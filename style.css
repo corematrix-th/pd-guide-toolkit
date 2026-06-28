@@ -1,0 +1,277 @@
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;font-family:Arial,sans-serif;color:#111;font-size:11px}
+.app{max-width:1250px;margin:0 auto;padding:10px}
+.topbar{background:#fff;border:1px solid #d9e1ea;padding:9px 12px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
+.title{font-size:17px;font-weight:700}.byline{font-size:12px;color:#666;margin-top:2px}
+.brand{background:#d71920;color:white;font-weight:700;padding:8px 12px;border-radius:3px}
+.controlbar{display:flex;align-items:end;gap:8px;background:#fff;border:1px solid #d9e1ea;padding:8px;margin-bottom:7px}
+.field label{display:block;font-size:10px;font-weight:700;margin-bottom:3px}
+.field.small{width:160px}.field{width:420px}
+select,input{font-size:11px;padding:4px 6px;border:1px solid #cfd8e3;border-radius:2px;background:#fff;width:100%}
+button{background:#d71920;color:#fff;border:0;border-radius:2px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;margin-top:7px}
+button.green{background:#198754}
+button.dark{background:#333} button.gray,button.clear{background:#777} button.clear{margin-top:0;height:25px}
+.buttons{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tree{display:grid;grid-template-columns:280px 1fr;gap:6px;margin-bottom:7px}
+.col{background:#fff;border:1px solid #d9e1ea;height:250px;overflow:auto}
+.col-title{font-size:10px;font-weight:700;background:#f1f4f8;border-bottom:1px solid #d9e1ea;padding:5px}
+.item{padding:5px 8px;border-bottom:1px solid #edf1f5;cursor:pointer;font-size:11px}
+.item:hover{background:#eef6ff}.item.active{background:#dcecff;font-weight:700}
+.main{display:grid;grid-template-columns:1.35fr .75fr;gap:7px}
+.left,.right{background:#fff;border:1px solid #d9e1ea;min-height:450px;padding:8px}
+.section-title{font-size:10px;font-weight:700;margin-bottom:7px;color:#333}
+.current-selection{background:#eef6ff;border:1px solid #cfe3ff;padding:6px 8px;margin-bottom:8px;font-size:11px}
+.check-row{display:grid;grid-template-columns:240px 160px 1fr;gap:7px;align-items:center;border-bottom:1px solid #edf1f5;padding:5px 0}
+.check-label{font-weight:700}.check-row select{width:155px}.check-row input{width:100%}
+.recommendation{border:1px solid #d9e1ea;background:#fafafa;color:#d71920;font-size:13px;font-weight:700;padding:9px;margin-bottom:9px;line-height:1.55}
+.recommendation.rec-fop{color:#0a7a22;background:#edf9f0;border-color:#b9e8c4}
+.recommendation.rec-adapter{color:#9a6500;background:#fff7e6;border-color:#ffe0a3}
+.recommendation.rec-lcd{color:#005b99;background:#eef7ff;border-color:#b8ddff}
+.recommendation.rec-l2{color:#a03b00;background:#fff0e8;border-color:#ffc5a8}
+.recommendation.rec-mainboard{color:#b00000;background:#fff0f0;border-color:#ffc7c7}
+.suggestion{border:1px solid #ffe0a3;background:#fff8e8;color:#805000;padding:8px;margin-bottom:9px;line-height:1.45}
+.hidden{display:none}.manual{border:1px solid #d9e1ea;background:#fafafa;padding:10px;line-height:1.6;white-space:pre-wrap}
+textarea{width:100%;height:300px;border:1px solid #cfd8e3;border-radius:2px;font-family:Consolas,monospace;font-size:11px;padding:7px}
+.version{font-size:10px;color:#777;margin-top:8px;text-align:right}
+@media(max-width:900px){.tree,.main{grid-template-columns:1fr}.controlbar{flex-wrap:wrap}.field,.field.small{width:100%}.check-row{grid-template-columns:1fr}}
+
+.related-guide{border:1px solid #d9e1ea;background:#fafafa;padding:7px;margin-bottom:9px;min-height:34px}
+.guide-chip{display:inline-block;background:#eef6ff;border:1px solid #b8ddff;color:#005b99;border-radius:3px;padding:4px 7px;margin:2px;cursor:pointer;font-weight:700}
+.guide-chip:hover{background:#dcecff}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:9999}
+.modal.hidden{display:none}
+.modal-content{background:#fff;border:1px solid #d9e1ea;width:min(720px,92vw);max-height:85vh;box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #d9e1ea;background:#f1f4f8}
+.modal-title{font-size:14px;font-weight:700}
+.modal-close{background:#777;margin:0}
+.modal-body{white-space:pre-wrap;font-family:Arial,sans-serif;font-size:12px;line-height:1.6;padding:12px;overflow:auto;max-height:70vh}
+.detail-box{width:100%;height:70px;border:1px solid #cfd8e3;border-radius:2px;font-family:Arial,sans-serif;font-size:11px;padding:7px;margin-top:8px}
+.error-description{border:1px solid #ffe0a3;background:#fff8e8;color:#805000;padding:8px;margin-bottom:8px;line-height:1.45}
+
+/* V4.5 compact UX */
+#relatedGuide{display:none}
+.related-guide-inline{margin-top:8px}
+.related-guide{display:flex;flex-wrap:wrap;gap:4px;max-height:86px;overflow-y:auto;border:1px solid #d9e1ea;background:#fafafa;padding:6px;margin-bottom:6px;min-height:28px}
+.related-title{margin-top:8px}
+.guide-chip{white-space:nowrap}
+#resultText, textarea#resultText{height:210px;min-height:180px;resize:vertical}
+.error-description{font-size:11px;padding:6px 8px;margin-bottom:7px}
+
+
+/* V4.5 polish: related guide divider */
+#relatedGuide{display:none !important}
+.related-guide-inline{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid #d9e1ea;
+}
+.related-guide-inline .related-title{
+  margin-top:0;
+  margin-bottom:6px;
+}
+.related-guide-inline .related-guide{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  max-height:86px;
+  overflow-y:auto;
+  border:1px solid #d9e1ea;
+  background:#fafafa;
+  padding:6px;
+  margin-bottom:6px;
+  min-height:28px;
+}
+
+/* V4.5 final polish: Related Guide grey card */
+.related-guide-inline{
+  margin-top:12px !important;
+  padding:9px !important;
+  border:1px solid #d9dee5 !important;
+  background:#f5f6f8 !important;
+  border-radius:4px !important;
+}
+.related-guide-inline .related-title{
+  margin:0 0 7px 0 !important;
+  color:#555 !important;
+  font-weight:700 !important;
+}
+.related-guide-inline .related-guide{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:5px !important;
+  max-height:86px !important;
+  overflow-y:auto !important;
+  border:0 !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+  min-height:28px !important;
+}
+
+/* V4.6 UI polish */
+#relatedGuide{display:none !important}
+.related-guide-inline{margin-top:12px !important;padding:9px !important;border:1px solid #d9dee5 !important;background:#f5f6f8 !important;border-radius:4px !important}
+.related-guide-inline .related-title{margin:0 0 7px 0 !important;color:#555 !important;font-weight:700 !important}
+.related-guide-inline .related-guide{display:flex !important;flex-wrap:wrap !important;gap:5px !important;max-height:86px !important;overflow-y:auto !important;border:0 !important;background:transparent !important;padding:0 !important;margin:0 !important;min-height:28px !important}
+
+
+/* V4.6.2 layout update */
+.right-related{
+  background:#f5f6f8;
+  border:1px solid #d9dee5;
+  border-radius:4px;
+  padding:8px;
+  margin-bottom:8px;
+}
+.right-related .related-title{
+  margin:0 0 6px 0;
+  color:#555;
+  font-weight:700;
+}
+.right-related .related-guide{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  max-height:76px;
+  overflow-y:auto;
+  border:0;
+  background:transparent;
+  padding:0;
+  margin:0;
+  min-height:24px;
+}
+.detail-box{
+  height:95px !important;
+}
+textarea#note, #note{
+  height:235px !important;
+  min-height:180px;
+  resize:vertical;
+}
+.related-guide-inline{
+  display:none !important;
+}
+
+
+/* V4.6 Final Update */
+.recommendation,
+.recommendation-dispatch{
+  background:#fff0f0 !important;
+  border:1px solid #ffb8b8 !important;
+  color:#d60000 !important;
+  font-size:12px !important;
+  line-height:1.45 !important;
+  font-weight:700 !important;
+  padding:10px !important;
+  min-height:44px !important;
+}
+
+.recommendation *{
+  color:#d60000 !important;
+  font-size:12px !important;
+}
+
+.right-related{
+  background:#f5f6f8 !important;
+  border:1px solid #d9dee5 !important;
+  border-radius:4px !important;
+  padding:7px !important;
+  margin:8px 0 8px 0 !important;
+}
+
+.right-related .related-title{
+  margin:0 0 6px 0 !important;
+  color:#555 !important;
+  font-weight:700 !important;
+}
+
+.right-related .related-guide{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:5px !important;
+  max-height:64px !important;
+  overflow-y:auto !important;
+  border:0 !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+  min-height:24px !important;
+}
+
+.detail-box{
+  height:90px !important;
+}
+
+/* restore result/email height while keeping buttons visible */
+#note{
+  height:285px !important;
+  min-height:220px !important;
+  resize:vertical;
+}
+
+.right{
+  min-height:430px !important;
+}
+
+.buttons{
+  margin-top:7px !important;
+}
+
+
+/* V4.6.3 layout update */
+#rightRelatedGuide,
+.right-related{
+  display:none !important;
+}
+
+.related-guide-inline{
+  display:block !important;
+  margin-top:10px !important;
+  padding:8px !important;
+  border:1px solid #d9dee5 !important;
+  background:#f5f6f8 !important;
+  border-radius:4px !important;
+}
+
+.related-guide-inline .related-title{
+  margin:0 0 6px 0 !important;
+  color:#555 !important;
+  font-weight:700 !important;
+}
+
+.related-guide-inline .related-guide{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:5px !important;
+  max-height:70px !important;
+  overflow-y:auto !important;
+  border:0 !important;
+  background:transparent !important;
+  padding:0 !important;
+  margin:0 !important;
+  min-height:24px !important;
+}
+
+.detail-box{
+  height:86px !important;
+}
+
+/* keep RESULT / EMAIL large, but keep buttons in the same screen */
+#note{
+  height:300px !important;
+  min-height:260px !important;
+  max-height:300px !important;
+  resize:none !important;
+}
+
+.right{
+  min-height:430px !important;
+}
+
+.buttons{
+  margin-top:7px !important;
+}
+
+.version{
+  margin-top:6px !important;
+}

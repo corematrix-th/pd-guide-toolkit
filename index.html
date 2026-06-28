@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lenovo PD Guide Toolkit</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GBWX6GCY18');
+  </script>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div>
+      <div class="title">Lenovo PD Guide Toolkit</div>
+      <div class="byline">by Nasree Jehteh</div>
+    </div>
+    <div class="brand">Lenovo</div>
+  </div>
+
+  <div class="controlbar">
+    <div class="field small">
+      <label>Product</label>
+      <select id="product">
+        <option value="thinkpad">ThinkPad</option>
+        <option value="ideapad">IdeaPad</option>
+        <option value="desktop">Desktop</option>
+        <option value="aio">All in one</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Search</label>
+      <input id="search" placeholder="no power, bsod, battery report, 2100">
+    </div>
+    <button class="clear" id="topClearBtn">Clear</button>
+  </div>
+
+  <div class="tree">
+    <div class="col">
+      <div class="col-title">LEVEL 1</div>
+      <div id="level1"></div>
+    </div>
+    <div class="col wide">
+      <div class="col-title">SYMPTOM / GUIDE</div>
+      <div id="symptom"></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="left">
+      <div id="currentSelection" class="current-selection"></div>
+      <div id="mainTitle" class="section-title">TROUBLESHOOTING CHECKLIST</div>
+      <div id="checklist"></div>
+      <div id="manualBox" class="manual hidden"></div>
+    </div>
+
+    <div class="right">
+      <div id="recTitle" class="section-title">CONCLUSION</div>
+      <div id="recommendation" class="recommendation">-</div>
+      <div id="suggestion" class="suggestion hidden"></div>
+<div class="section-title">RESULT / EMAIL</div>
+      <textarea id="note" placeholder="Result note, guide, or email will show here..."></textarea>
+
+      <div class="buttons">
+        <button id="generateBtn">Generate Note</button>
+        <button class="green" id="emailThBtn">Email TH</button>
+        <button class="green" id="emailEnBtn">Email EN</button>
+        <button class="gray" id="clearBtn">Clear</button>
+      </div>
+
+      <div class="version">Version 4.6.4 Dev</div>
+    </div>
+  </div>
+</div>
+
+
+<div id="guideModal" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div id="modalTitle" class="modal-title">Guide</div>
+      <button class="modal-close" id="modalCloseBtn">Close</button>
+    </div>
+    <pre id="modalBody" class="modal-body"></pre>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
