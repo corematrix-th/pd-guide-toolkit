@@ -488,12 +488,6 @@ const LEVELS = {
         "defaultPart": "Mainboard / Memory",
         "common": [
           {
-            "label": "Beep code / pattern",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
             "label": "Fan spinning",
             "options": "fan",
             "text": false,
@@ -503,6 +497,12 @@ const LEVELS = {
             "label": "External Monitor test",
             "options": "swap",
             "text": false,
+            "diag": false
+          },
+          {
+            "label": "Beep code / pattern",
+            "options": "yesno",
+            "text": true,
             "diag": false
           },
           {
@@ -531,13 +531,19 @@ const LEVELS = {
         "defaultPart": "Software Troubleshooting / SSD / Mainboard",
         "common": [
           {
-            "label": "Can boot into BIOS",
+            "label": "Can boot into Safe Mode",
             "options": "yesno",
             "text": false,
             "diag": false
           },
           {
-            "label": "Can boot into Safe Mode",
+            "label": "Re-install Windows",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Can boot into BIOS",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -547,12 +553,6 @@ const LEVELS = {
             "options": "diag",
             "text": false,
             "diag": true
-          },
-          {
-            "label": "Re-install Windows",
-            "options": "select",
-            "text": false,
-            "diag": false
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -574,6 +574,18 @@ const LEVELS = {
         "defaultPart": "SSD / Mainboard",
         "common": [
           {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Re-install Windows",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Can boot into BIOS",
             "options": "yesno",
             "text": false,
@@ -590,18 +602,6 @@ const LEVELS = {
             "options": "diag",
             "text": false,
             "diag": true
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Re-install Windows",
-            "options": "select",
-            "text": false,
-            "diag": false
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -629,16 +629,16 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Lenovo Diagnostics Storage",
-            "options": "diag",
-            "text": false,
-            "diag": true
-          },
-          {
             "label": "Re-install Windows",
             "options": "select",
             "text": false,
             "diag": false
+          },
+          {
+            "label": "Lenovo Diagnostics Storage",
+            "options": "diag",
+            "text": false,
+            "diag": true
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -677,17 +677,17 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Lenovo Diagnostics",
-            "options": "diag",
-            "diag": true
-          },
-          {
             "label": "Check storage free space",
             "options": "select"
           },
           {
             "label": "Re-install Windows",
             "options": "select"
+          },
+          {
+            "label": "Lenovo Diagnostics",
+            "options": "diag",
+            "diag": true
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -718,13 +718,13 @@ const LEVELS = {
             "options": "select"
           },
           {
+            "label": "Re-install Windows",
+            "options": "select"
+          },
+          {
             "label": "Lenovo Diagnostics",
             "options": "diag",
             "diag": true
-          },
-          {
-            "label": "Re-install Windows",
-            "options": "select"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -743,6 +743,12 @@ const LEVELS = {
         "defaultPart": "Fan / Thermal / Mainboard",
         "common": [
           {
+            "label": "Fan spinning",
+            "options": "fan",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Can access Windows",
             "options": "yesno",
             "text": false,
@@ -755,16 +761,10 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Fan spinning",
-            "options": "fan",
+            "label": "Windows Update",
+            "options": "select",
             "text": false,
             "diag": false
-          },
-          {
-            "label": "Lenovo Diagnostics",
-            "options": "diag",
-            "text": false,
-            "diag": true
           },
           {
             "label": "BIOS Update",
@@ -773,10 +773,10 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Windows Update",
-            "options": "select",
+            "label": "Lenovo Diagnostics",
+            "options": "diag",
             "text": false,
-            "diag": false
+            "diag": true
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -802,6 +802,10 @@ const LEVELS = {
             "options": "reboot_occurs"
           },
           {
+            "label": "Event Viewer / Dump file collected",
+            "options": "yesno"
+          },
+          {
             "label": "Windows Update",
             "options": "select"
           },
@@ -817,10 +821,6 @@ const LEVELS = {
             "label": "Lenovo Diagnostics",
             "options": "diag",
             "diag": true
-          },
-          {
-            "label": "Event Viewer / Dump file collected",
-            "options": "yesno"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -852,17 +852,17 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "Lenovo Diagnostics",
-            "options": "diag",
-            "diag": true
-          },
-          {
             "label": "Driver Update / Lenovo Vantage",
             "options": "select"
           },
           {
             "label": "Re-install Windows",
             "options": "select"
+          },
+          {
+            "label": "Lenovo Diagnostics",
+            "options": "diag",
+            "diag": true
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -881,11 +881,15 @@ const LEVELS = {
         "defaultPart": "Fingerprint Reader / Software Troubleshooting",
         "common": [
           {
+            "label": "Device Manager shows Fingerprint",
+            "options": "yesno"
+          },
+          {
             "label": "Fingerprint setup in Windows Hello",
             "options": "select"
           },
           {
-            "label": "Device Manager shows Fingerprint",
+            "label": "BIOS Fingerprint enabled",
             "options": "yesno"
           },
           {
@@ -899,10 +903,6 @@ const LEVELS = {
           {
             "label": "Driver Update / Lenovo Vantage",
             "options": "select"
-          },
-          {
-            "label": "BIOS Fingerprint enabled",
-            "options": "yesno"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -921,15 +921,19 @@ const LEVELS = {
         "defaultPart": "Camera Module / Software Troubleshooting",
         "common": [
           {
-            "label": "Windows Hello Face setup",
-            "options": "select"
-          },
-          {
             "label": "Windows Camera App",
             "options": "select"
           },
           {
             "label": "Device Manager shows Camera",
+            "options": "yesno"
+          },
+          {
+            "label": "Windows Hello Face setup",
+            "options": "select"
+          },
+          {
+            "label": "BIOS Camera enabled",
             "options": "yesno"
           },
           {
@@ -943,10 +947,6 @@ const LEVELS = {
           {
             "label": "Driver Update / Lenovo Vantage",
             "options": "select"
-          },
-          {
-            "label": "BIOS Camera enabled",
-            "options": "yesno"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -971,14 +971,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Safe Mode test",
-            "options": "select"
-          },
-          {
             "label": "Password / PIN reset",
             "options": "select",
             "text": false,
             "diag": false
+          },
+          {
+            "label": "Safe Mode test",
+            "options": "select"
           },
           {
             "label": "Re-install Windows",
@@ -1096,15 +1096,15 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Pixel location confirmed",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
             "label": "External Monitor test",
             "options": "swap",
             "text": false,
+            "diag": false
+          },
+          {
+            "label": "Pixel location confirmed",
+            "options": "yesno",
+            "text": true,
             "diag": false
           },
           {
@@ -1133,15 +1133,15 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Pixel location confirmed",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
             "label": "External Monitor test",
             "options": "swap",
             "text": false,
+            "diag": false
+          },
+          {
+            "label": "Pixel location confirmed",
+            "options": "yesno",
+            "text": true,
             "diag": false
           },
           {
@@ -1168,7 +1168,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Check BIOS",
+            "label": "Swap RAM test",
             "options": "select"
           },
           {
@@ -1176,7 +1176,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Swap RAM test",
+            "label": "Check BIOS",
             "options": "select"
           },
           {
@@ -1219,11 +1219,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -1234,6 +1229,11 @@ const LEVELS = {
             "options": "yesno",
             "text": true,
             "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
           }
         ]
       },
@@ -1255,11 +1255,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -1270,6 +1265,11 @@ const LEVELS = {
             "options": "yesno",
             "text": true,
             "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
           }
         ]
       }
@@ -1351,16 +1351,16 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Lenovo Diagnostics Battery",
-            "options": "diag",
-            "text": false,
-            "diag": true
-          },
-          {
             "label": "BIOS Update",
             "options": "select",
             "text": false,
             "diag": false
+          },
+          {
+            "label": "Lenovo Diagnostics Battery",
+            "options": "diag",
+            "text": false,
+            "diag": true
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -1417,14 +1417,14 @@ const LEVELS = {
         "defaultPart": "Adapter / Battery / Mainboard",
         "common": [
           {
-            "label": "Original Adapter used",
-            "options": "yesno",
+            "label": "Swap Adapter test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
-            "options": "swap",
+            "label": "Original Adapter used",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -1466,6 +1466,24 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "Swap Adapter test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Adapter test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Battery Health in Lenovo Vantage",
             "options": "battery_health",
             "text": false,
@@ -1476,24 +1494,6 @@ const LEVELS = {
             "options": "diag",
             "text": false,
             "diag": true
-          },
-          {
-            "label": "Adapter test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Swap Adapter test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
-            "options": "select",
-            "text": false,
-            "diag": false
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -1520,15 +1520,15 @@ const LEVELS = {
         "defaultPart": "USB Port / Mainboard",
         "common": [
           {
-            "label": "USB mouse / keyboard test",
-            "options": "select"
-          },
-          {
             "label": "Swap USB port test",
             "options": "select"
           },
           {
             "label": "Swap USB device test",
+            "options": "select"
+          },
+          {
+            "label": "USB mouse / keyboard test",
             "options": "select"
           },
           {
@@ -1568,11 +1568,11 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "USB-C device test",
+            "label": "Swap USB-C port test",
             "options": "select"
           },
           {
-            "label": "Swap USB-C port test",
+            "label": "USB-C device test",
             "options": "select"
           },
           {
@@ -1616,6 +1616,10 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select"
+          },
+          {
             "label": "Graphics Driver Update",
             "options": "select",
             "text": false,
@@ -1626,10 +1630,6 @@ const LEVELS = {
             "options": "select",
             "text": false,
             "diag": false
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
-            "options": "select"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -1669,14 +1669,14 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select"
+          },
+          {
             "label": "Driver Update",
             "options": "select",
             "text": false,
             "diag": false
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
-            "options": "select"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -1710,14 +1710,14 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select"
+          },
+          {
             "label": "Driver Update",
             "options": "select",
             "text": false,
             "diag": false
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
-            "options": "select"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -1817,7 +1817,13 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Enable LAN in BIOS",
+            "label": "USB to LAN Adapter test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Check LAN pin / damage",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -1829,20 +1835,14 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "Enable LAN in BIOS",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "BIOS Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "USB to LAN Adapter test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Check LAN pin / damage",
-            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -1866,8 +1866,8 @@ const LEVELS = {
         "defaultPart": "WLAN Card / Mainboard",
         "common": [
           {
-            "label": "Bluetooth toggle available",
-            "options": "yesno",
+            "label": "Swap Bluetooth device test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
@@ -1878,8 +1878,8 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Bluetooth device test",
-            "options": "swap",
+            "label": "Bluetooth toggle available",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -2009,15 +2009,15 @@ const LEVELS = {
             "options": "yesno"
           },
           {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select"
+          },
+          {
             "label": "Smart Card Driver Update",
             "options": "select"
           },
           {
             "label": "Windows Update",
-            "options": "select"
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
             "options": "select"
           },
           {
@@ -2042,6 +2042,12 @@ const LEVELS = {
         "defaultPart": "SSD / Mainboard",
         "common": [
           {
+            "label": "Swap SSD test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Can access Windows",
             "options": "yesno",
             "text": false,
@@ -2058,12 +2064,6 @@ const LEVELS = {
             "options": "diag",
             "text": false,
             "diag": true
-          },
-          {
-            "label": "Swap SSD test",
-            "options": "swap",
-            "text": false,
-            "diag": false
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -2085,10 +2085,6 @@ const LEVELS = {
         "defaultPart": "SSD / Storage Firmware / Mainboard",
         "common": [
           {
-            "label": "BIOS detects storage",
-            "options": "yesno"
-          },
-          {
             "label": "Secure Boot disabled",
             "options": "select"
           },
@@ -2103,6 +2099,10 @@ const LEVELS = {
           {
             "label": "Windows Installation USB recreated",
             "options": "select"
+          },
+          {
+            "label": "BIOS detects storage",
+            "options": "yesno"
           },
           {
             "label": "Lenovo Diagnostics Storage",
@@ -2126,6 +2126,12 @@ const LEVELS = {
         "defaultPart": "HDD / Mainboard",
         "common": [
           {
+            "label": "Swap HDD test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Can access Windows",
             "options": "yesno",
             "text": false,
@@ -2142,12 +2148,6 @@ const LEVELS = {
             "options": "diag",
             "text": false,
             "diag": true
-          },
-          {
-            "label": "Swap HDD test",
-            "options": "swap",
-            "text": false,
-            "diag": false
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -2186,6 +2186,12 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "Headphone test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Volume Mixer checked",
             "options": "select",
             "text": false,
@@ -2210,12 +2216,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Headphone test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -2235,7 +2235,7 @@ const LEVELS = {
         "defaultPart": "Speaker",
         "common": [
           {
-            "label": "Noise occurs all apps",
+            "label": "Video clip provided",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -2247,14 +2247,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
-            "options": "select",
+            "label": "Noise occurs all apps",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
           {
-            "label": "Video clip provided",
-            "options": "yesno",
+            "label": "Driver Update",
+            "options": "select",
             "text": false,
             "diag": false
           },
@@ -2278,14 +2278,14 @@ const LEVELS = {
         "defaultPart": "Audio Jack / Mainboard",
         "common": [
           {
-            "label": "Swap headphone test",
-            "options": "swap",
+            "label": "Output device selected correctly",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
           {
-            "label": "Output device selected correctly",
-            "options": "yesno",
+            "label": "Swap headphone test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
@@ -2339,6 +2339,12 @@ const LEVELS = {
             "diag": false
           },
           {
+            "label": "External mic test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Uninstall Audio Driver and Restart",
             "options": "select",
             "text": false,
@@ -2347,12 +2353,6 @@ const LEVELS = {
           {
             "label": "Driver Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "External mic test",
-            "options": "swap",
             "text": false,
             "diag": false
           },
@@ -2388,14 +2388,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
-            "options": "select",
+            "label": "External mic test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "External mic test",
-            "options": "swap",
+            "label": "Driver Update",
+            "options": "select",
             "text": false,
             "diag": false
           },
@@ -2431,14 +2431,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
-            "options": "select",
+            "label": "Headphone test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Headphone test",
-            "options": "swap",
+            "label": "Driver Update",
+            "options": "select",
             "text": false,
             "diag": false
           },
@@ -2478,16 +2478,16 @@ const LEVELS = {
             "options": "swap"
           },
           {
+            "label": "External mic test",
+            "options": "swap"
+          },
+          {
             "label": "Uninstall Audio Driver and Restart",
             "options": "select"
           },
           {
             "label": "Driver Update",
             "options": "select"
-          },
-          {
-            "label": "External mic test",
-            "options": "swap"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -2517,14 +2517,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Issue happens on all apps",
-            "options": "yesno",
+            "label": "Windows Camera App",
+            "options": "select",
             "text": false,
             "diag": false
           },
           {
-            "label": "Windows Camera App",
-            "options": "select",
+            "label": "Issue happens on all apps",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -2535,14 +2535,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Uninstall Camera Driver and Restart",
-            "options": "select",
+            "label": "BIOS Camera enabled",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
           {
-            "label": "BIOS Camera enabled",
-            "options": "yesno",
+            "label": "Uninstall Camera Driver and Restart",
+            "options": "select",
             "text": false,
             "diag": false
           },
@@ -2566,6 +2566,12 @@ const LEVELS = {
         "defaultPart": "Camera Module",
         "common": [
           {
+            "label": "Windows Camera App",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Clean camera lens",
             "options": "select",
             "text": false,
@@ -2578,20 +2584,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Windows Camera App",
-            "options": "select",
+            "label": "Photo / Video provided",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
           {
             "label": "Driver Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Photo / Video provided",
-            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -2615,10 +2615,6 @@ const LEVELS = {
         "defaultPart": "Camera Module / Software Troubleshooting",
         "common": [
           {
-            "label": "Windows Hello Face setup",
-            "options": "select"
-          },
-          {
             "label": "Camera Shutter",
             "options": "shutter"
           },
@@ -2631,12 +2627,16 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "Uninstall Camera Driver and Restart",
+            "label": "Windows Hello Face setup",
             "options": "select"
           },
           {
             "label": "BIOS Camera enabled",
             "options": "yesno"
+          },
+          {
+            "label": "Uninstall Camera Driver and Restart",
+            "options": "select"
           },
           {
             "label": "Windows Update",
@@ -2663,10 +2663,6 @@ const LEVELS = {
         "defaultPart": "Camera Module / Software Troubleshooting",
         "common": [
           {
-            "label": "Lock on leave setting enabled",
-            "options": "yesno"
-          },
-          {
             "label": "Windows Camera App",
             "options": "select"
           },
@@ -2675,12 +2671,16 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "Lenovo Vantage Update",
-            "options": "select"
+            "label": "Lock on leave setting enabled",
+            "options": "yesno"
           },
           {
             "label": "BIOS Camera enabled",
             "options": "yesno"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -2717,11 +2717,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2732,6 +2727,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ],
           "ideapad": [
@@ -2748,11 +2748,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2763,6 +2758,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ],
           "desktop": [
@@ -2785,11 +2785,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2800,6 +2795,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ],
           "aio": [
@@ -2822,11 +2822,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2837,6 +2832,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ]
         }
@@ -2866,11 +2866,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2881,6 +2876,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ],
           "ideapad": [
@@ -2903,11 +2903,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2918,6 +2913,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ],
           "desktop": [
@@ -2934,11 +2934,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2949,6 +2944,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ],
           "aio": [
@@ -2965,11 +2965,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            },
-            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -2980,6 +2975,11 @@ const LEVELS = {
               "options": "yesno",
               "text": true,
               "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
             }
           ]
         }
@@ -3008,11 +3008,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -3023,6 +3018,11 @@ const LEVELS = {
             "options": "yesno",
             "text": true,
             "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
           }
         ]
       },
@@ -3038,13 +3038,13 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Hotkey Driver Update",
+            "label": "BIOS Hotkey mode",
             "options": "select",
             "text": false,
             "diag": false
           },
           {
-            "label": "BIOS Hotkey mode",
+            "label": "Hotkey Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3087,11 +3087,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -3102,6 +3097,11 @@ const LEVELS = {
             "options": "yesno",
             "text": true,
             "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
           }
         ]
       },
@@ -3110,6 +3110,12 @@ const LEVELS = {
         "defaultResult": "Dispatch",
         "defaultPart": "Keyboard / Software Troubleshooting",
         "common": [
+          {
+            "label": "Specific hotkey listed",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
           {
             "label": "Lenovo Hotkey Features update",
             "options": "select",
@@ -3120,12 +3126,6 @@ const LEVELS = {
             "label": "Windows Update",
             "options": "select",
             "text": false,
-            "diag": false
-          },
-          {
-            "label": "Specific hotkey listed",
-            "options": "yesno",
-            "text": true,
             "diag": false
           },
           {
@@ -3165,17 +3165,17 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno"
           },
           {
             "label": "Other issue",
             "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
             "text": true
           }
         ]
@@ -3202,17 +3202,17 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno"
           },
           {
             "label": "Other issue",
             "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
             "text": true
           }
         ]
@@ -3241,11 +3241,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -3256,6 +3251,11 @@ const LEVELS = {
             "options": "yesno",
             "text": true,
             "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
           }
         ]
       }
@@ -3350,13 +3350,13 @@ const LEVELS = {
         "defaultPart": "Touchpad / C-cover",
         "common": [
           {
-            "label": "Disable Touchpad test",
+            "label": "External mouse test",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "External mouse test",
+            "label": "Disable Touchpad test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3393,6 +3393,12 @@ const LEVELS = {
         "defaultPart": "Keyboard / TrackPoint",
         "common": [
           {
+            "label": "External mouse works",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "TrackPoint enabled in BIOS",
             "options": "yesno",
             "text": false,
@@ -3401,12 +3407,6 @@ const LEVELS = {
           {
             "label": "Driver Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "External mouse works",
-            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3439,15 +3439,15 @@ const LEVELS = {
             "options": "fan"
           },
           {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select"
+          },
+          {
             "label": "BIOS Update",
             "options": "select"
           },
           {
             "label": "Load default BIOS",
-            "options": "select"
-          },
-          {
-            "label": "Power Reset / Emergency Reset",
             "options": "select"
           },
           {
@@ -3467,6 +3467,10 @@ const LEVELS = {
         "defaultPart": "Fan / Thermal Module",
         "common": [
           {
+            "label": "Video clip provided",
+            "options": "yesno"
+          },
+          {
             "label": "Noise occurs all the time",
             "options": "yesno"
           },
@@ -3481,10 +3485,6 @@ const LEVELS = {
           {
             "label": "Load default BIOS",
             "options": "select"
-          },
-          {
-            "label": "Video clip provided",
-            "options": "yesno"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -3511,15 +3511,15 @@ const LEVELS = {
             "options": "select"
           },
           {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
             "label": "BIOS Update",
             "options": "select"
           },
           {
             "label": "Load default BIOS",
-            "options": "select"
-          },
-          {
-            "label": "Lenovo Vantage Update",
             "options": "select"
           },
           {
@@ -3613,6 +3613,12 @@ const LEVELS = {
         "defaultPart": "BIOS / Mainboard",
         "common": [
           {
+            "label": "Error photo provided",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "Load BIOS default",
             "options": "select",
             "text": false,
@@ -3631,12 +3637,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Error photo provided",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Other issue",
             "options": "yesno",
             "text": true,
@@ -3651,6 +3651,12 @@ const LEVELS = {
         "defaultPart": "Mainboard",
         "common": [
           {
+            "label": "Error photo provided",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "BIOS default loaded",
             "options": "select",
             "text": false,
@@ -3659,12 +3665,6 @@ const LEVELS = {
           {
             "label": "BIOS Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Error photo provided",
-            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3683,14 +3683,14 @@ const LEVELS = {
         "defaultPart": "Battery / Mainboard",
         "common": [
           {
-            "label": "Battery charge level checked",
-            "options": "select",
+            "label": "Swap Adapter test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
-            "options": "swap",
+            "label": "Battery charge level checked",
+            "options": "select",
             "text": false,
             "diag": false
           },
@@ -3773,21 +3773,21 @@ const LEVELS = {
         "description": "ไม่พบระบบปฏิบัติการสำหรับบูตเข้า Windows",
         "common": [
           {
-            "label": "BIOS detects storage",
-            "options": "yesno"
-          },
-          {
             "label": "Boot order checked",
             "options": "select"
+          },
+          {
+            "label": "Windows Installation",
+            "options": "select"
+          },
+          {
+            "label": "BIOS detects storage",
+            "options": "yesno"
           },
           {
             "label": "Lenovo Diagnostics Storage",
             "options": "diag",
             "diag": true
-          },
-          {
-            "label": "Windows Installation",
-            "options": "select"
           },
           {
             "label": "Other issue",
@@ -3802,14 +3802,14 @@ const LEVELS = {
         "defaultPart": "SSD / HDD / Mainboard",
         "common": [
           {
-            "label": "BIOS detects storage",
-            "options": "yesno",
+            "label": "Swap SSD / HDD test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Swap SSD / HDD test",
-            "options": "swap",
+            "label": "BIOS detects storage",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3834,14 +3834,14 @@ const LEVELS = {
         "defaultPart": "HDD / Mainboard",
         "common": [
           {
-            "label": "BIOS detects HDD",
-            "options": "yesno",
+            "label": "Swap HDD test",
+            "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Swap HDD test",
-            "options": "swap",
+            "label": "BIOS detects HDD",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3866,6 +3866,12 @@ const LEVELS = {
         "defaultPart": "Mainboard",
         "common": [
           {
+            "label": "Error photo provided",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "BIOS default loaded",
             "options": "select",
             "text": false,
@@ -3874,12 +3880,6 @@ const LEVELS = {
           {
             "label": "BIOS Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Error photo provided",
-            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3898,6 +3898,12 @@ const LEVELS = {
         "defaultPart": "Mainboard",
         "common": [
           {
+            "label": "Error photo provided",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
             "label": "BIOS default loaded",
             "options": "select",
             "text": false,
@@ -3906,12 +3912,6 @@ const LEVELS = {
           {
             "label": "BIOS Update",
             "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Error photo provided",
-            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3930,14 +3930,20 @@ const LEVELS = {
         "defaultPart": "SSD / OS Reinstall",
         "common": [
           {
-            "label": "BIOS detects storage",
-            "options": "yesno",
+            "label": "Boot order checked",
+            "options": "select",
             "text": false,
             "diag": false
           },
           {
-            "label": "Boot order checked",
+            "label": "Re-install Windows",
             "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "BIOS detects storage",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3946,12 +3952,6 @@ const LEVELS = {
             "options": "diag",
             "text": false,
             "diag": true
-          },
-          {
-            "label": "Re-install Windows",
-            "options": "select",
-            "text": false,
-            "diag": false
           },
           {
             "label": "Other issue",
@@ -3968,26 +3968,26 @@ const LEVELS = {
         "defaultPart": "SSD / OS Reinstall",
         "common": [
           {
-            "label": "BIOS detects storage",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Boot order checked",
             "options": "select",
             "text": false,
             "diag": false
           },
           {
-            "label": "Disable UEFI IPv4 / IPv6",
-            "options": "select"
-          },
-          {
             "label": "Network boot disabled",
             "options": "select",
             "text": false,
             "diag": false
+          },
+          {
+            "label": "BIOS detects storage",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Disable UEFI IPv4 / IPv6",
+            "options": "select"
           },
           {
             "label": "Other issue",

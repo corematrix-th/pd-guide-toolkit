@@ -80,3 +80,11 @@ v4.6.4 Development Baseline
   * Physical damage / Liquid spilled before Other issue.
   * FRU P/N always last.
   * Product Capability by ThinkPad / IdeaPad / Desktop / AIO.
+
+
+v4.6.4 Patch 3
+- Reordered checklist items using Easy -> Difficult rule.
+- Moved Physical damage / Liquid spilled before Other issue.
+- Moved FRU P/N to the last checklist item.
+- Restored Boot warning for No power when Power LED = Yes.
+- No core UI/render structure changed.

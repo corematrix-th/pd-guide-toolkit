@@ -301,14 +301,21 @@ function calculate(){
 function suggestion(){
   const ans = answers();
   const get = label => (ans.find(x => x.q === label) || {}).a;
+  const getAny = labels => {
+    for(const label of labels){
+      const value = get(label);
+      if(value) return value;
+    }
+    return undefined;
+  };
 
   if(selectedLevel === "boot" && selectedSymptom === "no_power"){
-    if(get("LED on power button") === "Yes") return "⚠ Suggested PD: Boot > Power on no display (Reason: Power LED = Yes)";
+    if(getAny(["Power LED", "LED on power button"]) === "Yes") return "⚠ Suggested PD: Boot > Power on no display (Reason: Power LED = Yes)";
     if(get("Novo Button") === "Yes") return "⚠ Device responds to Novo Button. Please check Power Button / Top Cover.";
   }
 
   if(selectedLevel === "boot" && selectedSymptom === "pond"){
-    if(get("LED on power button") === "No") return "⚠ Suggested PD: Boot > No power (Reason: Power LED = No)";
+    if(getAny(["Power LED", "LED on power button"]) === "No") return "⚠ Suggested PD: Boot > No power (Reason: Power LED = No)";
   }
   return "";
 }
