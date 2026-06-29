@@ -348,6 +348,10 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Swap RAM test",
+              "options": "swap"
+            },
+            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -384,6 +388,10 @@ const LEVELS = {
               "options": "select",
               "text": false,
               "diag": false
+            },
+            {
+              "label": "Swap RAM test",
+              "options": "swap"
             },
             {
               "label": "Physical damage / Liquid spilled",
@@ -430,6 +438,10 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Swap RAM test",
+              "options": "swap"
+            },
+            {
               "label": "Physical damage / Liquid spilled",
               "options": "yesno",
               "text": false,
@@ -466,6 +478,10 @@ const LEVELS = {
               "options": "select",
               "text": false,
               "diag": false
+            },
+            {
+              "label": "Swap RAM test",
+              "options": "swap"
             },
             {
               "label": "Physical damage / Liquid spilled",
@@ -510,6 +526,10 @@ const LEVELS = {
             "options": "select",
             "text": false,
             "diag": false
+          },
+          {
+            "label": "Swap RAM test",
+            "options": "swap"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -823,6 +843,14 @@ const LEVELS = {
             "options": "yesno"
           },
           {
+            "label": "Swap RAM test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap SSD test",
+            "options": "swap"
+          },
+          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno"
           },
@@ -863,6 +891,14 @@ const LEVELS = {
           {
             "label": "Re-install Windows",
             "options": "select"
+          },
+          {
+            "label": "Swap RAM test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap SSD test",
+            "options": "swap"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -1192,6 +1228,87 @@ const LEVELS = {
       }
     }
   },
+  "monitor": {
+    "name": "Monitor",
+    "symptoms": {
+      "abnormal_line": {
+        "name": "Display abnormal line",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Monitor",
+        "common": [
+          {
+            "label": "Photo / Video evidence",
+            "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "Swap HDMI/DP cable test",
+            "options": "swap"
+          },
+          {
+            "label": "Monitor tested on another machine",
+            "options": "swap"
+          },
+          {
+            "label": "Swap monitor test",
+            "options": "swap"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "no_power": {
+        "name": "Monitor no power",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Monitor",
+        "common": [
+          {
+            "label": "Photo / Video evidence",
+            "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "Power LED",
+            "options": "yesno"
+          },
+          {
+            "label": "Swap power cord test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap monitor test",
+            "options": "swap"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      }
+    }
+  },
   "adapter_power": {
     "name": "Adapter",
     "symptoms": {
@@ -1235,7 +1352,7 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
       },
       "cord": {
         "name": "Power cord",
@@ -1271,7 +1388,7 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
       }
     }
   },
@@ -2733,7 +2850,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ],
+          ],
           "ideapad": [
             {
               "label": "Specific keys listed",
@@ -2764,7 +2881,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ],
+          ],
           "desktop": [
             {
               "label": "Specific keys listed",
@@ -2801,7 +2918,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ],
+          ],
           "aio": [
             {
               "label": "Specific keys listed",
@@ -2838,7 +2955,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ]
+          ]
         }
       },
       "all": {
@@ -2882,7 +2999,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ],
+          ],
           "ideapad": [
             {
               "label": "USB keyboard test",
@@ -2919,7 +3036,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ],
+          ],
           "desktop": [
             {
               "label": "Swap keyboard test",
@@ -2950,7 +3067,7 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ],
+          ],
           "aio": [
             {
               "label": "Swap keyboard test",
@@ -2981,8 +3098,59 @@ const LEVELS = {
               "options": "detail_only",
               "text": true
             }
-           ]
+          ]
         }
+      },
+      "auto_type": {
+        "name": "Keyboard auto type",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Top Cover",
+        "common": [
+          {
+            "label": "Specific keys listed",
+            "options": "detail_only",
+            "text": true
+          },
+          {
+            "label": "USB keyboard test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "On-Screen Keyboard test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Driver / Windows Update",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Key stuck / sunk",
+            "options": "yesno"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
       },
       "backlight": {
         "name": "Backlight",
@@ -3024,7 +3192,7 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
       },
       "fn": {
         "name": "FN key",
@@ -3103,7 +3271,7 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
       },
       "hotkey": {
         "name": "Hotkey",
@@ -3178,7 +3346,7 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
       },
       "wireless": {
         "name": "Wireless mouse not detect",
@@ -3215,7 +3383,41 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
+      },
+      "click_l_double": {
+        "name": "Mouse click L double",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Mouse Replacement",
+        "common": [
+          {
+            "label": "Mouse test on another machine",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Swap mouse test",
+            "options": "swap"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
       },
       "scroll": {
         "name": "Scroll mouse not work",
@@ -3257,7 +3459,7 @@ const LEVELS = {
             "options": "detail_only",
             "text": true
           }
-         ]
+        ]
       }
     }
   },

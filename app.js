@@ -101,13 +101,37 @@ function withDisplayQuestions(sym){
   return {...sym, common};
 }
 
+function isFruPnAllowed(){
+  // FRU P/N should only be requested for external replaceable items.
+  if(selectedLevel === "mouse") return true; // External Mouse
+  if(selectedLevel === "adapter_power") return true; // Adapter / Power cord
+  if(selectedLevel === "monitor") return true; // Monitor
+  const part = (current().defaultPart || "").toLowerCase();
+  return part.includes("external mouse") || part.includes("external keyboard") || part.includes("adapter") || part.includes("power cord") || part.includes("monitor");
+}
+
+function normalizeQuestionOrder(list){
+  const tail = ["Physical damage / Liquid spilled", "Other issue", "FRU P/N"];
+  let filtered = list.slice();
+  if(!isFruPnAllowed()){
+    filtered = filtered.filter(q => q.label !== "FRU P/N");
+  }
+  const nonTail = filtered.filter(q => !tail.includes(q.label));
+  const tailItems = [];
+  tail.forEach(label => {
+    filtered.filter(q => q.label === label).forEach(q => tailItems.push(q));
+  });
+  return nonTail.concat(tailItems);
+}
+
 function getQuestions(){
   if(isManual()) return [];
   const sym = withDisplayQuestions(current());
   const product = el("product").value;
-  if(sym.questions && sym.questions[product]) return sym.questions[product];
-  if(sym.common) return sym.common;
-  return [];
+  let qs = [];
+  if(sym.questions && sym.questions[product]) qs = sym.questions[product];
+  else if(sym.common) qs = sym.common;
+  return normalizeQuestionOrder(qs);
 }
 
 function getOptions(code){
@@ -346,16 +370,31 @@ function calculate(){
 
   for(const r of ans){
     if((r.q.includes("Swap Adapter") || r.q.includes("Adapter test")) && r.a === "Work fine") return {result:"Dispatch", part:"Adapter"};
-    if(r.q.includes("AC power cord") && r.a === "Work fine") return {result:"Dispatch", part:"Power Cord"};
+    if((r.q.includes("AC power cord") || r.q.includes("power cable") || r.q.includes("power cord")) && r.a === "Work fine") return {result:"Dispatch", part:"Power Cord"};
+    if((r.q.includes("Swap HDMI") || r.q.includes("Swap HDMI/DP")) && r.a === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
+    if(r.q.includes("Swap LAN cable") && r.a === "Work fine") return {result:"Dispatch", part:"LAN Cable"};
+    if(r.q.includes("Swap USB device") && r.a === "Work fine") return {result:"Dispatch", part:"USB Device"};
+    if(r.q.includes("Swap USB port") && r.a === "Work fine") return {result:"Dispatch", part:"USB Port"};
     if(r.q.includes("External Monitor") && r.a === "Work fine") return {result:"Dispatch", part:"LCD Panel"};
     if(r.q.includes("External Monitor") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("USB keyboard") && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
+    if(r.q.includes("Monitor tested on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Monitor"};
+    if(r.q.includes("Monitor tested on another machine") && r.a === "Work fine") return {result:"Dispatch", part:"PC / Graphics Output"};
+    if(r.q.includes("Swap monitor test") && r.a === "Work fine") return {result:"Dispatch", part:"Monitor"};
+    if((r.q.includes("USB keyboard") || r.q.includes("Swap keyboard") || r.q.includes("Keyboard test with other machine") || r.q.includes("On-Screen Keyboard")) && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
     if(r.q.includes("USB keyboard") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
+    if(r.q.includes("Swap SSD / HDD test") && r.a === "Work fine") return {result:"Dispatch", part:"SSD / HDD"};
+    if(r.q.includes("Swap SSD test") && r.a === "Work fine") return {result:"Dispatch", part:"SSD"};
+    if(r.q.includes("Swap HDD test") && r.a === "Work fine") return {result:"Dispatch", part:"HDD"};
+    if(r.q.includes("Swap RAM test") && r.a === "Work fine") return {result:"Dispatch", part:"RAM"};
+    if(r.q.includes("Swap Smart Card test") && r.a === "Work fine") return {result:"Dispatch", part:"Smart Card Reader"};
+    if(r.q.includes("Swap SIM test") && r.a === "Work fine") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
+    if((r.q.includes("Swap mouse") || r.q.includes("Mouse test on another machine")) && r.a === "Work fine") return {result:"Dispatch", part:"Mouse Replacement"};
+    if((r.q.includes("External mouse test") || r.q.includes("External mouse works")) && (r.a === "Work fine" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
+    if((r.q.includes("Headphone test") || r.q.includes("Swap headphone")) && r.a === "Work fine") return {result:"Dispatch", part:"Speaker"};
+    if(r.q.includes("External mic test") && r.a === "Work fine") return {result:"Dispatch", part:"Microphone"};
+    if(r.q.includes("Swap Bluetooth device") && r.a === "Work fine") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
+    if((r.q.includes("Swap SD Card") || r.q.includes("SD Card test")) && r.a === "Work fine") return {result:"Dispatch", part:"SD Card Reader"};
     if(r.q.includes("Novo Button") && r.a === "Yes") return {result:"Dispatch", part:"Power Button / Top Cover"};
-  }
-
-  for(const r of ans){
-    if(r.a === "Work fine") return {result:"FOP", part:"-"};
   }
 
   return {result:sym.defaultResult || "Dispatch", part:sym.defaultPart || "-"};

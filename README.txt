@@ -74,3 +74,24 @@ v4.6.4 Product Capability Update
 - AIO: hidden Charging/Battery-related symptoms, Touchpad, Lock on leave, Keyboard Backlight, FN key, Keyboard Left Ctrl, WWAN, SIM, and Error 0190.
 - IdeaPad: hidden TrackPoint, Keyboard Left Ctrl, Lock on leave, WWAN, SIM, Smart Card, and Smart Card Reader.
 - Kept UX, checklist data, conclusion, email, and FRU P/N order unchanged.
+
+
+v4.6.4 Hotfix
+- Fixed Storage swap conclusion logic: Swap SSD/HDD test = Work fine now dispatches SSD/HDD instead of FOP.
+
+
+v4.6.5 Logic Update
+- Updated central calculation logic: removed generic Work fine = FOP fallback.
+- Added logic-based dispatch exceptions for swap / external comparison tests.
+- Added Keyboard > Keyboard auto type.
+- Added Mouse > Mouse click L double.
+
+
+v4.6.6 Checklist / Logic Update
+- Keyboard > Keyboard auto type: added Specific keys listed at first and Key stuck / sunk before tail checks.
+- Mouse > Mouse click L double: removed Clean scroll wheel and reordered another-machine test before swap test.
+- Auto reboot / BSOD: added Swap RAM test and Swap SSD test before tail checks.
+- Power on no display / Beep code: added Swap RAM test before tail checks.
+- Added Monitor level under Display with Display abnormal line and Monitor no power symptoms.
+- FRU P/N is now shown only for External Mouse, External Keyboard, Adapter, Power cord, and Monitor cases.
+- Tail checklist order remains Physical damage / Liquid spilled > Other issue > FRU P/N.
