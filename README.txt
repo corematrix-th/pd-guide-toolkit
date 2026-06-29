@@ -95,3 +95,12 @@ v4.6.6 Checklist / Logic Update
 - Added Monitor level under Display with Display abnormal line and Monitor no power symptoms.
 - FRU P/N is now shown only for External Mouse, External Keyboard, Adapter, Power cord, and Monitor cases.
 - Tail checklist order remains Physical damage / Liquid spilled > Other issue > FRU P/N.
+
+
+v4.6.7 Checklist / Note Format Update
+- Reordered Level 1: Keyboard and Mouse after Port.
+- Generate Note now prefixes checklist and Additional Detail lines with dash (-).
+- Removed Clean / Reseat RAM and photo/video evidence checklist items from checklist display.
+- Added Check temperature / Overheat to Fan symptoms.
+- Updated USB-A and USB-C Data checklist.
+- Product rule: Power Reset / Emergency Reset remains for ThinkPad only; other products show Power Reset.

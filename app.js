@@ -111,8 +111,18 @@ function isFruPnAllowed(){
 }
 
 function normalizeQuestionOrder(list){
+  const product = getProductKey();
   const tail = ["Physical damage / Liquid spilled", "Other issue", "FRU P/N"];
-  let filtered = list.slice();
+  const removeLabels = ["Clean / Reseat RAM", "Video clip provided", "Photo / Video provided", "Photo / Video evidence", "Photo provided"];
+  let filtered = list.slice()
+    .filter(q => !removeLabels.includes(q.label))
+    .filter(q => !(q.label.includes("Video") || q.label.includes("Photo")))
+    .map(q => {
+      if(product !== "thinkpad" && q.label === "Power Reset / Emergency Reset"){
+        return {...q, label:"Power Reset"};
+      }
+      return q;
+    });
   if(!isFruPnAllowed()){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
   }
@@ -438,9 +448,9 @@ function updateRecommendation(){
 
 function formatNoteLine(label, answer){
   if(label === "FRU P/N"){
-    return "FRU P/N - " + String(answer).toUpperCase();
+    return "- FRU P/N - " + String(answer).toUpperCase();
   }
-  return `${label.toLowerCase()} - ${String(answer).toLowerCase()}`;
+  return `- ${label.toLowerCase()} - ${String(answer).toLowerCase()}`;
 }
 
 function generateText(){
@@ -452,7 +462,9 @@ function generateText(){
   });
 
   const extra = getAdditionalDetail();
-  if(extra) lines.push(extra);
+  if(extra){
+    extra.split(/\r?\n/).map(x => x.trim()).filter(Boolean).forEach(x => lines.push(`- ${x}`));
+  }
 
   const rec = calculate();
   lines.push("");
@@ -549,6 +561,10 @@ function customerStepTH(label){
     "High CPU usage checked": "ตรวจสอบว่ามีการใช้งาน CPU สูงผิดปกติหรือไม่",
     "Task Manager checked": "ตรวจสอบ Task Manager เพื่อดูโปรแกรมที่ใช้งานทรัพยากรสูง",
     "Fan area cleaned": "ตรวจสอบและทำความสะอาดบริเวณช่องระบายอากาศ",
+    "Check temperature / Overheat": "ตรวจสอบอุณหภูมิและอาการเครื่องร้อนผิดปกติ",
+    "Key stuck / sunk": "ตรวจสอบว่ามีปุ่มจม ค้าง หรือกดติดอยู่หรือไม่",
+    "Power Reset": "ถอด Adapter ออก กดปุ่ม Power ค้างประมาณ 15–20 วินาที จากนั้นเปิดเครื่องใหม่",
+    "Device Manager shows USB error": "ตรวจสอบใน Device Manager ว่ามี USB error หรือไม่",
     "Video clip provided": "รบกวนแนบคลิปวิดีโอขณะเกิดอาการเพิ่มเติม"
   };
   return map[label] || label;

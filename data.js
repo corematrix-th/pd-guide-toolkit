@@ -118,6 +118,7 @@ const APP_OPTIONS = {
     "Not test"
   ]
 };
+
 const LEVELS = {
   "boot": {
     "name": "Boot",
@@ -254,12 +255,6 @@ const LEVELS = {
             },
             {
               "label": "Power drain",
-              "options": "select",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Clean / Reseat RAM",
               "options": "select",
               "text": false,
               "diag": false
@@ -432,12 +427,6 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Clean / Reseat RAM",
-              "options": "select",
-              "text": false,
-              "diag": false
-            },
-            {
               "label": "Swap RAM test",
               "options": "swap"
             },
@@ -518,12 +507,6 @@ const LEVELS = {
           {
             "label": "External Monitor test",
             "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Clean / Reseat RAM",
-            "options": "select",
             "text": false,
             "diag": false
           },
@@ -1126,12 +1109,6 @@ const LEVELS = {
         "defaultPart": "LCD Panel",
         "common": [
           {
-            "label": "Photo provided",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Pixel location confirmed",
             "options": "yesno",
             "text": true,
@@ -1162,12 +1139,6 @@ const LEVELS = {
         "defaultResult": "Dispatch",
         "defaultPart": "LCD Panel",
         "common": [
-          {
-            "label": "Photo provided",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
           {
             "label": "Pixel location confirmed",
             "options": "yesno",
@@ -1237,11 +1208,6 @@ const LEVELS = {
         "defaultPart": "Monitor",
         "common": [
           {
-            "label": "Photo / Video evidence",
-            "options": "yesno",
-            "text": true
-          },
-          {
             "label": "Swap HDMI/DP cable test",
             "options": "swap"
           },
@@ -1274,11 +1240,6 @@ const LEVELS = {
         "defaultResult": "Dispatch",
         "defaultPart": "Monitor",
         "common": [
-          {
-            "label": "Photo / Video evidence",
-            "options": "yesno",
-            "text": true
-          },
           {
             "label": "Power LED",
             "options": "yesno"
@@ -1505,12 +1466,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Photo provided",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Keyboard / Touchpad affected by swollen battery",
             "options": "impact"
           },
@@ -1649,10 +1604,6 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Device Manager shows USB error",
-            "options": "yesno"
-          },
-          {
             "label": "Power Reset / Emergency Reset",
             "options": "select"
           },
@@ -1681,16 +1632,12 @@ const LEVELS = {
         "defaultPart": "USB-C Port / Mainboard",
         "common": [
           {
-            "label": "Adapter tested on another machine",
-            "options": "select"
-          },
-          {
-            "label": "USB-C device test",
-            "options": "select"
-          },
-          {
             "label": "Swap USB-C port test",
             "options": "select"
+          },
+          {
+            "label": "Device Manager shows USB error",
+            "options": "yesno"
           },
           {
             "label": "Power Reset / Emergency Reset",
@@ -1847,6 +1794,657 @@ const LEVELS = {
             "options": "yesno",
             "text": true,
             "diag": false
+          }
+        ]
+      }
+    }
+  },
+  "keyboard": {
+    "name": "Keyboard",
+    "symptoms": {
+      "few": {
+        "name": "Few key",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Top Cover",
+        "questions": {
+          "thinkpad": [
+            {
+              "label": "Specific keys listed",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "USB keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ],
+          "ideapad": [
+            {
+              "label": "Specific keys listed",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "USB keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ],
+          "desktop": [
+            {
+              "label": "Specific keys listed",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "Swap keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Keyboard test with other machine",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ],
+          "aio": [
+            {
+              "label": "Specific keys listed",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "Swap keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Keyboard test with other machine",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ]
+        }
+      },
+      "all": {
+        "name": "All key",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Mainboard",
+        "questions": {
+          "thinkpad": [
+            {
+              "label": "USB keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "On-Screen Keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Driver / Windows Update",
+              "options": "select",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ],
+          "ideapad": [
+            {
+              "label": "USB keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "On-Screen Keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Driver / Windows Update",
+              "options": "select",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ],
+          "desktop": [
+            {
+              "label": "Swap keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Keyboard test with other machine",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ],
+          "aio": [
+            {
+              "label": "Swap keyboard test",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Keyboard test with other machine",
+              "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Physical damage / Liquid spilled",
+              "options": "yesno",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Other issue",
+              "options": "yesno",
+              "text": true,
+              "diag": false
+            },
+            {
+              "label": "FRU P/N",
+              "options": "detail_only",
+              "text": true
+            }
+          ]
+        }
+      },
+      "auto_type": {
+        "name": "Keyboard auto type",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Top Cover",
+        "common": [
+          {
+            "label": "Specific keys listed",
+            "options": "detail_only",
+            "text": true
+          },
+          {
+            "label": "Key stuck / sunk",
+            "options": "yesno"
+          },
+          {
+            "label": "USB keyboard test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "On-Screen Keyboard test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Driver / Windows Update",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "backlight": {
+        "name": "Backlight",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard",
+        "common": [
+          {
+            "label": "Keyboard backlight hotkey test",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "BIOS Keyboard Backlight setting",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Lenovo Vantage setting",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "fn": {
+        "name": "FN key",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Software Troubleshooting",
+        "common": [
+          {
+            "label": "FN Lock checked",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Hotkey Driver Update",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "BIOS Hotkey mode",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          }
+        ]
+      },
+      "left_ctrl": {
+        "name": "Keyboard Left Ctrl",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Top Cover",
+        "common": [
+          {
+            "label": "Keyboard Online Test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "FN & Ctrl Swap",
+            "options": "disable_enable",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "USB keyboard test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "hotkey": {
+        "name": "Hotkey",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Keyboard / Software Troubleshooting",
+        "common": [
+          {
+            "label": "Lenovo Hotkey Features update",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Windows Update",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Specific hotkey listed",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          }
+        ]
+      }
+    }
+  },
+  "mouse": {
+    "name": "Mouse",
+    "symptoms": {
+      "mouse_not_work": {
+        "name": "Mouse not work",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Mouse Replacement / USB Port",
+        "common": [
+          {
+            "label": "Swap USB port test",
+            "options": "select"
+          },
+          {
+            "label": "Swap mouse test",
+            "options": "select"
+          },
+          {
+            "label": "Mouse test on another machine",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "wireless": {
+        "name": "Wireless mouse not detect",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Wireless Mouse / Receiver",
+        "common": [
+          {
+            "label": "Swap Battery test",
+            "options": "select"
+          },
+          {
+            "label": "Swap mouse test",
+            "options": "select"
+          },
+          {
+            "label": "Swap USB port test",
+            "options": "select"
+          },
+          {
+            "label": "Mouse test on another machine",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "click_l_double": {
+        "name": "Mouse click L double",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Mouse Replacement",
+        "common": [
+          {
+            "label": "Mouse test on another machine",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Swap mouse test",
+            "options": "swap"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
+          }
+        ]
+      },
+      "scroll": {
+        "name": "Scroll mouse not work",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Mouse Replacement",
+        "common": [
+          {
+            "label": "Swap app test",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Mouse test on another machine",
+            "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Clean scroll wheel",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true,
+            "diag": false
+          },
+          {
+            "label": "FRU P/N",
+            "options": "detail_only",
+            "text": true
           }
         ]
       }
@@ -2370,12 +2968,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Video clip provided",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -2707,12 +3299,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Photo / Video provided",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -2806,657 +3392,6 @@ const LEVELS = {
           {
             "label": "Other issue",
             "options": "yesno",
-            "text": true
-          }
-        ]
-      }
-    }
-  },
-  "keyboard": {
-    "name": "Keyboard",
-    "symptoms": {
-      "few": {
-        "name": "Few key",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard / Top Cover",
-        "questions": {
-          "thinkpad": [
-            {
-              "label": "Specific keys listed",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "USB keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ],
-          "ideapad": [
-            {
-              "label": "Specific keys listed",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "USB keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ],
-          "desktop": [
-            {
-              "label": "Specific keys listed",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "Swap keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Keyboard test with other machine",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ],
-          "aio": [
-            {
-              "label": "Specific keys listed",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "Swap keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Keyboard test with other machine",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ]
-        }
-      },
-      "all": {
-        "name": "All key",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard / Mainboard",
-        "questions": {
-          "thinkpad": [
-            {
-              "label": "USB keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "On-Screen Keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Driver / Windows Update",
-              "options": "select",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ],
-          "ideapad": [
-            {
-              "label": "USB keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "On-Screen Keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Driver / Windows Update",
-              "options": "select",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ],
-          "desktop": [
-            {
-              "label": "Swap keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Keyboard test with other machine",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ],
-          "aio": [
-            {
-              "label": "Swap keyboard test",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Keyboard test with other machine",
-              "options": "swap",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Physical damage / Liquid spilled",
-              "options": "yesno",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Other issue",
-              "options": "yesno",
-              "text": true,
-              "diag": false
-            },
-            {
-              "label": "FRU P/N",
-              "options": "detail_only",
-              "text": true
-            }
-          ]
-        }
-      },
-      "auto_type": {
-        "name": "Keyboard auto type",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard / Top Cover",
-        "common": [
-          {
-            "label": "Specific keys listed",
-            "options": "detail_only",
-            "text": true
-          },
-          {
-            "label": "USB keyboard test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "On-Screen Keyboard test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Driver / Windows Update",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Key stuck / sunk",
-            "options": "yesno"
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          }
-        ]
-      },
-      "backlight": {
-        "name": "Backlight",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard",
-        "common": [
-          {
-            "label": "Keyboard backlight hotkey test",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "BIOS Keyboard Backlight setting",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Lenovo Vantage setting",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          }
-        ]
-      },
-      "fn": {
-        "name": "FN key",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard / Software Troubleshooting",
-        "common": [
-          {
-            "label": "FN Lock checked",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Hotkey Driver Update",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "BIOS Hotkey mode",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          }
-        ]
-      },
-      "left_ctrl": {
-        "name": "Keyboard Left Ctrl",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard / Top Cover",
-        "common": [
-          {
-            "label": "Keyboard Online Test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "FN & Ctrl Swap",
-            "options": "disable_enable",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "USB keyboard test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          }
-        ]
-      },
-      "hotkey": {
-        "name": "Hotkey",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Keyboard / Software Troubleshooting",
-        "common": [
-          {
-            "label": "Lenovo Hotkey Features update",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Windows Update",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Specific hotkey listed",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          }
-        ]
-      }
-    }
-  },
-  "mouse": {
-    "name": "Mouse",
-    "symptoms": {
-      "mouse_not_work": {
-        "name": "Mouse not work",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Mouse Replacement / USB Port",
-        "common": [
-          {
-            "label": "Swap USB port test",
-            "options": "select"
-          },
-          {
-            "label": "Swap mouse test",
-            "options": "select"
-          },
-          {
-            "label": "Mouse test on another machine",
-            "options": "select"
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno"
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          }
-        ]
-      },
-      "wireless": {
-        "name": "Wireless mouse not detect",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Wireless Mouse / Receiver",
-        "common": [
-          {
-            "label": "Swap Battery test",
-            "options": "select"
-          },
-          {
-            "label": "Swap mouse test",
-            "options": "select"
-          },
-          {
-            "label": "Swap USB port test",
-            "options": "select"
-          },
-          {
-            "label": "Mouse test on another machine",
-            "options": "select"
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno"
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          }
-        ]
-      },
-      "click_l_double": {
-        "name": "Mouse click L double",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Mouse Replacement",
-        "common": [
-          {
-            "label": "Mouse test on another machine",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Swap mouse test",
-            "options": "swap"
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
-            "text": true
-          }
-        ]
-      },
-      "scroll": {
-        "name": "Scroll mouse not work",
-        "defaultResult": "Dispatch",
-        "defaultPart": "Mouse Replacement",
-        "common": [
-          {
-            "label": "Swap app test",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Mouse test on another machine",
-            "options": "swap",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Clean scroll wheel",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Physical damage / Liquid spilled",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Other issue",
-            "options": "yesno",
-            "text": true,
-            "diag": false
-          },
-          {
-            "label": "FRU P/N",
-            "options": "detail_only",
             "text": true
           }
         ]
@@ -3637,6 +3572,10 @@ const LEVELS = {
         "defaultPart": "Fan / Thermal Module",
         "common": [
           {
+            "label": "Check temperature / Overheat",
+            "options": "yesno"
+          },
+          {
             "label": "Fan spinning",
             "options": "fan"
           },
@@ -3673,6 +3612,10 @@ const LEVELS = {
             "options": "yesno"
           },
           {
+            "label": "Check temperature / Overheat",
+            "options": "yesno"
+          },
+          {
             "label": "Fan area cleaned",
             "options": "select"
           },
@@ -3683,10 +3626,6 @@ const LEVELS = {
           {
             "label": "Load default BIOS",
             "options": "select"
-          },
-          {
-            "label": "Video clip provided",
-            "options": "yesno"
           },
           {
             "label": "Physical damage / Liquid spilled",
@@ -3704,6 +3643,10 @@ const LEVELS = {
         "defaultResult": "Dispatch",
         "defaultPart": "Fan / Thermal / Software Troubleshooting",
         "common": [
+          {
+            "label": "Check temperature / Overheat",
+            "options": "yesno"
+          },
           {
             "label": "High CPU usage checked",
             "options": "select"
@@ -4451,12 +4394,14 @@ const RELATED_GUIDES = {
     "backlight": [],
     "fn": [],
     "hotkey": [],
-    "left_ctrl": []
+    "left_ctrl": [],
+    "auto_type": []
   },
   "mouse": {
     "mouse_not_work": [],
     "wireless": [],
-    "scroll": []
+    "scroll": [],
+    "click_l_double": []
   },
   "touchpad": {
     "cursor": [],
