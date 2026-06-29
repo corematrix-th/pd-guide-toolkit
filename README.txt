@@ -68,23 +68,9 @@ v4.6.3 Update
 - Expanded RESULT / EMAIL and locked its size.
 - Kept Generate / Email buttons visible in the same screen.
 
-
-v4.6.4 Development Baseline
-- Golden baseline from v4.6.3
-- Development strategy changed:
-  * Do not modify core UI/render unless required.
-  * Data-first development.
-  * Small incremental commits.
-- Planned rules:
-  * Easy -> Difficult checklist order.
-  * Physical damage / Liquid spilled before Other issue.
-  * FRU P/N always last.
-  * Product Capability by ThinkPad / IdeaPad / Desktop / AIO.
-
-
-v4.6.4 Patch 3
-- Reordered checklist items using Easy -> Difficult rule.
-- Moved Physical damage / Liquid spilled before Other issue.
-- Moved FRU P/N to the last checklist item.
-- Restored Boot warning for No power when Power LED = Yes.
-- No core UI/render structure changed.
+v4.6.4 Product Capability Update
+- Added Product Capability filter by product type.
+- Desktop: hidden Charging/Battery-related symptoms, Touchpad, Face Recognition, Lock on leave, Keyboard Backlight, FN key, Keyboard Left Ctrl, WWAN, SIM, and Error 0190.
+- AIO: hidden Charging/Battery-related symptoms, Touchpad, Lock on leave, Keyboard Backlight, FN key, Keyboard Left Ctrl, WWAN, SIM, and Error 0190.
+- IdeaPad: hidden TrackPoint, Keyboard Left Ctrl, Lock on leave, WWAN, SIM, Smart Card, and Smart Card Reader.
+- Kept UX, checklist data, conclusion, email, and FRU P/N order unchanged.

@@ -12,6 +12,69 @@ function getSymptomName(){
   return current() ? current().name : selectedSymptom;
 }
 
+
+const PRODUCT_CAPABILITY_EXCLUDE = {
+  desktop: {
+    charging: ["typec", "runtime", "swollen", "slow_charge", "not_detect"],
+    touchpad: ["cursor", "click", "jump", "track"],
+    camera: ["face_recognition", "lock_on_leave"],
+    keyboard: ["backlight", "fn", "left_ctrl"],
+    network: ["wwan", "sim"],
+    error: ["e0190"]
+  },
+  aio: {
+    charging: ["typec", "runtime", "swollen", "slow_charge", "not_detect"],
+    touchpad: ["cursor", "click", "jump", "track"],
+    camera: ["lock_on_leave"],
+    keyboard: ["backlight", "fn", "left_ctrl"],
+    network: ["wwan", "sim"],
+    error: ["e0190"]
+  },
+  ideapad: {
+    touchpad: ["track"],
+    keyboard: ["left_ctrl"],
+    camera: ["lock_on_leave"],
+    network: ["wwan", "sim", "smart_card_reader"],
+    port: ["smart"]
+  }
+};
+
+function getProductKey(){
+  const productEl = el("product");
+  return productEl ? productEl.value : "thinkpad";
+}
+
+function isSymptomAllowed(levelKey, symptomKey){
+  const product = getProductKey();
+  const excluded = PRODUCT_CAPABILITY_EXCLUDE[product] || {};
+  return !(excluded[levelKey] || []).includes(symptomKey);
+}
+
+function getVisibleLevelKeys(){
+  return Object.keys(LEVELS).filter(levelKey => {
+    if(LEVELS[levelKey].manual === true) return true;
+    return getVisibleSymptomKeys(levelKey).length > 0;
+  });
+}
+
+function getVisibleSymptomKeys(levelKey){
+  const level = LEVELS[levelKey];
+  if(!level || !level.symptoms) return [];
+  if(level.manual === true) return Object.keys(level.symptoms);
+  return Object.keys(level.symptoms).filter(symptomKey => isSymptomAllowed(levelKey, symptomKey));
+}
+
+function ensureSelectionAvailable(){
+  const visibleLevels = getVisibleLevelKeys();
+  if(!visibleLevels.includes(selectedLevel)){
+    selectedLevel = visibleLevels[0];
+  }
+  const visibleSymptoms = getVisibleSymptomKeys(selectedLevel);
+  if(!visibleSymptoms.includes(selectedSymptom)){
+    selectedSymptom = visibleSymptoms[0];
+  }
+}
+
 let selectedLevel = "boot";
 let selectedSymptom = "no_power";
 
@@ -54,13 +117,13 @@ function getOptions(code){
 function renderLevel1(){
   const box = el("level1");
   box.innerHTML = "";
-  Object.keys(LEVELS).forEach(key => {
+  getVisibleLevelKeys().forEach(key => {
     const div = document.createElement("div");
     div.className = "item" + (key === selectedLevel ? " active" : "");
     div.textContent = LEVELS[key].name;
     div.onclick = () => {
       selectedLevel = key;
-      selectedSymptom = Object.keys(LEVELS[key].symptoms)[0];
+      selectedSymptom = getVisibleSymptomKeys(key)[0];
       gaTrack("level1_selected", {
         level1: LEVELS[key].name
       });
@@ -77,7 +140,7 @@ function renderLevel1(){
 function renderSymptoms(){
   const box = el("symptom");
   box.innerHTML = "";
-  Object.keys(LEVELS[selectedLevel].symptoms).forEach(key => {
+  getVisibleSymptomKeys(selectedLevel).forEach(key => {
     const div = document.createElement("div");
     div.className = "item" + (key === selectedSymptom ? " active" : "");
     div.textContent = LEVELS[selectedLevel].symptoms[key].name;
@@ -301,21 +364,14 @@ function calculate(){
 function suggestion(){
   const ans = answers();
   const get = label => (ans.find(x => x.q === label) || {}).a;
-  const getAny = labels => {
-    for(const label of labels){
-      const value = get(label);
-      if(value) return value;
-    }
-    return undefined;
-  };
 
   if(selectedLevel === "boot" && selectedSymptom === "no_power"){
-    if(getAny(["Power LED", "LED on power button"]) === "Yes") return "⚠ Suggested PD: Boot > Power on no display (Reason: Power LED = Yes)";
+    if(get("LED on power button") === "Yes") return "⚠ Suggested PD: Boot > Power on no display (Reason: Power LED = Yes)";
     if(get("Novo Button") === "Yes") return "⚠ Device responds to Novo Button. Please check Power Button / Top Cover.";
   }
 
   if(selectedLevel === "boot" && selectedSymptom === "pond"){
-    if(getAny(["Power LED", "LED on power button"]) === "No") return "⚠ Suggested PD: Boot > No power (Reason: Power LED = No)";
+    if(get("LED on power button") === "No") return "⚠ Suggested PD: Boot > No power (Reason: Power LED = No)";
   }
   return "";
 }
@@ -544,8 +600,8 @@ function filterSymptoms(){
   if(!kw){ renderAll(); return; }
   const box = el("symptom");
   box.innerHTML = "";
-  Object.keys(LEVELS).forEach(levelKey => {
-    Object.keys(LEVELS[levelKey].symptoms).forEach(symKey => {
+  getVisibleLevelKeys().forEach(levelKey => {
+    getVisibleSymptomKeys(levelKey).forEach(symKey => {
       const obj = LEVELS[levelKey].symptoms[symKey];
       const hay = `${LEVELS[levelKey].name} ${obj.name}`.toLowerCase();
       if(hay.includes(kw)){
@@ -565,6 +621,7 @@ function filterSymptoms(){
 }
 
 function renderAll(){
+  ensureSelectionAvailable();
   renderLevel1();
   renderSymptoms();
   renderMain();
@@ -574,7 +631,8 @@ document.addEventListener("DOMContentLoaded", () => {
   el("product").addEventListener("change", () => {
     const productText = el("product").options[el("product").selectedIndex].text;
     gaTrack("product_selected", { product: productText });
-    renderMain();
+    ensureSelectionAvailable();
+    renderAll();
   });
   el("search").addEventListener("input", filterSymptoms);
   el("topClearBtn").addEventListener("click", clearAll);
