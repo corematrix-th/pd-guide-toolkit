@@ -1,4 +1,4 @@
-Lenovo PD Guide Toolkit v4.6
+PD Guide Toolkit v4.6
 
 วิธีใช้งาน
 1. แตกไฟล์ ZIP
@@ -113,3 +113,8 @@ Version 4.6.8
 - Added Power Reset / Emergency Reset checklist to Power on no display + Beep code.
 - Added missing Power Reset checklist for Desktop Power on no display.
 - Added Safe Mode to Boot loop Related Guide while keeping basic guides hidden.
+
+
+v4.6.9
+- Header: removed Lenovo logo/brand and updated title to PD Guide Toolkit.
+- Keyboard Specific keys listed: changed to detail-only select field and generates key detail in uppercase.

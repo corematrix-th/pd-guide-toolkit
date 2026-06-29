@@ -498,6 +498,9 @@ function formatNoteLine(label, answer){
   if(label === "FRU P/N"){
     return "- FRU P/N - " + String(answer).toUpperCase();
   }
+  if(label === "Specific keys listed"){
+    return `- ${label.toLowerCase()} - ${String(answer).toUpperCase()}`;
+  }
   return `- ${label.toLowerCase()} - ${String(answer).toLowerCase()}`;
 }
 

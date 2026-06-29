@@ -5,6 +5,9 @@ const APP_OPTIONS = {
     "Work fine",
     "Not test"
   ],
+  "detail_only": [
+    "-- Select --"
+  ],
   "swap": [
     "-- Select --",
     "Same issue",
@@ -1822,7 +1825,7 @@ const LEVELS = {
           "thinkpad": [
             {
               "label": "Specific keys listed",
-              "options": "yesno",
+              "options": "detail_only",
               "text": true,
               "diag": false
             },
@@ -1853,7 +1856,7 @@ const LEVELS = {
           "ideapad": [
             {
               "label": "Specific keys listed",
-              "options": "yesno",
+              "options": "detail_only",
               "text": true,
               "diag": false
             },
@@ -1884,7 +1887,7 @@ const LEVELS = {
           "desktop": [
             {
               "label": "Specific keys listed",
-              "options": "yesno",
+              "options": "detail_only",
               "text": true,
               "diag": false
             },
@@ -1921,7 +1924,7 @@ const LEVELS = {
           "aio": [
             {
               "label": "Specific keys listed",
-              "options": "yesno",
+              "options": "detail_only",
               "text": true,
               "diag": false
             },
