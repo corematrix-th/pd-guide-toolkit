@@ -364,6 +364,49 @@ function answers(){
   });
 }
 
+function answerValue(ans, label){
+  const hit = ans.find(x => x.q === label);
+  return hit ? hit.a : undefined;
+}
+
+function storageEliminationRule(ans){
+  if(selectedLevel !== "storage") return null;
+  let part = null;
+  let swapLabel = null;
+  if(selectedSymptom === "ssd") { part = "SSD"; swapLabel = "Swap SSD test"; }
+  if(selectedSymptom === "hdd") { part = "HDD"; swapLabel = "Swap HDD test"; }
+  if(!part) return null;
+
+  const bios = answerValue(ans, "BIOS detects storage");
+  const swap = answerValue(ans, swapLabel);
+  if(swap === "Same issue") return {result:"Dispatch", part:"Mainboard"};
+  if(swap === "Work fine") return {result:"Dispatch", part:part};
+  if(bios === "No") return {result:"Dispatch", part:part};
+  return null;
+}
+
+function monitorEliminationRule(ans){
+  if(selectedLevel !== "monitor") return null;
+  const cable = answerValue(ans, "Swap HDMI/DP cable test");
+  const monitorOther = answerValue(ans, "Monitor tested on another machine");
+  const swapMonitor = answerValue(ans, "Swap monitor test");
+  const powerCord = answerValue(ans, "Swap power cord test");
+
+  if(selectedSymptom === "abnormal_line"){
+    if(cable === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
+    if(monitorOther === "Same issue") return {result:"Dispatch", part:"Monitor"};
+    if(swapMonitor === "Work fine") return {result:"Dispatch", part:"Monitor"};
+    if(monitorOther === "Work fine" || swapMonitor === "Same issue") return {result:"Dispatch", part:"Mainboard / Graphics Output"};
+  }
+
+  if(selectedSymptom === "no_power"){
+    if(powerCord === "Work fine") return {result:"Dispatch", part:"Power Cord"};
+    if(swapMonitor === "Work fine") return {result:"Dispatch", part:"Monitor"};
+    if(swapMonitor === "Same issue") return {result:"FOP", part:"Power source / Environment"};
+  }
+  return null;
+}
+
 function calculate(){
   const sym = withDisplayQuestions(current());
   const ans = answers();
@@ -377,6 +420,11 @@ function calculate(){
 
   if(sym.defaultResult === "Escalate L2") return {result:"Escalate L2", part:sym.defaultPart || "-"};
   if(sym.defaultResult === "CID") return {result:"CID", part:sym.defaultPart || "-"};
+
+  const storageRule = storageEliminationRule(ans);
+  if(storageRule) return storageRule;
+  const monitorRule = monitorEliminationRule(ans);
+  if(monitorRule) return monitorRule;
 
   for(const r of ans){
     if((r.q.includes("Swap Adapter") || r.q.includes("Adapter test")) && r.a === "Work fine") return {result:"Dispatch", part:"Adapter"};

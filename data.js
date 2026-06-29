@@ -427,6 +427,12 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Power Reset / Emergency Reset",
+              "options": "select",
+              "text": false,
+              "diag": false
+            },
+            {
               "label": "Swap RAM test",
               "options": "swap"
             },
@@ -507,6 +513,12 @@ const LEVELS = {
           {
             "label": "External Monitor test",
             "options": "swap",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Power Reset / Emergency Reset",
+            "options": "select",
             "text": false,
             "diag": false
           },
@@ -4284,6 +4296,7 @@ const RELATED_GUIDES = {
     "pond": [],
     "pond_beep": [],
     "boot_loop": [
+      "safe_mode",
       "reinstall_windows"
     ],
     "stuck_logo": [

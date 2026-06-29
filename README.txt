@@ -104,3 +104,12 @@ v4.6.7 Checklist / Note Format Update
 - Added Check temperature / Overheat to Fan symptoms.
 - Updated USB-A and USB-C Data checklist.
 - Product rule: Power Reset / Emergency Reset remains for ThinkPad only; other products show Power Reset.
+
+Version 4.6.8
+- Updated Storage elimination logic for SSD/HDD not detect.
+- BIOS detects storage = No now dispatches SSD/HDD first.
+- Swap SSD/HDD = Same issue now dispatches Mainboard only.
+- Updated Monitor elimination logic to avoid unnecessary combined parts.
+- Added Power Reset / Emergency Reset checklist to Power on no display + Beep code.
+- Added missing Power Reset checklist for Desktop Power on no display.
+- Added Safe Mode to Boot loop Related Guide while keeping basic guides hidden.
