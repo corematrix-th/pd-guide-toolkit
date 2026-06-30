@@ -139,8 +139,22 @@ function getQuestions(){
   const sym = withDisplayQuestions(current());
   const product = el("product").value;
   let qs = [];
-  if(sym.questions && sym.questions[product]) qs = sym.questions[product];
-  else if(sym.common) qs = sym.common;
+  if(sym.questions && sym.questions[product]) qs = sym.questions[product].slice();
+  else if(sym.common) qs = sym.common.slice();
+
+  // v4.7.0: add easy checks for Keyboard > All key only.
+  if(selectedLevel === "keyboard" && selectedSymptom === "all"){
+    const addFront = [];
+    if(!qs.some(q => q.label === "Caps Lock LED works")){
+      addFront.push({label:"Caps Lock LED works", options:"yesno", text:false, diag:false});
+    }
+    const resetLabel = product === "thinkpad" ? "Power Reset / Emergency Reset" : "Power Reset";
+    if(!qs.some(q => q.label === "Power Reset / Emergency Reset" || q.label === "Power Reset")){
+      addFront.push({label:resetLabel, options:"swap", text:false, diag:false});
+    }
+    qs = addFront.concat(qs);
+  }
+
   return normalizeQuestionOrder(qs);
 }
 
@@ -427,7 +441,18 @@ function calculate(){
   if(monitorRule) return monitorRule;
 
   for(const r of ans){
-    if((r.q.includes("Swap Adapter") || r.q.includes("Adapter test")) && r.a === "Work fine") return {result:"Dispatch", part:"Adapter"};
+    // Cross-test logic: customer part tested on another machine.
+    // Work fine = that part is OK, so do not dispatch it. Same issue = dispatch that part.
+    if(r.q.includes("Adapter works on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Adapter"};
+    if(r.q.includes("Mouse test on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Mouse Replacement"};
+    if(r.q.includes("Keyboard test with other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Keyboard"};
+    if(r.q.includes("Monitor tested on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Monitor"};
+    if(r.q.includes("SD Card test with other machine") && r.a === "Same issue") return {result:"FOP", part:"SD Card"};
+  }
+
+  for(const r of ans){
+    if(r.q.includes("Swap Adapter") && r.a === "Work fine") return {result:"Dispatch", part:"Adapter"};
+    if(r.q.includes("Swap PSU test") && r.a === "Work fine") return {result:"Dispatch", part:"PSU"};
     if((r.q.includes("AC power cord") || r.q.includes("power cable") || r.q.includes("power cord")) && r.a === "Work fine") return {result:"Dispatch", part:"Power Cord"};
     if((r.q.includes("Swap HDMI") || r.q.includes("Swap HDMI/DP")) && r.a === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
     if(r.q.includes("Swap LAN cable") && r.a === "Work fine") return {result:"Dispatch", part:"LAN Cable"};
@@ -435,10 +460,9 @@ function calculate(){
     if(r.q.includes("Swap USB port") && r.a === "Work fine") return {result:"Dispatch", part:"USB Port"};
     if(r.q.includes("External Monitor") && r.a === "Work fine") return {result:"Dispatch", part:"LCD Panel"};
     if(r.q.includes("External Monitor") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("Monitor tested on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Monitor"};
     if(r.q.includes("Monitor tested on another machine") && r.a === "Work fine") return {result:"Dispatch", part:"PC / Graphics Output"};
     if(r.q.includes("Swap monitor test") && r.a === "Work fine") return {result:"Dispatch", part:"Monitor"};
-    if((r.q.includes("USB keyboard") || r.q.includes("Swap keyboard") || r.q.includes("Keyboard test with other machine") || r.q.includes("On-Screen Keyboard")) && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
+    if((r.q.includes("USB keyboard") || r.q.includes("Swap keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
     if(r.q.includes("USB keyboard") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
     if(r.q.includes("Swap SSD / HDD test") && r.a === "Work fine") return {result:"Dispatch", part:"SSD / HDD"};
     if(r.q.includes("Swap SSD test") && r.a === "Work fine") return {result:"Dispatch", part:"SSD"};
@@ -446,7 +470,7 @@ function calculate(){
     if(r.q.includes("Swap RAM test") && r.a === "Work fine") return {result:"Dispatch", part:"RAM"};
     if(r.q.includes("Swap Smart Card test") && r.a === "Work fine") return {result:"Dispatch", part:"Smart Card Reader"};
     if(r.q.includes("Swap SIM test") && r.a === "Work fine") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
-    if((r.q.includes("Swap mouse") || r.q.includes("Mouse test on another machine")) && r.a === "Work fine") return {result:"Dispatch", part:"Mouse Replacement"};
+    if(r.q.includes("Swap mouse") && r.a === "Work fine") return {result:"Dispatch", part:"Mouse Replacement"};
     if((r.q.includes("External mouse test") || r.q.includes("External mouse works")) && (r.a === "Work fine" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
     if((r.q.includes("Headphone test") || r.q.includes("Swap headphone")) && r.a === "Work fine") return {result:"Dispatch", part:"Speaker"};
     if(r.q.includes("External mic test") && r.a === "Work fine") return {result:"Dispatch", part:"Microphone"};
@@ -506,7 +530,7 @@ function formatNoteLine(label, answer){
 
 function generateText(){
   if(isManual()) return current().guide;
-  const lines = [current().name, ""];
+  const lines = [current().name];
 
   answers().forEach(r => {
     if(r.a && r.a !== "-- Select --") lines.push(formatNoteLine(r.q, r.a));
@@ -534,27 +558,46 @@ function guideFromChecklist(){
 
 function customerStepTH(label){
   const map = {
+    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Battery Report collected": "รบกวนสร้าง Battery Report โดยเปิด Command Prompt (CMD) พิมพ์คำสั่ง powercfg /batteryreport แล้วกด Enter จากนั้นส่งไฟล์ battery-report.html กลับมาให้ทางเราครับ",
+    "Dump File collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
+    "Dump file collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
+    "Minidump collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
+    "Power Reset / Emergency Reset": "รบกวนทำ Power Reset / Emergency Reset เพื่อเคลียร์ไฟของตัวเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
+    "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
+    "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
+    "Adapter works on another machine": "รบกวนนำ Adapter ของเครื่องไปทดลองใช้งานกับเครื่อง Lenovo รุ่นที่รองรับอีกเครื่องหนึ่ง แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Swap Adapter test": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap PSU test": "หากสะดวก รบกวนสลับ PSU ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap SSD test": "หากสะดวกและมี SSD ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap HDD test": "หากสะดวกและมี HDD ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap RAM test": "หากสะดวกและมี RAM ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Caps Lock LED works": "ตรวจสอบว่าไฟ Caps Lock ตอบสนองหรือไม่",
+
     "LED on power button": "ตรวจสอบว่าไฟแสดงสถานะบริเวณปุ่ม Power ติดหรือไม่",
     "LED beside Type-C port": "ตรวจสอบว่าไฟแสดงสถานะบริเวณช่องชาร์จ Type-C ติดหรือไม่",
     "LED beside charging port": "ตรวจสอบว่าไฟแสดงสถานะบริเวณช่องชาร์จติดหรือไม่",
     "Power LED": "ตรวจสอบว่าไฟแสดงสถานะของตัวเครื่องติดหรือไม่",
     "Fan spinning": "ตรวจสอบว่าพัดลมหมุนหรือไม่",
-    "Swap Adapter test": "ทดสอบสลับ Adapter",
-    "Swap other Type-C port test": "ทดสอบสลับพอร์ตชาร์จ Type-C",
-    "Adapter test with another machine": "นำ Adapter ไปทดสอบกับเครื่องอื่น",
-    "Adapter test with other machine": "นำ Adapter ไปทดสอบกับเครื่องอื่น",
-    "Emergency Reset Hole": "ทดสอบ Emergency Reset โดยใช้คลิปหนีบกระดาษ (Paper Clip) กดรู Emergency Reset ค้างประมาณ 5–10 วินาที แล้วเปิดเครื่องใหม่",
-    "Power Reset": "ถอด Adapter ออก กดปุ่ม Power ค้างประมาณ 15–20 วินาที จากนั้นเปิดเครื่องใหม่",
+    "Swap Adapter test": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap other Type-C port test": "ทดสอบชาร์จกับพอร์ต Type-C ช่องอื่นของเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Adapter test with another machine": "นำ Adapter ไปทดสอบกับเครื่องอื่นที่รองรับ แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Adapter test with other machine": "นำ Adapter ไปทดสอบกับเครื่องอื่นที่รองรับ แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
+    "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Novo Button": "ทดสอบกดปุ่ม Novo Button เพื่อตรวจสอบว่าเครื่องตอบสนองหรือไม่",
     "External Monitor test": "ทดสอบต่อใช้งานกับจอภายนอก (External Monitor)",
     "Clean / Reseat RAM": "ทดสอบถอดทำความสะอาดและใส่ RAM ใหม่",
     "Beep code / pattern": "ตรวจสอบจำนวนเสียง Beep หรือรูปแบบเสียง Beep ที่เกิดขึ้น",
     "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
-    "Can boot into Safe Mode": "ตรวจสอบว่าสามารถเข้า Safe Mode ได้หรือไม่",
+    "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Windows Startup Repair": "ทดสอบ Startup Repair ของ Windows",
-    "Lenovo Diagnostics": "ทดสอบ Lenovo Diagnostics และแจ้งผล Pass หรือ Failed",
-    "Lenovo Diagnostics Storage": "ทดสอบ Lenovo Diagnostics ในส่วน Storage และแจ้งผล Pass หรือ Failed",
-    "Lenovo Diagnostics Battery": "ทดสอบ Lenovo Diagnostics ในส่วน Battery และแจ้งผล Pass หรือ Failed",
+    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
     "Re-install Windows": "ทดสอบติดตั้ง Windows ใหม่",
     "Windows Update": "ทดสอบอัปเดต Windows เป็นเวอร์ชันล่าสุด",
     "BIOS Update": "ทดสอบอัปเดต BIOS เป็นเวอร์ชันล่าสุด",
@@ -591,12 +634,12 @@ function customerStepTH(label){
     "Bluetooth Driver Update": "ทดสอบอัปเดต Driver Bluetooth",
     "Swap Type-C port charge": "ทดสอบสลับพอร์ตชาร์จ Type-C",
     "LED beside port": "ตรวจสอบไฟแสดงสถานะบริเวณพอร์ตชาร์จ",
-    "Battery Report collected": "รบกวนดึง Battery Report เพื่อตรวจสอบเพิ่มเติม",
+    "Battery Report collected": "รบกวนสร้าง Battery Report โดยเปิด Command Prompt (CMD) พิมพ์คำสั่ง powercfg /batteryreport แล้วกด Enter จากนั้นส่งไฟล์ battery-report.html กลับมาให้ทางเราครับ",
     "Battery Health in Lenovo Vantage": "ตรวจสอบ Battery Health ผ่าน Lenovo Vantage",
     "Battery swollen confirmed": "ตรวจสอบว่า Battery มีอาการบวมหรือไม่",
     "Photo provided": "รบกวนแนบรูปถ่ายเพิ่มเติมเพื่อตรวจสอบ",
     "Stop using device advised": "หาก Battery บวม รบกวนหยุดใช้งานเครื่องชั่วคราวเพื่อความปลอดภัย",
-    "Power Reset / Emergency Reset": "ทดสอบ Power Reset / Emergency Reset เพื่อเคลียร์ไฟของตัวเครื่อง",
+    "Power Reset / Emergency Reset": "รบกวนทำ Power Reset / Emergency Reset เพื่อเคลียร์ไฟของตัวเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Disable UEFI IPv4 / IPv6": "ปิด UEFI IPv4 / IPv6 ใน BIOS เพื่อป้องกันเครื่อง Boot ผ่าน Network",
     "Storage Firmware Update": "ทดสอบติดตั้ง Storage Firmware เป็นเวอร์ชันล่าสุด",
     "Intel RST / Storage Driver loaded": "โหลด Intel RST / Storage Driver ระหว่างติดตั้ง Windows",
@@ -614,8 +657,122 @@ function customerStepTH(label){
     "Fan area cleaned": "ตรวจสอบและทำความสะอาดบริเวณช่องระบายอากาศ",
     "Check temperature / Overheat": "ตรวจสอบอุณหภูมิและอาการเครื่องร้อนผิดปกติ",
     "Key stuck / sunk": "ตรวจสอบว่ามีปุ่มจม ค้าง หรือกดติดอยู่หรือไม่",
-    "Power Reset": "ถอด Adapter ออก กดปุ่ม Power ค้างประมาณ 15–20 วินาที จากนั้นเปิดเครื่องใหม่",
-    "Device Manager shows USB error": "ตรวจสอบใน Device Manager ว่ามี USB error หรือไม่",
+    "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
+    "Device Manager shows USB error": "ตรวจสอบใน Device Manager ว่ามี USB error หรือเครื่องหมายแจ้งเตือนที่เกี่ยวข้องกับ USB หรือไม่",
+    "Swap USB port test": "รบกวนสลับทดสอบกับพอร์ต USB ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap USB device test": "รบกวนสลับใช้งานกับอุปกรณ์ USB ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap USB-C port test": "รบกวนสลับทดสอบกับพอร์ต USB-C ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap Smart Card test": "รบกวนสลับทดสอบด้วย Smart Card ใบอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Device Manager shows Smart Card Reader": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Smart Card Reader หรือไม่",
+    "Swap mouse test": "รบกวนสลับทดสอบด้วย Mouse ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Mouse test on another machine": "รบกวนนำ Mouse ตัวเดิมไปทดสอบกับเครื่องอื่น แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Swap Battery test": "รบกวนสลับ Battery ก้อนใหม่หรือ Battery ที่ใช้งานได้กับ Mouse แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+
+    "Can access Windows": "ตรวจสอบว่าสามารถเข้าสู่ Windows ได้หรือไม่",
+    "BIOS detects storage": "ตรวจสอบว่า BIOS สามารถตรวจพบ SSD/HDD ได้หรือไม่",
+    "BIOS detects HDD": "ตรวจสอบว่า BIOS สามารถตรวจพบ HDD ได้หรือไม่",
+    "Charge LED": "ตรวจสอบว่าไฟแสดงสถานะการชาร์จติดหรือไม่",
+    "Adapter test": "ทดสอบใช้งานกับ Adapter ตัวอื่นที่ใช้งานได้",
+    "Adapter works with another cord": "ทดสอบ Adapter ร่วมกับสายไฟอีกเส้นที่ใช้งานได้",
+    "Another Router test": "ทดสอบเชื่อมต่อกับ Router ตัวอื่นหรือเครือข่ายอื่น",
+    "Auto reboot occurs": "ตรวจสอบว่าเครื่องมีอาการ Restart เองหรือไม่",
+    "BIOS Fingerprint enabled": "ตรวจสอบว่า Fingerprint ถูก Enable ใน BIOS หรือไม่",
+    "BIOS Hotkey mode": "ตรวจสอบการตั้งค่า Hotkey Mode ใน BIOS",
+    "BIOS Keyboard Backlight setting": "ตรวจสอบการตั้งค่า Keyboard Backlight ใน BIOS",
+    "BIOS Touchpad enabled": "ตรวจสอบว่า Touchpad ถูก Enable ใน BIOS หรือไม่",
+    "BIOS default loaded": "โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง",
+    "BSOD occurs": "ตรวจสอบว่าเครื่องมีอาการจอฟ้า (BSOD) หรือไม่",
+    "Battery Conservation Mode": "ตรวจสอบว่าเปิด Battery Conservation Mode อยู่หรือไม่",
+    "Battery charge level checked": "ตรวจสอบระดับ Battery ว่าสามารถชาร์จเพิ่มขึ้นได้หรือไม่",
+    "Battery percentage": "ตรวจสอบเปอร์เซ็นต์ Battery ที่แสดงบน Windows",
+    "Bluetooth toggle available": "ตรวจสอบว่ามีปุ่มเปิด/ปิด Bluetooth ใน Windows หรือไม่",
+    "Boot order checked": "ตรวจสอบลำดับ Boot ใน BIOS ว่าถูกต้องหรือไม่",
+    "CMOS battery / RTC check": "ตรวจสอบ CMOS Battery / RTC ว่าทำงานปกติหรือไม่",
+    "Can login with another account": "ทดสอบ Login ด้วยบัญชีผู้ใช้อื่น",
+    "Check BIOS": "เข้า BIOS เพื่อตรวจสอบการตั้งค่าที่เกี่ยวข้อง",
+    "Check LAN pin / damage": "ตรวจสอบขา LAN และร่องรอยชำรุดบริเวณพอร์ต LAN",
+    "Check Task Manager usage": "ตรวจสอบการใช้งาน CPU / RAM / Disk ใน Task Manager",
+    "Check storage free space": "ตรวจสอบพื้นที่ว่างของ SSD/HDD ว่ายังเพียงพอหรือไม่",
+    "Clean scroll wheel": "ทำความสะอาดบริเวณ Scroll Wheel แล้วทดสอบอีกครั้ง",
+    "Clean touchpad surface": "ทำความสะอาดพื้นผิว Touchpad แล้วทดสอบอีกครั้ง",
+    "ClickPad enabled": "ตรวจสอบว่า ClickPad ถูก Enable อยู่หรือไม่",
+    "Customer knows password": "ตรวจสอบว่าลูกค้าทราบรหัสผ่านที่ใช้งานอยู่หรือไม่",
+    "Device Manager shows Bluetooth": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Bluetooth หรือไม่",
+    "Device Manager shows card reader": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Card Reader หรือไม่",
+    "Disable Touchpad test": "ทดสอบปิด Touchpad แล้วตรวจสอบว่าอาการยังเกิดขึ้นหรือไม่",
+    "Driver / Firmware Update": "ทดสอบอัปเดต Driver และ Firmware ที่เกี่ยวข้องเป็นเวอร์ชันล่าสุด",
+    "Enable LAN in BIOS": "ตรวจสอบว่า LAN ถูก Enable ใน BIOS หรือไม่",
+    "Error photo provided": "รบกวนแนบรูป Error ที่พบเพิ่มเติม",
+    "Event Viewer / Dump file collected": "รบกวนเก็บข้อมูล Event Viewer หรือ Dump file เพิ่มเติมเพื่อตรวจสอบ",
+    "External mic test": "ทดสอบใช้งานร่วมกับ Microphone ภายนอก",
+    "External mouse test": "ทดสอบใช้งานร่วมกับ Mouse ภายนอก",
+    "External mouse works": "ตรวจสอบว่า Mouse ภายนอกสามารถใช้งานได้ปกติหรือไม่",
+    "FN & Ctrl Swap": "ตรวจสอบการตั้งค่า FN & Ctrl Swap ใน BIOS หรือ Lenovo Vantage",
+    "FN Lock checked": "ตรวจสอบสถานะ FN Lock ว่าเปิดหรือปิดอยู่",
+    "Freeze occurs": "ตรวจสอบว่าเครื่องมีอาการค้างหรือไม่",
+    "Graphics Driver Update": "ทดสอบอัปเดต Driver การ์ดจอเป็นเวอร์ชันล่าสุด",
+    "Hotkey Driver Update": "ทดสอบอัปเดต Hotkey Driver เป็นเวอร์ชันล่าสุด",
+    "Issue occurs all apps": "ตรวจสอบว่าอาการเกิดขึ้นกับทุกโปรแกรมหรือไม่",
+    "Keyboard / Touchpad affected by swollen battery": "ตรวจสอบว่า Keyboard / Touchpad ได้รับผลกระทบจาก Battery บวมหรือไม่",
+    "Keyboard Online Test": "ทดสอบ Keyboard ผ่าน Online Keyboard Test",
+    "Keyboard backlight hotkey test": "ทดสอบปุ่มลัดสำหรับเปิด/ปิดไฟ Keyboard Backlight",
+    "Keyboard test with other machine": "นำ Keyboard ไปทดสอบกับเครื่องอื่น",
+    "LAN Driver Update": "ทดสอบอัปเดต Driver LAN เป็นเวอร์ชันล่าสุด",
+    "Lenovo Hotkey Features update": "ทดสอบอัปเดต Lenovo Hotkey Features เป็นเวอร์ชันล่าสุด",
+    "Lenovo Vantage Update": "ทดสอบอัปเดต Lenovo Vantage เป็นเวอร์ชันล่าสุด",
+    "Lenovo Vantage setting": "ตรวจสอบการตั้งค่าที่เกี่ยวข้องใน Lenovo Vantage",
+    "Load BIOS default": "โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง",
+    "Load default BIOS": "โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง",
+    "Microphone enhancement disabled": "ทดสอบปิด Microphone Enhancement แล้วทดสอบอีกครั้ง",
+    "Monitor tested on another machine": "นำ Monitor ไปทดสอบกับเครื่องอื่น",
+    "Network boot disabled": "ตรวจสอบว่าได้ปิด Network Boot แล้วหรือไม่",
+    "Noise occurs all apps": "ตรวจสอบว่าเสียงผิดปกติเกิดขึ้นกับทุกโปรแกรมหรือไม่",
+    "Noise occurs all the time": "ตรวจสอบว่าเสียงผิดปกติเกิดขึ้นตลอดเวลาหรือไม่",
+    "Original Adapter used": "ตรวจสอบว่าใช้งาน Adapter เดิมของเครื่องหรือ Adapter ที่รองรับรุ่นนี้",
+    "Password / PIN reset": "ทดสอบ Reset Password / PIN ของ Windows",
+    "Pixel location confirmed": "ตรวจสอบตำแหน่ง Pixel ที่ผิดปกติบนหน้าจอ",
+    "Power drain": "ทำ Power Drain เพื่อเคลียร์ไฟค้างในตัวเครื่อง",
+    "Proof of ownership checked": "ตรวจสอบหลักฐานความเป็นเจ้าของเครื่องตามขั้นตอน",
+    "RTC battery / CMOS check": "ตรวจสอบ RTC Battery / CMOS ว่าทำงานปกติหรือไม่",
+    "SD Card test with other machine": "นำ SD Card ไปทดสอบกับเครื่องอื่น",
+    "SIM card detected": "ตรวจสอบว่าเครื่องสามารถตรวจพบ SIM Card หรือไม่",
+    "SIM detected": "ตรวจสอบว่าเครื่องสามารถตรวจพบ SIM หรือไม่",
+    "SIM tray damage": "ตรวจสอบถาด SIM ว่ามีร่องรอยชำรุดหรือไม่",
+    "Safe Mode test": "ทดสอบใช้งานใน Safe Mode",
+    "Secure Boot disabled": "ทดสอบปิด Secure Boot แล้วตรวจสอบอีกครั้ง",
+    "Set date and time in BIOS": "ตั้งค่าวันที่และเวลาใน BIOS ให้ถูกต้อง",
+    "Specific hotkey listed": "ระบุปุ่ม Hotkey ที่มีปัญหาเพิ่มเติม",
+    "Stop code / Error code collected": "รบกวนแจ้ง Stop Code หรือ Error Code ที่พบเพิ่มเติม",
+    "Swap AC power cord test": "ทดสอบสลับสาย AC Power Cord เส้นอื่นที่ใช้งานได้",
+    "Swap Adapter / Power cable test": "ทดสอบสลับ Adapter หรือสาย Power Cable ที่ใช้งานได้",
+    "Swap Bluetooth device test": "ทดสอบเชื่อมต่อกับอุปกรณ์ Bluetooth ตัวอื่นที่ใช้งานได้",
+    "Swap HDMI cable test": "ทดสอบสลับสาย HDMI เส้นอื่นที่ใช้งานได้",
+    "Swap HDMI/DP cable test": "ทดสอบสลับสาย HDMI/DP เส้นอื่นที่ใช้งานได้",
+    "Swap LAN cable test": "ทดสอบสลับสาย LAN เส้นอื่นที่ใช้งานได้",
+    "Swap SD Card test": "ทดสอบสลับ SD Card ใบอื่นที่ใช้งานได้",
+    "Swap SIM test": "ทดสอบสลับ SIM Card ใบอื่นที่ใช้งานได้",
+    "Swap SSD / HDD test": "หากสะดวก รบกวนสลับ SSD/HDD ที่ใช้งานได้มาทดสอบ",
+    "Swap Wi-Fi / Hotspot test": "ทดสอบเชื่อมต่อ Wi-Fi อื่น หรือ Hotspot จากโทรศัพท์มือถือ",
+    "Swap app test": "ทดสอบใช้งานผ่านโปรแกรมอื่นที่รองรับ",
+    "Swap headphone test": "ทดสอบใช้งานร่วมกับหูฟังตัวอื่นที่ใช้งานได้",
+    "Swap keyboard test": "ทดสอบสลับ Keyboard ตัวอื่นที่ใช้งานได้",
+    "Swap monitor test": "ทดสอบสลับ Monitor ตัวอื่นที่ใช้งานได้",
+    "Swap power cable test": "ทดสอบสลับสาย Power Cable เส้นอื่นที่ใช้งานได้",
+    "Swap power cord test": "ทดสอบสลับสาย Power Cord เส้นอื่นที่ใช้งานได้",
+    "Swap power outlet test": "ทดสอบเสียบใช้งานกับปลั๊กไฟช่องอื่น",
+    "System Restore": "ทดสอบทำ System Restore ย้อนกลับไปก่อนเกิดอาการ",
+    "Touchpad enabled in Settings": "ตรวจสอบว่า Touchpad ถูกเปิดใช้งานใน Settings ของ Windows หรือไม่",
+    "TrackPoint enabled in BIOS": "ตรวจสอบว่า TrackPoint ถูก Enable ใน BIOS หรือไม่",
+    "USB mouse / keyboard test": "ทดสอบใช้งานร่วมกับ USB Mouse หรือ USB Keyboard ภายนอก",
+    "USB to LAN Adapter test": "ทดสอบใช้งานร่วมกับ USB to LAN Adapter",
+    "Uninstall Audio Driver and Restart": "ทดสอบถอนติดตั้ง Audio Driver และ Restart เครื่อง",
+    "Uninstall Bluetooth Driver and Restart": "ทดสอบถอนติดตั้ง Bluetooth Driver และ Restart เครื่อง",
+    "Volume Mixer checked": "ตรวจสอบ Volume Mixer ว่าระดับเสียงถูกต้องหรือไม่",
+    "Volume level checked": "ตรวจสอบระดับเสียงของเครื่องว่าไม่ได้ถูกลดไว้ต่ำเกินไป",
+    "WLAN / WWAN card changed before issue": "ตรวจสอบว่ามีการเปลี่ยน WLAN / WWAN Card ก่อนเกิดอาการหรือไม่",
+    "WWAN Driver Update": "ทดสอบอัปเดต Driver WWAN เป็นเวอร์ชันล่าสุด",
+    "WWAN device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ WWAN หรือไม่",
+    "Windows Installation": "ทดสอบติดตั้ง Windows ใหม่",
     "Video clip provided": "รบกวนแนบคลิปวิดีโอขณะเกิดอาการเพิ่มเติม"
   };
   return map[label] || label;
@@ -623,13 +780,40 @@ function customerStepTH(label){
 
 function customerStepEN(label){
   const map = {
+    "Lenovo Diagnostics": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Storage": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Battery": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Battery Report collected": "Please generate a Battery Report by opening Command Prompt (CMD), running the command powercfg /batteryreport, and then send us the generated battery-report.html file.",
+    "Dump File collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
+    "Dump file collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
+    "Minidump collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
+    "Emergency Reset Hole": "Please perform an Emergency Reset by inserting a pin or paper clip into the Emergency Reset hole on the bottom of the system, press and hold for approximately 10 seconds, then power the system on again.",
+    "Power Reset / Emergency Reset": "Please perform Power Reset / Emergency Reset to clear residual power, then let us know whether the issue remains or works fine.",
+    "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
+    "Can boot into Safe Mode": "Please boot the system into Safe Mode and let us know whether the issue still occurs.",
+    "Adapter works on another machine": "Please test the Adapter with another compatible Lenovo machine and let us know whether it works fine.",
+    "Swap Adapter test": "Please test the system with another working Adapter and let us know whether the issue remains or works fine.",
+    "Swap PSU test": "Please test the system with another working PSU and let us know whether the issue remains or works fine.",
+    "Swap SSD test": "If a known-good SSD is available, please swap it for testing and let us know whether the issue remains or works fine.",
+    "Swap HDD test": "If a known-good HDD is available, please swap it for testing and let us know whether the issue remains or works fine.",
+    "Swap RAM test": "If known-good RAM is available, please swap it for testing and let us know whether the issue remains or works fine.",
+    "Caps Lock LED works": "Check whether the Caps Lock LED responds.",
+    "Swap USB port test": "Please test with another USB port on the machine and let us know whether the issue remains or works fine.",
+    "Swap USB device test": "Please test with another known-good USB device and let us know whether the issue remains or works fine.",
+    "Swap USB-C port test": "Please test with another USB-C port on the machine and let us know whether the issue remains or works fine.",
+    "Swap Smart Card test": "Please test with another known-good Smart Card and let us know whether the issue remains or works fine.",
+    "Device Manager shows Smart Card Reader": "Please check Device Manager and confirm whether the Smart Card Reader is detected.",
+    "Swap mouse test": "Please test with another known-good mouse and let us know whether the issue remains or works fine.",
+    "Mouse test on another machine": "Please test the same mouse on another machine and let us know whether it works fine.",
+    "Swap Battery test": "Please replace the mouse battery with a new or known-good battery and let us know whether the issue remains or works fine.",
+
     "LED on power button": "Check whether the LED on the power button is on.",
     "LED beside Type-C port": "Check whether the LED beside the Type-C charging port is on.",
-    "Swap Adapter test": "Test with another working Adapter.",
+    "Swap Adapter test": "Please test the system with another working Adapter and let us know whether the issue remains or works fine.",
     "Swap other Type-C port test": "Test with another Type-C charging port.",
     "Adapter test with another machine": "Test the Adapter with another machine.",
-    "Emergency Reset Hole": "Perform Emergency Reset using a paper clip for about 5–10 seconds.",
-    "Power Reset": "Disconnect the Adapter, press and hold the Power button for about 15–20 seconds, then power on again.",
+    "Emergency Reset Hole": "Please perform an Emergency Reset by inserting a pin or paper clip into the Emergency Reset hole on the bottom of the system, press and hold for approximately 10 seconds, then power the system on again.",
+    "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
     "External Monitor test": "Test with an external monitor.",
     "Camera Shutter": "Check whether the Camera Shutter is closed.",
     "Device Manager shows Camera": "Check if the Camera device appears in Device Manager.",
@@ -737,7 +921,11 @@ document.addEventListener("DOMContentLoaded", () => {
   el("product").addEventListener("change", () => {
     const productText = el("product").options[el("product").selectedIndex].text;
     gaTrack("product_selected", { product: productText });
+    // v4.7.0: force clean state and re-render to prevent missing Level 1 / Symptom items.
+    if(el("search")) el("search").value = "";
     ensureSelectionAvailable();
+    const visibleSymptoms = getVisibleSymptomKeys(selectedLevel);
+    if(visibleSymptoms.length) selectedSymptom = visibleSymptoms[0];
     renderAll();
   });
   el("search").addEventListener("input", filterSymptoms);

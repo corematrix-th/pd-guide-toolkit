@@ -157,7 +157,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Adapter tested on another machine",
+              "label": "Adapter works on another machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -201,7 +201,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Adapter tested on another machine",
+              "label": "Adapter works on another machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -259,6 +259,12 @@ const LEVELS = {
             {
               "label": "Power drain",
               "options": "select",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Swap PSU test",
+              "options": "swap",
               "text": false,
               "diag": false
             },
@@ -1306,7 +1312,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Adapter tested on another machine",
+            "label": "Adapter works on another machine",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1395,7 +1401,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Adapter tested on another machine",
+            "label": "Adapter works on another machine",
             "options": "swap",
             "text": false,
             "diag": false

@@ -1,8 +1,16 @@
-PD Guide Toolkit v4.6
+PD Guide Toolkit v4.7.3
+
+
+v4.7.3 Quality Fix
+- Restored Troubleshooting Checklist labels to English only.
+- Fixed v4.7.2 issue where some checklist labels were translated into Thai on the main UI.
+- Email TH translation is now handled through customerStepTH mapping only.
+- Added Thai Email mapping coverage for all checklist labels found in data.js.
+- Verified no Thai labels remain in data.js checklist labels.
 
 วิธีใช้งาน
 1. แตกไฟล์ ZIP
-2. เปิดโฟลเดอร์ Lenovo_PD_Guide_Toolkit_v4_6
+2. เปิดโฟลเดอร์ PD_Guide_Toolkit_v4_7_3
 3. ดับเบิลคลิก index.html
 
 v4.6 Update
@@ -118,3 +126,13 @@ Version 4.6.8
 v4.6.9
 - Header: removed Lenovo logo/brand and updated title to PD Guide Toolkit.
 - Keyboard Specific keys listed: changed to detail-only select field and generates key detail in uppercase.
+
+v4.7.0
+- Fixed Product Change refresh state to reduce missing Level 1 / Symptom items after switching Product.
+- Updated cross-test logic for Adapter / Mouse / Keyboard / Monitor to distinguish customer part tested on another machine from swap test.
+- Renamed Adapter tested on another machine to Adapter works on another machine.
+- Added Swap PSU test for Desktop > No power and dispatch logic for PSU.
+- Added Caps Lock LED works and Power Reset / Emergency Reset to Keyboard > All key.
+- Updated Generate Note format: symptom is directly followed by checklist lines; Conclusion spacing remains separated.
+- Improved Email TH / Email EN instruction wording for Diagnostics, Battery Report, Minidump, Power Reset, Emergency Reset and common swap tests.
+- Updated version label to 4.7.0.
