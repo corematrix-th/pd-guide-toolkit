@@ -94,7 +94,8 @@ const APP_OPTIONS = {
     "RAM High",
     "Disk High",
     "GPU High",
-    "Normal"
+    "Normal",
+    "Not Tested"
   ],
   "freeze_occurs": [
     "-- Select --",
@@ -137,6 +138,12 @@ const APP_OPTIONS = {
     "-- Select --",
     "Balanced",
     "High Performance",
+    "Not Tested"
+  ],
+  "yesno_test": [
+    "-- Select --",
+    "Yes",
+    "No",
     "Not Tested"
   ]
 };
@@ -337,7 +344,7 @@ const LEVELS = {
       "pond": {
         "name": "Power on no display",
         "defaultResult": "Dispatch",
-        "defaultPart": "Mainboard / LCD Panel",
+        "defaultPart": "Mainboard",
         "questions": {
           "thinkpad": [
             {
@@ -353,8 +360,20 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Caps Lock Toggle",
+              "options": "yesno_test",
+              "text": false,
+              "diag": false
+            },
+            {
               "label": "External Monitor test",
               "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Display Backlight",
+              "options": "yesno_test",
               "text": false,
               "diag": false
             },
@@ -363,10 +382,6 @@ const LEVELS = {
               "options": "select",
               "text": false,
               "diag": false
-            },
-            {
-              "label": "Swap RAM",
-              "options": "swap"
             },
             {
               "label": "Physical damage / Liquid spilled",
@@ -395,8 +410,20 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Caps Lock Toggle",
+              "options": "yesno_test",
+              "text": false,
+              "diag": false
+            },
+            {
               "label": "External Monitor test",
               "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Display Backlight",
+              "options": "yesno_test",
               "text": false,
               "diag": false
             },
@@ -405,10 +432,6 @@ const LEVELS = {
               "options": "select",
               "text": false,
               "diag": false
-            },
-            {
-              "label": "Swap RAM",
-              "options": "swap"
             },
             {
               "label": "Physical damage / Liquid spilled",
@@ -437,6 +460,12 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Caps Lock Toggle",
+              "options": "yesno_test",
+              "text": false,
+              "diag": false
+            },
+            {
               "label": "Swap Monitor",
               "options": "swap",
               "text": false,
@@ -453,10 +482,6 @@ const LEVELS = {
               "options": "select",
               "text": false,
               "diag": false
-            },
-            {
-              "label": "Swap RAM",
-              "options": "swap"
             },
             {
               "label": "Physical damage / Liquid spilled",
@@ -485,8 +510,20 @@ const LEVELS = {
               "diag": false
             },
             {
+              "label": "Caps Lock Toggle",
+              "options": "yesno_test",
+              "text": false,
+              "diag": false
+            },
+            {
               "label": "External Monitor test",
               "options": "swap",
+              "text": false,
+              "diag": false
+            },
+            {
+              "label": "Display Backlight",
+              "options": "yesno_test",
               "text": false,
               "diag": false
             },
@@ -495,10 +532,6 @@ const LEVELS = {
               "options": "select",
               "text": false,
               "diag": false
-            },
-            {
-              "label": "Swap RAM",
-              "options": "swap"
             },
             {
               "label": "Physical damage / Liquid spilled",
@@ -773,7 +806,7 @@ const LEVELS = {
       "auto_shutdown": {
         "name": "Auto shutdown",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal / Mainboard",
+        "defaultPart": "Fan",
         "common": [
           {
             "label": "Can access Windows",
@@ -974,7 +1007,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Windows Camera App",
+            "label": "Camera",
             "options": "select"
           },
           {
@@ -3072,7 +3105,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Voice Recorder test",
+            "label": "Voice Recorder",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3213,7 +3246,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Voice Recorder test",
+            "label": "Voice Recorder",
             "options": "swap"
           },
           {
@@ -3256,7 +3289,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Windows Camera App",
+            "label": "Camera",
             "options": "select",
             "text": false,
             "diag": false
@@ -3323,7 +3356,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Windows Camera App",
+            "label": "Camera",
             "options": "select",
             "text": false,
             "diag": false
@@ -3362,7 +3395,7 @@ const LEVELS = {
             "options": "shutter"
           },
           {
-            "label": "Windows Camera App",
+            "label": "Camera",
             "options": "select"
           },
           {
@@ -3406,7 +3439,7 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "Windows Camera App",
+            "label": "Camera",
             "options": "select"
           },
           {
@@ -3605,7 +3638,7 @@ const LEVELS = {
       "fan_error": {
         "name": "Fan Error",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal Module / Mainboard",
+        "defaultPart": "Fan",
         "common": [
           {
             "label": "Can Access Windows",
@@ -3638,7 +3671,7 @@ const LEVELS = {
       "fan_not_spin": {
         "name": "Fan Not Spin",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal Module / Mainboard",
+        "defaultPart": "Fan",
         "common": [
           {
             "label": "Check Temperature",
@@ -3679,7 +3712,7 @@ const LEVELS = {
       "fan_noise": {
         "name": "Fan Noise",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal Module",
+        "defaultPart": "Fan",
         "common": [
           {
             "label": "Check Temperature",
@@ -3724,7 +3757,7 @@ const LEVELS = {
       "fan_spin_high": {
         "name": "Fan Spin High",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal Module / Software Troubleshooting",
+        "defaultPart": "Fan",
         "common": [
           {
             "label": "Check Temperature",
@@ -3764,7 +3797,7 @@ const LEVELS = {
       "fan_overheat": {
         "name": "Fan Overheat",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal Module / Mainboard",
+        "defaultPart": "Fan",
         "common": [
           {
             "label": "Check Temperature",
@@ -4897,3 +4930,19 @@ const RELATED_GUIDES = {
     "pxe": []
   }
 };
+
+
+// v4.8.6 Alias Symptom Rule
+// Port > Not Charge is an alias of Battery > Not Charge because agents often search by Port/Type-C.
+// Checklist, email and dispatch logic are shared from the same source symptom.
+if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec && LEVELS.port && LEVELS.port.symptoms){
+  const portNotCharge = {
+    ...LEVELS.charging.symptoms.typec,
+    name: "Not Charge",
+    aliasOf: "Battery > Not Charge"
+  };
+  LEVELS.port.symptoms = {
+    not_charge: portNotCharge,
+    ...LEVELS.port.symptoms
+  };
+}
