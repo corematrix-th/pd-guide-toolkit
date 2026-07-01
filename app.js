@@ -306,7 +306,7 @@ function getAdditionalDetail(){
 function renderErrorDescription(){
   const checklist = el("checklist");
   const sym = current();
-  if(selectedLevel === "error" && sym.description){
+  if((selectedLevel === "error" || selectedLevel === "bios") && sym.description){
     const div = document.createElement("div");
     div.className = "error-description";
     div.textContent = "Description : " + sym.description;
@@ -660,9 +660,9 @@ function guideFromChecklist(){
 
 function customerStepTH(label){
   const map = {
-    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
     "Battery Report collected": "รบกวนสร้าง Battery Report โดยเปิด Command Prompt (CMD) พิมพ์คำสั่ง powercfg /batteryreport แล้วกด Enter จากนั้นส่งไฟล์ battery-report.html กลับมาให้ทางเราครับ",
     "Dump File collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
     "Dump file collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
@@ -697,9 +697,9 @@ function customerStepTH(label){
     "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
     "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Windows Startup Repair": "ทดสอบ Startup Repair ของ Windows",
-    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
     "Re-install Windows": "ทดสอบติดตั้ง Windows ใหม่",
     "Windows Update": "ทดสอบอัปเดต Windows เป็นเวอร์ชันล่าสุด",
     "BIOS Update": "ทดสอบอัปเดต BIOS เป็นเวอร์ชันล่าสุด",
@@ -909,9 +909,9 @@ function customerStepTH(label){
 
 function customerStepEN(label){
   const map = {
-    "Lenovo Diagnostics": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick Unattended, and let us know whether the result is Pass or Failed.",
-    "Lenovo Diagnostics Storage": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick Unattended, and let us know whether the result is Pass or Failed.",
-    "Lenovo Diagnostics Battery": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Lenovo Diagnostics": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Storage": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Battery": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Pass or Failed.",
     "Battery Report collected": "Please generate a Battery Report by opening Command Prompt (CMD), running the command powercfg /batteryreport, and then send us the generated battery-report.html file.",
     "Dump File collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
     "Dump file collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",

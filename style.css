@@ -275,3 +275,5 @@ textarea#note, #note{
 .version{
   margin-top:6px !important;
 }
+
+.site-stats{font-size:10px;color:#777;margin-top:2px;text-align:right}

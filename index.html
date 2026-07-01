@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>PD Guide Toolkit</title>
-  <link rel="stylesheet" href="style.css?v=4_7_4_final_fixed">
+  <link rel="stylesheet" href="style.css?v=4_7_7">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
   <script>
@@ -72,7 +72,8 @@
         <button class="gray" id="clearBtn">Clear</button>
       </div>
 
-      <div class="version">Version 4.7.6</div>
+      <div class="version">Version 4.7.7</div>
+      <div class="site-stats">👥 <span id="visitorCount">-</span> | 🟢 <span id="onlineCount">-</span></div>
     </div>
   </div>
 </div>
@@ -88,7 +89,56 @@
   </div>
 </div>
 
-<script src="data.js?v=4_7_6"></script>
-<script src="app.js?v=4_7_6"></script>
+<script src="data.js?v=4_7_7"></script>
+<script src="app.js?v=4_7_7"></script>
+<script>
+  // Firebase Realtime Database counter.
+  // Fill this config from Firebase Console to enable Visitors / Online counter.
+  window.PD_FIREBASE_CONFIG = window.PD_FIREBASE_CONFIG || null;
+</script>
+<script type="module">
+  const visitorEl = document.getElementById("visitorCount");
+  const onlineEl = document.getElementById("onlineCount");
+
+  async function initSiteStats(){
+    if(!window.PD_FIREBASE_CONFIG){
+      if(visitorEl) visitorEl.textContent = "-";
+      if(onlineEl) onlineEl.textContent = "-";
+      return;
+    }
+
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
+    const { getDatabase, ref, onValue, set, push, onDisconnect, runTransaction, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js");
+
+    const app = initializeApp(window.PD_FIREBASE_CONFIG);
+    const db = getDatabase(app);
+    const basePath = "siteStats/global";
+
+    const visitorsRef = ref(db, `${basePath}/visitors`);
+    const sessionKey = "pdGuideVisitorCounted";
+    if(!sessionStorage.getItem(sessionKey)){
+      await runTransaction(visitorsRef, current => (current || 0) + 1);
+      sessionStorage.setItem(sessionKey, "1");
+    }
+
+    onValue(visitorsRef, snapshot => {
+      if(visitorEl) visitorEl.textContent = (snapshot.val() || 0).toLocaleString();
+    });
+
+    const onlineRef = ref(db, `${basePath}/online`);
+    const userRef = push(onlineRef);
+    await set(userRef, { online: true, at: serverTimestamp() });
+    onDisconnect(userRef).remove();
+
+    onValue(onlineRef, snapshot => {
+      if(onlineEl) onlineEl.textContent = snapshot.size || 0;
+    });
+  }
+
+  initSiteStats().catch(() => {
+    if(visitorEl) visitorEl.textContent = "-";
+    if(onlineEl) onlineEl.textContent = "-";
+  });
+</script>
 </body>
 </html>

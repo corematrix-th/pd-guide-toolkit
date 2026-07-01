@@ -1,7 +1,7 @@
-PD Guide Toolkit v4.7.6
+PD Guide Toolkit v4.7.7
 
 
-v4.7.6
+v4.7.7
 - Added Level 1: Dock, placed before BIOS.
 - Added 8 Dock symptoms with short UI names: USB-A, DisplayPort, HDMI, LAN, Audio Jack, Not charging, Not detected, and Monitor flickering.
 - Updated Dock checklist to follow Minimum Required Evidence rule.
@@ -14,7 +14,7 @@ v4.7.6
 
 วิธีใช้งาน
 1. แตกไฟล์ ZIP
-2. เปิดโฟลเดอร์ PD_Guide_Toolkit_v4_7_6
+2. เปิดโฟลเดอร์ PD_Guide_Toolkit_v4_7_7
 3. ดับเบิลคลิก index.html
 
 
