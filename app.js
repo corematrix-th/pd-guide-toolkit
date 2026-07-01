@@ -438,8 +438,8 @@ function storageEliminationRule(ans){
 
   const bios = answerValue(ans, "BIOS detects storage");
   const swap = answerValue(ans, swapLabel);
-  if(swap === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-  if(swap === "Work fine") return {result:"Dispatch", part:part};
+  if(swap === "Same Issue") return {result:"Dispatch", part:"Mainboard"};
+  if(swap === "Working") return {result:"Dispatch", part:part};
   if(bios === "No") return {result:"Dispatch", part:part};
   return null;
 }
@@ -452,16 +452,16 @@ function monitorEliminationRule(ans){
   const powerCord = answerValue(ans, "Swap Power Cord");
 
   if(selectedSymptom === "abnormal_line"){
-    if(cable === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
-    if(monitorOther === "Same issue") return {result:"Dispatch", part:"Monitor"};
-    if(swapMonitor === "Work fine") return {result:"Dispatch", part:"Monitor"};
-    if(monitorOther === "Work fine" || swapMonitor === "Same issue") return {result:"Dispatch", part:"Mainboard / Graphics Output"};
+    if(cable === "Working") return {result:"Dispatch", part:"HDMI / DP Cable"};
+    if(monitorOther === "Same Issue") return {result:"Dispatch", part:"Monitor"};
+    if(swapMonitor === "Working") return {result:"Dispatch", part:"Monitor"};
+    if(monitorOther === "Working" || swapMonitor === "Same Issue") return {result:"Dispatch", part:"Mainboard / Graphics Output"};
   }
 
   if(selectedSymptom === "no_power"){
-    if(powerCord === "Work fine") return {result:"Dispatch", part:"Power Cord"};
-    if(swapMonitor === "Work fine") return {result:"Dispatch", part:"Monitor"};
-    if(swapMonitor === "Same issue") return {result:"FOP", part:"Power source / Environment"};
+    if(powerCord === "Working") return {result:"Dispatch", part:"Power Cord"};
+    if(swapMonitor === "Working") return {result:"Dispatch", part:"Monitor"};
+    if(swapMonitor === "Same Issue") return {result:"FOP", part:"Power source / Environment"};
   }
   return null;
 }
@@ -473,7 +473,7 @@ function dockEliminationRule(ans){
 
   // Dock decision logic must be conservative.
   // Dispatch only when a checklist result clearly identifies the failed item.
-  // Same issue after Swap Dock must NOT dispatch Docking or Mainboard.
+  // Same Issue after Swap Dock must NOT dispatch Docking or Mainboard.
   const dispatchOnWorkFine = [
     ["Swap USB-A Port", "Docking"],
     ["Swap HDMI / DisplayPort cable", "HDMI / DisplayPort Cable"],
@@ -486,18 +486,18 @@ function dockEliminationRule(ans){
   ];
 
   for(const [label, part] of dispatchOnWorkFine){
-    if(val(label) === "Work fine") return {result:"Dispatch", part};
+    if(val(label) === "Working") return {result:"Dispatch", part};
   }
 
   // Software/Firmware resolved = FOP with no FRU part.
-  if(val("Lenovo Vantage Update") === "Work fine") return {result:"FOP", part:"-"};
-  if(val("Dock Firmware Update") === "Work fine") return {result:"FOP", part:"-"};
+  if(val("Lenovo Vantage Update") === "Working") return {result:"FOP", part:"-"};
+  if(val("Dock Firmware Update") === "Working") return {result:"FOP", part:"-"};
 
   // Peripheral reference tests that work normally indicate the customer's external device,
   // not the Dock, may be the cause. FOP has no FRU part.
-  if(val("USB Mouse / Keyboard test") === "Work fine") return {result:"FOP", part:"-"};
-  if(val("Headphone test") === "Work fine") return {result:"FOP", part:"-"};
-  if(val("Swap Headphone") === "Work fine") return {result:"FOP", part:"-"};
+  if(val("USB Mouse / Keyboard test") === "Working") return {result:"FOP", part:"-"};
+  if(val("Headphone test") === "Working") return {result:"FOP", part:"-"};
+  if(val("Swap Headphone") === "Working") return {result:"FOP", part:"-"};
 
   // No Dock fallback here. Global Decision State will show Pending until enough
   // checklist evidence exists, then the symptom default may be used as last resort.
@@ -516,7 +516,7 @@ function calculateRaw(){
   }
 
   // Symptom-specific logic must run before static default results.
-  // This is required for Dock: default is safe L2, but Work fine on a swapped item must still dispatch the identified FRU.
+  // This is required for Dock: default is safe L2, but Working on a swapped item must still dispatch the identified FRU.
   const storageRule = storageEliminationRule(ans);
   if(storageRule) return storageRule;
   const monitorRule = monitorEliminationRule(ans);
@@ -526,44 +526,44 @@ function calculateRaw(){
 
   for(const r of ans){
     // Cross-test logic: customer part tested on another machine.
-    // Work fine = that part is OK, so do not dispatch it. Same issue = dispatch that part.
-    if(r.q.includes("Adapter test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Adapter"};
-    if(r.q.includes("Mouse test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Mouse Replacement"};
-    if(r.q.includes("Keyboard test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Keyboard"};
-    if(r.q.includes("Monitor test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Monitor"};
-    if(r.q.includes("SD Card test on other machine") && r.a === "Same issue") return {result:"FOP", part:"SD Card"};
+    // Working = that part is OK, so do not dispatch it. Same Issue = dispatch that part.
+    if(r.q.includes("Adapter test on other machine") && r.a === "Same Issue") return {result:"Dispatch", part:"Adapter"};
+    if(r.q.includes("Mouse test on other machine") && r.a === "Same Issue") return {result:"Dispatch", part:"Mouse Replacement"};
+    if(r.q.includes("Keyboard test on other machine") && r.a === "Same Issue") return {result:"Dispatch", part:"Keyboard"};
+    if(r.q.includes("Monitor test on other machine") && r.a === "Same Issue") return {result:"Dispatch", part:"Monitor"};
+    if(r.q.includes("SD Card test on other machine") && r.a === "Same Issue") return {result:"FOP", part:"SD Card"};
   }
 
   for(const r of ans){
-    if(r.q.includes("Swap Adapter") && r.a === "Work fine") return {result:"Dispatch", part:"Adapter"};
-    if(r.q.includes("Swap PSU") && r.a === "Work fine") return {result:"Dispatch", part:"PSU"};
-    if((r.q.toLowerCase().includes("ac power cord") || r.q.toLowerCase().includes("power cable") || r.q.toLowerCase().includes("power cord")) && r.a === "Work fine") return {result:"Dispatch", part:"Power Cord"};
-    if((r.q.includes("Swap HDMI") || r.q.includes("Swap HDMI/DP")) && r.a === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
-    if(r.q.includes("Swap LAN cable") && r.a === "Work fine") return {result:"Dispatch", part:"LAN Cable"};
-    if(r.q.includes("Swap DisplayPort cable") && r.a === "Work fine") return {result:"Dispatch", part:"DisplayPort Cable"};
-    if(r.q.includes("Swap USB-C cable") && r.a === "Work fine") return {result:"Dispatch", part:"USB-C Cable"};
-    if(r.q.includes("Swap Dock") && r.a === "Work fine") return {result:"Dispatch", part:"Dock"};
-    if(r.q.includes("Swap USB-A Port") && r.a === "Work fine") return {result:"Dispatch", part:"Dock USB-A Port"};
-    if(r.q.includes("Swap USB Device") && r.a === "Work fine") return {result:"Dispatch", part:"USB Device"};
-    if(r.q.includes("Swap USB port") && r.a === "Work fine") return {result:"Dispatch", part:"USB Port"};
-    if(r.q.includes("External Monitor") && r.a === "Work fine") return {result:"Dispatch", part:"LCD Panel"};
-    if(r.q.includes("External Monitor") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("Monitor test on other machine") && r.a === "Work fine") return {result:"Dispatch", part:"PC / Graphics Output"};
-    if(r.q.includes("Swap Monitor") && r.a === "Work fine") return {result:"Dispatch", part:"Monitor"};
-    if((r.q.includes("USB Keyboard") || r.q.includes("Swap Keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
-    if(r.q.includes("USB Keyboard") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("Swap SSD / HDD") && r.a === "Work fine") return {result:"Dispatch", part:"SSD / HDD"};
-    if(r.q.includes("Swap SSD") && r.a === "Work fine") return {result:"Dispatch", part:"SSD"};
-    if(r.q.includes("Swap HDD") && r.a === "Work fine") return {result:"Dispatch", part:"HDD"};
-    if(r.q.includes("Swap RAM") && r.a === "Work fine") return {result:"Dispatch", part:"RAM"};
-    if(r.q.includes("Swap Smart Card") && r.a === "Work fine") return {result:"Dispatch", part:"Smart Card Reader"};
-    if(r.q.includes("Swap SIM") && r.a === "Work fine") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
-    if(r.q.includes("Swap Mouse") && r.a === "Work fine") return {result:"Dispatch", part:"Mouse Replacement"};
-    if((r.q.includes("Mouse test") || r.q.includes("Mouse works")) && (r.a === "Work fine" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
-    if((r.q.includes("Headphone test") || r.q.includes("Swap Headphone")) && r.a === "Work fine") return {result:"Dispatch", part:"Speaker"};
-    if(r.q.includes("External mic test") && r.a === "Work fine") return {result:"Dispatch", part:"Microphone"};
-    if(r.q.includes("Swap Bluetooth Device") && r.a === "Work fine") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
-    if((r.q.includes("Swap SD Card") || r.q.includes("SD Card test")) && r.a === "Work fine") return {result:"Dispatch", part:"SD Card Reader"};
+    if(r.q.includes("Swap Adapter") && r.a === "Working") return {result:"Dispatch", part:"Adapter"};
+    if(r.q.includes("Swap PSU") && r.a === "Working") return {result:"Dispatch", part:"PSU"};
+    if((r.q.toLowerCase().includes("ac power cord") || r.q.toLowerCase().includes("power cable") || r.q.toLowerCase().includes("power cord")) && r.a === "Working") return {result:"Dispatch", part:"Power Cord"};
+    if((r.q.includes("Swap HDMI") || r.q.includes("Swap HDMI/DP")) && r.a === "Working") return {result:"Dispatch", part:"HDMI / DP Cable"};
+    if(r.q.includes("Swap LAN cable") && r.a === "Working") return {result:"Dispatch", part:"LAN Cable"};
+    if(r.q.includes("Swap DisplayPort cable") && r.a === "Working") return {result:"Dispatch", part:"DisplayPort Cable"};
+    if(r.q.includes("Swap USB-C cable") && r.a === "Working") return {result:"Dispatch", part:"USB-C Cable"};
+    if(r.q.includes("Swap Dock") && r.a === "Working") return {result:"Dispatch", part:"Dock"};
+    if(r.q.includes("Swap USB-A Port") && r.a === "Working") return {result:"Dispatch", part:"Dock USB-A Port"};
+    if(r.q.includes("Swap USB Device") && r.a === "Working") return {result:"Dispatch", part:"USB Device"};
+    if(r.q.includes("Swap USB port") && r.a === "Working") return {result:"Dispatch", part:"USB Port"};
+    if(r.q.includes("External Monitor") && r.a === "Working") return {result:"Dispatch", part:"LCD Panel"};
+    if(r.q.includes("External Monitor") && r.a === "Same Issue") return {result:"Dispatch", part:"Mainboard"};
+    if(r.q.includes("Monitor test on other machine") && r.a === "Working") return {result:"Dispatch", part:"PC / Graphics Output"};
+    if(r.q.includes("Swap Monitor") && r.a === "Working") return {result:"Dispatch", part:"Monitor"};
+    if((r.q.includes("USB Keyboard") || r.q.includes("Swap Keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Working") return {result:"Dispatch", part:"Keyboard"};
+    if(r.q.includes("USB Keyboard") && r.a === "Same Issue") return {result:"Dispatch", part:"Mainboard"};
+    if(r.q.includes("Swap SSD / HDD") && r.a === "Working") return {result:"Dispatch", part:"SSD / HDD"};
+    if(r.q.includes("Swap SSD") && r.a === "Working") return {result:"Dispatch", part:"SSD"};
+    if(r.q.includes("Swap HDD") && r.a === "Working") return {result:"Dispatch", part:"HDD"};
+    if(r.q.includes("Swap RAM") && r.a === "Working") return {result:"Dispatch", part:"RAM"};
+    if(r.q.includes("Swap Smart Card") && r.a === "Working") return {result:"Dispatch", part:"Smart Card Reader"};
+    if(r.q.includes("Swap SIM") && r.a === "Working") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
+    if(r.q.includes("Swap Mouse") && r.a === "Working") return {result:"Dispatch", part:"Mouse Replacement"};
+    if((r.q.includes("Mouse test") || r.q.includes("Mouse works")) && (r.a === "Working" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
+    if((r.q.includes("Headphone test") || r.q.includes("Swap Headphone")) && r.a === "Working") return {result:"Dispatch", part:"Speaker"};
+    if(r.q.includes("External mic test") && r.a === "Working") return {result:"Dispatch", part:"Microphone"};
+    if(r.q.includes("Swap Bluetooth Device") && r.a === "Working") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
+    if((r.q.includes("Swap SD Card") || r.q.includes("SD Card test")) && r.a === "Working") return {result:"Dispatch", part:"SD Card Reader"};
     if(r.q.includes("Novo Button") && r.a === "Yes") return {result:"Dispatch", part:"Power Button / Top Cover"};
   }
 
@@ -794,7 +794,6 @@ function customerStepTH(label){
     "Check BIOS": "เข้า BIOS เพื่อตรวจสอบการตั้งค่าที่เกี่ยวข้อง",
     "Check LAN pin / damage": "ตรวจสอบขา LAN และร่องรอยชำรุดบริเวณพอร์ต LAN",
     "Check Task Manager usage": "ตรวจสอบการใช้งาน CPU / RAM / Disk ใน Task Manager",
-    "Check storage free space": "ตรวจสอบพื้นที่ว่างของ SSD/HDD ว่ายังเพียงพอหรือไม่",
     "Clean scroll wheel": "ทำความสะอาดบริเวณ Scroll Wheel แล้วทดสอบอีกครั้ง",
     "Clean touchpad surface": "ทำความสะอาดพื้นผิว Touchpad แล้วทดสอบอีกครั้ง",
     "ClickPad enabled": "ตรวจสอบว่า ClickPad ถูก Enable อยู่หรือไม่",
@@ -904,14 +903,37 @@ function customerStepTH(label){
     "Audio Jack on notebook test": "ทดลองเชื่อมต่อ Headphone กับ Audio Jack ของเครื่องคอมพิวเตอร์โดยตรง",
     "Swap Adapter": "ทดลองสลับ Adapter"
   };
-  return map[label] || label;
+
+  const standardMap = {
+    "Can Access Windows": "ตรวจสอบว่าสามารถเข้า Windows ได้หรือไม่",
+    "Can access Windows": "ตรวจสอบว่าสามารถเข้า Windows ได้หรือไม่",
+    "Check Temperature": "ตรวจสอบว่าเครื่องมีความร้อนผิดปกติหรือไม่",
+    "Check for Dust and Foreign Objects": "ตรวจสอบว่าพัดลมหรือช่องระบายอากาศมีฝุ่นหรือสิ่งแปลกปลอมหรือไม่",
+    "Check for Dust or Obstruction": "ตรวจสอบว่าพัดลมหรือช่องระบายอากาศมีฝุ่นหรือสิ่งแปลกปลอมหรือไม่",
+    "Fan Check": "ตรวจสอบว่าพัดลมทำงานหรือไม่",
+    "Check Task Manager Usage": "เปิด Task Manager และตรวจสอบการใช้งาน CPU / RAM / Disk / GPU",
+    "Check Task Manager usage": "เปิด Task Manager และตรวจสอบการใช้งาน CPU / RAM / Disk / GPU",
+    "Check Power Mode": "ตรวจสอบ Power Mode และทดลองเปลี่ยนเป็น Balanced",
+    "Windows Update": "ตรวจสอบและติดตั้ง Windows Update ที่ค้างอยู่ (หากมี)",
+    "BIOS Update": "อัปเดต BIOS เป็นเวอร์ชันล่าสุด",
+    "Load BIOS Default": "ทำการ Load BIOS Default",
+    "Load BIOS default": "ทำการ Load BIOS Default",
+    "Load default BIOS": "ทำการ Load BIOS Default",
+    "Lenovo Diagnostics": "รัน Lenovo Diagnostics และแจ้งผลว่า Passed หรือ Failed",
+    "Lenovo Diagnostics Storage": "รัน Lenovo Diagnostics และแจ้งผลว่า Passed หรือ Failed",
+    "Lenovo Diagnostics Battery": "รัน Lenovo Diagnostics และแจ้งผลว่า Passed หรือ Failed",
+    "Clean Cooling System": "ทำความสะอาดระบบระบายความร้อน แล้วทดลองใช้งานอีกครั้ง",
+    "Physical damage / Liquid spilled": "ตรวจสอบว่าตัวเครื่องมีความเสียหาย หรือมีของเหลวหกใส่ตัวเครื่องหรือไม่",
+    "Other issue": "ตรวจสอบว่าตัวเครื่องมีอาการอื่นเพิ่มเติมหรือไม่"
+  };
+  return standardMap[label] || map[label] || label;
 }
 
 function customerStepEN(label){
   const map = {
-    "Lenovo Diagnostics": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Pass or Failed.",
-    "Lenovo Diagnostics Storage": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Pass or Failed.",
-    "Lenovo Diagnostics Battery": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Pass or Failed.",
+    "Lenovo Diagnostics": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Passed or Failed.",
+    "Lenovo Diagnostics Storage": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Passed or Failed.",
+    "Lenovo Diagnostics Battery": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Passed or Failed.",
     "Battery Report collected": "Please generate a Battery Report by opening Command Prompt (CMD), running the command powercfg /batteryreport, and then send us the generated battery-report.html file.",
     "Dump File collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
     "Dump file collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
@@ -990,18 +1012,22 @@ function emailFromChecklist(lang){
 
   if(lang === "EN"){
     let lines = [
-      "Please perform the troubleshooting steps below."
+      "Dear Customer,",
+      "",
+      "Please follow the steps below."
     ];
     q.forEach((item, i) => lines.push(`${i+1}. ${customerStepEN(item)}`));
-    lines.push("", "Once completed, please let us know the result so we can proceed with the next step.");
+    lines.push("", "Once completed, please send us the result and attach any photo or test result if available, so we can proceed with the next step.");
     return lines.join("\n");
   }
 
   let lines = [
-    "รบกวนช่วยทดสอบและตรวจสอบเบื้องต้นตามขั้นตอนดังนี้ครับ"
+    "เรียน คุณลูกค้า",
+    "",
+    "รบกวนช่วยดำเนินการตามขั้นตอนดังต่อไปนี้"
   ];
   q.forEach((item, i) => lines.push(`${i+1}. ${customerStepTH(item)}`));
-  lines.push("", "หากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับ เพื่อให้ทางเราดำเนินการในขั้นตอนถัดไปครับ");
+  lines.push("", "หากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับ พร้อมแนบรูปหรือผลการทดสอบ (ถ้ามี) เพื่อให้ทางเราดำเนินการในขั้นตอนถัดไปครับ");
   return lines.join("\n");
 }
 

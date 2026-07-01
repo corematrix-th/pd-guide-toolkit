@@ -1,18 +1,18 @@
 const APP_OPTIONS = {
   "select": [
     "-- Select --",
-    "Same issue",
-    "Work fine",
-    "Not test"
+    "Same Issue",
+    "Working",
+    "Not Tested"
   ],
   "detail_only": [
     "-- Select --"
   ],
   "swap": [
     "-- Select --",
-    "Same issue",
-    "Work fine",
-    "Not test"
+    "Same Issue",
+    "Working",
+    "Not Tested"
   ],
   "yesno": [
     "-- Select --",
@@ -28,8 +28,8 @@ const APP_OPTIONS = {
   "diag": [
     "-- Select --",
     "Failed",
-    "Pass",
-    "Not test"
+    "Passed",
+    "Not Tested"
   ],
   "fan": [
     "-- Select --",
@@ -55,9 +55,9 @@ const APP_OPTIONS = {
   ],
   "typec_port": [
     "-- Select --",
-    "Same issue",
-    "Work fine",
-    "Not test",
+    "Same Issue",
+    "Working",
+    "Not Tested",
     "No Other Port"
   ],
   "shutter": [
@@ -65,15 +65,12 @@ const APP_OPTIONS = {
     "Open",
     "Closed",
     "No Shutter",
-    "Not test"
+    "Not Tested"
   ],
   "airplane": [
     "-- Select --",
     "Off",
     "On"
-  ],
-  "detail_only": [
-    "-- Select --"
   ],
   "reboot_occurs": [
     "-- Select --",
@@ -81,7 +78,7 @@ const APP_OPTIONS = {
     "During Windows loading",
     "After Windows login",
     "Randomly",
-    "Not test"
+    "Not Tested"
   ],
   "bsod_occurs": [
     "-- Select --",
@@ -89,16 +86,15 @@ const APP_OPTIONS = {
     "After Windows login",
     "Randomly",
     "While using specific application",
-    "Not test"
+    "Not Tested"
   ],
   "task_manager_usage": [
     "-- Select --",
-    "CPU high",
-    "Memory high",
-    "Disk high",
-    "GPU high",
-    "Normal",
-    "Not test"
+    "CPU High",
+    "RAM High",
+    "Disk High",
+    "GPU High",
+    "Normal"
   ],
   "freeze_occurs": [
     "-- Select --",
@@ -106,13 +102,13 @@ const APP_OPTIONS = {
     "After Windows login",
     "Randomly",
     "While using specific application",
-    "Not test"
+    "Not Tested"
   ],
   "onoff": [
     "-- Select --",
     "On",
     "Off",
-    "Not test"
+    "Not Tested"
   ],
   "impact": [
     "-- Select --",
@@ -124,7 +120,24 @@ const APP_OPTIONS = {
     "-- Select --",
     "Disabled",
     "Enabled",
-    "Not test"
+    "Not Tested"
+  ],
+  "temperature": [
+    "-- Select --",
+    "Overheat",
+    "Normal",
+    "Not Tested"
+  ],
+  "fan_check": [
+    "-- Select --",
+    "Spin",
+    "Not Spin"
+  ],
+  "power_mode": [
+    "-- Select --",
+    "Balanced",
+    "High Performance",
+    "Not Tested"
   ]
 };
 
@@ -689,7 +702,7 @@ const LEVELS = {
         "defaultPart": "Software Troubleshooting / SSD / Mainboard",
         "common": [
           {
-            "label": "Check Task Manager usage",
+            "label": "Check Task Manager Usage",
             "options": "task_manager_usage"
           },
           {
@@ -704,10 +717,6 @@ const LEVELS = {
             "label": "Lenovo Diagnostics",
             "options": "diag",
             "diag": true
-          },
-          {
-            "label": "Check storage free space",
-            "options": "select"
           },
           {
             "label": "Re-install Windows",
@@ -3596,26 +3605,64 @@ const LEVELS = {
       "fan_error": {
         "name": "Fan Error",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal Module",
+        "defaultPart": "Fan / Thermal Module / Mainboard",
         "common": [
           {
-            "label": "Check temperature / Overheat",
+            "label": "Can Access Windows",
             "options": "yesno"
-          },
-          {
-            "label": "Fan spinning",
-            "options": "fan"
           },
           {
             "label": "BIOS Update",
             "options": "select"
           },
           {
-            "label": "Load default BIOS",
+            "label": "Load BIOS Default",
             "options": "select"
           },
           {
-            "label": "Power Reset / Emergency Reset",
+            "label": "Lenovo Diagnostics",
+            "options": "diag",
+            "diag": true
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "fan_not_spin": {
+        "name": "Fan Not Spin",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Fan / Thermal Module / Mainboard",
+        "common": [
+          {
+            "label": "Check Temperature",
+            "options": "temperature"
+          },
+          {
+            "label": "Check for Dust and Foreign Objects",
+            "options": "yesno"
+          },
+          {
+            "label": "Fan Check",
+            "options": "fan_check"
+          },
+          {
+            "label": "Lenovo Diagnostics",
+            "options": "diag",
+            "diag": true
+          },
+          {
+            "label": "BIOS Update",
+            "options": "select"
+          },
+          {
+            "label": "Load BIOS Default",
             "options": "select"
           },
           {
@@ -3630,28 +3677,37 @@ const LEVELS = {
         ]
       },
       "fan_noise": {
-        "name": "Fan noise",
+        "name": "Fan Noise",
         "defaultResult": "Dispatch",
         "defaultPart": "Fan / Thermal Module",
         "common": [
           {
-            "label": "Noise occurs all the time",
+            "label": "Check Temperature",
+            "options": "temperature"
+          },
+          {
+            "label": "Check for Dust and Foreign Objects",
             "options": "yesno"
           },
           {
-            "label": "Check temperature / Overheat",
-            "options": "yesno"
-          },
-          {
-            "label": "Fan area cleaned",
+            "label": "Clean Cooling System",
             "options": "select"
+          },
+          {
+            "label": "Check Power Mode",
+            "options": "power_mode"
+          },
+          {
+            "label": "Lenovo Diagnostics",
+            "options": "diag",
+            "diag": true
           },
           {
             "label": "BIOS Update",
             "options": "select"
           },
           {
-            "label": "Load default BIOS",
+            "label": "Load BIOS Default",
             "options": "select"
           },
           {
@@ -3666,32 +3722,68 @@ const LEVELS = {
         ]
       },
       "fan_spin_high": {
-        "name": "Fan spin high",
+        "name": "Fan Spin High",
         "defaultResult": "Dispatch",
-        "defaultPart": "Fan / Thermal / Software Troubleshooting",
+        "defaultPart": "Fan / Thermal Module / Software Troubleshooting",
         "common": [
           {
-            "label": "Check temperature / Overheat",
-            "options": "yesno"
+            "label": "Check Temperature",
+            "options": "temperature"
           },
           {
-            "label": "High CPU usage checked",
+            "label": "Check Task Manager Usage",
+            "options": "task_manager_usage"
+          },
+          {
+            "label": "Windows Update",
             "options": "select"
           },
           {
-            "label": "Task Manager checked",
-            "options": "select"
+            "label": "Check Power Mode",
+            "options": "power_mode"
           },
           {
             "label": "BIOS Update",
             "options": "select"
           },
           {
-            "label": "Load default BIOS",
+            "label": "Load BIOS Default",
             "options": "select"
           },
           {
-            "label": "Lenovo Vantage Update",
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "fan_overheat": {
+        "name": "Fan Overheat",
+        "defaultResult": "Dispatch",
+        "defaultPart": "Fan / Thermal Module / Mainboard",
+        "common": [
+          {
+            "label": "Check Temperature",
+            "options": "temperature"
+          },
+          {
+            "label": "Check for Dust and Foreign Objects",
+            "options": "yesno"
+          },
+          {
+            "label": "Check Task Manager Usage",
+            "options": "task_manager_usage"
+          },
+          {
+            "label": "BIOS Update",
+            "options": "select"
+          },
+          {
+            "label": "Load BIOS Default",
             "options": "select"
           },
           {
@@ -4487,7 +4579,7 @@ const LEVELS = {
     "symptoms": {
       "vantage_update": {
         "name": "Lenovo Vantage Update",
-        "guide": "วิธีอัปเดต Driver ผ่าน Lenovo Vantage\n\n1. เปิด Lenovo Vantage\n2. ไปที่ System Update\n3. กด Check for updates\n4. ติดตั้งรายการที่พบ และ Restart เครื่อง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
+        "guide": "วิธีอัปเดต Driver ผ่าน Lenovo Vantage\n\n1. เปิด Lenovo Vantage\n2. ไปที่ System Update\n3. กด Check for updates\n4. ติดตั้งรายการที่พบ และ Restart เครื่อง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
         "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยทดสอบอัปเดต Driver ผ่าน Lenovo Vantage ตามขั้นตอนด้านล่าง\n\n1. เปิด Lenovo Vantage\n2. ไปที่ System Update\n3. กด Check for updates\n4. ติดตั้งรายการที่พบ และ Restart เครื่อง\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบอาการอีกครั้งและแจ้งผลกลับมาครับ",
         "emailEN": "Dear Customer,\n\nPlease update the drivers through Lenovo Vantage.\n\n1. Open Lenovo Vantage.\n2. Go to System Update.\n3. Click Check for updates.\n4. Install all available updates and restart the machine.\n\nOnce completed, please test the issue again and provide the result back to us."
       },
@@ -4523,9 +4615,9 @@ const LEVELS = {
       },
       "activation": {
         "name": "Windows Activation",
-        "guide": "วิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Error Code",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Error Code\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
       },
       "reset_pc": {
         "name": "Reset this PC",
@@ -4535,7 +4627,7 @@ const LEVELS = {
       },
       "reinstall_windows": {
         "name": "Windows Installation",
-        "guide": "วิธีติดตั้ง Windows\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security > Secure Boot > Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
+        "guide": "วิธีติดตั้ง Windows\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security > Secure Boot > Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
         "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการติดตั้ง Windows ตามขั้นตอนด้านล่าง\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security > Secure Boot > Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบอาการอีกครั้งและแจ้งผลกลับมาครับ",
         "emailEN": "Dear Customer,\n\nPlease perform Windows installation by following the steps below.\n\n1. Download Windows from Microsoft:\nhttps://www.microsoft.com/en-us/software-download/windows11\n\n2. Video guide for creating a USB Installer:\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. After the USB Installer is created:\n• Enter BIOS by repeatedly pressing F1 after powering on the machine.\n• Go to Security > Secure Boot > Disable.\n• Press F10 and select Yes.\nAfter the screen turns off, repeatedly press F12 to enter the Boot Menu.\n• Select the USB device.\n• Then continue following the on-screen instructions.\n\nOnce completed, please test the issue again and provide the result back to us."
       },
@@ -4547,15 +4639,15 @@ const LEVELS = {
       },
       "sfc": {
         "name": "SFC /scannow",
-        "guide": "วิธีใช้งาน SFC /scannow\n\n1. เปิด Command Prompt หรือ CMD แบบ Run as administrator\n2. พิมพ์คำสั่ง sfc /scannow\n3. รอจนระบบสแกนเสร็จ 100%\n4. Restart เครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีใช้งาน SFC /scannow\n\n1. เปิด Command Prompt หรือ CMD แบบ Run as administrator\n2. พิมพ์คำสั่ง sfc /scannow\n3. รอจนระบบสแกนเสร็จ 100%\n4. Restart เครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีใช้งาน SFC /scannow\n\n1. เปิด Command Prompt หรือ CMD แบบ Run as administrator\n2. พิมพ์คำสั่ง sfc /scannow\n3. รอจนระบบสแกนเสร็จ 100%\n4. Restart เครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีใช้งาน SFC /scannow\n\n1. เปิด Command Prompt หรือ CMD แบบ Run as administrator\n2. พิมพ์คำสั่ง sfc /scannow\n3. รอจนระบบสแกนเสร็จ 100%\n4. Restart เครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีใช้งาน SFC /scannow\n\n1. เปิด Command Prompt หรือ CMD แบบ Run as administrator\n2. พิมพ์คำสั่ง sfc /scannow\n3. รอจนระบบสแกนเสร็จ 100%\n4. Restart เครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีใช้งาน SFC /scannow\n\n1. เปิด Command Prompt หรือ CMD แบบ Run as administrator\n2. พิมพ์คำสั่ง sfc /scannow\n3. รอจนระบบสแกนเสร็จ 100%\n4. Restart เครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       },
       "safe_mode": {
         "name": "Safe Mode",
-        "guide": "วิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       },
       "dump_file": {
         "name": "Dump File",
@@ -4571,21 +4663,21 @@ const LEVELS = {
       },
       "office_activation": {
         "name": "Microsoft Office Activation",
-        "guide": "วิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Error Code",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Error Code\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
       },
       "windows11_bypass": {
         "name": "Bypass Windows 11 OOBE",
-        "guide": "วิธี Bypass Windows 11 ระหว่าง Setup\n\n1. ที่หน้า Setup ให้กด Shift + F10 เพื่อเปิด Command Prompt\n2. พิมพ์คำสั่ง OOBE\\BYPASSNRO\n3. กด Enter\n4. เครื่องจะ Restart\n5. เลือก I don't have internet เพื่อตั้งค่าต่อ\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Bypass Windows 11 ระหว่าง Setup\n\n1. ที่หน้า Setup ให้กด Shift + F10 เพื่อเปิด Command Prompt\n2. พิมพ์คำสั่ง OOBE\\BYPASSNRO\n3. กด Enter\n4. เครื่องจะ Restart\n5. เลือก I don't have internet เพื่อตั้งค่าต่อ\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Bypass Windows 11 ระหว่าง Setup\n\n1. ที่หน้า Setup ให้กด Shift + F10 เพื่อเปิด Command Prompt\n2. พิมพ์คำสั่ง OOBE\\BYPASSNRO\n3. กด Enter\n4. เครื่องจะ Restart\n5. เลือก I don't have internet เพื่อตั้งค่าต่อ\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธี Bypass Windows 11 ระหว่าง Setup\n\n1. ที่หน้า Setup ให้กด Shift + F10 เพื่อเปิด Command Prompt\n2. พิมพ์คำสั่ง OOBE\\BYPASSNRO\n3. กด Enter\n4. เครื่องจะ Restart\n5. เลือก I don't have internet เพื่อตั้งค่าต่อ\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Bypass Windows 11 ระหว่าง Setup\n\n1. ที่หน้า Setup ให้กด Shift + F10 เพื่อเปิด Command Prompt\n2. พิมพ์คำสั่ง OOBE\\BYPASSNRO\n3. กด Enter\n4. เครื่องจะ Restart\n5. เลือก I don't have internet เพื่อตั้งค่าต่อ\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Bypass Windows 11 ระหว่าง Setup\n\n1. ที่หน้า Setup ให้กด Shift + F10 เพื่อเปิด Command Prompt\n2. พิมพ์คำสั่ง OOBE\\BYPASSNRO\n3. กด Enter\n4. เครื่องจะ Restart\n5. เลือก I don't have internet เพื่อตั้งค่าต่อ\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       },
       "always_on_usb": {
         "name": "Always On USB",
-        "guide": "วิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       },
       "bios_password": {
         "name": "BIOS / Supervisor Password",
@@ -4601,19 +4693,20 @@ const LEVELS = {
       },
       "emergency_reset": {
         "name": "Emergency Reset",
-        "guide": "วิธีทำ Emergency Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. ใช้คลิปหนีบกระดาษ (Paper Clip) กดรู Emergency Reset ค้างประมาณ 5–10 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
+        "guide": "วิธีทำ Emergency Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. ใช้คลิปหนีบกระดาษ (Paper Clip) กดรู Emergency Reset ค้างประมาณ 5–10 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
         "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยทดสอบ Emergency Reset ตามขั้นตอนด้านล่าง\n\n1. ถอด Adapter ออกจากเครื่อง\n2. ใช้คลิปหนีบกระดาษ (Paper Clip) กดรู Emergency Reset ค้างประมาณ 5–10 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nหลังจากดำเนินการแล้ว รบกวนแจ้งผลกลับมาครับ",
         "emailEN": "Dear Customer,\n\nPlease perform Emergency Reset by following the steps below.\n\n1. Disconnect the Adapter.\n2. Use a paper clip to press and hold the Emergency Reset hole for about 5–10 seconds.\n3. Reconnect the Adapter.\n4. Power on the machine and test the issue again.\n\nOnce completed, please provide the result back to us."
       },
       "power_reset": {
         "name": "Power Reset",
-        "guide": "วิธีทำ Power Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. กดปุ่ม Power ค้างประมาณ 15–20 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีทำ Power Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. กดปุ่ม Power ค้างประมาณ 15–20 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีทำ Power Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. กดปุ่ม Power ค้างประมาณ 15–20 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Work fine หรือ Same issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีทำ Power Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. กดปุ่ม Power ค้างประมาณ 15–20 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีทำ Power Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. กดปุ่ม Power ค้างประมาณ 15–20 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีทำ Power Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. กดปุ่ม Power ค้างประมาณ 15–20 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       }
     }
   }
 };
+
 const RELATED_GUIDES = {
   "boot": {
     "no_power": [],

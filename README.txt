@@ -105,11 +105,11 @@ v4.6.4 Product Capability Update
 
 
 v4.6.4 Hotfix
-- Fixed Storage swap conclusion logic: Swap SSD/HDD test = Work fine now dispatches SSD/HDD instead of FOP.
+- Fixed Storage swap conclusion logic: Swap SSD/HDD test = Working now dispatches SSD/HDD instead of FOP.
 
 
 v4.6.5 Logic Update
-- Updated central calculation logic: removed generic Work fine = FOP fallback.
+- Updated central calculation logic: removed generic Working = FOP fallback.
 - Added logic-based dispatch exceptions for swap / external comparison tests.
 - Added Keyboard > Keyboard auto type.
 - Added Mouse > Mouse click L double.
@@ -167,13 +167,13 @@ V4.7.5 - Dock Conclusion Logic Fix
 - Updated Dock conclusion logic to follow selected checklist evidence.
 - Removed Dock behavior that escalated when no decisive checklist was found.
 - Dock now defaults to Dispatch / Docking when all selected checks remain Same issue.
-- Swap USB-C cable = Work fine now dispatches USB-C Cable.
-- Swap Dock = Work fine now dispatches Docking.
+- Swap USB-C cable = Working now dispatches USB-C Cable.
+- Swap Dock = Working now dispatches Docking.
 - Software/Firmware resolved cases now use FOP / Software Troubleshooting.
 
 V4.7.5 - Dock Logic Correction
 - Corrected Dock conclusion logic to avoid incorrect Docking dispatch.
-- Swap Dock = Work fine dispatches Docking.
+- Swap Dock = Working dispatches Docking.
 - Swap Dock = Same issue does not dispatch Docking or Mainboard.
 - Non-decisive Dock evidence now concludes Escalate L2 / Software Troubleshooting.
 - Dock logic must follow checklist evidence and must not reuse Storage/RAM/Keyboard elimination logic directly.
