@@ -19,6 +19,12 @@ const APP_OPTIONS = {
     "No",
     "Yes"
   ],
+  "led": [
+    "-- Select --",
+    "No",
+    "Yes",
+    "Blink"
+  ],
   "diag": [
     "-- Select --",
     "Failed",
@@ -134,30 +140,30 @@ const LEVELS = {
           "thinkpad": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
             {
               "label": "Charge LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
             {
-              "label": "Swap Adapter test",
+              "label": "Swap Adapter",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Swap other Type-C port test",
+              "label": "Swap other Type-C port",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Adapter works on another machine",
+              "label": "Adapter test on other machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -184,24 +190,24 @@ const LEVELS = {
           "ideapad": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
             {
               "label": "LED beside charging port",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
             {
-              "label": "Swap Adapter test",
+              "label": "Swap Adapter",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Adapter works on another machine",
+              "label": "Adapter test on other machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -234,7 +240,7 @@ const LEVELS = {
           "desktop": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
@@ -245,25 +251,19 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap power cable test",
+              "label": "Swap Power Cable",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Swap power outlet test",
+              "label": "Swap Power Outlet",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Power drain",
-              "options": "select",
-              "text": false,
-              "diag": false
-            },
-            {
-              "label": "Swap PSU test",
+              "label": "Swap PSU",
               "options": "swap",
               "text": false,
               "diag": false
@@ -284,7 +284,7 @@ const LEVELS = {
           "aio": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
@@ -295,7 +295,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap Adapter / Power cable test",
+              "label": "Swap Adapter / Power Cable",
               "options": "swap",
               "text": false,
               "diag": false
@@ -329,7 +329,7 @@ const LEVELS = {
           "thinkpad": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
@@ -352,7 +352,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap RAM test",
+              "label": "Swap RAM",
               "options": "swap"
             },
             {
@@ -371,7 +371,7 @@ const LEVELS = {
           "ideapad": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
@@ -394,7 +394,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap RAM test",
+              "label": "Swap RAM",
               "options": "swap"
             },
             {
@@ -413,7 +413,7 @@ const LEVELS = {
           "desktop": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
@@ -424,13 +424,13 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap monitor test",
+              "label": "Swap Monitor",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Swap HDMI/DP cable test",
+              "label": "Swap HDMI / DisplayPort cable",
               "options": "swap",
               "text": false,
               "diag": false
@@ -442,7 +442,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap RAM test",
+              "label": "Swap RAM",
               "options": "swap"
             },
             {
@@ -461,7 +461,7 @@ const LEVELS = {
           "aio": [
             {
               "label": "Power LED",
-              "options": "yesno",
+              "options": "led",
               "text": false,
               "diag": false
             },
@@ -484,7 +484,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap RAM test",
+              "label": "Swap RAM",
               "options": "swap"
             },
             {
@@ -532,7 +532,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap RAM test",
+            "label": "Swap RAM",
             "options": "swap"
           },
           {
@@ -697,7 +697,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Lenovo Vantage Update",
             "options": "select"
           },
           {
@@ -738,7 +738,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Lenovo Vantage Update",
             "options": "select"
           },
           {
@@ -830,7 +830,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Lenovo Vantage Update",
             "options": "select"
           },
           {
@@ -847,11 +847,11 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "Swap RAM test",
+            "label": "Swap RAM",
             "options": "swap"
           },
           {
-            "label": "Swap SSD test",
+            "label": "Swap SSD",
             "options": "swap"
           },
           {
@@ -889,7 +889,7 @@ const LEVELS = {
             "diag": true
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Lenovo Vantage Update",
             "options": "select"
           },
           {
@@ -897,11 +897,11 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Swap RAM test",
+            "label": "Swap RAM",
             "options": "swap"
           },
           {
-            "label": "Swap SSD test",
+            "label": "Swap SSD",
             "options": "swap"
           },
           {
@@ -937,7 +937,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Fingerprint Driver Update / Lenovo Vantage",
             "options": "select"
           },
           {
@@ -981,7 +981,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Camera Driver Update / Lenovo Vantage",
             "options": "select"
           },
           {
@@ -1204,7 +1204,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Swap RAM test",
+            "label": "Swap RAM",
             "options": "select"
           },
           {
@@ -1229,15 +1229,15 @@ const LEVELS = {
         "defaultPart": "Monitor",
         "common": [
           {
-            "label": "Swap HDMI/DP cable test",
+            "label": "Swap HDMI / DisplayPort cable",
             "options": "swap"
           },
           {
-            "label": "Monitor tested on another machine",
+            "label": "Monitor test on other machine",
             "options": "swap"
           },
           {
-            "label": "Swap monitor test",
+            "label": "Swap Monitor",
             "options": "swap"
           },
           {
@@ -1263,14 +1263,14 @@ const LEVELS = {
         "common": [
           {
             "label": "Power LED",
-            "options": "yesno"
+            "options": "led"
           },
           {
-            "label": "Swap power cord test",
+            "label": "Swap Power Cord",
             "options": "swap"
           },
           {
-            "label": "Swap monitor test",
+            "label": "Swap Monitor",
             "options": "swap"
           },
           {
@@ -1300,19 +1300,19 @@ const LEVELS = {
         "defaultPart": "Adapter",
         "common": [
           {
-            "label": "Swap AC power cord test",
+            "label": "Swap AC Power Cord",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
+            "label": "Swap Adapter",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Adapter works on another machine",
+            "label": "Adapter test on other machine",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1337,12 +1337,12 @@ const LEVELS = {
         ]
       },
       "cord": {
-        "name": "Power cord",
+        "name": "Power Cord",
         "defaultResult": "Dispatch",
         "defaultPart": "Power Cord",
         "common": [
           {
-            "label": "Swap AC power cord test",
+            "label": "Swap AC Power Cord",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1384,7 +1384,7 @@ const LEVELS = {
         "common": [
           {
             "label": "Charge LED",
-            "options": "yesno",
+            "options": "led",
             "text": false,
             "diag": false
           },
@@ -1395,13 +1395,13 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
+            "label": "Swap Adapter",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Adapter works on another machine",
+            "label": "Adapter test on other machine",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1516,7 +1516,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
+            "label": "Swap Adapter",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1577,7 +1577,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
+            "label": "Swap Adapter",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1613,15 +1613,15 @@ const LEVELS = {
         "defaultPart": "USB Port / Mainboard",
         "common": [
           {
-            "label": "USB mouse / keyboard test",
+            "label": "USB Mouse / Keyboard test",
             "options": "select"
           },
           {
-            "label": "Swap USB port test",
+            "label": "Swap USB Port",
             "options": "select"
           },
           {
-            "label": "Swap USB device test",
+            "label": "Swap USB Device",
             "options": "select"
           },
           {
@@ -1629,7 +1629,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "USB Driver Update / Lenovo Vantage",
             "options": "select"
           },
           {
@@ -1653,7 +1653,7 @@ const LEVELS = {
         "defaultPart": "USB-C Port / Mainboard",
         "common": [
           {
-            "label": "Swap USB-C port test",
+            "label": "Swap USB-C Port",
             "options": "select"
           },
           {
@@ -1665,7 +1665,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "USB Driver Update / Lenovo Vantage",
             "options": "select"
           },
           {
@@ -1689,7 +1689,7 @@ const LEVELS = {
         "defaultPart": "HDMI Port / Mainboard",
         "common": [
           {
-            "label": "Swap HDMI cable test",
+            "label": "Swap HDMI cable",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1736,13 +1736,13 @@ const LEVELS = {
         "defaultPart": "SD Card Reader / Mainboard",
         "common": [
           {
-            "label": "Swap SD Card test",
+            "label": "Swap SD Card",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "SD Card test with other machine",
+            "label": "SD Card test on other machine",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1754,7 +1754,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "SD Card Reader Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -1783,7 +1783,7 @@ const LEVELS = {
         "defaultPart": "Smart Card Reader",
         "common": [
           {
-            "label": "Swap Smart Card test",
+            "label": "Swap Smart Card",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1795,7 +1795,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Smart Card Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -1836,7 +1836,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "USB keyboard test",
+              "label": "USB Keyboard test",
               "options": "swap",
               "text": false,
               "diag": false
@@ -1867,7 +1867,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "USB keyboard test",
+              "label": "USB Keyboard test",
               "options": "swap",
               "text": false,
               "diag": false
@@ -1898,13 +1898,13 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap keyboard test",
+              "label": "Swap Keyboard",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Keyboard test with other machine",
+              "label": "Keyboard test on other machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -1935,13 +1935,13 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Swap keyboard test",
+              "label": "Swap Keyboard",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Keyboard test with other machine",
+              "label": "Keyboard test on other machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -1973,7 +1973,7 @@ const LEVELS = {
         "questions": {
           "thinkpad": [
             {
-              "label": "USB keyboard test",
+              "label": "USB Keyboard test",
               "options": "swap",
               "text": false,
               "diag": false
@@ -2010,7 +2010,7 @@ const LEVELS = {
           ],
           "ideapad": [
             {
-              "label": "USB keyboard test",
+              "label": "USB Keyboard test",
               "options": "swap",
               "text": false,
               "diag": false
@@ -2047,13 +2047,13 @@ const LEVELS = {
           ],
           "desktop": [
             {
-              "label": "Swap keyboard test",
+              "label": "Swap Keyboard",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Keyboard test with other machine",
+              "label": "Keyboard test on other machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -2078,13 +2078,13 @@ const LEVELS = {
           ],
           "aio": [
             {
-              "label": "Swap keyboard test",
+              "label": "Swap Keyboard",
               "options": "swap",
               "text": false,
               "diag": false
             },
             {
-              "label": "Keyboard test with other machine",
+              "label": "Keyboard test on other machine",
               "options": "swap",
               "text": false,
               "diag": false
@@ -2124,7 +2124,7 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "USB keyboard test",
+            "label": "USB Keyboard test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2257,7 +2257,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "USB keyboard test",
+            "label": "USB Keyboard test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2329,15 +2329,15 @@ const LEVELS = {
         "defaultPart": "Mouse Replacement / USB Port",
         "common": [
           {
-            "label": "Swap USB port test",
+            "label": "Swap USB Port",
             "options": "select"
           },
           {
-            "label": "Swap mouse test",
+            "label": "Swap Mouse",
             "options": "select"
           },
           {
-            "label": "Mouse test on another machine",
+            "label": "Mouse test on other machine",
             "options": "select"
           },
           {
@@ -2362,19 +2362,19 @@ const LEVELS = {
         "defaultPart": "Wireless Mouse / Receiver",
         "common": [
           {
-            "label": "Swap Battery test",
+            "label": "Swap Battery",
             "options": "select"
           },
           {
-            "label": "Swap mouse test",
+            "label": "Swap Mouse",
             "options": "select"
           },
           {
-            "label": "Swap USB port test",
+            "label": "Swap USB Port",
             "options": "select"
           },
           {
-            "label": "Mouse test on another machine",
+            "label": "Mouse test on other machine",
             "options": "select"
           },
           {
@@ -2399,13 +2399,13 @@ const LEVELS = {
         "defaultPart": "Mouse Replacement",
         "common": [
           {
-            "label": "Mouse test on another machine",
+            "label": "Mouse test on other machine",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Swap mouse test",
+            "label": "Swap Mouse",
             "options": "swap"
           },
           {
@@ -2433,13 +2433,13 @@ const LEVELS = {
         "defaultPart": "Mouse Replacement",
         "common": [
           {
-            "label": "Swap app test",
+            "label": "Swap App",
             "options": "swap",
             "text": false,
             "diag": false
           },
           {
-            "label": "Mouse test on another machine",
+            "label": "Mouse test on other machine",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2486,7 +2486,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Wi-Fi / Hotspot test",
+            "label": "Swap Wi-Fi / Hotspot",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2541,7 +2541,7 @@ const LEVELS = {
         "defaultPart": "LAN Port / Mainboard",
         "common": [
           {
-            "label": "Swap LAN cable test",
+            "label": "Swap LAN cable",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2614,7 +2614,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Bluetooth device test",
+            "label": "Swap Bluetooth Device",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2700,7 +2700,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap SIM test",
+            "label": "Swap SIM",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2737,7 +2737,7 @@ const LEVELS = {
         "defaultPart": "Smart Card Reader / Mainboard",
         "common": [
           {
-            "label": "Swap Smart Card test",
+            "label": "Swap Smart Card",
             "options": "swap"
           },
           {
@@ -2796,7 +2796,7 @@ const LEVELS = {
             "diag": true
           },
           {
-            "label": "Swap SSD test",
+            "label": "Swap SSD",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2880,7 +2880,7 @@ const LEVELS = {
             "diag": true
           },
           {
-            "label": "Swap HDD test",
+            "label": "Swap HDD",
             "options": "swap",
             "text": false,
             "diag": false
@@ -2940,7 +2940,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -2983,7 +2983,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3008,7 +3008,7 @@ const LEVELS = {
         "defaultPart": "Audio Jack / Mainboard",
         "common": [
           {
-            "label": "Swap headphone test",
+            "label": "Swap Headphone",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3026,7 +3026,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3075,7 +3075,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3118,7 +3118,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3161,7 +3161,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3212,7 +3212,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update",
+            "label": "Audio Driver Update",
             "options": "select"
           },
           {
@@ -3247,14 +3247,14 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Issue happens on all apps",
-            "options": "yesno",
+            "label": "Windows Camera App",
+            "options": "select",
             "text": false,
             "diag": false
           },
           {
-            "label": "Windows Camera App",
-            "options": "select",
+            "label": "Issue happens on all apps",
+            "options": "yesno",
             "text": false,
             "diag": false
           },
@@ -3266,6 +3266,12 @@ const LEVELS = {
           },
           {
             "label": "Uninstall Camera Driver and Restart",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Camera Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3314,7 +3320,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Camera Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3367,7 +3373,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Driver Update / Lenovo Vantage",
+            "label": "Camera Driver Update / Lenovo Vantage",
             "options": "select"
           },
           {
@@ -3428,7 +3434,7 @@ const LEVELS = {
         "defaultPart": "Touchpad / Mainboard",
         "common": [
           {
-            "label": "External mouse works",
+            "label": "Mouse works",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -3446,7 +3452,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Touchpad Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3471,7 +3477,7 @@ const LEVELS = {
         "defaultPart": "ClickPad / C-cover",
         "common": [
           {
-            "label": "External mouse works",
+            "label": "Mouse works",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -3483,7 +3489,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Touchpad Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3514,7 +3520,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "External mouse test",
+            "label": "Mouse test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3526,7 +3532,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "Touchpad Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -3557,13 +3563,13 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Driver Update",
+            "label": "TrackPoint Driver Update",
             "options": "select",
             "text": false,
             "diag": false
           },
           {
-            "label": "External mouse works",
+            "label": "Mouse works",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -3701,6 +3707,315 @@ const LEVELS = {
       }
     }
   },
+  "dock": {
+    "name": "Dock",
+    "symptoms": {
+      "usb_a_not_working": {
+        "name": "USB-A",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap USB-A Port",
+            "options": "swap"
+          },
+          {
+            "label": "USB Mouse / Keyboard test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "displayport_not_working": {
+        "name": "DisplayPort",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap DisplayPort cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "hdmi_not_working": {
+        "name": "HDMI",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap HDMI cable",
+            "options": "swap"
+          },
+          {
+            "label": "HDMI Port on notebook test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "lan_not_working": {
+        "name": "LAN",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Wi-Fi test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap LAN cable",
+            "options": "swap"
+          },
+          {
+            "label": "LAN Port on notebook test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "audio_jack_not_working": {
+        "name": "Audio Jack",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap Headphone",
+            "options": "swap"
+          },
+          {
+            "label": "Audio Jack on notebook test",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "dock_not_charging": {
+        "name": "Not charging",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap Adapter",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "dock_not_detected": {
+        "name": "Not detected",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      },
+      "external_monitor_flickering": {
+        "name": "Monitor flickering",
+        "defaultResult": "Escalate L2",
+        "defaultPart": "Software Troubleshooting",
+        "common": [
+          {
+            "label": "Swap HDMI / DisplayPort cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap USB-C cable",
+            "options": "swap"
+          },
+          {
+            "label": "Swap Dock",
+            "options": "swap"
+          },
+          {
+            "label": "Lenovo Vantage Update",
+            "options": "select"
+          },
+          {
+            "label": "Dock Firmware Update",
+            "options": "select"
+          },
+          {
+            "label": "Physical damage / Liquid spilled",
+            "options": "yesno"
+          },
+          {
+            "label": "Other issue",
+            "options": "yesno",
+            "text": true
+          }
+        ]
+      }
+    }
+  },
   "bios": {
     "name": "BIOS",
     "symptoms": {
@@ -3734,7 +4049,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "ต้องใช้รหัสเดิมในการปลดล็อกหรือแก้ไข หากไม่ทราบรหัสจำเป็นต้องเปลี่ยน Mainboard และไม่ครอบคลุมการรับประกัน"
+        "description": "BIOS Password เป็นรหัสผ่านที่ใช้ป้องกันการเข้าถึง BIOS หรือการใช้งานบางส่วนของระบบ หากไม่ทราบรหัสผ่าน จะไม่สามารถเข้าสู่ BIOS หรือดำเนินการตามสิทธิ์ที่กำหนดได้"
       },
       "svp": {
         "name": "Supervisor Password",
@@ -3766,7 +4081,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "ต้องใช้รหัสเดิมในการปลดล็อกหรือแก้ไข หากไม่ทราบรหัสจำเป็นต้องเปลี่ยน Mainboard และไม่ครอบคลุมการรับประกัน"
+        "description": "Supervisor Password เป็นรหัสผ่านระดับผู้ดูแลสำหรับป้องกันการเปลี่ยนแปลงการตั้งค่า BIOS หากไม่ทราบรหัสผ่าน จะไม่สามารถแก้ไขการตั้งค่า BIOS ได้"
       }
     }
   },
@@ -3809,7 +4124,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "BIOS ตรวจพบว่าการตั้งค่าระบบผิดปกติหรือข้อมูล BIOS เปลี่ยนแปลง"
+        "description": "BIOS ตรวจพบว่าค่าการตั้งค่าระบบ (BIOS Configuration) มีการเปลี่ยนแปลง หรือข้อมูลการตั้งค่าไม่ตรงกับที่บันทึกไว้ อาจเกิดหลังการอัปเดต BIOS, การรีเซ็ต BIOS หรือการเปลี่ยน CMOS Battery"
       },
       "e0188": {
         "name": "Error 0188 : Invalid RFID serialization information area",
@@ -3841,7 +4156,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "ข้อมูล RFID หรือข้อมูลประจำเครื่องใน BIOS ไม่ถูกต้อง"
+        "description": "BIOS ตรวจพบข้อมูล RFID Serialization ไม่ถูกต้องหรือสูญหาย ซึ่งอาจเกิดจากการเปลี่ยน Mainboard หรือข้อมูลระบบไม่สมบูรณ์"
       },
       "e0190": {
         "name": "Error 0190 : Critical low-battery error",
@@ -3855,7 +4170,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap Adapter test",
+            "label": "Swap Adapter",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3873,7 +4188,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "แบตเตอรี่มีพลังงานต่ำเกินกว่าจะเริ่มต้นระบบได้"
+        "description": "แบตเตอรี่มีระดับพลังงานต่ำจนระบบไม่สามารถเริ่มต้นหรือดำเนินการต่อได้ มักเกี่ยวข้องกับสถานะแบตเตอรี่ การชาร์จ หรืออุปกรณ์จ่ายไฟ"
       },
       "e0271": {
         "name": "Error 0271 : Date and time error",
@@ -3905,13 +4220,13 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "วันที่และเวลาของระบบไม่ถูกต้อง"
+        "description": "วันที่และเวลาของระบบไม่ถูกต้อง มักเกิดจากค่า BIOS ถูกรีเซ็ต, CMOS/RTC Battery อ่อน หรือไม่ได้ตั้งค่าวันที่และเวลาใหม่"
       },
       "e1802": {
         "name": "Error 1802 : Unauthorized network card is plugged in",
         "defaultResult": "Escalate L2",
         "defaultPart": "Wireless Card / Mainboard",
-        "description": "ตรวจพบอุปกรณ์ Wireless ที่ระบบไม่รองรับหรือไม่ได้รับอนุญาต",
+        "description": "BIOS ตรวจพบอุปกรณ์เครือข่ายไร้สายที่ไม่รองรับหรือไม่ได้รับอนุญาตให้ใช้งานกับเครื่องรุ่นนี้ อาจเกิดหลังมีการเปลี่ยน WLAN/WWAN Card",
         "common": [
           {
             "label": "Error photo provided",
@@ -3936,7 +4251,7 @@ const LEVELS = {
         "name": "Error 1962 : No operating system found",
         "defaultResult": "Dispatch",
         "defaultPart": "SSD / OS Reinstall / Mainboard",
-        "description": "ไม่พบระบบปฏิบัติการสำหรับบูตเข้า Windows",
+        "description": "BIOS ไม่พบระบบปฏิบัติการที่สามารถบูตได้ อาจเกิดจากลำดับการบูตไม่ถูกต้อง หรืออุปกรณ์จัดเก็บข้อมูลไม่พร้อมใช้งาน",
         "common": [
           {
             "label": "BIOS detects storage",
@@ -3974,7 +4289,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap SSD / HDD test",
+            "label": "Swap SSD / HDD",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3992,7 +4307,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "BIOS ไม่สามารถตรวจพบ SSD หรืออุปกรณ์จัดเก็บข้อมูลได้"
+        "description": "BIOS ไม่สามารถตรวจพบอุปกรณ์จัดเก็บข้อมูล หรือการสื่อสารกับ Storage Device ล้มเหลว อาจเกี่ยวข้องกับ SSD/HDD หรือการเชื่อมต่อภายในเครื่อง"
       },
       "e2101": {
         "name": "Error 2101 : Detection error on HDD",
@@ -4006,7 +4321,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Swap HDD test",
+            "label": "Swap HDD",
             "options": "swap",
             "text": false,
             "diag": false
@@ -4024,7 +4339,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "BIOS ไม่สามารถตรวจพบ HDD ได้"
+        "description": "BIOS ตรวจพบปัญหาการสื่อสารกับ HDD หรือไม่สามารถตรวจพบ HDD ได้ตามปกติ อาจเกี่ยวข้องกับตัว HDD หรือการเชื่อมต่อ"
       },
       "e2200": {
         "name": "Error 2200 : Machine Type and Serial Number are invalid",
@@ -4056,7 +4371,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "ไม่พบข้อมูล Machine Type หรือ Serial Number ของเครื่อง"
+        "description": "ข้อมูล Machine Type หรือ Serial Number ใน BIOS ไม่ถูกต้อง สูญหาย หรือไม่ตรงกับข้อมูลของเครื่อง มักเกี่ยวข้องกับข้อมูลระบบใน Mainboard"
       },
       "e2201": {
         "name": "Error 2201 : Machine UUID is invalid",
@@ -4088,7 +4403,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "ไม่พบข้อมูล UUID ของเครื่อง หรือข้อมูลไม่ถูกต้อง"
+        "description": "ข้อมูล UUID ของเครื่องไม่ถูกต้อง สูญหาย หรือไม่ได้ถูกบันทึกใน BIOS อย่างสมบูรณ์ มักเกี่ยวข้องกับข้อมูลระบบใน Mainboard"
       },
       "boot_missing": {
         "name": "Boot Device Missing",
@@ -4126,7 +4441,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "ไม่พบอุปกรณ์สำหรับบูตระบบปฏิบัติการ"
+        "description": "ระบบไม่พบอุปกรณ์ที่สามารถใช้บูตเข้าสู่ระบบปฏิบัติการได้ อาจเกิดจาก Storage ไม่ถูกตรวจพบ หรือลำดับการบูตไม่ถูกต้อง"
       },
       "pxe": {
         "name": "PXE",
@@ -4162,7 +4477,7 @@ const LEVELS = {
             "diag": false
           }
         ],
-        "description": "เครื่องพยายามบูตผ่านระบบเครือข่าย เนื่องจากไม่พบอุปกรณ์สำหรับบูต"
+        "description": "เครื่องพยายามบูตผ่านระบบเครือข่าย (PXE) เพราะไม่พบอุปกรณ์หรือระบบปฏิบัติการที่สามารถบูตได้ในลำดับการบูตปัจจุบัน"
       }
     }
   },
@@ -4435,6 +4750,32 @@ const RELATED_GUIDES = {
     "fan_error": [],
     "fan_noise": [],
     "fan_spin_high": []
+  },
+  "dock": {
+    "usb_a_not_working": [
+      "lenovo_vantage_update"
+    ],
+    "displayport_not_working": [
+      "lenovo_vantage_update"
+    ],
+    "hdmi_not_working": [
+      "lenovo_vantage_update"
+    ],
+    "lan_not_working": [
+      "lenovo_vantage_update"
+    ],
+    "audio_jack_not_working": [
+      "lenovo_vantage_update"
+    ],
+    "dock_not_charging": [
+      "lenovo_vantage_update"
+    ],
+    "dock_not_detected": [
+      "lenovo_vantage_update"
+    ],
+    "external_monitor_flickering": [
+      "lenovo_vantage_update"
+    ]
   },
   "bios": {
     "bios_pw": [

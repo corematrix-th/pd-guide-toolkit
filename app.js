@@ -15,6 +15,7 @@ function getSymptomName(){
 
 const PRODUCT_CAPABILITY_EXCLUDE = {
   desktop: {
+    dock: ['usb_a_not_working', 'displayport_not_working', 'hdmi_not_working', 'lan_not_working', 'audio_jack_not_working', 'dock_not_charging', 'dock_not_detected', 'external_monitor_flickering'],
     charging: ["typec", "runtime", "swollen", "slow_charge", "not_detect"],
     touchpad: ["cursor", "click", "jump", "track"],
     camera: ["face_recognition", "lock_on_leave"],
@@ -23,6 +24,7 @@ const PRODUCT_CAPABILITY_EXCLUDE = {
     error: ["e0190"]
   },
   aio: {
+    dock: ['usb_a_not_working', 'displayport_not_working', 'hdmi_not_working', 'lan_not_working', 'audio_jack_not_working', 'dock_not_charging', 'dock_not_detected', 'external_monitor_flickering'],
     charging: ["typec", "runtime", "swollen", "slow_charge", "not_detect"],
     touchpad: ["cursor", "click", "jump", "track"],
     camera: ["lock_on_leave"],
@@ -31,6 +33,7 @@ const PRODUCT_CAPABILITY_EXCLUDE = {
     error: ["e0190"]
   },
   ideapad: {
+    dock: ['usb_a_not_working', 'displayport_not_working', 'hdmi_not_working', 'lan_not_working', 'audio_jack_not_working', 'dock_not_charging', 'dock_not_detected', 'external_monitor_flickering'],
     touchpad: ["track"],
     keyboard: ["left_ctrl"],
     camera: ["lock_on_leave"],
@@ -102,12 +105,13 @@ function withDisplayQuestions(sym){
 }
 
 function isFruPnAllowed(){
-  // FRU P/N should only be requested for external replaceable items.
+  // FRU P/N is requested only for optional external accessories when appropriate.
+  const product = getProductKey();
+  if(selectedLevel === "adapter_power") return true; // Adapter / Power Cord
   if(selectedLevel === "mouse") return true; // External Mouse
-  if(selectedLevel === "adapter_power") return true; // Adapter / Power cord
-  if(selectedLevel === "monitor") return true; // Monitor
+  if(selectedLevel === "keyboard" && (product === "desktop" || product === "aio")) return true; // External Keyboard
   const part = (current().defaultPart || "").toLowerCase();
-  return part.includes("external mouse") || part.includes("external keyboard") || part.includes("adapter") || part.includes("power cord") || part.includes("monitor");
+  return part.includes("external mouse") || part.includes("external keyboard") || part.includes("adapter") || part.includes("power cord");
 }
 
 function normalizeQuestionOrder(list){
@@ -305,7 +309,7 @@ function renderErrorDescription(){
   if(selectedLevel === "error" && sym.description){
     const div = document.createElement("div");
     div.className = "error-description";
-    div.textContent = "คำอธิบาย : " + sym.description;
+    div.textContent = "Description : " + sym.description;
     checklist.appendChild(div);
   }
 }
@@ -378,6 +382,47 @@ function answers(){
   });
 }
 
+function isAnsweredValue(a){
+  return !!a && a !== "-- Select --";
+}
+
+function isTailChecklist(label){
+  return label === "Physical damage / Liquid spilled" || label === "Other issue" || label === "FRU P/N";
+}
+
+function decisionProgress(ans){
+  const required = ans.filter(r => !isTailChecklist(r.q));
+  const answered = required.filter(r => isAnsweredValue(r.a));
+  return {required: required.length, answered: answered.length};
+}
+
+function hasAnyChecklistAnswer(ans){
+  return ans.some(r => isAnsweredValue(r.a));
+}
+
+function hasEnoughDecisionEvidence(ans){
+  const p = decisionProgress(ans);
+  if(p.required === 0) return hasAnyChecklistAnswer(ans);
+  // Escalate/default conclusions are last-resort results.
+  // They may appear only after all or almost all decision checklist items are answered.
+  const needed = Math.max(1, Math.ceil(p.required * 0.8));
+  return p.answered >= needed;
+}
+
+function pendingConclusion(){
+  return {
+    result: "Pending",
+    part: "-",
+    recommendation: ""
+  };
+}
+
+function normalizeConclusion(rec){
+  if(!rec) return rec;
+  if(rec.result === "FOP" || rec.result === "Escalate L2" || rec.result === "Pending") rec.part = "-";
+  return rec;
+}
+
 function answerValue(ans, label){
   const hit = ans.find(x => x.q === label);
   return hit ? hit.a : undefined;
@@ -387,8 +432,8 @@ function storageEliminationRule(ans){
   if(selectedLevel !== "storage") return null;
   let part = null;
   let swapLabel = null;
-  if(selectedSymptom === "ssd") { part = "SSD"; swapLabel = "Swap SSD test"; }
-  if(selectedSymptom === "hdd") { part = "HDD"; swapLabel = "Swap HDD test"; }
+  if(selectedSymptom === "ssd") { part = "SSD"; swapLabel = "Swap SSD"; }
+  if(selectedSymptom === "hdd") { part = "HDD"; swapLabel = "Swap HDD"; }
   if(!part) return null;
 
   const bios = answerValue(ans, "BIOS detects storage");
@@ -401,10 +446,10 @@ function storageEliminationRule(ans){
 
 function monitorEliminationRule(ans){
   if(selectedLevel !== "monitor") return null;
-  const cable = answerValue(ans, "Swap HDMI/DP cable test");
-  const monitorOther = answerValue(ans, "Monitor tested on another machine");
-  const swapMonitor = answerValue(ans, "Swap monitor test");
-  const powerCord = answerValue(ans, "Swap power cord test");
+  const cable = answerValue(ans, "Swap HDMI / DisplayPort cable");
+  const monitorOther = answerValue(ans, "Monitor test on other machine");
+  const swapMonitor = answerValue(ans, "Swap Monitor");
+  const powerCord = answerValue(ans, "Swap Power Cord");
 
   if(selectedSymptom === "abnormal_line"){
     if(cable === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
@@ -421,7 +466,45 @@ function monitorEliminationRule(ans){
   return null;
 }
 
-function calculate(){
+
+function dockEliminationRule(ans){
+  if(selectedLevel !== "dock") return null;
+  const val = label => answerValue(ans, label);
+
+  // Dock decision logic must be conservative.
+  // Dispatch only when a checklist result clearly identifies the failed item.
+  // Same issue after Swap Dock must NOT dispatch Docking or Mainboard.
+  const dispatchOnWorkFine = [
+    ["Swap USB-A Port", "Docking"],
+    ["Swap HDMI / DisplayPort cable", "HDMI / DisplayPort Cable"],
+    ["Swap DisplayPort cable", "DisplayPort Cable"],
+    ["Swap HDMI cable", "HDMI Cable"],
+    ["Swap LAN cable", "LAN Cable"],
+    ["Swap Adapter", "Adapter"],
+    ["Swap USB-C cable", "USB-C Cable"],
+    ["Swap Dock", "Docking"]
+  ];
+
+  for(const [label, part] of dispatchOnWorkFine){
+    if(val(label) === "Work fine") return {result:"Dispatch", part};
+  }
+
+  // Software/Firmware resolved = FOP with no FRU part.
+  if(val("Lenovo Vantage Update") === "Work fine") return {result:"FOP", part:"-"};
+  if(val("Dock Firmware Update") === "Work fine") return {result:"FOP", part:"-"};
+
+  // Peripheral reference tests that work normally indicate the customer's external device,
+  // not the Dock, may be the cause. FOP has no FRU part.
+  if(val("USB Mouse / Keyboard test") === "Work fine") return {result:"FOP", part:"-"};
+  if(val("Headphone test") === "Work fine") return {result:"FOP", part:"-"};
+  if(val("Swap Headphone") === "Work fine") return {result:"FOP", part:"-"};
+
+  // No Dock fallback here. Global Decision State will show Pending until enough
+  // checklist evidence exists, then the symptom default may be used as last resort.
+  return null;
+}
+
+function calculateRaw(){
   const sym = withDisplayQuestions(current());
   const ans = answers();
 
@@ -432,54 +515,69 @@ function calculate(){
     }
   }
 
-  if(sym.defaultResult === "Escalate L2") return {result:"Escalate L2", part:sym.defaultPart || "-"};
-  if(sym.defaultResult === "CID") return {result:"CID", part:sym.defaultPart || "-"};
-
+  // Symptom-specific logic must run before static default results.
+  // This is required for Dock: default is safe L2, but Work fine on a swapped item must still dispatch the identified FRU.
   const storageRule = storageEliminationRule(ans);
   if(storageRule) return storageRule;
   const monitorRule = monitorEliminationRule(ans);
   if(monitorRule) return monitorRule;
+  const dockRule = dockEliminationRule(ans);
+  if(dockRule) return dockRule;
 
   for(const r of ans){
     // Cross-test logic: customer part tested on another machine.
     // Work fine = that part is OK, so do not dispatch it. Same issue = dispatch that part.
-    if(r.q.includes("Adapter works on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Adapter"};
-    if(r.q.includes("Mouse test on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Mouse Replacement"};
-    if(r.q.includes("Keyboard test with other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Keyboard"};
-    if(r.q.includes("Monitor tested on another machine") && r.a === "Same issue") return {result:"Dispatch", part:"Monitor"};
-    if(r.q.includes("SD Card test with other machine") && r.a === "Same issue") return {result:"FOP", part:"SD Card"};
+    if(r.q.includes("Adapter test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Adapter"};
+    if(r.q.includes("Mouse test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Mouse Replacement"};
+    if(r.q.includes("Keyboard test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Keyboard"};
+    if(r.q.includes("Monitor test on other machine") && r.a === "Same issue") return {result:"Dispatch", part:"Monitor"};
+    if(r.q.includes("SD Card test on other machine") && r.a === "Same issue") return {result:"FOP", part:"SD Card"};
   }
 
   for(const r of ans){
     if(r.q.includes("Swap Adapter") && r.a === "Work fine") return {result:"Dispatch", part:"Adapter"};
-    if(r.q.includes("Swap PSU test") && r.a === "Work fine") return {result:"Dispatch", part:"PSU"};
-    if((r.q.includes("AC power cord") || r.q.includes("power cable") || r.q.includes("power cord")) && r.a === "Work fine") return {result:"Dispatch", part:"Power Cord"};
+    if(r.q.includes("Swap PSU") && r.a === "Work fine") return {result:"Dispatch", part:"PSU"};
+    if((r.q.toLowerCase().includes("ac power cord") || r.q.toLowerCase().includes("power cable") || r.q.toLowerCase().includes("power cord")) && r.a === "Work fine") return {result:"Dispatch", part:"Power Cord"};
     if((r.q.includes("Swap HDMI") || r.q.includes("Swap HDMI/DP")) && r.a === "Work fine") return {result:"Dispatch", part:"HDMI / DP Cable"};
     if(r.q.includes("Swap LAN cable") && r.a === "Work fine") return {result:"Dispatch", part:"LAN Cable"};
-    if(r.q.includes("Swap USB device") && r.a === "Work fine") return {result:"Dispatch", part:"USB Device"};
+    if(r.q.includes("Swap DisplayPort cable") && r.a === "Work fine") return {result:"Dispatch", part:"DisplayPort Cable"};
+    if(r.q.includes("Swap USB-C cable") && r.a === "Work fine") return {result:"Dispatch", part:"USB-C Cable"};
+    if(r.q.includes("Swap Dock") && r.a === "Work fine") return {result:"Dispatch", part:"Dock"};
+    if(r.q.includes("Swap USB-A Port") && r.a === "Work fine") return {result:"Dispatch", part:"Dock USB-A Port"};
+    if(r.q.includes("Swap USB Device") && r.a === "Work fine") return {result:"Dispatch", part:"USB Device"};
     if(r.q.includes("Swap USB port") && r.a === "Work fine") return {result:"Dispatch", part:"USB Port"};
     if(r.q.includes("External Monitor") && r.a === "Work fine") return {result:"Dispatch", part:"LCD Panel"};
     if(r.q.includes("External Monitor") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("Monitor tested on another machine") && r.a === "Work fine") return {result:"Dispatch", part:"PC / Graphics Output"};
-    if(r.q.includes("Swap monitor test") && r.a === "Work fine") return {result:"Dispatch", part:"Monitor"};
-    if((r.q.includes("USB keyboard") || r.q.includes("Swap keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
-    if(r.q.includes("USB keyboard") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("Swap SSD / HDD test") && r.a === "Work fine") return {result:"Dispatch", part:"SSD / HDD"};
-    if(r.q.includes("Swap SSD test") && r.a === "Work fine") return {result:"Dispatch", part:"SSD"};
-    if(r.q.includes("Swap HDD test") && r.a === "Work fine") return {result:"Dispatch", part:"HDD"};
-    if(r.q.includes("Swap RAM test") && r.a === "Work fine") return {result:"Dispatch", part:"RAM"};
-    if(r.q.includes("Swap Smart Card test") && r.a === "Work fine") return {result:"Dispatch", part:"Smart Card Reader"};
-    if(r.q.includes("Swap SIM test") && r.a === "Work fine") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
-    if(r.q.includes("Swap mouse") && r.a === "Work fine") return {result:"Dispatch", part:"Mouse Replacement"};
-    if((r.q.includes("External mouse test") || r.q.includes("External mouse works")) && (r.a === "Work fine" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
-    if((r.q.includes("Headphone test") || r.q.includes("Swap headphone")) && r.a === "Work fine") return {result:"Dispatch", part:"Speaker"};
+    if(r.q.includes("Monitor test on other machine") && r.a === "Work fine") return {result:"Dispatch", part:"PC / Graphics Output"};
+    if(r.q.includes("Swap Monitor") && r.a === "Work fine") return {result:"Dispatch", part:"Monitor"};
+    if((r.q.includes("USB Keyboard") || r.q.includes("Swap Keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Work fine") return {result:"Dispatch", part:"Keyboard"};
+    if(r.q.includes("USB Keyboard") && r.a === "Same issue") return {result:"Dispatch", part:"Mainboard"};
+    if(r.q.includes("Swap SSD / HDD") && r.a === "Work fine") return {result:"Dispatch", part:"SSD / HDD"};
+    if(r.q.includes("Swap SSD") && r.a === "Work fine") return {result:"Dispatch", part:"SSD"};
+    if(r.q.includes("Swap HDD") && r.a === "Work fine") return {result:"Dispatch", part:"HDD"};
+    if(r.q.includes("Swap RAM") && r.a === "Work fine") return {result:"Dispatch", part:"RAM"};
+    if(r.q.includes("Swap Smart Card") && r.a === "Work fine") return {result:"Dispatch", part:"Smart Card Reader"};
+    if(r.q.includes("Swap SIM") && r.a === "Work fine") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
+    if(r.q.includes("Swap Mouse") && r.a === "Work fine") return {result:"Dispatch", part:"Mouse Replacement"};
+    if((r.q.includes("Mouse test") || r.q.includes("Mouse works")) && (r.a === "Work fine" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
+    if((r.q.includes("Headphone test") || r.q.includes("Swap Headphone")) && r.a === "Work fine") return {result:"Dispatch", part:"Speaker"};
     if(r.q.includes("External mic test") && r.a === "Work fine") return {result:"Dispatch", part:"Microphone"};
-    if(r.q.includes("Swap Bluetooth device") && r.a === "Work fine") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
+    if(r.q.includes("Swap Bluetooth Device") && r.a === "Work fine") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
     if((r.q.includes("Swap SD Card") || r.q.includes("SD Card test")) && r.a === "Work fine") return {result:"Dispatch", part:"SD Card Reader"};
     if(r.q.includes("Novo Button") && r.a === "Yes") return {result:"Dispatch", part:"Power Button / Top Cover"};
   }
 
-  return {result:sym.defaultResult || "Dispatch", part:sym.defaultPart || "-"};
+
+  if(!hasEnoughDecisionEvidence(ans)) return pendingConclusion();
+
+  if(sym.defaultResult === "Escalate L2") return {result:"Escalate L2", part:"-"};
+  if(sym.defaultResult === "CID") return {result:"CID", part:sym.defaultPart || "-"};
+
+  return normalizeConclusion({result:sym.defaultResult || "Dispatch", part:sym.defaultPart || "-"});
+}
+
+function calculate(){
+  return normalizeConclusion(calculateRaw());
 }
 
 function suggestion(){
@@ -499,9 +597,13 @@ function suggestion(){
 
 function updateRecommendation(){
   if(isManual()) return;
-  const rec = calculate();
+  const rec = normalizeConclusion(calculate());
   const box = el("recommendation");
-  box.innerHTML = `Result : ${rec.result}<br>Part : ${rec.part}`;
+  if(rec.result === "Pending"){
+    box.innerHTML = `Result : ${rec.result}<br>Part : ${rec.part}`;
+  }else{
+    box.innerHTML = `Result : ${rec.result}<br>Part : ${rec.part}`;
+  }
   box.className = "recommendation";
   const lower = `${rec.result} ${rec.part}`.toLowerCase();
   if(lower.includes("fop")) box.classList.add("rec-fop");
@@ -541,7 +643,7 @@ function generateText(){
     extra.split(/\r?\n/).map(x => x.trim()).filter(Boolean).forEach(x => lines.push(`- ${x}`));
   }
 
-  const rec = calculate();
+  const rec = normalizeConclusion(calculate());
   lines.push("");
   lines.push(`Conclusion: ${rec.result === "Dispatch" ? "Dispatch " + rec.part : rec.result}`);
   return lines.join("\n");
@@ -569,12 +671,12 @@ function customerStepTH(label){
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
-    "Adapter works on another machine": "รบกวนนำ Adapter ของเครื่องไปทดลองใช้งานกับเครื่อง Lenovo รุ่นที่รองรับอีกเครื่องหนึ่ง แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
-    "Swap Adapter test": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap PSU test": "หากสะดวก รบกวนสลับ PSU ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap SSD test": "หากสะดวกและมี SSD ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap HDD test": "หากสะดวกและมี HDD ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap RAM test": "หากสะดวกและมี RAM ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Adapter test on other machine": "รบกวนนำ Adapter ของเครื่องไปทดลองใช้งานกับเครื่อง Lenovo รุ่นที่รองรับอีกเครื่องหนึ่ง แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Swap Adapter": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap PSU": "หากสะดวก รบกวนสลับ PSU ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap SSD": "หากสะดวกและมี SSD ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap HDD": "หากสะดวกและมี HDD ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap RAM": "หากสะดวกและมี RAM ที่สามารถใช้งานได้ รบกวนสลับทดสอบ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Caps Lock LED works": "ตรวจสอบว่าไฟ Caps Lock ตอบสนองหรือไม่",
 
     "LED on power button": "ตรวจสอบว่าไฟแสดงสถานะบริเวณปุ่ม Power ติดหรือไม่",
@@ -582,10 +684,10 @@ function customerStepTH(label){
     "LED beside charging port": "ตรวจสอบว่าไฟแสดงสถานะบริเวณช่องชาร์จติดหรือไม่",
     "Power LED": "ตรวจสอบว่าไฟแสดงสถานะของตัวเครื่องติดหรือไม่",
     "Fan spinning": "ตรวจสอบว่าพัดลมหมุนหรือไม่",
-    "Swap Adapter test": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap other Type-C port test": "ทดสอบชาร์จกับพอร์ต Type-C ช่องอื่นของเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Adapter test with another machine": "นำ Adapter ไปทดสอบกับเครื่องอื่นที่รองรับ แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
-    "Adapter test with other machine": "นำ Adapter ไปทดสอบกับเครื่องอื่นที่รองรับ แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Swap Adapter": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap other Type-C port": "ทดสอบชาร์จกับพอร์ต Type-C ช่องอื่นของเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Adapter test on other machine": "นำ Adapter ไปทดสอบกับเครื่องอื่นที่รองรับ แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Adapter test on other machine": "นำ Adapter ไปทดสอบกับเครื่องอื่นที่รองรับ แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
     "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Novo Button": "ทดสอบกดปุ่ม Novo Button เพื่อตรวจสอบว่าเครื่องตอบสนองหรือไม่",
@@ -612,7 +714,7 @@ function customerStepTH(label){
     "Clean camera lens": "ทำความสะอาดบริเวณเลนส์กล้องและทดสอบอีกครั้ง",
     "Photo / Video provided": "รบกวนแนบรูปหรือวิดีโอขณะเกิดอาการเพิ่มเติม",
     "Specific keys listed": "ระบุปุ่มที่กดไม่ติดเพิ่มเติม",
-    "USB keyboard test": "ทดสอบใช้งานด้วย USB Keyboard ภายนอก",
+    "USB Keyboard test": "ทดสอบใช้งานด้วย USB Keyboard ภายนอก",
     "FRU P/N": "รบกวนแจ้ง FRU P/N เพิ่มเติม",
     "On-Screen Keyboard test": "ทดสอบใช้งานผ่าน On-Screen Keyboard",
     "Driver / Windows Update": "ทดสอบอัปเดต Windows และ Driver ที่เกี่ยวข้อง",
@@ -659,14 +761,14 @@ function customerStepTH(label){
     "Key stuck / sunk": "ตรวจสอบว่ามีปุ่มจม ค้าง หรือกดติดอยู่หรือไม่",
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Device Manager shows USB error": "ตรวจสอบใน Device Manager ว่ามี USB error หรือเครื่องหมายแจ้งเตือนที่เกี่ยวข้องกับ USB หรือไม่",
-    "Swap USB port test": "รบกวนสลับทดสอบกับพอร์ต USB ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap USB device test": "รบกวนสลับใช้งานกับอุปกรณ์ USB ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap USB-C port test": "รบกวนสลับทดสอบกับพอร์ต USB-C ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Swap Smart Card test": "รบกวนสลับทดสอบด้วย Smart Card ใบอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap USB Port": "รบกวนสลับทดสอบกับพอร์ต USB ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap USB Device": "รบกวนสลับใช้งานกับอุปกรณ์ USB ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap USB-C Port": "รบกวนสลับทดสอบกับพอร์ต USB-C ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap Smart Card": "รบกวนสลับทดสอบด้วย Smart Card ใบอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Device Manager shows Smart Card Reader": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Smart Card Reader หรือไม่",
-    "Swap mouse test": "รบกวนสลับทดสอบด้วย Mouse ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Mouse test on another machine": "รบกวนนำ Mouse ตัวเดิมไปทดสอบกับเครื่องอื่น แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
-    "Swap Battery test": "รบกวนสลับ Battery ก้อนใหม่หรือ Battery ที่ใช้งานได้กับ Mouse แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Swap Mouse": "รบกวนสลับทดสอบด้วย Mouse ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
+    "Mouse test on other machine": "รบกวนนำ Mouse ตัวเดิมไปทดสอบกับเครื่องอื่น แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
+    "Swap Battery": "รบกวนสลับ Battery ก้อนใหม่หรือ Battery ที่ใช้งานได้กับ Mouse แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
 
     "Can access Windows": "ตรวจสอบว่าสามารถเข้าสู่ Windows ได้หรือไม่",
     "BIOS detects storage": "ตรวจสอบว่า BIOS สามารถตรวจพบ SSD/HDD ได้หรือไม่",
@@ -705,18 +807,30 @@ function customerStepTH(label){
     "Error photo provided": "รบกวนแนบรูป Error ที่พบเพิ่มเติม",
     "Event Viewer / Dump file collected": "รบกวนเก็บข้อมูล Event Viewer หรือ Dump file เพิ่มเติมเพื่อตรวจสอบ",
     "External mic test": "ทดสอบใช้งานร่วมกับ Microphone ภายนอก",
-    "External mouse test": "ทดสอบใช้งานร่วมกับ Mouse ภายนอก",
-    "External mouse works": "ตรวจสอบว่า Mouse ภายนอกสามารถใช้งานได้ปกติหรือไม่",
+    "Mouse test": "ทดสอบใช้งานร่วมกับ Mouse ภายนอก",
+    "Mouse works": "ตรวจสอบว่า Mouse ภายนอกสามารถใช้งานได้ปกติหรือไม่",
     "FN & Ctrl Swap": "ตรวจสอบการตั้งค่า FN & Ctrl Swap ใน BIOS หรือ Lenovo Vantage",
     "FN Lock checked": "ตรวจสอบสถานะ FN Lock ว่าเปิดหรือปิดอยู่",
     "Freeze occurs": "ตรวจสอบว่าเครื่องมีอาการค้างหรือไม่",
+
+    "Audio Driver Update": "ทดสอบอัปเดต Audio Driver เป็นเวอร์ชันล่าสุด",
+    "Camera Driver Update": "ทดสอบอัปเดต Camera Driver เป็นเวอร์ชันล่าสุด",
+    "Camera Driver Update / Lenovo Vantage": "ทดสอบอัปเดต Camera Driver และ Lenovo Vantage เป็นเวอร์ชันล่าสุด",
+    "Fingerprint Driver Update / Lenovo Vantage": "ทดสอบอัปเดต Fingerprint Driver และ Lenovo Vantage เป็นเวอร์ชันล่าสุด",
+    "SD Card Reader Driver Update": "ทดสอบอัปเดต SD Card Reader Driver เป็นเวอร์ชันล่าสุด",
+    "Smart Card Driver Update": "ทดสอบอัปเดต Smart Card Driver เป็นเวอร์ชันล่าสุด",
+    "Touchpad Driver Update": "ทดสอบอัปเดต Touchpad Driver เป็นเวอร์ชันล่าสุด",
+    "TrackPoint Driver Update": "ทดสอบอัปเดต TrackPoint Driver เป็นเวอร์ชันล่าสุด",
+    "USB Driver Update / Lenovo Vantage": "ทดสอบอัปเดต USB Driver และ Lenovo Vantage เป็นเวอร์ชันล่าสุด",
+    "Swap Headphone": "ทดลองสลับ Headphone ที่ใช้งานได้",
+    "Swap HDMI / DisplayPort cable": "ทดลองสลับสาย HDMI หรือ DisplayPort",
     "Graphics Driver Update": "ทดสอบอัปเดต Driver การ์ดจอเป็นเวอร์ชันล่าสุด",
     "Hotkey Driver Update": "ทดสอบอัปเดต Hotkey Driver เป็นเวอร์ชันล่าสุด",
     "Issue occurs all apps": "ตรวจสอบว่าอาการเกิดขึ้นกับทุกโปรแกรมหรือไม่",
     "Keyboard / Touchpad affected by swollen battery": "ตรวจสอบว่า Keyboard / Touchpad ได้รับผลกระทบจาก Battery บวมหรือไม่",
     "Keyboard Online Test": "ทดสอบ Keyboard ผ่าน Online Keyboard Test",
     "Keyboard backlight hotkey test": "ทดสอบปุ่มลัดสำหรับเปิด/ปิดไฟ Keyboard Backlight",
-    "Keyboard test with other machine": "นำ Keyboard ไปทดสอบกับเครื่องอื่น",
+    "Keyboard test on other machine": "นำ Keyboard ไปทดสอบกับเครื่องอื่น",
     "LAN Driver Update": "ทดสอบอัปเดต Driver LAN เป็นเวอร์ชันล่าสุด",
     "Lenovo Hotkey Features update": "ทดสอบอัปเดต Lenovo Hotkey Features เป็นเวอร์ชันล่าสุด",
     "Lenovo Vantage Update": "ทดสอบอัปเดต Lenovo Vantage เป็นเวอร์ชันล่าสุด",
@@ -724,17 +838,16 @@ function customerStepTH(label){
     "Load BIOS default": "โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง",
     "Load default BIOS": "โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง",
     "Microphone enhancement disabled": "ทดสอบปิด Microphone Enhancement แล้วทดสอบอีกครั้ง",
-    "Monitor tested on another machine": "นำ Monitor ไปทดสอบกับเครื่องอื่น",
+    "Monitor test on other machine": "นำ Monitor ไปทดสอบกับเครื่องอื่น",
     "Network boot disabled": "ตรวจสอบว่าได้ปิด Network Boot แล้วหรือไม่",
     "Noise occurs all apps": "ตรวจสอบว่าเสียงผิดปกติเกิดขึ้นกับทุกโปรแกรมหรือไม่",
     "Noise occurs all the time": "ตรวจสอบว่าเสียงผิดปกติเกิดขึ้นตลอดเวลาหรือไม่",
     "Original Adapter used": "ตรวจสอบว่าใช้งาน Adapter เดิมของเครื่องหรือ Adapter ที่รองรับรุ่นนี้",
     "Password / PIN reset": "ทดสอบ Reset Password / PIN ของ Windows",
     "Pixel location confirmed": "ตรวจสอบตำแหน่ง Pixel ที่ผิดปกติบนหน้าจอ",
-    "Power drain": "ทำ Power Drain เพื่อเคลียร์ไฟค้างในตัวเครื่อง",
     "Proof of ownership checked": "ตรวจสอบหลักฐานความเป็นเจ้าของเครื่องตามขั้นตอน",
     "RTC battery / CMOS check": "ตรวจสอบ RTC Battery / CMOS ว่าทำงานปกติหรือไม่",
-    "SD Card test with other machine": "นำ SD Card ไปทดสอบกับเครื่องอื่น",
+    "SD Card test on other machine": "นำ SD Card ไปทดสอบกับเครื่องอื่น",
     "SIM card detected": "ตรวจสอบว่าเครื่องสามารถตรวจพบ SIM Card หรือไม่",
     "SIM detected": "ตรวจสอบว่าเครื่องสามารถตรวจพบ SIM หรือไม่",
     "SIM tray damage": "ตรวจสอบถาด SIM ว่ามีร่องรอยชำรุดหรือไม่",
@@ -743,27 +856,27 @@ function customerStepTH(label){
     "Set date and time in BIOS": "ตั้งค่าวันที่และเวลาใน BIOS ให้ถูกต้อง",
     "Specific hotkey listed": "ระบุปุ่ม Hotkey ที่มีปัญหาเพิ่มเติม",
     "Stop code / Error code collected": "รบกวนแจ้ง Stop Code หรือ Error Code ที่พบเพิ่มเติม",
-    "Swap AC power cord test": "ทดสอบสลับสาย AC Power Cord เส้นอื่นที่ใช้งานได้",
-    "Swap Adapter / Power cable test": "ทดสอบสลับ Adapter หรือสาย Power Cable ที่ใช้งานได้",
-    "Swap Bluetooth device test": "ทดสอบเชื่อมต่อกับอุปกรณ์ Bluetooth ตัวอื่นที่ใช้งานได้",
-    "Swap HDMI cable test": "ทดสอบสลับสาย HDMI เส้นอื่นที่ใช้งานได้",
-    "Swap HDMI/DP cable test": "ทดสอบสลับสาย HDMI/DP เส้นอื่นที่ใช้งานได้",
-    "Swap LAN cable test": "ทดสอบสลับสาย LAN เส้นอื่นที่ใช้งานได้",
-    "Swap SD Card test": "ทดสอบสลับ SD Card ใบอื่นที่ใช้งานได้",
-    "Swap SIM test": "ทดสอบสลับ SIM Card ใบอื่นที่ใช้งานได้",
-    "Swap SSD / HDD test": "หากสะดวก รบกวนสลับ SSD/HDD ที่ใช้งานได้มาทดสอบ",
-    "Swap Wi-Fi / Hotspot test": "ทดสอบเชื่อมต่อ Wi-Fi อื่น หรือ Hotspot จากโทรศัพท์มือถือ",
-    "Swap app test": "ทดสอบใช้งานผ่านโปรแกรมอื่นที่รองรับ",
-    "Swap headphone test": "ทดสอบใช้งานร่วมกับหูฟังตัวอื่นที่ใช้งานได้",
-    "Swap keyboard test": "ทดสอบสลับ Keyboard ตัวอื่นที่ใช้งานได้",
-    "Swap monitor test": "ทดสอบสลับ Monitor ตัวอื่นที่ใช้งานได้",
-    "Swap power cable test": "ทดสอบสลับสาย Power Cable เส้นอื่นที่ใช้งานได้",
-    "Swap power cord test": "ทดสอบสลับสาย Power Cord เส้นอื่นที่ใช้งานได้",
-    "Swap power outlet test": "ทดสอบเสียบใช้งานกับปลั๊กไฟช่องอื่น",
+    "Swap AC Power Cord": "ทดสอบสลับสาย AC Power Cord เส้นอื่นที่ใช้งานได้",
+    "Swap Adapter / Power Cable": "ทดสอบสลับ Adapter หรือสาย Power Cable ที่ใช้งานได้",
+    "Swap Bluetooth Device": "ทดสอบเชื่อมต่อกับอุปกรณ์ Bluetooth ตัวอื่นที่ใช้งานได้",
+    "Swap HDMI cable": "ทดสอบสลับสาย HDMI เส้นอื่นที่ใช้งานได้",
+    "Swap HDMI / DisplayPort cable": "ทดสอบสลับสาย HDMI/DP เส้นอื่นที่ใช้งานได้",
+    "Swap LAN cable": "ทดสอบสลับสาย LAN เส้นอื่นที่ใช้งานได้",
+    "Swap SD Card": "ทดสอบสลับ SD Card ใบอื่นที่ใช้งานได้",
+    "Swap SIM": "ทดสอบสลับ SIM Card ใบอื่นที่ใช้งานได้",
+    "Swap SSD / HDD": "หากสะดวก รบกวนสลับ SSD/HDD ที่ใช้งานได้มาทดสอบ",
+    "Swap Wi-Fi / Hotspot": "ทดสอบเชื่อมต่อ Wi-Fi อื่น หรือ Hotspot จากโทรศัพท์มือถือ",
+    "Swap App": "ทดสอบใช้งานผ่านโปรแกรมอื่นที่รองรับ",
+    "Swap Headphone": "ทดสอบใช้งานร่วมกับหูฟังตัวอื่นที่ใช้งานได้",
+    "Swap Keyboard": "ทดสอบสลับ Keyboard ตัวอื่นที่ใช้งานได้",
+    "Swap Monitor": "ทดสอบสลับ Monitor ตัวอื่นที่ใช้งานได้",
+    "Swap Power Cable": "ทดสอบสลับสาย Power Cable เส้นอื่นที่ใช้งานได้",
+    "Swap Power Cord": "ทดสอบสลับสาย Power Cord เส้นอื่นที่ใช้งานได้",
+    "Swap Power Outlet": "ทดสอบเสียบใช้งานกับปลั๊กไฟช่องอื่น",
     "System Restore": "ทดสอบทำ System Restore ย้อนกลับไปก่อนเกิดอาการ",
     "Touchpad enabled in Settings": "ตรวจสอบว่า Touchpad ถูกเปิดใช้งานใน Settings ของ Windows หรือไม่",
     "TrackPoint enabled in BIOS": "ตรวจสอบว่า TrackPoint ถูก Enable ใน BIOS หรือไม่",
-    "USB mouse / keyboard test": "ทดสอบใช้งานร่วมกับ USB Mouse หรือ USB Keyboard ภายนอก",
+    "USB Mouse / Keyboard test": "ทดสอบใช้งานร่วมกับ USB Mouse หรือ USB Keyboard ภายนอก",
     "USB to LAN Adapter test": "ทดสอบใช้งานร่วมกับ USB to LAN Adapter",
     "Uninstall Audio Driver and Restart": "ทดสอบถอนติดตั้ง Audio Driver และ Restart เครื่อง",
     "Uninstall Bluetooth Driver and Restart": "ทดสอบถอนติดตั้ง Bluetooth Driver และ Restart เครื่อง",
@@ -773,7 +886,23 @@ function customerStepTH(label){
     "WWAN Driver Update": "ทดสอบอัปเดต Driver WWAN เป็นเวอร์ชันล่าสุด",
     "WWAN device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ WWAN หรือไม่",
     "Windows Installation": "ทดสอบติดตั้ง Windows ใหม่",
-    "Video clip provided": "รบกวนแนบคลิปวิดีโอขณะเกิดอาการเพิ่มเติม"
+    "Video clip provided": "รบกวนแนบคลิปวิดีโอขณะเกิดอาการเพิ่มเติม",
+    "Swap USB-A Port": "ทดลองเปลี่ยนไปใช้งานพอร์ต USB-A ช่องอื่นบน Dock",
+    "USB Mouse / Keyboard test": "ทดลองใช้งานด้วย USB Mouse หรือ USB Keyboard",
+    "Swap USB-C cable": "ทดลองสลับสาย USB-C",
+    "Swap Dock": "ทดลองสลับ Dock",
+    "Dock Firmware Update": "อัปเดต Dock Firmware ให้เป็นเวอร์ชันล่าสุด",
+    "Lenovo Vantage Update": "อัปเดตผ่าน Lenovo Vantage ให้เป็นเวอร์ชันล่าสุด",
+    "Swap DisplayPort cable": "ทดลองสลับสาย DisplayPort",
+    "Swap HDMI cable": "ทดลองสลับสาย HDMI",
+    "HDMI Port on notebook test": "ทดลองเชื่อมต่อจอภาพผ่านพอร์ต HDMI ของเครื่องคอมพิวเตอร์โดยตรง",
+    "Wi-Fi test": "ทดลองเชื่อมต่ออินเทอร์เน็ตผ่าน Wi-Fi",
+    "Swap LAN cable": "ทดลองสลับสาย LAN",
+    "LAN Port on notebook test": "ทดลองเชื่อมต่อสาย LAN เข้ากับเครื่องคอมพิวเตอร์โดยตรง",
+    "Built-in Speaker test": "ทดลองใช้งานลำโพงของเครื่องคอมพิวเตอร์",
+    "Headphone test": "ทดลองใช้งานด้วย Headphone",
+    "Audio Jack on notebook test": "ทดลองเชื่อมต่อ Headphone กับ Audio Jack ของเครื่องคอมพิวเตอร์โดยตรง",
+    "Swap Adapter": "ทดลองสลับ Adapter"
   };
   return map[label] || label;
 }
@@ -791,35 +920,63 @@ function customerStepEN(label){
     "Power Reset / Emergency Reset": "Please perform Power Reset / Emergency Reset to clear residual power, then let us know whether the issue remains or works fine.",
     "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
     "Can boot into Safe Mode": "Please boot the system into Safe Mode and let us know whether the issue still occurs.",
-    "Adapter works on another machine": "Please test the Adapter with another compatible Lenovo machine and let us know whether it works fine.",
-    "Swap Adapter test": "Please test the system with another working Adapter and let us know whether the issue remains or works fine.",
-    "Swap PSU test": "Please test the system with another working PSU and let us know whether the issue remains or works fine.",
-    "Swap SSD test": "If a known-good SSD is available, please swap it for testing and let us know whether the issue remains or works fine.",
-    "Swap HDD test": "If a known-good HDD is available, please swap it for testing and let us know whether the issue remains or works fine.",
-    "Swap RAM test": "If known-good RAM is available, please swap it for testing and let us know whether the issue remains or works fine.",
+    "Adapter test on other machine": "Please test the Adapter with another compatible Lenovo machine and let us know whether it works fine.",
+    "Swap Adapter": "Please test the system with another working Adapter and let us know whether the issue remains or works fine.",
+    "Swap PSU": "Please test the system with another working PSU and let us know whether the issue remains or works fine.",
+    "Swap SSD": "If a known-good SSD is available, please swap it for testing and let us know whether the issue remains or works fine.",
+    "Swap HDD": "If a known-good HDD is available, please swap it for testing and let us know whether the issue remains or works fine.",
+    "Swap RAM": "If known-good RAM is available, please swap it for testing and let us know whether the issue remains or works fine.",
     "Caps Lock LED works": "Check whether the Caps Lock LED responds.",
-    "Swap USB port test": "Please test with another USB port on the machine and let us know whether the issue remains or works fine.",
-    "Swap USB device test": "Please test with another known-good USB device and let us know whether the issue remains or works fine.",
-    "Swap USB-C port test": "Please test with another USB-C port on the machine and let us know whether the issue remains or works fine.",
-    "Swap Smart Card test": "Please test with another known-good Smart Card and let us know whether the issue remains or works fine.",
+    "Swap USB Port": "Please test with another USB port on the machine and let us know whether the issue remains or works fine.",
+    "Swap USB Device": "Please test with another known-good USB device and let us know whether the issue remains or works fine.",
+    "Swap USB-C Port": "Please test with another USB-C port on the machine and let us know whether the issue remains or works fine.",
+    "Swap Smart Card": "Please test with another known-good Smart Card and let us know whether the issue remains or works fine.",
     "Device Manager shows Smart Card Reader": "Please check Device Manager and confirm whether the Smart Card Reader is detected.",
-    "Swap mouse test": "Please test with another known-good mouse and let us know whether the issue remains or works fine.",
-    "Mouse test on another machine": "Please test the same mouse on another machine and let us know whether it works fine.",
-    "Swap Battery test": "Please replace the mouse battery with a new or known-good battery and let us know whether the issue remains or works fine.",
+    "Swap Mouse": "Please test with another known-good mouse and let us know whether the issue remains or works fine.",
+    "Mouse test on other machine": "Please test the same mouse on another machine and let us know whether it works fine.",
+    "Swap Battery": "Please replace the mouse battery with a new or known-good battery and let us know whether the issue remains or works fine.",
 
     "LED on power button": "Check whether the LED on the power button is on.",
     "LED beside Type-C port": "Check whether the LED beside the Type-C charging port is on.",
-    "Swap Adapter test": "Please test the system with another working Adapter and let us know whether the issue remains or works fine.",
-    "Swap other Type-C port test": "Test with another Type-C charging port.",
-    "Adapter test with another machine": "Test the Adapter with another machine.",
+    "Swap Adapter": "Please test the system with another working Adapter and let us know whether the issue remains or works fine.",
+    "Swap other Type-C port": "Test with another Type-C charging port.",
+    "Adapter test on other machine": "Test the Adapter with another machine.",
     "Emergency Reset Hole": "Please perform an Emergency Reset by inserting a pin or paper clip into the Emergency Reset hole on the bottom of the system, press and hold for approximately 10 seconds, then power the system on again.",
     "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
     "External Monitor test": "Test with an external monitor.",
+
+    "Audio Driver Update": "Please update the Audio Driver to the latest version.",
+    "Camera Driver Update": "Please update the Camera Driver to the latest version.",
+    "Camera Driver Update / Lenovo Vantage": "Please update the Camera Driver and Lenovo Vantage to the latest version.",
+    "Fingerprint Driver Update / Lenovo Vantage": "Please update the Fingerprint Driver and Lenovo Vantage to the latest version.",
+    "SD Card Reader Driver Update": "Please update the SD Card Reader Driver to the latest version.",
+    "Smart Card Driver Update": "Please update the Smart Card Driver to the latest version.",
+    "Touchpad Driver Update": "Please update the Touchpad Driver to the latest version.",
+    "TrackPoint Driver Update": "Please update the TrackPoint Driver to the latest version.",
+    "USB Driver Update / Lenovo Vantage": "Please update the USB Driver and Lenovo Vantage to the latest version.",
+    "Swap Headphone": "Please test with another known-good headphone.",
+    "Swap HDMI / DisplayPort cable": "Please swap the HDMI or DisplayPort cable.",
     "Camera Shutter": "Check whether the Camera Shutter is closed.",
     "Device Manager shows Camera": "Check if the Camera device appears in Device Manager.",
     "Windows Camera App": "Test the camera using the Windows Camera application.",
     "Uninstall Camera Driver and Restart": "Uninstall the Camera driver and restart the machine.",
     "BIOS Camera enabled": "Check whether Camera is enabled in BIOS.",
+    "Swap USB-A Port": "Test another USB-A port on the Dock.",
+    "USB Mouse / Keyboard test": "Test with a USB mouse or USB keyboard.",
+    "Swap USB-C cable": "Swap the USB-C cable.",
+    "Swap Dock": "Swap the Dock.",
+    "Dock Firmware Update": "Update the Dock Firmware to the latest version.",
+    "Lenovo Vantage Update": "Update through Lenovo Vantage to the latest version.",
+    "Swap DisplayPort cable": "Swap the DisplayPort cable.",
+    "Swap HDMI cable": "Swap the HDMI cable.",
+    "HDMI Port on notebook test": "Test the monitor through the HDMI port on the computer.",
+    "Wi-Fi test": "Test the internet connection through Wi-Fi.",
+    "Swap LAN cable": "Swap the LAN cable.",
+    "LAN Port on notebook test": "Connect the LAN cable directly to the computer.",
+    "Built-in Speaker test": "Test the built-in speaker on the computer.",
+    "Headphone test": "Test with a headphone.",
+    "Audio Jack on notebook test": "Connect the headphone directly to the audio jack on the computer.",
+    "Swap Adapter": "Swap the Adapter.",
     "Physical damage / Liquid spilled": "Check for any physical damage or liquid damage.",
     "Other issue": "Please confirm if there are any other issues with the machine."
   };

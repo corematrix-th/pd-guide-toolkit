@@ -1,3 +1,23 @@
+PD Guide Toolkit v4.7.6
+
+
+v4.7.6
+- Added Level 1: Dock, placed before BIOS.
+- Added 8 Dock symptoms with short UI names: USB-A, DisplayPort, HDMI, LAN, Audio Jack, Not charging, Not detected, and Monitor flickering.
+- Updated Dock checklist to follow Minimum Required Evidence rule.
+- Removed ambiguous / not-needed Dock checklist items from this update: Test on another machine, USB-C Port test, External Monitor test, HDMI Port test, DisplayPort test, and USB Port on notebook test.
+- Port on notebook test is used only where approved: HDMI, LAN, and Audio Jack.
+- Added Dock Email TH / Email EN mapping for active Dock checklist labels only.
+- Added LED dropdown option set with Blink support for LED checklist items.
+- Added developer documentation under docs/DEVELOPMENT_RULES.md.
+- Kept UX, layout, workflow, and main data structure unchanged.
+
+วิธีใช้งาน
+1. แตกไฟล์ ZIP
+2. เปิดโฟลเดอร์ PD_Guide_Toolkit_v4_7_6
+3. ดับเบิลคลิก index.html
+
+
 PD Guide Toolkit v4.7.3
 
 
@@ -136,3 +156,33 @@ v4.7.0
 - Updated Generate Note format: symptom is directly followed by checklist lines; Conclusion spacing remains separated.
 - Improved Email TH / Email EN instruction wording for Diagnostics, Battery Report, Minidump, Power Reset, Emergency Reset and common swap tests.
 - Updated version label to 4.7.0.
+
+V4.7.5 - Dock Logic Patch
+- Adjusted Dock conclusion logic to dispatch only by decisive checklist result.
+- Removed broad Dock default dispatch behavior that listed every possible part.
+- Dock fallback now escalates when no checklist result clearly identifies the part.
+- Added Dock logic note to docs/DEVELOPMENT_RULES.md.
+
+V4.7.5 - Dock Conclusion Logic Fix
+- Updated Dock conclusion logic to follow selected checklist evidence.
+- Removed Dock behavior that escalated when no decisive checklist was found.
+- Dock now defaults to Dispatch / Docking when all selected checks remain Same issue.
+- Swap USB-C cable = Work fine now dispatches USB-C Cable.
+- Swap Dock = Work fine now dispatches Docking.
+- Software/Firmware resolved cases now use FOP / Software Troubleshooting.
+
+V4.7.5 - Dock Logic Correction
+- Corrected Dock conclusion logic to avoid incorrect Docking dispatch.
+- Swap Dock = Work fine dispatches Docking.
+- Swap Dock = Same issue does not dispatch Docking or Mainboard.
+- Non-decisive Dock evidence now concludes Escalate L2 / Software Troubleshooting.
+- Dock logic must follow checklist evidence and must not reuse Storage/RAM/Keyboard elimination logic directly.
+
+V4.7.5 - Global Decision State Fix
+- Added global Pending state for incomplete checklist evidence.
+- Pending displays: Result = Pending, Part = -.
+- FOP now displays Part = - because no FRU is required.
+- Escalate L2 now displays Part = - and is used only after all or almost all decision checklist items are completed but no FRU can be identified.
+- Dock no longer escalates after only a few Same issue answers.
+- Swap Dock = Same issue does not dispatch Docking and does not dispatch Mainboard.
+- Dock remains Pending until there is enough evidence for Dispatch, FOP, or final Escalate L2.
