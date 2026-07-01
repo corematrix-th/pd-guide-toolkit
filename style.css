@@ -1,7 +1,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6f8;font-family:Arial,sans-serif;color:#111;font-size:11px}
 .app{max-width:1250px;margin:0 auto;padding:10px}
-.topbar{background:#fff;border:1px solid #d9e1ea;padding:9px 12px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
+.topbar{background:#fff;border:1px solid #d9e1ea;padding:9px 12px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .title{font-size:17px;font-weight:700}.byline{font-size:12px;color:#666;margin-top:2px}
 .brand{background:#d71920;color:white;font-weight:700;padding:8px 12px;border-radius:3px}
 .controlbar{display:flex;align-items:end;gap:8px;background:#fff;border:1px solid #d9e1ea;padding:8px;margin-bottom:7px}
@@ -33,7 +33,7 @@ button.dark{background:#333} button.gray,button.clear{background:#777} button.cl
 .hidden{display:none}.manual{border:1px solid #d9e1ea;background:#fafafa;padding:10px;line-height:1.6;white-space:pre-wrap}
 textarea{width:100%;height:300px;border:1px solid #cfd8e3;border-radius:2px;font-family:Consolas,monospace;font-size:11px;padding:7px}
 .version{font-size:10px;color:#777;margin-top:8px;text-align:right}
-@media(max-width:900px){.tree,.main{grid-template-columns:1fr}.controlbar{flex-wrap:wrap}.field,.field.small{width:100%}.check-row{grid-template-columns:1fr}}
+@media(max-width:900px){.tree,.main{grid-template-columns:1fr}.controlbar{flex-wrap:wrap}.field,.field.small{width:100%}.check-row{grid-template-columns:1fr}.topbar{flex-wrap:wrap}.topbar-stats{text-align:left;width:100%}}
 
 .related-guide{border:1px solid #d9e1ea;background:#fafafa;padding:7px;margin-bottom:9px;min-height:34px}
 .guide-chip{display:inline-block;background:#eef6ff;border:1px solid #b8ddff;color:#005b99;border-radius:3px;padding:4px 7px;margin:2px;cursor:pointer;font-weight:700}
@@ -276,5 +276,12 @@ textarea#note, #note{
   margin-top:6px !important;
 }
 
-.site-stats{font-size:10px;color:#666;margin-top:2px;text-align:right;letter-spacing:.1px}
+.site-stats{font-size:10px;color:#666;letter-spacing:.1px}
 .site-stats span{font-weight:600;color:#555}
+.topbar-stats{
+  text-align:right;
+  white-space:nowrap;
+  align-self:flex-start;
+  margin-top:2px;
+  padding:2px 4px;
+}

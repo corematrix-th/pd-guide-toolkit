@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>PD Guide Toolkit</title>
-  <link rel="stylesheet" href="style.css?v=4_7_9">
+  <link rel="stylesheet" href="style.css?v=4_8_0">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
   <script>
@@ -19,6 +19,9 @@
     <div>
       <div class="title">PD Guide Toolkit</div>
       <div class="byline">by Nasree Jehteh</div>
+    </div>
+    <div class="site-stats topbar-stats" aria-label="Website statistics">
+      Visitors : <span id="visitorCount">-</span> | Views : <span id="viewCount">-</span> | Online : <span id="onlineCount">-</span>
     </div>
   </div>
 
@@ -72,8 +75,7 @@
         <button class="gray" id="clearBtn">Clear</button>
       </div>
 
-      <div class="version">Version 4.7.9</div>
-      <div class="site-stats">Visitors : <span id="visitorCount">-</span> | Views : <span id="viewCount">-</span> | Online : <span id="onlineCount">-</span></div>
+      <div class="version">Version 4.8.0</div>
     </div>
   </div>
 </div>
@@ -89,8 +91,8 @@
   </div>
 </div>
 
-<script src="data.js?v=4_7_9"></script>
-<script src="app.js?v=4_7_9"></script>
+<script src="data.js?v=4_8_0"></script>
+<script src="app.js?v=4_8_0"></script>
 <script>
   // Firebase Realtime Database counter for PD Guide Toolkit.
   // Global path: siteStats/global (does not reset when toolkit version changes).
@@ -147,11 +149,28 @@
     // Views increase every page load.
     runTransaction(viewsRef, current => (current || 0) + 1).catch(() => {});
 
-    // Visitors increase once per browser, not every refresh.
-    const visitorKey = "pdGuideToolkitVisitorCounted";
-    if(!localStorage.getItem(visitorKey)){
-      await runTransaction(visitorsRef, current => (current || 0) + 1);
-      localStorage.setItem(visitorKey, "1");
+    // Visitors increase only when this browser/profile has no stored UUID.
+    // Refreshing the page keeps the same UUID and does not increase Visitors.
+    const visitorUuidKey = "pdGuideToolkitVisitorUUID";
+    const legacyVisitorKey = "pdGuideToolkitVisitorCounted";
+    let visitorUuid = localStorage.getItem(visitorUuidKey);
+
+    function createVisitorUuid(){
+      if(window.crypto && typeof window.crypto.randomUUID === "function"){
+        return window.crypto.randomUUID();
+      }
+      return `visitor-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    }
+
+    if(!visitorUuid){
+      visitorUuid = createVisitorUuid();
+      localStorage.setItem(visitorUuidKey, visitorUuid);
+
+      // Migration note: users already counted by v4.7.x should not be counted again.
+      if(!localStorage.getItem(legacyVisitorKey)){
+        await runTransaction(visitorsRef, current => (current || 0) + 1);
+        localStorage.setItem(legacyVisitorKey, "1");
+      }
     }
 
     onValue(visitorsRef, snapshot => {
