@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>PD Guide Toolkit</title>
-  <link rel="stylesheet" href="style.css?v=4_7_7">
+  <link rel="stylesheet" href="style.css?v=4_7_9">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
   <script>
@@ -72,8 +72,8 @@
         <button class="gray" id="clearBtn">Clear</button>
       </div>
 
-      <div class="version">Version 4.7.7</div>
-      <div class="site-stats">👥 <span id="visitorCount">-</span> | 🟢 <span id="onlineCount">-</span></div>
+      <div class="version">Version 4.7.9</div>
+      <div class="site-stats">Visitors : <span id="visitorCount">-</span> | Views : <span id="viewCount">-</span> | Online : <span id="onlineCount">-</span></div>
     </div>
   </div>
 </div>
@@ -89,55 +89,101 @@
   </div>
 </div>
 
-<script src="data.js?v=4_7_7"></script>
-<script src="app.js?v=4_7_7"></script>
+<script src="data.js?v=4_7_9"></script>
+<script src="app.js?v=4_7_9"></script>
 <script>
-  // Firebase Realtime Database counter.
-  // Fill this config from Firebase Console to enable Visitors / Online counter.
-  window.PD_FIREBASE_CONFIG = window.PD_FIREBASE_CONFIG || null;
+  // Firebase Realtime Database counter for PD Guide Toolkit.
+  // Global path: siteStats/global (does not reset when toolkit version changes).
+  window.PD_FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCEbXMckd0TA5p2r88sLgxH9hTpGUaGNpI",
+    authDomain: "pd-guide-toolkit.firebaseapp.com",
+    databaseURL: "https://pd-guide-toolkit-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "pd-guide-toolkit",
+    storageBucket: "pd-guide-toolkit.firebasestorage.app",
+    messagingSenderId: "348983029780",
+    appId: "1:348983029780:web:a1f53a65c8268663323701"
+  };
 </script>
 <script type="module">
   const visitorEl = document.getElementById("visitorCount");
   const onlineEl = document.getElementById("onlineCount");
+  const viewEl = document.getElementById("viewCount");
+
+  function formatCount(value){
+    const number = Number(value || 0);
+    return Number.isFinite(number) ? number.toLocaleString() : "0";
+  }
 
   async function initSiteStats(){
     if(!window.PD_FIREBASE_CONFIG){
       if(visitorEl) visitorEl.textContent = "-";
       if(onlineEl) onlineEl.textContent = "-";
+      if(viewEl) viewEl.textContent = "-";
       return;
     }
 
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
-    const { getDatabase, ref, onValue, set, push, onDisconnect, runTransaction, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js");
+    const {
+      getDatabase,
+      ref,
+      onValue,
+      set,
+      push,
+      remove,
+      onDisconnect,
+      runTransaction,
+      serverTimestamp
+    } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js");
 
     const app = initializeApp(window.PD_FIREBASE_CONFIG);
     const db = getDatabase(app);
     const basePath = "siteStats/global";
 
     const visitorsRef = ref(db, `${basePath}/visitors`);
-    const sessionKey = "pdGuideVisitorCounted";
-    if(!sessionStorage.getItem(sessionKey)){
+    const viewsRef = ref(db, `${basePath}/views`);
+    const onlineValueRef = ref(db, `${basePath}/online`);
+    const onlineUsersRef = ref(db, `${basePath}/onlineUsers`);
+
+    // Views increase every page load.
+    runTransaction(viewsRef, current => (current || 0) + 1).catch(() => {});
+
+    // Visitors increase once per browser, not every refresh.
+    const visitorKey = "pdGuideToolkitVisitorCounted";
+    if(!localStorage.getItem(visitorKey)){
       await runTransaction(visitorsRef, current => (current || 0) + 1);
-      sessionStorage.setItem(sessionKey, "1");
+      localStorage.setItem(visitorKey, "1");
     }
 
     onValue(visitorsRef, snapshot => {
-      if(visitorEl) visitorEl.textContent = (snapshot.val() || 0).toLocaleString();
+      if(visitorEl) visitorEl.textContent = formatCount(snapshot.val());
     });
 
-    const onlineRef = ref(db, `${basePath}/online`);
-    const userRef = push(onlineRef);
-    await set(userRef, { online: true, at: serverTimestamp() });
-    onDisconnect(userRef).remove();
+    onValue(viewsRef, snapshot => {
+      if(viewEl) viewEl.textContent = formatCount(snapshot.val());
+    });
 
-    onValue(onlineRef, snapshot => {
-      if(onlineEl) onlineEl.textContent = snapshot.size || 0;
+    // Presence list is stored under siteStats/global/onlineUsers.
+    // The displayed online number is also mirrored to siteStats/global/online.
+    const myOnlineRef = push(onlineUsersRef);
+    await set(myOnlineRef, {
+      online: true,
+      at: serverTimestamp(),
+      userAgent: navigator.userAgent || "unknown"
+    });
+    onDisconnect(myOnlineRef).remove();
+    window.addEventListener("beforeunload", () => remove(myOnlineRef));
+
+    onValue(onlineUsersRef, snapshot => {
+      const count = snapshot.exists() ? snapshot.size : 0;
+      if(onlineEl) onlineEl.textContent = formatCount(count);
+      set(onlineValueRef, count).catch(() => {});
     });
   }
 
   initSiteStats().catch(() => {
     if(visitorEl) visitorEl.textContent = "-";
     if(onlineEl) onlineEl.textContent = "-";
+    if(viewEl) viewEl.textContent = "-";
   });
 </script>
 </body>

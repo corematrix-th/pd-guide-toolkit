@@ -276,4 +276,5 @@ textarea#note, #note{
   margin-top:6px !important;
 }
 
-.site-stats{font-size:10px;color:#777;margin-top:2px;text-align:right}
+.site-stats{font-size:10px;color:#666;margin-top:2px;text-align:right;letter-spacing:.1px}
+.site-stats span{font-weight:600;color:#555}
