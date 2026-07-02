@@ -1,21 +1,13 @@
-PD Guide Toolkit v4.8.6
+PD Guide Toolkit v4.8.7
 
-Open index.html to use the toolkit.
+## v4.8.7 Updates
 
-Folder structure:
-- index.html, app.js, data.js, style.css: active toolkit files
-- docs/: changelog and dispatch/review rules
-- backup/: previous-version backup files when available
-
-## v4.8.6 Major Logic Audit
-- Applied Evidence First / Customer First dispatch logic across the toolkit.
-- Added accessory/cable dispatch logic: Power Cord, Adapter, HDMI Cable, DisplayPort Cable, USB-C Cable, LAN Cable.
-- Added Symptom Recommendation and Suggestion messages only when the selected symptom is incorrect.
-- Added No default next-step text for Blank Result results.
-- Added Port > Not Charge as an alias of Battery > Not Charge.
-- Maintained Email TH/EN as customer templates independent from selected checklist answers.
-
-Revision notes:
-- Normal Generate Note output now uses compact `Conclusion: Dispatch <Part>` format.
-- Result / Part are shown only in the top CONCLUSION panel, not duplicated in RESULT / EMAIL.
-- Suggested PD is hidden unless the selected symptom is incorrect or information is inconsistent.
+- Added Reset Battery guide under Battery Health related guide.
+- Added LCD Self-Test guide.
+- Updated Reset this PC guide with WinRE access by force shutdown 3 times.
+- Added Disable Audio Enhancements (External Microphone) guide and related guide for Microphone Low Sound.
+- Added ThinkCentre RAID 1 SSD Not Found During OS Installation guide.
+- Added Fn & Ctrl Key Swap guide and related guide for Keyboard Left Ctrl.
+- Updated Generate Note rules: checklist text uses lowercase with technical-term exceptions, FRU P/N stays uppercase.
+- Split ThinkPad Power Reset and Emergency Reset checklist items while keeping them adjacent.
+- Added Software / Driver / BIOS update checklist mapping with done / not test status.

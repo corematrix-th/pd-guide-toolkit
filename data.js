@@ -5,6 +5,11 @@ const APP_OPTIONS = {
     "Working",
     "Not Tested"
   ],
+  "update_status": [
+    "-- Select --",
+    "Done",
+    "Not test"
+  ],
   "detail_only": [
     "-- Select --"
   ],
@@ -4654,9 +4659,9 @@ const LEVELS = {
       },
       "reset_pc": {
         "name": "Reset this PC",
-        "guide": "Reset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เข้า Windows Recovery Environment (WinRE)\n2. เลือก Troubleshoot\n3. เลือก Reset this PC\n4. เลือก Keep my files หรือ Remove everything\n5. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nReset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เข้า Windows Recovery Environment (WinRE)\n2. เลือก Troubleshoot\n3. เลือก Reset this PC\n4. เลือก Keep my files หรือ Remove everything\n5. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nReset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เข้า Windows Recovery Environment (WinRE)\n2. เลือก Troubleshoot\n3. เลือก Reset this PC\n4. เลือก Keep my files หรือ Remove everything\n5. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nOnce completed, please provide the result back to us."
+        "guide": "Reset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset this PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nReset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset this PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nReset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset this PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nOnce completed, please provide the result back to us."
       },
       "reinstall_windows": {
         "name": "Windows Installation",
@@ -4724,6 +4729,36 @@ const LEVELS = {
         "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nLock on Leave Function\n\nวิธีปิดใน Lenovo Vantage\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device หรือ Smart Assist\n3. หาเมนู Presence Detection / Zero Touch Lock / Lock on Leave\n4. ปิดฟังก์ชัน Lock on Leave\n5. Restart เครื่องและทดสอบอีกครั้ง\n\nวิธีตรวจสอบใน BIOS (บางรุ่น)\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Security หรือ Intelligent Security\n3. ตรวจสอบ Presence Detection / Human Presence Detection\n4. Disable ฟังก์ชันที่เกี่ยวข้อง\n5. กด F10 เพื่อ Save และ Restart\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
         "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nLock on Leave Function\n\nวิธีปิดใน Lenovo Vantage\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device หรือ Smart Assist\n3. หาเมนู Presence Detection / Zero Touch Lock / Lock on Leave\n4. ปิดฟังก์ชัน Lock on Leave\n5. Restart เครื่องและทดสอบอีกครั้ง\n\nวิธีตรวจสอบใน BIOS (บางรุ่น)\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Security หรือ Intelligent Security\n3. ตรวจสอบ Presence Detection / Human Presence Detection\n4. Disable ฟังก์ชันที่เกี่ยวข้อง\n5. กด F10 เพื่อ Save และ Restart\n\nOnce completed, please provide the result back to us."
       },
+      "reset_battery": {
+        "name": "Reset Battery",
+        "guide": "Reset Battery เพื่อยืดอายุการใช้งาน\n\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Power\n3. ค้นหาหัวข้อ Battery Gauge Reset\n4. เสียบสายชาร์จไว้ระหว่างทำ Reset\n5. กด Reset และรอให้ระบบทำงานจนเสร็จ\n\nระบบจะดำเนินการอัตโนมัติ\n1. ชาร์จแบตเตอรี่จนถึง 100%\n2. ปล่อยแบตเตอรี่ลงจนเกือบ 0%\n3. ชาร์จกลับขึ้นมา 100%\n\nใช้เวลาประมาณ 4–8 ชั่วโมง\nแนะนำให้ทำช่วงกลางวัน หรือช่วงกลางคืนโดยเปิดเครื่องทิ้งไว้",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ Reset Battery ตามขั้นตอนด้านล่าง\n\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Power\n3. ค้นหาหัวข้อ Battery Gauge Reset\n4. เสียบสายชาร์จไว้ระหว่างทำ Reset\n5. กด Reset และรอให้ระบบทำงานจนเสร็จ\n\nกระบวนการจะใช้เวลาประมาณ 4–8 ชั่วโมง โดยระบบจะชาร์จแบตเตอรี่ 100% จากนั้นปล่อยแบตเตอรี่ลงเกือบ 0% และชาร์จกลับขึ้นมา 100%\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease perform Battery Gauge Reset by following the steps below.\n\n1. Open Lenovo Commercial Vantage or Lenovo Vantage.\n2. Go to Device > Power.\n3. Find Battery Gauge Reset.\n4. Keep the AC adapter connected during the reset.\n5. Click Reset and wait until the process is completed.\n\nThe process may take approximately 4–8 hours.\n\nOnce completed, please provide the result back to us."
+      },
+      "lcd_self_test": {
+        "name": "LCD Self-Test",
+        "guide": "LCD Self-Test\n\nMethod 1\n1. ถอดอุปกรณ์ภายนอกทั้งหมด\n2. เคลียร์ไฟโดยกดปุ่ม Power ค้าง 10–15 วินาที\n3. กด Fn + Left Ctrl ค้างไว้\n4. ระหว่างกดค้าง ให้กดปุ่ม Power\n5. เครื่องจะเข้าสู่ LCD Self-Test\n\nMethod 2\n1. เปิดเครื่องและกด F10 ย้ำ ๆ\n2. เข้า Lenovo Diagnostics\n3. เลือก Run Test\n4. เลือกหัวข้อ Display",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยทดสอบ LCD Self-Test ตามขั้นตอนด้านล่าง\n\nMethod 1\n1. ถอดอุปกรณ์ภายนอกทั้งหมด\n2. เคลียร์ไฟโดยกดปุ่ม Power ค้าง 10–15 วินาที\n3. กด Fn + Left Ctrl ค้างไว้\n4. ระหว่างกดค้าง ให้กดปุ่ม Power\n5. เครื่องจะเข้าสู่ LCD Self-Test\n\nMethod 2\n1. เปิดเครื่องและกด F10 ย้ำ ๆ\n2. เข้า Lenovo Diagnostics\n3. เลือก Run Test\n4. เลือกหัวข้อ Display\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease perform LCD Self-Test by following the steps below.\n\nMethod 1\n1. Disconnect all external devices.\n2. Press and hold the Power button for 10–15 seconds to clear residual power.\n3. Press and hold Fn + Left Ctrl.\n4. While holding the keys, press the Power button.\n5. The system will enter LCD Self-Test.\n\nMethod 2\n1. Power on the machine and press F10 repeatedly.\n2. Enter Lenovo Diagnostics.\n3. Select Run Test.\n4. Select Display.\n\nOnce completed, please provide the result back to us."
+      },
+      "disable_audio_enhancements_external_mic": {
+        "name": "Disable Audio Enhancements (External Microphone)",
+        "guide": "Disable Audio Enhancements (External Microphone)\n\nMethod 1: Windows Settings\n1. เปิด Settings > System > Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced > Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel > Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced > Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยปิด Audio Enhancements ของ External Microphone ตามขั้นตอนด้านล่าง\n\nMethod 1: Windows Settings\n1. เปิด Settings > System > Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced > Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel > Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced > Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบไมโครโฟนอีกครั้งและแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease disable Audio Enhancements for the External Microphone by following the steps below.\n\nMethod 1: Windows Settings\n1. Open Settings > System > Sound.\n2. Select External Microphone.\n3. Go to Advanced > Signal.\n4. Uncheck Enable audio enhancements.\n5. Click Apply and OK.\n\nMethod 2: Control Panel\n1. Open Control Panel > Sound.\n2. Go to the Recording tab.\n3. Double-click External Microphone.\n4. Go to Advanced > Signal.\n5. Uncheck Enable audio enhancements.\n6. Click Apply and OK.\n\nOnce completed, please test the microphone again and provide the result back to us."
+      },
+      "thinkcentre_raid1_ssd_not_found_os_install": {
+        "name": "ThinkCentre : RAID 1 SSD Not Found During OS Installation",
+        "guide": "ThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Windows Installation USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Windows Installation USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the guide below.\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. Download the Intel RST/RSTe Driver that matches the machine model.\n2. Extract the driver to the USB Flash Drive.\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. Enter BIOS > Devices > Storage Setup.\n2. Change Configure storage as to RAID.\n3. Press F10 to Save and Exit.\n4. Enter BIOS again.\n5. Go to Devices > Storage Setup > Intel(R) Rapid Storage Technology.\n6. Select Create RAID Volume and create RAID 1.\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot to the Windows Installation USB.\n2. On Windows Setup, select Load driver.\n3. Open the USB Flash Drive that contains the driver.\n4. Select the VMD or RST folder depending on the downloaded driver.\n5. Select Intel RST/RSTe Driver.\n6. Once the SSD is displayed, continue Windows installation.\n\nOnce completed, please provide the result back to us."
+      },
+      "fn_ctrl_key_swap": {
+        "name": "Fn & Ctrl Key Swap",
+        "guide": "Fn & Ctrl Key Swap\n\nMethod 1: Lenovo Vantage\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Input & Accessories > Keyboard\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. หากเปิดใช้งานอยู่ ให้ปิด Off\n5. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nMethod 2: BIOS\n1. เข้า BIOS\n2. ไปที่ Config > Keyboard/Mouse\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. ตั้งค่าเป็น Disabled\n5. กด F10 เพื่อ Save and Exit\n6. ทดสอบปุ่ม Left Ctrl อีกครั้ง",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยตรวจสอบ Fn & Ctrl Key Swap ตามขั้นตอนด้านล่าง\n\nMethod 1: Lenovo Vantage\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Input & Accessories > Keyboard\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. หากเปิดใช้งานอยู่ ให้ปิด Off\n5. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nMethod 2: BIOS\n1. เข้า BIOS\n2. ไปที่ Config > Keyboard/Mouse\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. ตั้งค่าเป็น Disabled\n5. กด F10 เพื่อ Save and Exit\n6. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease check Fn & Ctrl Key Swap by following the steps below.\n\nMethod 1: Lenovo Vantage\n1. Open Lenovo Commercial Vantage or Lenovo Vantage.\n2. Go to Device > Input & Accessories > Keyboard.\n3. Check Fn and Ctrl Key Swap.\n4. If it is enabled, turn it Off.\n5. Test the Left Ctrl key again.\n\nMethod 2: BIOS\n1. Enter BIOS.\n2. Go to Config > Keyboard/Mouse.\n3. Check Fn and Ctrl Key Swap.\n4. Set it to Disabled.\n5. Press F10 to Save and Exit.\n6. Test the Left Ctrl key again.\n\nOnce completed, please provide the result back to us."
+      },
       "emergency_reset": {
         "name": "Emergency Reset",
         "guide": "วิธีทำ Emergency Reset\n\n1. ถอด Adapter ออกจากเครื่อง\n2. ใช้คลิปหนีบกระดาษ (Paper Clip) กดรู Emergency Reset ค้างประมาณ 5–10 วินาที\n3. ต่อ Adapter กลับเข้าเครื่อง\n4. เปิดเครื่องและทดสอบอาการอีกครั้ง\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
@@ -4784,14 +4819,30 @@ const RELATED_GUIDES = {
     ]
   },
   "display": {
-    "abnormal_line": [],
-    "flickering": [],
-    "dim": [],
-    "black": [],
-    "color": [],
-    "ghost": [],
-    "dead": [],
-    "bright": [],
+    "abnormal_line": [
+      "lcd_self_test"
+    ],
+    "flickering": [
+      "lcd_self_test"
+    ],
+    "dim": [
+      "lcd_self_test"
+    ],
+    "black": [
+      "lcd_self_test"
+    ],
+    "color": [
+      "lcd_self_test"
+    ],
+    "ghost": [
+      "lcd_self_test"
+    ],
+    "dead": [
+      "lcd_self_test"
+    ],
+    "bright": [
+      "lcd_self_test"
+    ],
     "garbage": []
   },
   "adapter_power": {
@@ -4802,7 +4853,8 @@ const RELATED_GUIDES = {
     "typec": [],
     "runtime": [
       "battery_report",
-      "battery_health"
+      "battery_health",
+      "reset_battery"
     ],
     "swollen": [],
     "slow_charge": [
@@ -4830,7 +4882,8 @@ const RELATED_GUIDES = {
   "storage": {
     "ssd": [],
     "ssd_not_detect_windows_setup": [
-      "reinstall_windows"
+      "reinstall_windows",
+      "thinkcentre_raid1_ssd_not_found_os_install"
     ],
     "hdd": []
   },
@@ -4841,7 +4894,9 @@ const RELATED_GUIDES = {
     "mic": [],
     "echo": [],
     "low": [],
-    "mic_low": []
+    "mic_low": [
+      "disable_audio_enhancements_external_mic"
+    ]
   },
   "camera": {
     "not_work": [],
@@ -4857,7 +4912,9 @@ const RELATED_GUIDES = {
     "backlight": [],
     "fn": [],
     "hotkey": [],
-    "left_ctrl": [],
+    "left_ctrl": [
+      "fn_ctrl_key_swap"
+    ],
     "auto_type": []
   },
   "mouse": {

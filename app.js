@@ -117,25 +117,97 @@ function isFruPnAllowed(){
 function normalizeQuestionOrder(list){
   const product = getProductKey();
   const tail = ["Physical damage / Liquid spilled", "Other issue", "FRU P/N"];
+  const notebookTestAfterSwapLabels = new Set(["Audio Jack on notebook test"]);
   const removeLabels = ["Clean / Reseat RAM", "Video clip provided", "Photo / Video provided", "Photo / Video evidence", "Photo provided"];
   let filtered = list.slice()
     .filter(q => !removeLabels.includes(q.label))
-    .filter(q => !(q.label.includes("Video") || q.label.includes("Photo")))
-    .map(q => {
-      if(product !== "thinkpad" && q.label === "Power Reset / Emergency Reset"){
-        return {...q, label:"Power Reset"};
+    .filter(q => !(q.label.includes("Video") || q.label.includes("Photo")));
+
+  // v4.8.7: ThinkPad must show Power Reset and Emergency Reset as separate adjacent checklist items.
+  const expanded = [];
+  filtered.forEach(q => {
+    if(q.label === "Power Reset / Emergency Reset"){
+      if(product === "thinkpad"){
+        expanded.push({...q, label:"Power Reset"});
+        expanded.push({...q, label:"Emergency Reset"});
+      }else{
+        expanded.push({...q, label:"Power Reset"});
       }
-      return q;
-    });
+    }else{
+      expanded.push(q);
+    }
+  });
+  filtered = expanded;
+
   if(!isFruPnAllowed()){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
   }
-  const nonTail = filtered.filter(q => !tail.includes(q.label));
+  let nonTail = filtered.filter(q => !tail.includes(q.label));
+
+  // v4.8.7 revised: keep Swap items together, then notebook/direct-device test, then update items.
+  const notebookTests = nonTail.filter(q => notebookTestAfterSwapLabels.has(q.label));
+  if(notebookTests.length){
+    nonTail = nonTail.filter(q => !notebookTestAfterSwapLabels.has(q.label));
+    const lastSwapIndex = nonTail.reduce((last, q, idx) => q.label.startsWith("Swap ") ? idx : last, -1);
+    const insertAt = lastSwapIndex >= 0 ? lastSwapIndex + 1 : nonTail.length;
+    nonTail.splice(insertAt, 0, ...notebookTests);
+  }
+
   const tailItems = [];
   tail.forEach(label => {
     filtered.filter(q => q.label === label).forEach(q => tailItems.push(q));
   });
   return nonTail.concat(tailItems);
+}
+
+
+
+// v4.8.7 Software / Driver / BIOS Update mapping
+const UPDATE_RULES = {
+  audio: {speaker_no:{vantage:true, driver:"Audio"}, speaker_noise:{vantage:true, driver:"Audio"}, jack:{vantage:true, driver:"Audio"}, mic:{vantage:true, driver:"Audio"}, echo:{vantage:true, driver:"Audio"}, low:{vantage:true, driver:"Audio"}, mic_low:{vantage:true, driver:"Audio"}},
+  camera: {not_work:{vantage:true, driver:"Camera"}, blurry:{vantage:true, driver:"Camera"}, face_recognition:{vantage:true, driver:"Camera"}, lock_on_leave:{vantage:true, driver:"Camera"}},
+  touchpad: {cursor:{vantage:true, driver:"Touchpad"}, click:{vantage:true, driver:"Touchpad"}, jump:{vantage:true, driver:"Touchpad"}, track:{vantage:true, driver:"Touchpad"}},
+  keyboard: {few:{vantage:true}, all:{vantage:true}, auto_type:{vantage:true}, backlight:{vantage:true}, fn:{vantage:true}, left_ctrl:{vantage:true}, hotkey:{vantage:true}},
+  windows: {fingerprint:{vantage:true, driver:"Fingerprint"}, freeze:{vantage:true, bios:true}, bsod:{vantage:true, bios:true}, auto_reboot:{vantage:true, bios:true}, slow:{vantage:true}, login:{vantage:true}, black_login:{vantage:true}},
+  network: {wifi:{vantage:true, driver:"WLAN"}, lan:{vantage:true, driver:"LAN"}, bluetooth:{vantage:true, driver:"Bluetooth"}},
+  port: {usba:{vantage:true}, usbc:{vantage:true, bios:true}},
+  dock: {default:{vantage:true, driver:"Thunderbolt", bios:true}},
+  monitor: {default:{vantage:true, driver:"Graphics", bios:true}},
+  display: {flickering:{vantage:true, driver:"Graphics"}, dim:{vantage:true, driver:"Graphics"}, black:{vantage:true, driver:"Graphics"}, abnormal_line:{vantage:true, driver:"Graphics"}},
+  charging: {typec:{vantage:true, bios:true}, runtime:{vantage:true, bios:true}, not_detect:{vantage:true, bios:true}, slow_charge:{vantage:true}, swollen:{}},
+  fan: {fan_noise:{vantage:true, bios:true}, fan_spin_high:{vantage:true, bios:true}, fan_overheat:{vantage:true, bios:true}, fan_error:{vantage:true, bios:true}, fan_not_spin:{vantage:true, bios:true}},
+  boot: {boot_loop:{vantage:true}, stuck_logo:{vantage:true}, auto_repair:{vantage:true}},
+  storage: {ssd_not_detect_windows_setup:{driver:"RST / RSTe"}}
+};
+
+function getUpdateRule(){
+  const levelRules = UPDATE_RULES[selectedLevel];
+  if(!levelRules) return null;
+  return levelRules[selectedSymptom] || levelRules.default || null;
+}
+
+function updateQuestion(label){
+  return {label, options:"update_status", text:false, diag:false, update:true};
+}
+
+function applyUpdateChecklistRules(qs){
+  const rule = getUpdateRule();
+  if(!rule) return qs;
+  const removeUpdateLabels = new Set([
+    "Lenovo Vantage Update", "Lenovo Vantage update", "Driver Update", "Driver update", "Driver / Firmware Update", "Driver / Windows Update",
+    "BIOS Update", "BIOS update", "Windows Update", "Audio Driver Update", "Audio driver update", "Camera Driver Update", "Camera driver update", "Camera Driver Update / Lenovo Vantage",
+    "Fingerprint Driver Update / Lenovo Vantage", "Touchpad Driver Update", "TrackPoint Driver Update", "Hotkey Driver Update",
+    "USB Driver Update / Lenovo Vantage", "Dock Firmware Update", "SD Card Reader Driver Update", "Smart Card Driver Update"
+  ]);
+  let base = qs.filter(q => !removeUpdateLabels.has(q.label));
+  const tailLabels = new Set(["Physical damage / Liquid spilled", "Other issue", "FRU P/N"]);
+  const tail = base.filter(q => tailLabels.has(q.label));
+  base = base.filter(q => !tailLabels.has(q.label));
+  const updates = [];
+  if(rule.vantage) updates.push(updateQuestion("Lenovo Vantage Update"));
+  if(rule.driver) updates.push(updateQuestion(`${rule.driver} Driver Update`));
+  if(rule.bios) updates.push(updateQuestion("BIOS Update"));
+  return base.concat(updates).concat(tail);
 }
 
 function getQuestions(){
@@ -159,7 +231,7 @@ function getQuestions(){
     qs = addFront.concat(qs);
   }
 
-  return normalizeQuestionOrder(qs);
+  return applyUpdateChecklistRules(normalizeQuestionOrder(qs));
 }
 
 function getOptions(code){
@@ -556,7 +628,7 @@ function cableAndAccessoryRule(ans){
 
 function recoveryActionRule(ans){
   const recoveryLabels = [
-    "Power Reset / Emergency Reset", "Power Reset", "Emergency Reset Hole",
+    "Power Reset / Emergency Reset", "Power Reset", "Emergency Reset", "Emergency Reset Hole",
     "BIOS Update", "Load BIOS Default", "Windows Update", "Driver Update", "Driver / Windows Update",
     "Lenovo Vantage Update", "Dock Firmware Update", "Clean Cooling System",
     "Windows Startup Repair", "Re-install Windows", "Safe Mode test"
@@ -833,7 +905,7 @@ function smartBootRule(ans){
 function checklistSummaryText(){
   const lines = [current().name];
   answers().forEach(r => {
-    if(r.a && r.a !== "-- Select --") lines.push(`- ${r.q} - ${r.a}`);
+    if(r.a && r.a !== "-- Select --") lines.push(formatNoteLine(r.q, r.a));
   });
   const extra = getAdditionalDetail();
   if(extra){
@@ -1058,14 +1130,34 @@ function updateRecommendation(){
 }
 
 
+function preserveTechTerms(text){
+  let out = String(text || "").toLowerCase();
+  const terms = [
+    [/(^|\b)ac(?=\b)/g, "$1AC"], [/(^|\b)dc(?=\b)/g, "$1DC"], [/(^|\b)ssd(?=\b)/g, "$1SSD"],
+    [/(^|\b)hdd(?=\b)/g, "$1HDD"], [/(^|\b)ram(?=\b)/g, "$1RAM"], [/(^|\b)usb(?=\b)/g, "$1USB"],
+    [/(^|\b)bios(?=\b)/g, "$1BIOS"], [/(^|\b)uefi(?=\b)/g, "$1UEFI"], [/(^|\b)tpm(?=\b)/g, "$1TPM"],
+    [/(^|\b)lan(?=\b)/g, "$1LAN"], [/(^|\b)wlan(?=\b)/g, "$1WLAN"], [/(^|\b)wwan(?=\b)/g, "$1WWAN"],
+    [/(^|\b)hdmi(?=\b)/g, "$1HDMI"], [/(^|\b)dp(?=\b)/g, "$1DP"], [/(^|\b)pd(?=\b)/g, "$1PD"],
+    [/(^|\b)led(?=\b)/g, "$1LED"], [/(^|\b)fru p\/n(?=\b)/g, "$1FRU P/N"],
+    [/(^|\b)rst\/rste(?=\b)/g, "$1RST/RSTe"], [/(^|\b)rste(?=\b)/g, "$1RSTe"], [/(^|\b)rst(?=\b)/g, "$1RST"],
+    [/(^|\b)vmd(?=\b)/g, "$1VMD"], [/(^|\b)type-c(?=\b)/g, "$1Type-C"],
+    [/(^|\b)fn(?=\b)/g, "$1Fn"], [/(^|\b)ctrl(?=\b)/g, "$1Ctrl"],
+    [/(^|\b)lenovo vantage(?=\b)/g, "$1Lenovo Vantage"],
+    [/(^|\b)lenovo diagnostics(?=\b)/g, "$1Lenovo Diagnostics"],
+    [/(^|\b)intel(?=\b)/g, "$1Intel"], [/(^|\b)amd(?=\b)/g, "$1AMD"], [/(^|\b)nvidia(?=\b)/g, "$1NVIDIA"]
+  ];
+  terms.forEach(([pattern, replacement]) => { out = out.replace(pattern, replacement); });
+  return out;
+}
+
 function formatNoteLine(label, answer){
   if(label === "FRU P/N"){
     return "- FRU P/N - " + String(answer).toUpperCase();
   }
   if(label === "Specific keys listed"){
-    return `- ${label.toLowerCase()} - ${String(answer).toUpperCase()}`;
+    return `- ${preserveTechTerms(label)} - ${String(answer).toUpperCase()}`;
   }
-  return `- ${label.toLowerCase()} - ${String(answer).toLowerCase()}`;
+  return `- ${preserveTechTerms(label)} - ${preserveTechTerms(answer)}`;
 }
 
 function nextRequiredActionText(label){
@@ -1077,6 +1169,7 @@ function nextRequiredActionText(label){
     "Swap other Type-C port": "Test another Type-C charging port.",
     "Power Reset / Emergency Reset": "Complete Power Reset / Emergency Reset.",
     "Power Reset": "Complete Power Reset.",
+    "Emergency Reset": "Complete Emergency Reset.",
     "Swap Power Cable": "Test with another power cable.",
     "Swap Power Cord": "Test with another power cord.",
     "Swap Power Outlet": "Test with another power outlet.",
@@ -1131,6 +1224,7 @@ function customerStepTH(label){
     "Minidump collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
     "Power Reset / Emergency Reset": "รบกวนทำ Power Reset / Emergency Reset เพื่อเคลียร์ไฟของตัวเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
+    "Emergency Reset": "รบกวนทำ Emergency Reset โดยกดที่รู Emergency Reset ใต้เครื่องประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Adapter test on other machine": "รบกวนนำ Adapter ของเครื่องไปทดลองใช้งานกับเครื่อง Lenovo รุ่นที่รองรับอีกเครื่องหนึ่ง แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
@@ -1405,6 +1499,7 @@ function customerStepEN(label){
     "Emergency Reset Hole": "Please perform an Emergency Reset by inserting a pin or paper clip into the Emergency Reset hole on the bottom of the system, press and hold for approximately 10 seconds, then power the system on again.",
     "Power Reset / Emergency Reset": "Please perform Power Reset / Emergency Reset to clear residual power, then power the system on again.",
     "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
+    "Emergency Reset": "Please perform Emergency Reset by pressing the Emergency Reset hole on the bottom cover for approximately 10 seconds, then power the system on again.",
     "Can boot into Safe Mode": "Please boot the system into Safe Mode and let us know whether the issue still occurs.",
     "Adapter test on other machine": "Please test the Adapter with another compatible Lenovo machine and let us know whether it works fine.",
     "Swap Adapter": "Please test the system with another known-good Adapter.",
