@@ -1,6 +1,6 @@
-PD Guide Toolkit v4.8.7
+PD Guide Toolkit v4.8.8
 
-## v4.8.7 Updates
+## v4.8.8 Updates
 
 - Added Reset Battery guide under Battery Health related guide.
 - Added LCD Self-Test guide.

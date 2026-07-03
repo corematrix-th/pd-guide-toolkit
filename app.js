@@ -116,14 +116,13 @@ function isFruPnAllowed(){
 
 function normalizeQuestionOrder(list){
   const product = getProductKey();
-  const tail = ["Physical damage / Liquid spilled", "Other issue", "FRU P/N"];
   const notebookTestAfterSwapLabels = new Set(["Audio Jack on notebook test"]);
   const removeLabels = ["Clean / Reseat RAM", "Video clip provided", "Photo / Video provided", "Photo / Video evidence", "Photo provided"];
   let filtered = list.slice()
     .filter(q => !removeLabels.includes(q.label))
     .filter(q => !(q.label.includes("Video") || q.label.includes("Photo")));
 
-  // v4.8.7: ThinkPad must show Power Reset and Emergency Reset as separate adjacent checklist items.
+  // ThinkPad must show Power Reset and Emergency Reset as separate adjacent checklist items.
   const expanded = [];
   filtered.forEach(q => {
     if(q.label === "Power Reset / Emergency Reset"){
@@ -142,22 +141,53 @@ function normalizeQuestionOrder(list){
   if(!isFruPnAllowed()){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
   }
-  let nonTail = filtered.filter(q => !tail.includes(q.label));
 
-  // v4.8.7 revised: keep Swap items together, then notebook/direct-device test, then update items.
-  const notebookTests = nonTail.filter(q => notebookTestAfterSwapLabels.has(q.label));
-  if(notebookTests.length){
-    nonTail = nonTail.filter(q => !notebookTestAfterSwapLabels.has(q.label));
-    const lastSwapIndex = nonTail.reduce((last, q, idx) => q.label.startsWith("Swap ") ? idx : last, -1);
-    const insertAt = lastSwapIndex >= 0 ? lastSwapIndex + 1 : nonTail.length;
-    nonTail.splice(insertAt, 0, ...notebookTests);
+  // Fan not spin rule: Fan Check must always be the first checklist item.
+  const frontItems = [];
+  if(selectedLevel === "fan" && selectedSymptom === "fan_not_spin"){
+    filtered = filtered.filter(q => {
+      if(q.label === "Fan Check"){
+        frontItems.push(q);
+        return false;
+      }
+      return true;
+    });
   }
 
-  const tailItems = [];
-  tail.forEach(label => {
-    filtered.filter(q => q.label === label).forEach(q => tailItems.push(q));
+  const rankUpdateTail = (label) => {
+    const l = String(label || "").toLowerCase();
+    if(l === "lenovo vantage update") return 10;
+    if(l.includes("driver update") || l.includes("firmware update") || l.includes("windows update")) return 20;
+    if(l === "bios update") return 30;
+    if(l === "load bios default" || l === "load bios default".toLowerCase() || l === "load default bios") return 40;
+    if(l === "physical damage / liquid spilled") return 50;
+    if(l === "other issue") return 60;
+    if(l === "fru p/n") return 70;
+    return 0;
+  };
+
+  let normal = [];
+  let orderedTail = [];
+  filtered.forEach((q, idx) => {
+    const rank = rankUpdateTail(q.label);
+    if(rank){
+      orderedTail.push({q, idx, rank});
+    }else{
+      normal.push(q);
+    }
   });
-  return nonTail.concat(tailItems);
+
+  // Keep Swap items together, then notebook/direct-device test, then update items.
+  const notebookTests = normal.filter(q => notebookTestAfterSwapLabels.has(q.label));
+  if(notebookTests.length){
+    normal = normal.filter(q => !notebookTestAfterSwapLabels.has(q.label));
+    const lastSwapIndex = normal.reduce((last, q, idx) => q.label.startsWith("Swap ") ? idx : last, -1);
+    const insertAt = lastSwapIndex >= 0 ? lastSwapIndex + 1 : normal.length;
+    normal.splice(insertAt, 0, ...notebookTests);
+  }
+
+  orderedTail.sort((a,b) => (a.rank - b.rank) || (a.idx - b.idx));
+  return frontItems.concat(normal).concat(orderedTail.map(x => x.q));
 }
 
 
@@ -231,7 +261,7 @@ function getQuestions(){
     qs = addFront.concat(qs);
   }
 
-  return applyUpdateChecklistRules(normalizeQuestionOrder(qs));
+  return normalizeQuestionOrder(applyUpdateChecklistRules(qs));
 }
 
 function getOptions(code){
@@ -466,14 +496,17 @@ function isTailChecklist(label){
 // Not Tested must not block Dispatch unless the item is truly required to choose a part.
 // Optional/Recommended items add confidence only.
 function isOptionalChecklist(label){
-  const optionalLabels = [
-    "Lenovo Diagnostics", "Lenovo Diagnostics Storage", "Lenovo Diagnostics Battery",
-    "Caps Lock Toggle", "Display Backlight", "Fan Spinning",
-    "Check Temperature", "Fan Check", "Check Task Manager Usage", "Check Power Mode",
-    "Windows Update", "BIOS Update", "Load BIOS Default", "Driver Update", "Driver / Windows Update",
-    "Check for Dust and Foreign Objects", "Clean Cooling System",
-    "Charge LED", "Can Access Windows"
+  
+const optionalLabels = [
+    "Lenovo Vantage Update",
+    "Driver Update", "Driver / Windows Update", "Driver / Firmware Update",
+    "Audio Driver Update", "Camera Driver Update", "Fingerprint Driver Update", "Touchpad Driver Update", "TrackPoint Driver Update", "Hotkey Driver Update", "Graphics Driver Update", "Thunderbolt Driver Update", "LAN Driver Update", "WLAN Driver Update", "Bluetooth Driver Update", "Chipset / Power Driver Update", "RST / RSTe Driver Update",
+    "BIOS Update",
+    "Load BIOS Default",
+    "Can Access Windows", "Lenovo Diagnostics", "Check Temperature", "Fan Check", "Check Task Manager Usage", "Check Power Mode",
+    "Physical damage / Liquid spilled", "Other issue", "FRU P/N"
   ];
+
   return optionalLabels.includes(label) || isTailChecklist(label);
 }
 
@@ -903,7 +936,7 @@ function smartBootRule(ans){
 }
 
 function checklistSummaryText(){
-  const lines = [current().name];
+  const lines = [formatSymptomTitle(current().name)];
   answers().forEach(r => {
     if(r.a && r.a !== "-- Select --") lines.push(formatNoteLine(r.q, r.a));
   });
@@ -1130,23 +1163,18 @@ function updateRecommendation(){
 }
 
 
-function preserveTechTerms(text){
-  let out = String(text || "").toLowerCase();
-  const terms = [
-    [/(^|\b)ac(?=\b)/g, "$1AC"], [/(^|\b)dc(?=\b)/g, "$1DC"], [/(^|\b)ssd(?=\b)/g, "$1SSD"],
-    [/(^|\b)hdd(?=\b)/g, "$1HDD"], [/(^|\b)ram(?=\b)/g, "$1RAM"], [/(^|\b)usb(?=\b)/g, "$1USB"],
-    [/(^|\b)bios(?=\b)/g, "$1BIOS"], [/(^|\b)uefi(?=\b)/g, "$1UEFI"], [/(^|\b)tpm(?=\b)/g, "$1TPM"],
-    [/(^|\b)lan(?=\b)/g, "$1LAN"], [/(^|\b)wlan(?=\b)/g, "$1WLAN"], [/(^|\b)wwan(?=\b)/g, "$1WWAN"],
-    [/(^|\b)hdmi(?=\b)/g, "$1HDMI"], [/(^|\b)dp(?=\b)/g, "$1DP"], [/(^|\b)pd(?=\b)/g, "$1PD"],
-    [/(^|\b)led(?=\b)/g, "$1LED"], [/(^|\b)fru p\/n(?=\b)/g, "$1FRU P/N"],
-    [/(^|\b)rst\/rste(?=\b)/g, "$1RST/RSTe"], [/(^|\b)rste(?=\b)/g, "$1RSTe"], [/(^|\b)rst(?=\b)/g, "$1RST"],
-    [/(^|\b)vmd(?=\b)/g, "$1VMD"], [/(^|\b)type-c(?=\b)/g, "$1Type-C"],
-    [/(^|\b)fn(?=\b)/g, "$1Fn"], [/(^|\b)ctrl(?=\b)/g, "$1Ctrl"],
-    [/(^|\b)lenovo vantage(?=\b)/g, "$1Lenovo Vantage"],
-    [/(^|\b)lenovo diagnostics(?=\b)/g, "$1Lenovo Diagnostics"],
-    [/(^|\b)intel(?=\b)/g, "$1Intel"], [/(^|\b)amd(?=\b)/g, "$1AMD"], [/(^|\b)nvidia(?=\b)/g, "$1NVIDIA"]
-  ];
-  terms.forEach(([pattern, replacement]) => { out = out.replace(pattern, replacement); });
+function formatSymptomTitle(text){
+  let out = String(text || "").trim().toLowerCase();
+  out = out.replace(/\busb\b/g, "USB");
+  out = out.replace(/^./, c => c.toUpperCase());
+  return out;
+}
+
+function formatOutputText(text){
+  let out = String(text || "").trim().toLowerCase();
+  // RESULT / EMAIL rule: keep only USB and FRU P/N uppercase; keep type-c and bios lowercase.
+  out = out.replace(/\busb\b/g, "USB");
+  out = out.replace(/\bfru p\/n\b/g, "FRU P/N");
   return out;
 }
 
@@ -1155,9 +1183,9 @@ function formatNoteLine(label, answer){
     return "- FRU P/N - " + String(answer).toUpperCase();
   }
   if(label === "Specific keys listed"){
-    return `- ${preserveTechTerms(label)} - ${String(answer).toUpperCase()}`;
+    return `- ${formatOutputText(label)} - ${String(answer).toUpperCase()}`;
   }
-  return `- ${preserveTechTerms(label)} - ${preserveTechTerms(answer)}`;
+  return `- ${formatOutputText(label)} - ${formatOutputText(answer)}`;
 }
 
 function nextRequiredActionText(label){
