@@ -54,6 +54,10 @@ function isSymptomAllowed(levelKey, symptomKey){
 }
 
 function getVisibleLevelKeys(){
+  const product = getProductKey();
+  if(typeof MODEL_STRUCTURE !== "undefined" && MODEL_STRUCTURE[product]){
+    return MODEL_STRUCTURE[product].map(item => item.level).filter(levelKey => LEVELS[levelKey]);
+  }
   return Object.keys(LEVELS).filter(levelKey => {
     if(LEVELS[levelKey].manual === true) return true;
     return getVisibleSymptomKeys(levelKey).length > 0;
@@ -61,8 +65,14 @@ function getVisibleLevelKeys(){
 }
 
 function getVisibleSymptomKeys(levelKey){
+  const product = getProductKey();
   const level = LEVELS[levelKey];
   if(!level || !level.symptoms) return [];
+  if(typeof MODEL_STRUCTURE !== "undefined" && MODEL_STRUCTURE[product]){
+    const row = MODEL_STRUCTURE[product].find(item => item.level === levelKey);
+    if(row) return row.symptoms.filter(symptomKey => level.symptoms[symptomKey]);
+    return [];
+  }
   if(level.manual === true) return Object.keys(level.symptoms);
   return Object.keys(level.symptoms).filter(symptomKey => isSymptomAllowed(levelKey, symptomKey));
 }
@@ -109,7 +119,7 @@ function isFruPnAllowed(){
   const product = getProductKey();
   if(selectedLevel === "adapter_power") return true; // Adapter / Power Cord
   if(selectedLevel === "mouse") return true; // External Mouse
-  if(selectedLevel === "keyboard" && (product === "desktop" || product === "aio")) return true; // External Keyboard
+  if(selectedLevel === "keyboard" && (product === "desktop" || product === "tiny" || product === "aio")) return true; // External Keyboard
   const part = (current().defaultPart || "").toLowerCase();
   return part.includes("external mouse") || part.includes("external keyboard") || part.includes("adapter") || part.includes("power cord");
 }
@@ -142,6 +152,31 @@ function normalizeQuestionOrder(list){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
   }
 
+  // v4.9.1: ThinkCentre Tiny external Keyboard must ask FRU P/N first.
+  if(product === "tiny" && selectedLevel === "keyboard"){
+    const fruItems = filtered.filter(q => q.label === "FRU P/N");
+    filtered = filtered.filter(q => q.label !== "FRU P/N");
+    if(fruItems.length){
+      filtered = [fruItems[0]].concat(filtered);
+    }
+  }
+
+  // v4.9.1: Device Manager check must stay before the matching Uninstall Driver step.
+  const checkItems = filtered.filter(q => /^Check .+ in Device Manager$/.test(q.label));
+  if(checkItems.length){
+    checkItems.forEach(checkQ => {
+      const device = checkQ.label.replace(/^Check /, "").replace(/ in Device Manager$/, "");
+      const uninstallLabel = `Uninstall ${device.replace(/ Driver$/, "")} Driver and Restart`;
+      const checkIndex = filtered.indexOf(checkQ);
+      const uninstallIndex = filtered.findIndex(q => q.label === uninstallLabel);
+      if(uninstallIndex >= 0 && checkIndex > uninstallIndex){
+        filtered.splice(checkIndex, 1);
+        const newUninstallIndex = filtered.findIndex(q => q.label === uninstallLabel);
+        filtered.splice(newUninstallIndex, 0, checkQ);
+      }
+    });
+  }
+
   // Fan not spin rule: Fan Check must always be the first checklist item.
   const frontItems = [];
   if(selectedLevel === "fan" && selectedSymptom === "fan_not_spin"){
@@ -162,7 +197,7 @@ function normalizeQuestionOrder(list){
     if(l === "load bios default" || l === "load bios default".toLowerCase() || l === "load default bios") return 40;
     if(l === "physical damage / liquid spilled") return 50;
     if(l === "other issue") return 60;
-    if(l === "fru p/n") return 70;
+    if(l === "fru p/n" && !(product === "tiny" && selectedLevel === "keyboard")) return 70;
     return 0;
   };
 
@@ -246,6 +281,7 @@ function getQuestions(){
   const product = el("product").value;
   let qs = [];
   if(sym.questions && sym.questions[product]) qs = sym.questions[product].slice();
+  else if(product === "tiny" && sym.questions && sym.questions.desktop) qs = sym.questions.desktop.slice();
   else if(sym.common) qs = sym.common.slice();
 
   // v4.7.0: add easy checks for Keyboard > All key only.
@@ -1277,7 +1313,7 @@ function customerStepTH(label){
     "Novo Button": "ทดสอบกดปุ่ม Novo Button เพื่อตรวจสอบว่าเครื่องตอบสนองหรือไม่",
     "External Monitor test": "ทดสอบต่อใช้งานกับจอภายนอก (External Monitor)",
     "Clean / Reseat RAM": "ทดสอบถอดทำความสะอาดและใส่ RAM ใหม่",
-    "Beep code / pattern": "ตรวจสอบจำนวนเสียง Beep หรือรูปแบบเสียง Beep ที่เกิดขึ้น",
+    "Beep sound / pattern": "ตรวจสอบจำนวนเสียง Beep Sound หรือรูปแบบเสียง Beep Sound ที่เกิดขึ้น",
     "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
     "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Windows Startup Repair": "ทดสอบ Startup Repair ของ Windows",
@@ -1291,8 +1327,8 @@ function customerStepTH(label){
     "Driver Update / Lenovo Vantage": "ทดสอบอัปเดต Driver ผ่าน Lenovo Vantage",
     "Camera Shutter": "ตรวจสอบว่า Camera Shutter ถูกปิดอยู่หรือไม่",
     "Issue happens on all apps": "ตรวจสอบว่าอาการเกิดขึ้นทุกโปรแกรม หรือเฉพาะบางโปรแกรม",
-    "Camera": "ทดลองเปิดใช้งานกล้องผ่านโปรแกรม Camera ของ Windows",
-    "Device Manager shows Camera": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Camera หรือไม่",
+    "Check Camera in Device Manager": "ทดลองเปิดใช้งานกล้องผ่านโปรแกรม Camera ของ Windows",
+    "Check Camera in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Camera หรือไม่",
     "Uninstall Camera Driver and Restart": "ทดสอบถอนติดตั้ง Driver Camera และ Restart เครื่อง",
     "BIOS Camera enabled": "ตรวจสอบว่า Camera ถูก Enable ใน BIOS หรือไม่",
     "Clean camera lens": "ทำความสะอาดบริเวณเลนส์กล้องและทดสอบอีกครั้ง",
@@ -1306,7 +1342,7 @@ function customerStepTH(label){
     "Input device selected correctly": "ตรวจสอบว่าเลือก Input Device ถูกต้องหรือไม่",
     "Mute checked": "ตรวจสอบว่าเครื่องถูกปิดเสียง (Mute) อยู่หรือไม่",
     "Mic mute checked": "ตรวจสอบว่า Microphone ถูกปิด Mute อยู่หรือไม่",
-    "Device Manager shows Audio": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Audio หรือไม่",
+    "Check Audio Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Audio หรือไม่",
     "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
     "Voice Recorder": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
     "Physical damage / Liquid spilled": "ตรวจสอบว่ามีร่องรอยชำรุด หรือคราบน้ำหรือไม่",
@@ -1314,7 +1350,7 @@ function customerStepTH(label){
     "Can detect Wi-Fi signal": "ตรวจสอบว่าเครื่องสามารถค้นหาสัญญาณ Wi-Fi ได้หรือไม่",
     "Another Wi-Fi / Hotspot test": "ทดสอบเชื่อมต่อ Wi-Fi อื่น หรือ Hotspot จากโทรศัพท์มือถือ",
     "Airplane Mode": "ตรวจสอบว่า Airplane Mode ถูกปิดอยู่หรือไม่",
-    "Device Manager shows Wireless Driver": "ตรวจสอบใน Device Manager ว่ายังพบ Wireless Driver หรือไม่",
+    "Check Wireless Driver in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบ Wireless Driver หรือไม่",
     "Uninstall Wireless Driver and Restart": "ทดสอบถอนติดตั้ง Wireless Driver และ Restart เครื่อง",
     "Wi-Fi Driver Update": "ทดสอบอัปเดต Driver Wi-Fi",
     "Bluetooth Driver Update": "ทดสอบอัปเดต Driver Bluetooth",
@@ -1331,7 +1367,7 @@ function customerStepTH(label){
     "Intel RST / Storage Driver loaded": "โหลด Intel RST / Storage Driver ระหว่างติดตั้ง Windows",
     "Windows Installation USB recreated": "ทดสอบสร้าง USB Windows Installation ใหม่อีกครั้ง",
     "Fingerprint setup in Windows Hello": "ตรวจสอบการตั้งค่า Fingerprint ใน Windows Hello",
-    "Device Manager shows Fingerprint": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Fingerprint หรือไม่",
+    "Check Fingerprint Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Fingerprint หรือไม่",
     "Uninstall Fingerprint Driver and Restart": "ทดสอบถอนติดตั้ง Driver Fingerprint และ Restart เครื่อง",
     "Windows Hello Face setup": "ตรวจสอบการตั้งค่า Face Recognition ใน Windows Hello",
     "Lock on leave setting enabled": "ตรวจสอบว่าเปิดใช้งาน Lock on leave function อยู่หรือไม่",
@@ -1344,12 +1380,12 @@ function customerStepTH(label){
     "Check temperature / Overheat": "ตรวจสอบอุณหภูมิและอาการเครื่องร้อนผิดปกติ",
     "Key stuck / sunk": "ตรวจสอบว่ามีปุ่มจม ค้าง หรือกดติดอยู่หรือไม่",
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
-    "Device Manager shows USB error": "ตรวจสอบใน Device Manager ว่ามี USB error หรือเครื่องหมายแจ้งเตือนที่เกี่ยวข้องกับ USB หรือไม่",
+    "Check USB Error in Device Manager": "ตรวจสอบใน Device Manager ว่ามี USB error หรือเครื่องหมายแจ้งเตือนที่เกี่ยวข้องกับ USB หรือไม่",
     "Swap USB Port": "รบกวนสลับทดสอบกับพอร์ต USB ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Swap USB Device": "รบกวนสลับใช้งานกับอุปกรณ์ USB ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Swap USB-C Port": "รบกวนสลับทดสอบกับพอร์ต USB-C ช่องอื่นบนเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Swap Smart Card": "รบกวนสลับทดสอบด้วย Smart Card ใบอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
-    "Device Manager shows Smart Card Reader": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Smart Card Reader หรือไม่",
+    "Check Smart Card Reader in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Smart Card Reader หรือไม่",
     "Swap Mouse": "รบกวนสลับทดสอบด้วย Mouse ตัวอื่นที่ใช้งานได้ แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Mouse test on other machine": "รบกวนนำ Mouse ตัวเดิมไปทดสอบกับเครื่องอื่น แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
     "Swap Battery": "รบกวนสลับ Battery ก้อนใหม่หรือ Battery ที่ใช้งานได้กับ Mouse แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
@@ -1384,8 +1420,8 @@ function customerStepTH(label){
     "Clean touchpad surface": "ทำความสะอาดพื้นผิว Touchpad แล้วทดสอบอีกครั้ง",
     "ClickPad enabled": "ตรวจสอบว่า ClickPad ถูก Enable อยู่หรือไม่",
     "Customer knows password": "ตรวจสอบว่าลูกค้าทราบรหัสผ่านที่ใช้งานอยู่หรือไม่",
-    "Device Manager shows Bluetooth": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Bluetooth หรือไม่",
-    "Device Manager shows card reader": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Card Reader หรือไม่",
+    "Check Bluetooth Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Bluetooth หรือไม่",
+    "Check Card Reader in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Card Reader หรือไม่",
     "Disable Touchpad test": "ทดสอบปิด Touchpad แล้วตรวจสอบว่าอาการยังเกิดขึ้นหรือไม่",
     "Driver / Firmware Update": "ทดสอบอัปเดต Driver และ Firmware ที่เกี่ยวข้องเป็นเวอร์ชันล่าสุด",
     "Enable LAN in BIOS": "ตรวจสอบว่า LAN ถูก Enable ใน BIOS หรือไม่",
@@ -1469,7 +1505,7 @@ function customerStepTH(label){
     "Volume level checked": "ตรวจสอบระดับเสียงของเครื่องว่าไม่ได้ถูกลดไว้ต่ำเกินไป",
     "WLAN / WWAN card changed before issue": "ตรวจสอบว่ามีการเปลี่ยน WLAN / WWAN Card ก่อนเกิดอาการหรือไม่",
     "WWAN Driver Update": "ทดสอบอัปเดต Driver WWAN เป็นเวอร์ชันล่าสุด",
-    "WWAN device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ WWAN หรือไม่",
+    "Check WWAN Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ WWAN หรือไม่",
     "Windows Installation": "ทดสอบติดตั้ง Windows ใหม่",
     "Video clip provided": "รบกวนแนบคลิปวิดีโอขณะเกิดอาการเพิ่มเติม",
     "Swap USB-A Port": "ทดลองเปลี่ยนไปใช้งานพอร์ต USB-A ช่องอื่นบน Dock",
@@ -1542,7 +1578,7 @@ function customerStepEN(label){
     "Swap USB Device": "Please test with another known-good USB device and let us know whether the issue remains or works fine.",
     "Swap USB-C Port": "Please test with another USB-C port on the machine and let us know whether the issue remains or works fine.",
     "Swap Smart Card": "Please test with another known-good Smart Card and let us know whether the issue remains or works fine.",
-    "Device Manager shows Smart Card Reader": "Please check Device Manager and confirm whether the Smart Card Reader is detected.",
+    "Check Smart Card Reader in Device Manager": "Please check Device Manager and confirm whether the Smart Card Reader is detected.",
     "Swap Mouse": "Please test with another known-good mouse and let us know whether the issue remains or works fine.",
     "Mouse test on other machine": "Please test the same mouse on another machine and let us know whether it works fine.",
     "Swap Battery": "Please replace the mouse battery with a new or known-good battery and let us know whether the issue remains or works fine.",
@@ -1568,8 +1604,8 @@ function customerStepEN(label){
     "Swap Headphone": "Please test with another known-good headphone.",
     "Swap HDMI / DisplayPort cable": "Please swap the HDMI or DisplayPort cable.",
     "Camera Shutter": "Check whether the Camera Shutter is closed.",
-    "Device Manager shows Camera": "Check if the Camera device appears in Device Manager.",
-    "Camera": "Test the camera using the Windows Camera application.",
+    "Check Camera in Device Manager": "Check if the Camera device appears in Device Manager.",
+    "Check Camera in Device Manager": "Test the camera using the Windows Camera application.",
     "Uninstall Camera Driver and Restart": "Uninstall the Camera driver and restart the machine.",
     "BIOS Camera enabled": "Check whether Camera is enabled in BIOS.",
     "Swap USB-A Port": "Test another USB-A port on the Dock.",
@@ -1650,12 +1686,12 @@ function customerStepTH(label){
     "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
     "External mic test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
     "Voice Recorder": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
-    "Device Manager shows Camera": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Camera หรือไม่",
-    "Device Manager shows Audio": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Audio หรือไม่",
-    "Device Manager shows Wireless Driver": "เปิด Device Manager และตรวจสอบว่ายังพบ Wireless Driver หรือไม่",
-    "Device Manager shows Fingerprint": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Fingerprint หรือไม่",
+    "Check Camera in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Camera หรือไม่",
+    "Check Audio Device in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Audio หรือไม่",
+    "Check Wireless Driver in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบ Wireless Driver หรือไม่",
+    "Check Fingerprint Device in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Fingerprint หรือไม่",
     "Camera Shutter": "ตรวจสอบว่า Camera Shutter เปิดอยู่หรือไม่",
-    "Camera": "ทดลองเปิดใช้งานกล้องผ่านโปรแกรม Camera ของ Windows",
+    "Check Camera in Device Manager": "ทดลองเปิดใช้งานกล้องผ่านโปรแกรม Camera ของ Windows",
     "Battery Report collected": "สร้าง Battery Report ผ่าน Command Prompt ด้วยคำสั่ง powercfg /batteryreport",
     "Battery Health in Lenovo Vantage": "ตรวจสอบ Battery Health ผ่าน Lenovo Vantage",
     "Battery swollen confirmed": "ตรวจสอบว่า Battery มีอาการบวมหรือไม่",

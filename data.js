@@ -13,6 +13,11 @@ const APP_OPTIONS = {
   "detail_only": [
     "-- Select --"
   ],
+  "detect": [
+    "-- Select --",
+    "Detect",
+    "Not detect"
+  ],
   "swap": [
     "-- Select --",
     "Same Issue",
@@ -554,12 +559,12 @@ const LEVELS = {
         }
       },
       "pond_beep": {
-        "name": "Power on no display + Beep code",
+        "name": "Power on no display + Beep Sound",
         "defaultResult": "Dispatch",
         "defaultPart": "Mainboard / Memory",
         "common": [
           {
-            "label": "Beep code / pattern",
+            "label": "Beep sound / pattern",
             "options": "yesno",
             "text": true,
             "diag": false
@@ -972,7 +977,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Device Manager shows Fingerprint",
+            "label": "Check Fingerprint Device in Device Manager",
             "options": "yesno"
           },
           {
@@ -1012,11 +1017,11 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Camera",
+            "label": "Check Camera in Device Manager",
             "options": "select"
           },
           {
-            "label": "Device Manager shows Camera",
+            "label": "Check Camera in Device Manager",
             "options": "yesno"
           },
           {
@@ -1704,7 +1709,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Device Manager shows USB error",
+            "label": "Check USB Error in Device Manager",
             "options": "yesno"
           },
           {
@@ -1795,7 +1800,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Device Manager shows card reader",
+            "label": "Check Card Reader in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -1836,7 +1841,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Device Manager shows Smart Card Reader",
+            "label": "Check Smart Card Reader in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -2545,7 +2550,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Device Manager shows Wireless Driver",
+            "label": "Check Wireless Driver in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -2655,7 +2660,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Device Manager shows Bluetooth",
+            "label": "Check Bluetooth Device in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -2710,7 +2715,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "WWAN device in Device Manager",
+            "label": "Check WWAN Device in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -2788,7 +2793,7 @@ const LEVELS = {
             "options": "swap"
           },
           {
-            "label": "Device Manager shows Smart Card Reader",
+            "label": "Check Smart Card Reader in Device Manager",
             "options": "yesno"
           },
           {
@@ -2975,7 +2980,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Device Manager shows Audio",
+            "label": "Check Audio Device in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -3294,7 +3299,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Camera",
+            "label": "Check Camera in Device Manager",
             "options": "select",
             "text": false,
             "diag": false
@@ -3306,7 +3311,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Device Manager shows Camera",
+            "label": "Check Camera in Device Manager",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -3361,7 +3366,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Camera",
+            "label": "Check Camera in Device Manager",
             "options": "select",
             "text": false,
             "diag": false
@@ -3400,11 +3405,11 @@ const LEVELS = {
             "options": "shutter"
           },
           {
-            "label": "Camera",
+            "label": "Check Camera in Device Manager",
             "options": "select"
           },
           {
-            "label": "Device Manager shows Camera",
+            "label": "Check Camera in Device Manager",
             "options": "yesno"
           },
           {
@@ -3444,11 +3449,11 @@ const LEVELS = {
             "options": "yesno"
           },
           {
-            "label": "Camera",
+            "label": "Check Camera in Device Manager",
             "options": "select"
           },
           {
-            "label": "Device Manager shows Camera",
+            "label": "Check Camera in Device Manager",
             "options": "yesno"
           },
           {
@@ -5003,3 +5008,386 @@ if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec
     ...LEVELS.port.symptoms
   };
 }
+
+
+// v4.9.1 Model Structure Reference
+// The Level 1 and Symptom order is controlled by the 5 Reference_Text files.
+// Existing checklist logic is reused. New symptoms clone the closest existing checklist and keep dispatch rules unchanged.
+function cloneSymptom(sourceLevel, sourceSymptom, newName){
+  const src = LEVELS[sourceLevel] && LEVELS[sourceLevel].symptoms && LEVELS[sourceLevel].symptoms[sourceSymptom];
+  if(!src) return { name: newName, common: [] };
+  return { ...src, name: newName };
+}
+function ensureSymptom(levelKey, symptomKey, sourceLevel, sourceSymptom, newName){
+  if(!LEVELS[levelKey]) return;
+  if(!LEVELS[levelKey].symptoms) LEVELS[levelKey].symptoms = {};
+  if(!LEVELS[levelKey].symptoms[symptomKey]) LEVELS[levelKey].symptoms[symptomKey] = cloneSymptom(sourceLevel, sourceSymptom, newName);
+  LEVELS[levelKey].symptoms[symptomKey].name = newName;
+}
+function ensureLevel(levelKey, levelName){
+  if(!LEVELS[levelKey]) LEVELS[levelKey] = { name: levelName, symptoms: {} };
+  LEVELS[levelKey].name = levelName;
+  if(!LEVELS[levelKey].symptoms) LEVELS[levelKey].symptoms = {};
+}
+
+// Standardize Beep wording: do not use legacy Beep wording in v4.9.1+.
+if(LEVELS.boot && LEVELS.boot.symptoms && LEVELS.boot.symptoms.pond_beep){
+  LEVELS.boot.symptoms.pond_beep.name = "Power on no display + Beep Sound";
+}
+
+// New / expanded symptoms required by the 5 model reference files.
+ensureSymptom('display', 'touchscreen', 'display', 'black', 'Touchscreen not work');
+ensureSymptom('monitor', 'flickering', 'display', 'flickering', 'Flickering');
+ensureSymptom('port', 'usbc_thunderbolt', 'port', 'usbc', 'USB-C Thunderbolt');
+ensureSymptom('port', 'usbc_display', 'port', 'hdmi', 'USB-C Display');
+ensureSymptom('port', 'displayport', 'port', 'hdmi', 'DisplayPort');
+ensureSymptom('port', 'vga', 'port', 'hdmi', 'VGA');
+ensureSymptom('port', 'serial', 'port', 'usba', 'Serial Port');
+ensureSymptom('port', 'hdmi_in', 'port', 'hdmi', 'HDMI In');
+ensureSymptom('port', 'hdmi_out', 'port', 'hdmi', 'HDMI Out');
+ensureSymptom('keyboard', 'usb_keyboard_not_detect', 'keyboard', 'few', 'USB keyboard not detect');
+ensureSymptom('keyboard', 'wireless_keyboard_not_detect', 'keyboard', 'few', 'Wireless keyboard not detect');
+ensureSymptom('audio', 'front_jack', 'audio', 'jack', 'Front Audio Jack');
+ensureSymptom('audio', 'rear_jack', 'audio', 'jack', 'Rear Audio Jack');
+ensureSymptom('dock', 'no_signal', 'dock', 'displayport_not_working', 'No signal');
+ensureSymptom('dock', 'usbc_data_thunderbolt', 'dock', 'usb_a_not_working', 'USB-C Data / Thunderbolt');
+ensureLevel('tio_dock', 'Tiny-in-One (TIO) Dock');
+ensureSymptom('tio_dock', 'not_charging_no_power', 'dock', 'dock_not_charging', 'Not charging / No power to Tiny');
+ensureSymptom('tio_dock', 'not_detected', 'dock', 'dock_not_detected', 'Not detected');
+
+const GUIDE_ORDER = [
+  'vantage_update','lenovo_diagnostics','battery_report','battery_health','bios_version','product_key','activation','reset_pc','reinstall_windows','event_viewer','sfc','safe_mode','dump_file','bitlocker_recovery','office_activation','windows11_bypass','always_on_usb','bios_password','lock_on_leave','reset_battery','lcd_self_test','disable_audio_enhancements_external_mic','thinkcentre_raid1_ssd_not_found_os_install','fn_ctrl_key_swap','emergency_reset','power_reset'
+];
+
+const MODEL_STRUCTURE = {
+  thinkpad: [
+    {level:'boot', symptoms:['no_power','pond','pond_beep','boot_loop','stuck_logo','auto_repair']},
+    {level:'windows', symptoms:['slow','freeze','auto_shutdown','auto_reboot','bsod','fingerprint','face_recognition','login','black_login']},
+    {level:'display', symptoms:['abnormal_line','flickering','dim','black','color','ghost','dead','bright','garbage','touchscreen']},
+    {level:'adapter_power', symptoms:['adapter','cord']},
+    {level:'charging', symptoms:['typec','runtime','swollen','slow_charge','not_detect']},
+    {level:'port', symptoms:['usbc_thunderbolt','usbc','usbc_display','usba','hdmi','sd','smart']},
+    {level:'keyboard', symptoms:['few','all','auto_type','backlight','fn','left_ctrl','hotkey']},
+    {level:'mouse', symptoms:['mouse_not_work','wireless','click_l_double','scroll']},
+    {level:'network', symptoms:['wifi','lan','bluetooth','wwan','sim','smart_card_reader']},
+    {level:'storage', symptoms:['ssd','ssd_not_detect_windows_setup']},
+    {level:'audio', symptoms:['speaker_no','speaker_noise','jack','mic','echo','low','mic_low']},
+    {level:'camera', symptoms:['not_work','blurry','face_recognition','lock_on_leave']},
+    {level:'touchpad', symptoms:['cursor','click','jump','track']},
+    {level:'fan', symptoms:['fan_error','fan_not_spin','fan_noise','fan_spin_high','fan_overheat']},
+    {level:'dock', symptoms:['dock_not_charging','dock_not_detected','external_monitor_flickering','no_signal','usb_a_not_working','usbc_data_thunderbolt','displayport_not_working','hdmi_not_working','lan_not_working','audio_jack_not_working']},
+    {level:'bios', symptoms:['bios_pw','svp']},
+    {level:'error', symptoms:['e0162','e0188','e0190','e0271','e1802','e1962','e2100','e2101','e2200','e2201','boot_missing','pxe']},
+    {level:'manual', symptoms:GUIDE_ORDER}
+  ],
+  ideapad: [
+    {level:'boot', symptoms:['no_power','pond','boot_loop','stuck_logo','auto_repair']},
+    {level:'windows', symptoms:['slow','freeze','auto_shutdown','auto_reboot','bsod','fingerprint','face_recognition','login','black_login']},
+    {level:'display', symptoms:['abnormal_line','flickering','dim','black','color','ghost','dead','bright','garbage']},
+    {level:'adapter_power', symptoms:['adapter','cord']},
+    {level:'charging', symptoms:['typec','runtime','swollen','slow_charge','not_detect']},
+    {level:'port', symptoms:['usbc','usbc_display','usba','hdmi','sd']},
+    {level:'keyboard', symptoms:['few','all','auto_type','backlight','fn','hotkey']},
+    {level:'mouse', symptoms:['mouse_not_work','wireless','click_l_double','scroll']},
+    {level:'network', symptoms:['wifi','lan','bluetooth']},
+    {level:'storage', symptoms:['ssd','ssd_not_detect_windows_setup']},
+    {level:'audio', symptoms:['speaker_no','speaker_noise','jack','mic','echo','low','mic_low']},
+    {level:'camera', symptoms:['not_work','blurry']},
+    {level:'touchpad', symptoms:['cursor','click','jump']},
+    {level:'fan', symptoms:['fan_error','fan_not_spin','fan_noise','fan_spin_high','fan_overheat']},
+    {level:'bios', symptoms:['bios_pw','svp']},
+    {level:'error', symptoms:['e0162','e0188','e0190','e0271','e1802','e1962','e2100','e2101','e2200','e2201','boot_missing','pxe']},
+    {level:'manual', symptoms:GUIDE_ORDER}
+  ],
+  desktop: [
+    {level:'boot', symptoms:['no_power','pond','pond_beep','boot_loop','stuck_logo','auto_repair']},
+    {level:'windows', symptoms:['slow','freeze','auto_shutdown','auto_reboot','bsod','fingerprint','login','black_login']},
+    {level:'monitor', symptoms:['abnormal_line','no_power','flickering']},
+    {level:'adapter_power', symptoms:['cord']},
+    {level:'port', symptoms:['usba','usbc','hdmi','displayport','vga','serial']},
+    {level:'keyboard', symptoms:['few','auto_type','usb_keyboard_not_detect','wireless_keyboard_not_detect','hotkey']},
+    {level:'mouse', symptoms:['mouse_not_work','wireless','click_l_double','scroll']},
+    {level:'network', symptoms:['wifi','lan','bluetooth']},
+    {level:'storage', symptoms:['ssd','ssd_not_detect_windows_setup','hdd']},
+    {level:'audio', symptoms:['speaker_no','speaker_noise','front_jack','rear_jack']},
+    {level:'fan', symptoms:['fan_error','fan_not_spin','fan_noise','fan_spin_high','fan_overheat']},
+    {level:'bios', symptoms:['bios_pw','svp']},
+    {level:'error', symptoms:['e0162','e0188','e0190','e0271','e1802','e1962','e2100','e2101','e2200','e2201','boot_missing','pxe']},
+    {level:'manual', symptoms:GUIDE_ORDER}
+  ],
+  tiny: [
+    {level:'boot', symptoms:['no_power','pond','pond_beep','boot_loop','stuck_logo','auto_repair']},
+    {level:'windows', symptoms:['slow','freeze','auto_shutdown','auto_reboot','bsod','fingerprint','login','black_login']},
+    {level:'monitor', symptoms:['abnormal_line','no_power','flickering']},
+    {level:'adapter_power', symptoms:['adapter','cord']},
+    {level:'port', symptoms:['usba','usbc','hdmi','displayport','vga','serial']},
+    {level:'keyboard', symptoms:['few','auto_type','usb_keyboard_not_detect','wireless_keyboard_not_detect','hotkey']},
+    {level:'mouse', symptoms:['mouse_not_work','wireless','click_l_double','scroll']},
+    {level:'network', symptoms:['wifi','lan','bluetooth']},
+    {level:'storage', symptoms:['ssd','ssd_not_detect_windows_setup']},
+    {level:'audio', symptoms:['speaker_no','speaker_noise','front_jack','rear_jack']},
+    {level:'fan', symptoms:['fan_error','fan_not_spin','fan_noise','fan_spin_high','fan_overheat']},
+    {level:'tio_dock', symptoms:['not_charging_no_power','not_detected']},
+    {level:'bios', symptoms:['bios_pw','svp']},
+    {level:'error', symptoms:['e0162','e0188','e0190','e0271','e1802','e1962','e2100','e2101','e2200','e2201','boot_missing','pxe']},
+    {level:'manual', symptoms:GUIDE_ORDER}
+  ],
+  aio: [
+    {level:'boot', symptoms:['no_power','pond','boot_loop','stuck_logo','auto_repair']},
+    {level:'windows', symptoms:['slow','freeze','auto_shutdown','auto_reboot','bsod','login','black_login']},
+    {level:'display', symptoms:['abnormal_line','flickering','dim','black','color','ghost','dead','bright','garbage']},
+    {level:'port', symptoms:['usba','usbc','hdmi_in','hdmi_out','sd']},
+    {level:'keyboard', symptoms:['few','auto_type','usb_keyboard_not_detect','wireless_keyboard_not_detect','hotkey']},
+    {level:'mouse', symptoms:['mouse_not_work','wireless','click_l_double','scroll']},
+    {level:'network', symptoms:['wifi','lan','bluetooth']},
+    {level:'storage', symptoms:['ssd','ssd_not_detect_windows_setup','hdd']},
+    {level:'audio', symptoms:['speaker_no','speaker_noise','jack','mic','echo','low','mic_low']},
+    {level:'camera', symptoms:['not_work','blurry']},
+    {level:'fan', symptoms:['fan_error','fan_not_spin','fan_noise','fan_spin_high','fan_overheat']},
+    {level:'bios', symptoms:['bios_pw','svp']},
+    {level:'error', symptoms:['e0162','e0188','e0190','e0271','e1802','e1962','e2100','e2101','e2200','e2201','boot_missing','pxe']},
+    {level:'manual', symptoms:GUIDE_ORDER}
+  ]
+};
+
+
+// v4.9.1 Checklist Standardization
+// - Device Manager pattern: Check <Device Name> in Device Manager
+// - Device Manager check must be placed before Uninstall <Device Name> Driver and Restart
+// - Touchscreen checklist revised
+// - ThinkCentre Tiny hardware-specific checklist updates
+(function applyV490Rules(){
+  APP_OPTIONS.detect = APP_OPTIONS.detect || ["-- Select --", "Detect", "Not detect"];
+
+  function makeQ(label, options, extra){
+    return Object.assign({label: label, options: options || "select", text: false, diag: false}, extra || {});
+  }
+  function cloneQs(qs){ return (qs || []).map(q => ({...q})); }
+  function getSym(level, symptom){ return LEVELS[level] && LEVELS[level].symptoms && LEVELS[level].symptoms[symptom]; }
+  function setCommon(level, symptom, qs){
+    const sym = getSym(level, symptom);
+    if(sym){ delete sym.questions; sym.common = qs; }
+  }
+  function ensureQuestion(list, q, beforeLabel){
+    if(list.some(item => item.label === q.label)) return list;
+    const idx = beforeLabel ? list.findIndex(item => item.label === beforeLabel) : -1;
+    if(idx >= 0) list.splice(idx, 0, q); else list.push(q);
+    return list;
+  }
+  function renameDeviceManagerLabels(obj){
+    if(!obj || typeof obj !== 'object') return;
+    if(Array.isArray(obj)){ obj.forEach(renameDeviceManagerLabels); return; }
+    const map = {
+      "Check Fingerprint Device in Device Manager": "Check Fingerprint Device in Device Manager",
+      "Check Camera in Device Manager": "Check Camera in Device Manager",
+      "Check Card Reader in Device Manager": "Check Card Reader in Device Manager",
+      "Check Smart Card Reader in Device Manager": "Check Smart Card Reader in Device Manager",
+      "Check Wireless Driver in Device Manager": "Check Wireless Driver in Device Manager",
+      "Check Bluetooth Device in Device Manager": "Check Bluetooth Device in Device Manager",
+      "Check WWAN Device in Device Manager": "Check WWAN Device in Device Manager",
+      "Check Audio Device in Device Manager": "Check Audio Device in Device Manager",
+      "Check HID-compliant touch screen Driver in Device Manager": "Check HID-compliant touch screen Driver in Device Manager"
+    };
+    if(obj.label && map[obj.label]){
+      obj.label = map[obj.label];
+      obj.options = "detect";
+      obj.text = false;
+      obj.diag = false;
+    }
+    Object.keys(obj).forEach(k => renameDeviceManagerLabels(obj[k]));
+  }
+  renameDeviceManagerLabels(LEVELS);
+
+  function renameStandaloneCameraLabels(obj){
+    if(!obj || typeof obj !== 'object') return;
+    if(Array.isArray(obj)){ obj.forEach(renameStandaloneCameraLabels); return; }
+    if(obj.label === "Camera"){
+      obj.label = "Check Camera in Device Manager";
+    }
+    Object.keys(obj).forEach(k => renameStandaloneCameraLabels(obj[k]));
+  }
+  renameStandaloneCameraLabels(LEVELS);
+
+  // Touchscreen not work
+  setCommon('display', 'touchscreen', [
+    makeQ('Check HID-compliant touch screen Driver in Device Manager', 'detect'),
+    makeQ('Uninstall HID-compliant touch screen Driver and Restart', 'select'),
+    makeQ('Windows Update', 'update_status', {update:true}),
+    makeQ('Lenovo Vantage Update', 'update_status', {update:true}),
+    makeQ('BIOS Update', 'update_status', {update:true}),
+    makeQ('Power Reset', 'select'),
+    makeQ('Reinstall Windows', 'select'),
+    makeQ('Physical damage / Liquid spilled', 'yesno'),
+    makeQ('Other issue', 'yesno', {text:true})
+  ]);
+  // Touchscreen uses its own checklist and must not be overridden by generic Display checklist.
+  const touchSym = getSym('display', 'touchscreen');
+  if(touchSym){ touchSym.display = false; }
+
+  // ThinkCentre Tiny > Boot > No power: Mini PC has no internal PSU and no Power Outlet item.
+  const noPower = getSym('boot', 'no_power');
+  if(noPower){
+    noPower.questions = noPower.questions || {};
+    noPower.questions.tiny = [
+      makeQ('Power LED', 'led'),
+      makeQ('Fan spinning', 'fan'),
+      makeQ('Swap AC Power Cord', 'swap'),
+      makeQ('Physical damage / Liquid spilled', 'yesno'),
+      makeQ('Other issue', 'yesno', {text:true})
+    ];
+  }
+
+  // ThinkCentre Tiny > Keyboard: ask FRU P/N for every keyboard symptom using the existing Toolkit component.
+  ['few','auto_type','usb_keyboard_not_detect','wireless_keyboard_not_detect','hotkey'].forEach(key => {
+    const sym = getSym('keyboard', key);
+    if(!sym) return;
+    sym.questions = sym.questions || {};
+    const base = cloneQs(sym.questions.tiny || sym.questions.desktop || sym.common || []);
+    const withoutFru = base.filter(q => q.label !== 'FRU P/N');
+    sym.questions.tiny = [makeQ('FRU P/N', 'detail_only', {text:true})].concat(withoutFru);
+  });
+
+  // Front / Rear Audio Jack: add Swap Audio Jack Port.
+  ['front_jack','rear_jack'].forEach(key => {
+    const sym = getSym('audio', key);
+    if(!sym) return;
+    const base = cloneQs(sym.common || []);
+    sym.common = ensureQuestion(base, makeQ('Swap Audio Jack Port', 'swap'), 'Physical damage / Liquid spilled');
+  });
+
+  // TIO Dock > Not charging / No power to Tiny.
+  const tio = getSym('tio_dock', 'not_charging_no_power');
+  if(tio){
+    const base = cloneQs(tio.common || []);
+    tio.common = ensureQuestion(base, makeQ('Test Tiny without TIO Dock', 'swap'), 'Physical damage / Liquid spilled');
+  }
+
+  // Standardize Re-install Windows wording for checklist labels only.
+  renameChecklistLabel(LEVELS, 'Re-install Windows', 'Reinstall Windows');
+
+  function renameChecklistLabel(obj, fromLabel, toLabel){
+    if(!obj || typeof obj !== 'object') return;
+    if(Array.isArray(obj)){ obj.forEach(item => renameChecklistLabel(item, fromLabel, toLabel)); return; }
+    if(obj.label === fromLabel) obj.label = toLabel;
+    Object.keys(obj).forEach(k => renameChecklistLabel(obj[k], fromLabel, toLabel));
+  }
+})();
+
+
+// v4.9.1 Model & Symptom Validation fixes
+// - USB-C Display checklist must match USB-C to monitor connection, not HDMI.
+// - DisplayPort checklist must use DisplayPort cable, not HDMI cable.
+(function applyV491Rules(){
+  function makeQ(label, options, extra){
+    return Object.assign({label: label, options: options || "select", text: false, diag: false}, extra || {});
+  }
+  function getSym(level, symptom){
+    return LEVELS[level] && LEVELS[level].symptoms && LEVELS[level].symptoms[symptom];
+  }
+  function setCommon(level, symptom, qs){
+    const sym = getSym(level, symptom);
+    if(sym){ delete sym.questions; sym.common = qs; }
+  }
+
+  // ThinkPad / IdeaPad > Port > USB-C Display
+  setCommon('port', 'usbc_display', [
+    makeQ('Swap USB-C cable', 'swap'),
+    makeQ('Swap Monitor', 'swap'),
+    makeQ('Test HDMI Port on Notebook', 'swap'),
+    makeQ('Thunderbolt Driver Update', 'update_status', {update:true}),
+    makeQ('Lenovo Vantage Update', 'update_status', {update:true}),
+    makeQ('BIOS Update', 'update_status', {update:true}),
+    makeQ('Power Reset', 'select'),
+    makeQ('Emergency Reset', 'select'),
+    makeQ('Physical damage / Liquid spilled', 'yesno'),
+    makeQ('Other issue', 'yesno', {text:true})
+  ]);
+
+  // ThinkCentre Desktop / ThinkCentre Tiny > Port > DisplayPort
+  setCommon('port', 'displayport', [
+    makeQ('Swap DisplayPort cable', 'swap'),
+    makeQ('Swap Monitor', 'swap'),
+    makeQ('Power Reset', 'select'),
+    makeQ('Graphics Driver Update', 'update_status', {update:true}),
+    makeQ('BIOS Update', 'update_status', {update:true}),
+    makeQ('Physical damage / Liquid spilled', 'yesno'),
+    makeQ('Other issue', 'yesno', {text:true})
+  ]);
+})();
+
+// v4.9.1 Full Audit Corrections
+// - Port checklist cable/action must match selected port/interface.
+// - VGA must not use HDMI checklist wording.
+// - Generic External Monitor test wording is replaced with Swap Monitor for port display symptoms.
+(function applyV491FullAuditCorrections(){
+  function makeQ(label, options, extra){
+    return Object.assign({label: label, options: options || "select", text: false, diag: false}, extra || {});
+  }
+  function getSym(level, symptom){
+    return LEVELS[level] && LEVELS[level].symptoms && LEVELS[level].symptoms[symptom];
+  }
+  function setCommon(level, symptom, qs){
+    const sym = getSym(level, symptom);
+    if(sym){ delete sym.questions; sym.common = qs; }
+  }
+
+  // ThinkCentre Desktop / ThinkCentre Tiny > Port > VGA
+  setCommon('port', 'vga', [
+    makeQ('Swap VGA cable', 'swap'),
+    makeQ('Swap Monitor', 'swap'),
+    makeQ('Power Reset', 'select'),
+    makeQ('Graphics Driver Update', 'update_status', {update:true}),
+    makeQ('BIOS Update', 'update_status', {update:true}),
+    makeQ('Physical damage / Liquid spilled', 'yesno'),
+    makeQ('Other issue', 'yesno', {text:true})
+  ]);
+
+  // Keep HDMI as HDMI, but standardize monitor action wording.
+  setCommon('port', 'hdmi', [
+    makeQ('Swap HDMI cable', 'swap'),
+    makeQ('Swap Monitor', 'swap'),
+    makeQ('Graphics Driver Update', 'update_status', {update:true}),
+    makeQ('BIOS Update', 'update_status', {update:true}),
+    makeQ('Power Reset / Emergency Reset', 'select'),
+    makeQ('Physical damage / Liquid spilled', 'yesno'),
+    makeQ('Other issue', 'yesno', {text:true})
+  ]);
+
+  // AIO HDMI In / HDMI Out remain HDMI cable based, but use Swap Monitor wording where applicable.
+  ['hdmi_in','hdmi_out'].forEach(function(key){
+    setCommon('port', key, [
+      makeQ('Swap HDMI cable', 'swap'),
+      makeQ('Swap Monitor', 'swap'),
+      makeQ('Graphics Driver Update', 'update_status', {update:true}),
+      makeQ('BIOS Update', 'update_status', {update:true}),
+      makeQ('Power Reset / Emergency Reset', 'select'),
+      makeQ('Physical damage / Liquid spilled', 'yesno'),
+      makeQ('Other issue', 'yesno', {text:true})
+    ]);
+  });
+})();
+
+// v4.9.1 Full Audit Corrections - Serial Port
+// Serial Port must not reuse USB-A checklist wording.
+(function applyV491SerialPortAudit(){
+  function makeQ(label, options, extra){
+    return Object.assign({label: label, options: options || "select", text: false, diag: false}, extra || {});
+  }
+  function getSym(level, symptom){
+    return LEVELS[level] && LEVELS[level].symptoms && LEVELS[level].symptoms[symptom];
+  }
+  function setCommon(level, symptom, qs){
+    const sym = getSym(level, symptom);
+    if(sym){ delete sym.questions; sym.common = qs; }
+  }
+  setCommon('port', 'serial', [
+    makeQ('Swap Serial Cable', 'swap'),
+    makeQ('Swap Serial Device', 'swap'),
+    makeQ('Check Serial Port in Device Manager', 'detect'),
+    makeQ('Serial Port Driver Update', 'update_status', {update:true}),
+    makeQ('BIOS Update', 'update_status', {update:true}),
+    makeQ('Power Reset', 'select'),
+    makeQ('Physical damage / Liquid spilled', 'yesno'),
+    makeQ('Other issue', 'yesno', {text:true})
+  ]);
+})();
