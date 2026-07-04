@@ -51,10 +51,18 @@ function getModelSpecificDiagnosticsText(label, lang){
   return prefix + "\n" + steps;
 }
 
+function getModelSpecificDiagnosticsGuideText(){
+  const modelGroup = getProductModelGroupForMapping();
+  if(modelGroup === "ideapad"){
+    return "Lenovo Diagnostics\n\nทดสอบ Run Diagnostics\n\n1. กด Novo Button\n2. เลือก UEFI Diagnostics\n3. เลือก Run All\n4. เลือก Quick\n5. รอจนการทดสอบเสร็จสิ้น\n6. ตรวจสอบว่าผลการทดสอบเป็น Pass หรือ Failed";
+  }
+  return "Lenovo Diagnostics\n\nทดสอบ Run Diagnostics\n\n1. เปิดเครื่องและกด F10 รัว ๆ\n2. เลือก Run All\n3. เลือก Quick\n4. เลือก Quick Unattended\n5. รอจนการทดสอบเสร็จสิ้น\n6. ตรวจสอบว่าผลการทดสอบเป็น Pass หรือ Failed";
+}
+
 function getGuideTextForCurrentModel(guide){
   if(!guide) return "";
   if(String(guide.name || "").trim() === "Lenovo Diagnostics"){
-    return "Lenovo Diagnostics\n\n" + getModelSpecificDiagnosticsText("Run Lenovo Diagnostics", "th") + "\n\n" + getModelSpecificDiagnosticsText("Run Lenovo Diagnostics", "en");
+    return getModelSpecificDiagnosticsGuideText();
   }
   return guide.guide || "";
 }
@@ -451,13 +459,72 @@ function getManualGuide(key){
 
 function getRelatedGuideKeys(){
   if(isManual()) return [];
-  const cfg = (typeof RELATED_GUIDES !== "undefined" && RELATED_GUIDES[selectedLevel]) ? RELATED_GUIDES[selectedLevel] : null;
-  let keys = cfg ? (cfg[selectedSymptom] || cfg.default || []) : [];
-  const hasWindowsRecoveryChecklist = getQuestions().some(q => q.label === "Windows Recovery");
-  if(hasWindowsRecoveryChecklist){
-    keys = keys.concat(["reset_pc", "startup_repair", "system_restore", "uninstall_updates"]);
+
+  // v4.9.9 Full Impact Audit Rule:
+  // Related Guide must be driven by checklist items for the selected symptom only.
+  // Do not show guides for actions that are not present in the checklist.
+  // Power Reset and Emergency Reset are routine daily steps and must not appear here.
+  const questions = getQuestions();
+  const labels = questions.map(q => String(q.label || "").trim());
+  const normalized = labels.map(label => label.toLowerCase());
+
+  const hasLabel = (label) => normalized.includes(String(label || "").toLowerCase());
+  const hasAnyLabel = (items) => items.some(item => hasLabel(item));
+
+  const keys = [];
+
+  const add = (key) => {
+    if(key && !keys.includes(key)) keys.push(key);
+  };
+
+  if(hasLabel("Windows Recovery")){
+    ["reset_pc", "startup_repair", "system_restore", "uninstall_updates"].forEach(add);
   }
-  return Array.from(new Set(keys));
+
+  if(hasLabel("Re-install Windows")) add("reinstall_windows");
+  if(hasLabel("Run Lenovo Diagnostics") || hasLabel("Lenovo Diagnostics Storage") || hasLabel("Lenovo Diagnostics Battery")) add("lenovo_diagnostics");
+  // Lenovo Vantage Update is a routine update step and must not appear in Related Guide.
+  if(hasLabel("Battery Report collected")) add("battery_report");
+  if(hasLabel("Battery Health in Lenovo Vantage")) add("battery_health");
+  if(hasLabel("Event Viewer / Dump file collected")) add("dump_file");
+  if(hasLabel("Safe Mode test") || hasLabel("Can boot into Safe Mode")) add("safe_mode");
+  if(hasAnyLabel(["LCD Self-Test", "LCD self-test", "LCD Self Test"])) add("lcd_self_test");
+  if(hasLabel("FN & Ctrl Swap")) add("fn_ctrl_key_swap");
+  if(hasLabel("BIOS Password") || hasLabel("Supervisor Password")) add("bios_password");
+
+  // Legacy RELATED_GUIDES entries are allowed only when their trigger checklist exists.
+  // This keeps older special guides working while blocking unrelated guides.
+  const cfg = (typeof RELATED_GUIDES !== "undefined" && RELATED_GUIDES[selectedLevel]) ? RELATED_GUIDES[selectedLevel] : null;
+  const configured = cfg ? (cfg[selectedSymptom] || cfg.default || []) : [];
+  const legacyTrigger = {
+    "battery_report": ["Battery Report collected"],
+    "battery_health": ["Battery Health in Lenovo Vantage"],
+    "reset_battery": ["Emergency Reset"],
+    "safe_mode": ["Safe Mode test", "Can boot into Safe Mode"],
+    "dump_file": ["Event Viewer / Dump file collected"],
+    "lcd_self_test": ["LCD Self-Test", "LCD self-test", "LCD Self Test"],
+    // Lenovo Vantage Update is intentionally excluded from Related Guide.
+    "reinstall_windows": ["Re-install Windows"],
+    "reset_pc": ["Windows Recovery"],
+    "startup_repair": ["Windows Recovery"],
+    "system_restore": ["Windows Recovery"],
+    "uninstall_updates": ["Windows Recovery"],
+    "fn_ctrl_key_swap": ["FN & Ctrl Swap"],
+    "lock_on_leave": ["Lock on Leave Function"],
+    "disable_audio_enhancements_external_mic": ["Disable Audio Enhancements", "Disable Audio Enhancements (External Microphone)"],
+    "thinkcentre_raid1_ssd_not_found_os_install": ["Re-install Windows USB recreated"],
+    "bios_password": ["BIOS Password", "Supervisor Password"]
+  };
+
+  configured.forEach(key => {
+    // Never show routine reset guides in Related Guide.
+    if(key === "power_reset" || key === "emergency_reset" || key === "reset_battery" || key === "vantage_update" || key === "lenovo_vantage_update") return;
+
+    const triggers = legacyTrigger[key] || [];
+    if(triggers.length && hasAnyLabel(triggers)) add(key);
+  });
+
+  return keys;
 }
 
 function openGuideModal(key){
