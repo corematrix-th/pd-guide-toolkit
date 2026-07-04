@@ -1,0 +1,996 @@
+# PD Guide Global Checklist Mapping v4.9.6
+# Source of Truth for Checklist / Email TH / Email EN / Generate Note / Export / Copy Result.
+# Every checklist label must have TH and EN mapping. Update this file whenever a new mapping is added.
+
+Adapter test
+TH > ทดสอบ Adapter แล้วแจ้งผล
+EN > Check Adapter test.
+
+Adapter test on other machine
+TH > ทดสอบนำ Adapter ไปทดสอบกับเครื่องอื่น
+EN > Test this adapter with another machine.
+
+Adapter works with another cord
+TH > ทดสอบ Adapter กับสายไฟเส้นอื่น
+EN > Check Adapter works with another cord.
+
+Airplane Mode
+TH > ตรวจสอบว่าไม่ได้เปิด Airplane Mode
+EN > Check that Airplane Mode is turned off.
+
+Another Router test
+TH > ทดสอบเชื่อมต่อกับ Router อื่น
+EN > Test with another router.
+
+Audio Driver Update
+TH > อัปเดต Driver ของ Audio ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Audio driver to the latest version.
+
+Audio Jack on notebook test
+TH > ตรวจสอบหัวข้อ Audio Jack on notebook test
+EN > Check Audio Jack on notebook test.
+
+Auto reboot occurs
+TH > พบอาการเครื่อง Restart ช่วงใดบ้าง
+EN > Check when the automatic restart occurs.
+
+Battery charge level checked
+TH > ตรวจสอบระดับแบตเตอรี่ปัจจุบัน
+EN > Check Battery charge level.
+
+Battery Conservation Mode
+TH > ตรวจสอบ Battery Conservation Mode ใน Lenovo Vantage
+EN > Check Battery Conservation Mode.
+
+Battery Health in Lenovo Vantage
+TH > ตรวจสอบ Battery Health ใน Lenovo Vantage
+EN > Check Battery Health in Lenovo Vantage.
+
+Battery percentage
+TH > ตรวจสอบเปอร์เซ็นต์แบตเตอรี่ปัจจุบัน
+EN > Check the current battery percentage.
+
+Battery Report collected
+TH > สร้าง Battery Report และแนบไฟล์ผลลัพธ์
+EN > Generate and attach the Battery Report.
+
+Battery swollen confirmed
+TH > ตรวจสอบว่าแบตเตอรี่มีอาการบวมหรือไม่
+EN > Check whether the battery is swollen.
+
+Beep sound / pattern
+TH > รบกวนส่งคลิปถ่ายเสียงร้องเตือน (Beep sound) เพื่อตรวจสอบเพิ่มเติม
+EN > Please send a video of the beep sound for further checking.
+
+BIOS Camera enabled
+TH > ตรวจสอบว่า Camera เปิดใช้งานใน BIOS หรือไม่
+EN > Check BIOS Camera enabled.
+
+BIOS default loaded
+TH > โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง
+EN > Check BIOS default loaded.
+
+BIOS detects HDD
+TH > ตรวจสอบหัวข้อ BIOS detects HDD
+EN > Check BIOS detects HDD.
+
+BIOS detects storage
+TH > ตรวจสอบหน้า Bios พบ SSD/HDD หรือไม่
+EN > Check whether BIOS detects the SSD/HDD.
+
+BIOS Fingerprint enabled
+TH > ตรวจสอบว่า Fingerprint เปิดใช้งานใน BIOS หรือไม่
+EN > Check BIOS Fingerprint enabled.
+
+BIOS Hotkey mode
+TH > ตรวจสอบโหมด Hotkey ใน BIOS
+EN > Check BIOS Hotkey mode.
+
+BIOS Keyboard Backlight setting
+TH > ตรวจสอบการตั้งค่า Keyboard Backlight ใน BIOS
+EN > Check BIOS Keyboard Backlight setting.
+
+BIOS Touchpad enabled
+TH > ตรวจสอบว่า Touchpad เปิดใช้งานใน BIOS หรือไม่
+EN > Check BIOS Touchpad enabled.
+
+BIOS Update
+TH > ทดสอบอัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด
+EN > Update BIOS to the latest version.
+
+BIOS update
+TH > ทดสอบอัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด
+EN > Update BIOS to the latest version.
+
+Bluetooth Driver Update
+TH > อัปเดต Driver ของ Bluetooth ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Bluetooth driver to the latest version.
+
+Bluetooth toggle available
+TH > ตรวจสอบว่ามีปุ่มเปิด/ปิด Bluetooth ใน Windows หรือไม่
+EN > Check whether the Bluetooth toggle is available in Windows.
+
+Boot order checked
+TH > ตรวจสอบ Boot Order ใน BIOS
+EN > Check Boot order.
+
+BSOD occurs
+TH > พบอาการจอฟ้า (BSOD) ช่วงใดบ้าง
+EN > Check when the BSOD occurs.
+
+Camera Driver Update
+TH > อัปเดต Driver ของ Camera ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Camera driver to the latest version.
+
+Camera Driver Update / Lenovo Vantage
+TH > อัปเดต Driver ของ Camera ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Camera driver to the latest version.
+
+Camera Shutter
+TH > ตรวจสอบว่า Camera Shutter เปิดอยู่หรือไม่
+EN > Check whether the camera shutter is open.
+
+Can Access Windows
+TH > สามารถเข้าหน้า Windows ได้หรือไม่
+EN > Check whether Windows can be accessed.
+
+Can access Windows
+TH > สามารถเข้าหน้า Windows ได้หรือไม่
+EN > Check whether Windows can be accessed.
+
+Can boot into BIOS
+TH > สามารถเข้าหน้า BIOS ได้หรือไม่
+EN > Check whether the machine can enter BIOS.
+
+Can boot into Safe Mode
+TH > สามารถเข้าหน้า Safe Mode ได้หรือไม่
+EN > Check whether the machine can enter Safe Mode.
+
+Can detect Wi-Fi signal
+TH > ตรวจสอบว่าเครื่องมองเห็นสัญญาณ Wi-Fi หรือไม่
+EN > Check whether the machine can detect Wi-Fi signals.
+
+Can login with another account
+TH > ทดสอบ Login ด้วยบัญชีผู้ใช้อื่น
+EN > Test login with another user account.
+
+Caps Lock LED works
+TH > ทดสอบกดปุ่ม Caps Lock ดูว่าไฟตอบสนองไหม
+EN > Press Caps Lock and check whether the indicator responds.
+
+Caps Lock Toggle
+TH > ทดสอบกดปุ่ม Caps Lock ดูว่าไฟตอบสนองไหม
+EN > Press Caps Lock and check whether the indicator responds.
+
+Charge LED
+TH > ตรวจสอบว่าไฟสถานะบริเวณช่องชาร์จติดหรือไม่
+EN > Check whether the charging port status light turns on.
+
+Check Audio Device in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Audio หรือไม่
+EN > Check whether Device Manager detects Audio.
+
+Check BIOS
+TH > ตรวจสอบการตั้งค่าใน BIOS
+EN > Check BIOS settings.
+
+Check Bluetooth Device in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Bluetooth หรือไม่
+EN > Check whether Device Manager detects Bluetooth.
+
+Check Camera in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Camera หรือไม่
+EN > Check whether Device Manager detects Camera.
+
+Check Card Reader in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Card Reader หรือไม่
+EN > Check whether Device Manager detects Card Reader.
+
+Check Fingerprint Device in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Fingerprint หรือไม่
+EN > Check whether Device Manager detects Fingerprint.
+
+Check for Dust and Foreign Objects
+TH > ตรวจสอบฝุ่นหรือสิ่งแปลกปลอมบริเวณอุปกรณ์/พอร์ต
+EN > Check for dust or foreign objects.
+
+Check HID-compliant touch screen Driver in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ HID-compliant touch screen หรือไม่
+EN > Check whether Device Manager detects HID-compliant touch screen.
+
+Check LAN pin / damage
+TH > ตรวจสอบขา LAN และร่องรอยความเสียหาย
+EN > Check the LAN pins and any physical damage.
+
+Check Power Mode
+TH > ตรวจสอบ Power Mode ใน Windows
+EN > Check Power Mode in Windows.
+
+Check Serial Port in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Serial Port หรือไม่
+EN > Check whether Device Manager detects Serial Port.
+
+Check Smart Card Reader in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Smart Card Reader หรือไม่
+EN > Check whether Device Manager detects Smart Card Reader.
+
+Check Task Manager usage
+TH > เข้าหน้า Task Manager และตรวจสอบการทำงานของเครื่อง เช่น CPU/RAM/DISK วิ่ง 100% หรือไม่
+EN > Open Task Manager and check whether CPU/RAM/DISK usage reaches 100%.
+
+Check Task Manager Usage
+TH > เข้าหน้า Task Manager และตรวจสอบการทำงานของเครื่อง เช่น CPU/RAM/DISK วิ่ง 100% หรือไม่
+EN > Open Task Manager and check whether CPU/RAM/DISK usage reaches 100%.
+
+Check Temperature
+TH > ตรวจสอบอุณหภูมิของตัวเครื่องพบปัญหาเครื่องร้อนหรือไม่ และบริเวณใด
+EN > Check whether the machine overheats and identify the hot area.
+
+Check temperature / Overheat
+TH > ตรวจสอบอุณหภูมิของตัวเครื่องพบปัญหาเครื่องร้อนหรือไม่ และบริเวณใด
+EN > Check whether the machine overheats and identify the hot area.
+
+Check USB Error in Device Manager
+TH > ตรวจสอบ Error ของ USB ใน Device Manager
+EN > Check whether Device Manager detects USB Error.
+
+Check Wireless Driver in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ Wireless หรือไม่
+EN > Check whether Device Manager detects Wireless.
+
+Check WWAN Device in Device Manager
+TH > ตรวจสอบว่า Device Manager พบอุปกรณ์ WWAN หรือไม่
+EN > Check whether Device Manager detects WWAN.
+
+Clean camera lens
+TH > ทำความสะอาดเลนส์กล้องแล้วทดสอบอีกครั้ง
+EN > Clean the camera lens and test again.
+
+Clean Cooling System
+TH > ทำความสะอาดระบบระบายความร้อนแล้วทดสอบอีกครั้ง
+EN > Clean the cooling system and test again.
+
+Clean scroll wheel
+TH > ทำความสะอาด Scroll Wheel แล้วทดสอบอีกครั้ง
+EN > Clean the scroll wheel and test again.
+
+Clean touchpad surface
+TH > ทำความสะอาดพื้นผิว Touchpad แล้วทดสอบอีกครั้ง
+EN > Clean the touchpad surface and test again.
+
+ClickPad enabled
+TH > ตรวจสอบว่า ClickPad เปิดใช้งานอยู่หรือไม่
+EN > Check whether ClickPad is enabled.
+
+CMOS battery / RTC check
+TH > ตรวจสอบ CMOS Battery / RTC
+EN > Check CMOS battery / RTC check.
+
+Customer knows password
+TH > ตรวจสอบว่าลูกค้าทราบรหัสผ่านเครื่องหรือไม่
+EN > Confirm whether the customer knows the machine password.
+
+Disable Touchpad test
+TH > ปิด Touchpad แล้วทดสอบอาการอีกครั้ง
+EN > Disable Touchpad and test again.
+
+Disable UEFI IPv4 / IPv6
+TH > ปิด UEFI IPv4 / IPv6 แล้วทดสอบอีกครั้ง
+EN > Disable UEFI IPv4 / IPv6 and test again.
+
+Display Backlight
+TH > ตรวจสอบว่ามีแสงสว่างจากหลังหน้าจอหรือไม่
+EN > Check whether there is backlight from the display.
+
+Dock Firmware Update
+TH > อัปเดต Firmware ของ Dock ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Dock firmware to the latest version.
+
+Driver / Firmware Update
+TH > อัปเดต Driver หรือ Firmware ที่เกี่ยวข้องให้เป็นเวอร์ชันล่าสุด
+EN > Update the related driver or firmware to the latest version.
+
+Driver / Windows Update
+TH > อัปเดต Driver และ Windows ให้เป็นเวอร์ชันล่าสุด
+EN > Update the driver and Windows to the latest version.
+
+Dump File collected
+TH > รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม
+EN > Please send the dump file for further checking. Open File Explorer > C:\Windows\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\Windows\MEMORY.DMP.
+
+Dump file collected
+TH > รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม
+EN > Please send the dump file for further checking. Open File Explorer > C:\Windows\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\Windows\MEMORY.DMP.
+
+Emergency Reset
+TH > ทดสอบ Reset Battery โดยจิ้มรูที่ใต้ตัวเครื่องประมาณ 5-10 วินาที จากนั้นเปิดเครื่องใหม่
+EN > Perform a battery reset by pressing the reset hole on the bottom cover for about 5-10 seconds, then turn the machine on again.
+
+Enable LAN in BIOS
+TH > ตรวจสอบว่า LAN เปิดใช้งานใน BIOS หรือไม่
+EN > Check whether LAN is enabled in BIOS.
+
+Error photo provided
+TH > แนบรูป Error ที่พบเพิ่มเติม
+EN > Attach a photo of the error.
+
+Event Viewer / Dump file collected
+TH > รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม
+EN > Please send the dump file for further checking. Open File Explorer > C:\Windows\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\Windows\MEMORY.DMP.
+
+External mic test
+TH > ตรวจสอบหัวข้อ External mic test
+EN > Check External mic test.
+
+External Monitor test
+TH > ตรวจสอบหัวข้อ External Monitor test
+EN > For notebook no display: connect an external monitor and check whether the image appears.
+   For display line/defect: connect an external monitor and check whether the same issue appears.
+
+Fan Check
+TH > ตรวจสอบพัดลมหมุนหรือไม่
+EN > Check whether the fan is spinning.
+
+Fan spinning
+TH > ตรวจสอบพัดลมหมุนหรือไม่
+EN > Check whether the fan is spinning.
+
+Fingerprint Driver Update / Lenovo Vantage
+TH > อัปเดต Driver ของ Fingerprint ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Fingerprint driver to the latest version.
+
+Fingerprint setup in Windows Hello
+TH > ตั้งค่า Fingerprint ใน Windows Hello ใหม่แล้วทดสอบอีกครั้ง
+EN > Set up Fingerprint in Windows Hello again and test.
+
+FN & Ctrl Swap
+TH > ตรวจสอบการตั้งค่า FN & Ctrl Swap
+EN > Check the FN & Ctrl Swap setting.
+
+FN Lock checked
+TH > ตรวจสอบสถานะ FN Lock
+EN > Check FN Lock.
+
+Freeze occurs
+TH > พบอาการเครื่องค้างช่วงใดบ้าง
+EN > Check whether Freeze occurs.
+
+FRU P/N
+TH > ส่งภาพถ่ายสติกเกอร์ Serial Number / MTM ที่อยู่ใต้เครื่องหรือด้านหลังเครื่อง
+EN > Send a photo of the Serial Number / MTM sticker on the bottom or back of the machine.
+
+Graphics Driver Update
+TH > อัปเดต Driver ของ Graphics ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Graphics driver to the latest version.
+
+HDMI Port on notebook test
+TH > ทดสอบพอร์ต HDMI บนเครื่องโดยตรง
+EN > Test the HDMI port directly on the notebook.
+
+Headphone test
+TH > ทดสอบใช้งานร่วมกับหูฟังอื่น
+EN > Test with another headphone.
+
+Hotkey Driver Update
+TH > อัปเดต Driver ของ Hotkey ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Hotkey driver to the latest version.
+
+Idepad > ทดสอบ Run Diagnostics
+TH > ตรวจสอบหัวข้อ Idepad > ทดสอบ Run Diagnostics
+EN > Check Idepad > ทดสอบ Run Diagnostics.
+
+Input device selected correctly
+TH > ตรวจสอบว่าเลือก Input Device ถูกต้อง
+EN > Check that the correct input device is selected.
+
+Input volume level checked
+TH > ตรวจสอบระดับเสียง Input Volume
+EN > Check Input volume level.
+
+Intel RST / Storage Driver loaded
+TH > โหลด Intel RST / Storage Driver ระหว่างติดตั้ง Windows แล้วทดสอบอีกครั้ง
+EN > Load Intel RST / Storage Driver during Windows installation and test again.
+
+Issue happens on all apps
+TH > ตรวจสอบว่าอาการเกิดกับทุกโปรแกรมหรือไม่
+EN > Check whether the issue occurs in all applications.
+
+Issue occurs all apps
+TH > ตรวจสอบว่าอาการเกิดกับทุกโปรแกรมหรือไม่
+EN > Check whether the issue occurs in all applications.
+
+Key stuck / sunk
+TH > ตรวจสอบว่ามีปุ่มค้างหรือปุ่มยุบหรือไม่
+EN > Check whether any key is stuck or sunk.
+
+Keyboard / Touchpad affected by swollen battery
+TH > ตรวจสอบว่า Keyboard หรือ Touchpad ได้รับผลจากแบตเตอรี่บวมหรือไม่
+EN > Check Keyboard / Touchpad affected by swollen battery.
+
+Keyboard backlight hotkey test
+TH > ทดสอบปุ่มลัด Keyboard Backlight
+EN > Test the keyboard backlight hotkey.
+
+Keyboard Online Test
+TH > ทดสอบ Keyboard ผ่าน Online Keyboard Test
+EN > Test the keyboard with an online keyboard tester.
+
+Keyboard test on other machine
+TH > ทดสอบ Keyboard กับเครื่องอื่น
+EN > Test the Keyboard with another machine.
+
+LAN Driver Update
+TH > อัปเดต Driver ของ LAN ให้เป็นเวอร์ชันล่าสุด
+EN > Update the LAN driver to the latest version.
+
+LAN Port on notebook test
+TH > ทดสอบสาย LAN กับพอร์ต LAN ของเครื่องโดยตรง
+EN > Test the LAN cable directly with the machine LAN port.
+
+LED beside charging port
+TH > ตรวจสอบว่าไฟสถานะบริเวณช่องชาร์จติดหรือไม่
+EN > Check whether the charging port status light turns on.
+
+LED beside port
+TH > ตรวจสอบว่าไฟสถานะบริเวณช่องชาร์จติดหรือไม่
+EN > Check whether the charging port status light turns on.
+
+LED beside Type-C port
+TH > ตรวจสอบว่าไฟสถานะบริเวณช่องชาร์จติดหรือไม่
+EN > Check whether the charging port status light turns on.
+
+LED on power button
+TH > ตรวจสอบว่าไฟสถานะที่ปุ่มเปิด/ปิดติดหรือไม่
+EN > Check whether the power button status light turns on.
+
+Lenovo Diagnostics
+TH > ทดสอบ Run Diagnostics
+สำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed
+สำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed
+EN > Run Lenovo Diagnostics.
+For ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.
+For IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.
+
+Lenovo Diagnostics Battery
+TH > ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed
+EN > Run Lenovo Diagnostics to check the battery by following the steps for the machine model, then report whether the result is Pass or Failed.
+
+Lenovo Diagnostics Storage
+TH > ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed
+EN > Run Lenovo Diagnostics to check storage by following the steps for the machine model, then report whether the result is Pass or Failed.
+
+Lenovo Hotkey Features update
+TH > อัปเดต Lenovo Hotkey Features ให้เป็นเวอร์ชันล่าสุด
+EN > Update Lenovo Hotkey Features to the latest version.
+
+Lenovo Vantage setting
+TH > ตรวจสอบการตั้งค่าใน Lenovo Vantage
+EN > Check settings in Lenovo Vantage.
+
+Lenovo Vantage update
+TH > ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage
+EN > Update all drivers through Lenovo Vantage: open Lenovo Vantage > System Update > Check for updates.
+
+Lenovo Vantage Update
+TH > ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage
+EN > Update all drivers through Lenovo Vantage: open Lenovo Vantage > System Update > Check for updates.
+
+Load BIOS default
+TH > โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง
+EN > Check Load BIOS Default.
+
+Load BIOS Default
+TH > โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง
+EN > Check Load BIOS Default.
+
+Lock on leave setting enabled
+TH > ตรวจสอบว่าเปิด Lock on leave setting หรือไม่
+EN > Check Lock on leave setting enabled.
+
+Mic mute checked
+TH > ตรวจสอบว่าไม่ได้ปิดเสียงไมโครโฟน
+EN > Check Mic mute.
+
+Microphone enhancement disabled
+TH > ปิด Microphone Enhancement แล้วทดสอบอีกครั้ง
+EN > Disable Microphone Enhancement and test again.
+
+Minidump collected
+TH > รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม
+EN > Please send the dump file for further checking. Open File Explorer > C:\Windows\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\Windows\MEMORY.DMP.
+
+Monitor test on other machine
+TH > ทดสอบจอภาพกับเครื่องอื่น
+EN > Test the Monitor with another machine.
+
+Mouse test
+TH > ทดสอบการใช้งาน Mouse
+EN > Test mouse operation.
+
+Mouse test on other machine
+TH > ทดสอบ Mouse กับเครื่องอื่น
+EN > Test the Mouse with another machine.
+
+Mouse works
+TH > ตรวจสอบว่า Mouse ใช้งานได้หรือไม่
+EN > Check whether the mouse works.
+
+Move LCD lid
+TH > ขยับฝาจอ LCD แล้วสังเกตว่าอาการเปลี่ยนหรือไม่
+EN > Move the LCD lid and check whether the symptom changes.
+
+Mute checked
+TH > ตรวจสอบว่าไม่ได้ปิดเสียงอยู่
+EN > Check Mute.
+
+Network boot disabled
+TH > ปิด Network Boot แล้วทดสอบอีกครั้ง
+EN > Disable Network Boot and test again.
+
+Noise occurs all apps
+TH > ตรวจสอบว่าเสียงผิดปกติเกิดกับทุกโปรแกรมหรือไม่
+EN > Check whether the noise occurs in all applications.
+
+Novo Button
+TH > กด Novo Button แล้วตรวจสอบว่าเครื่องตอบสนองหรือไม่
+EN > Press the Novo Button and check whether the machine responds.
+
+On-Screen Keyboard test
+TH > ทดสอบผ่าน On-Screen Keyboard
+EN > Test with On-Screen Keyboard.
+
+Original Adapter used
+TH > ตรวจสอบว่าใช้งาน Adapter เดิมของเครื่องหรือไม่
+EN > Check whether the original adapter is being used.
+
+Other issue
+TH > ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่
+EN > Check whether there are any additional issues.
+
+Output device selected correctly
+TH > ตรวจสอบว่าเลือก Output Device ถูกต้อง
+EN > Check that the correct output device is selected.
+
+Password / PIN reset
+TH > Reset Password หรือ PIN แล้วทดสอบอีกครั้ง
+EN > Reset Password or PIN and test again.
+
+Physical damage / Liquid spilled
+TH > ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่
+EN > Check whether the machine has physical damage or any liquid spill history.
+
+Pixel location confirmed
+TH > ระบุตำแหน่ง Pixel ที่พบปัญหา
+EN > Confirm the affected pixel location.
+
+Power LED
+TH > ตรวจสอบว่าไฟสถานะที่ปุ่มเปิด/ปิดติดหรือไม่
+EN > Check whether the power button status light turns on.
+
+Power Reset
+TH > ทดสอบเคลียร์ไฟ (Power reset) โดยสายชาร์จออก จากนั้นกดปุ่ม Power ค้างไว้ประมาณ 30 วินาที แล้วลองเปิดเครื่องใหม่อีกครั้ง
+EN > Perform a power reset: unplug the charger, press and hold the Power button for about 30 seconds, then try to turn the machine on again.
+
+Power Reset / Emergency Reset
+TH > ตรวจสอบหัวข้อ Power Reset / Emergency Reset
+EN > Check Power Reset / Emergency Reset.
+
+Proof of ownership checked
+TH > ตรวจสอบหลักฐานความเป็นเจ้าของเครื่อง
+EN > Check Proof of ownership.
+
+Re-install Windows
+TH > รบกวนทดสอบติดตั้ง windows ใหม่
+EN > Please reinstall Windows and test again.
+
+Re-install Windows
+TH > รบกวนทดสอบติดตั้ง windows ใหม่
+EN > Please reinstall Windows and test again.
+
+RTC battery / CMOS check
+TH > ตรวจสอบ RTC Battery / CMOS
+EN > Check RTC battery / CMOS check.
+
+Run Lenovo Diagnostics
+TH > ทดสอบ Run Diagnostics
+สำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed
+สำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed
+EN > Run Lenovo Diagnostics.
+For ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.
+For IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.
+
+Safe Mode test
+TH > เข้า Safe Mode แล้วทดสอบอาการอีกครั้ง
+EN > Enter Safe Mode and test again.
+
+SD Card Reader Driver Update
+TH > อัปเดต Driver ของ SD Card Reader ให้เป็นเวอร์ชันล่าสุด
+EN > Update the SD Card Reader driver to the latest version.
+
+SD Card test on other machine
+TH > ทดสอบ SD Card กับเครื่องอื่น
+EN > Test the SD Card with another machine.
+
+Secure Boot disabled
+TH > ปิด Secure Boot แล้วทดสอบอีกครั้ง
+EN > Disable Secure Boot and test again.
+
+Serial Port Driver Update
+TH > อัปเดต Driver ของ Serial Port ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Serial Port driver to the latest version.
+
+Set date and time in BIOS
+TH > ตั้งค่าวันและเวลาใน BIOS ให้ถูกต้อง
+EN > Set the correct date and time in BIOS.
+
+SIM card detected
+TH > ตรวจสอบว่าเครื่องตรวจพบ SIM หรือไม่
+EN > Check whether the machine detects the SIM.
+
+SIM detected
+TH > ตรวจสอบว่าเครื่องตรวจพบ SIM หรือไม่
+EN > Check whether the machine detects the SIM.
+
+SIM tray damage
+TH > ตรวจสอบว่า SIM Tray เสียหายหรือไม่
+EN > Check whether the SIM tray is damaged.
+
+Slow occurs / Freeze occurs
+TH > พบอาการเครื่องช้าหรือค้างตอนไหนบ้าง
+EN > Check when the slow or freeze issue occurs.
+
+Smart Card Driver Update
+TH > อัปเดต Driver ของ Smart Card ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Smart Card driver to the latest version.
+
+Specific hotkey listed
+TH > ระบุปุ่ม Hotkey ที่มีปัญหาให้ครบถ้วน
+EN > List all affected hotkeys.
+
+Specific keys listed
+TH > ระบุปุ่มที่มีปัญหาให้ครบถ้วน
+EN > List all affected keys.
+
+Stop code / Error code
+TH > รบกวนส่งภาพถ่าพ Error code หรือ Stop code เพื่อตรวจสอบเพิ่มเติม
+EN > Please send a photo of the Error Code or Stop Code for further checking.
+
+Stop code / Error code collected
+TH > รบกวนส่งภาพถ่าพ Error code หรือ Stop code เพื่อตรวจสอบเพิ่มเติม
+EN > Please send a photo of the Error Code or Stop Code for further checking.
+
+Storage Firmware Update
+TH > อัปเดต Firmware ของ Storage ให้เป็นเวอร์ชันล่าสุด
+EN > Update storage firmware to the latest version.
+
+Swap AC Power Cord
+TH > ทดสอบสลับด้วย AC Power Cord อื่น
+EN > Test with another AC Power Cord.
+
+Swap Adapter
+TH > ทดสอบสลับ Adapter อื่น ๆ
+EN > Test with another adapter.
+
+Swap Adapter / Power Cable
+TH > ทดสอบสลับด้วย Adapter / Power Cable อื่น
+EN > Test with another Adapter / Power Cable.
+
+Swap App
+TH > ทดสอบใช้งานด้วยแอปอื่น
+EN > Test with another App.
+
+Swap Audio Jack Port
+TH > ทดสอบช่อง Audio Jack อื่น
+EN > Test with another Audio Jack Port.
+
+Swap Battery
+TH > ทดสอบสลับด้วย Battery อื่น
+EN > Test with another Battery.
+
+Swap Bluetooth Device
+TH > ทดสอบสลับด้วย Bluetooth Device อื่น
+EN > Test with another Bluetooth Device.
+
+Swap DisplayPort Cable
+TH > ทดสอบสลับด้วย DisplayPort Cable อื่น
+EN > Test with another DisplayPort Cable.
+
+Swap DisplayPort cable
+TH > ทดสอบสลับด้วย DisplayPort cable อื่น
+EN > Test with another DisplayPort cable.
+
+Swap Dock
+TH > ทดสอบสลับด้วย Dock อื่น
+EN > Test with another Dock.
+
+Swap HDD
+TH > ทดสอบสลับ HDD ตัวอื่น
+EN > Test with another HDD.
+
+Swap HDMI / DisplayPort cable
+TH > ทดสอบสลับด้วย HDMI / DisplayPort cable อื่น
+EN > Test with another HDMI / DisplayPort cable.
+
+Swap HDMI cable
+TH > ทดสอบสลับด้วย HDMI cable อื่น
+EN > Test with another HDMI cable.
+
+Swap HDMI Cable
+TH > ทดสอบสลับด้วย HDMI Cable อื่น
+EN > Test with another HDMI Cable.
+
+Swap Headphone
+TH > ทดสอบสลับด้วย Headphone อื่น
+EN > Test with another Headphone.
+
+Swap Keyboard
+TH > ทดสอบสลับด้วย Keyboard อื่น
+EN > Test with another Keyboard.
+
+Swap LAN cable
+TH > ทดสอบสลับด้วย LAN cable อื่น
+EN > Test with another LAN cable.
+
+Swap Monitor
+TH > ทดสอบสลับด้วย Monitor อื่น
+EN > Test with another Monitor.
+
+Swap Mouse
+TH > ทดสอบสลับด้วย Mouse อื่น
+EN > Test with another Mouse.
+
+Swap other Type-C port
+TH > ทดสอบสลับช่องชาร์จ (Type-C) ช่องอื่น
+EN > Test charging with another Type-C port.
+
+Swap Power Cable
+TH > ทดสอบสลับด้วย Power Cable อื่น
+EN > Test with another Power Cable.
+
+Swap Power Cord
+TH > ทดสอบสลับด้วย Power Cord อื่น
+EN > Test with another Power Cord.
+
+Swap Power Outlet
+TH > ทดสอบสลับด้วย Power Outlet อื่น
+EN > Test with another Power Outlet.
+
+Swap PSU
+TH > ทดสอบสลับด้วย PSU อื่น
+EN > Test with another PSU.
+
+Swap RAM
+TH > ทดสอบสลับ RAM ตัวอื่น
+EN > Test with another RAM module.
+
+Swap SD Card
+TH > ทดสอบสลับด้วย SD Card อื่น
+EN > Test with another SD Card.
+
+Swap Serial Cable
+TH > ทดสอบสลับสาย Serial อื่น
+EN > Test with another Serial Cable.
+
+Swap Serial Device
+TH > ทดสอบสลับอุปกรณ์ Serial อื่น
+EN > Test with another Serial Device.
+
+Swap SIM
+TH > ทดสอบสลับด้วย SIM อื่น
+EN > Test with another SIM.
+
+Swap Smart Card
+TH > ทดสอบสลับด้วย Smart Card อื่น
+EN > Test with another Smart Card.
+
+Swap SSD
+TH > ทดสอบสลับ SSD ตัวอื่น
+EN > Test with another SSD.
+
+Swap SSD / HDD
+TH > ทดสอบสลับด้วย SSD / HDD อื่น
+EN > Test with another SSD / HDD.
+
+Swap Type-C port charge
+TH > ทดสอบสลับด้วย Type-C port charge อื่น
+EN > Test with another Type-C port charge.
+
+Swap USB Device
+TH > ทดสอบสลับด้วย USB Device อื่น
+EN > Test with another USB Device.
+
+Swap USB Port
+TH > ทดสอบสลับด้วย USB Port อื่น
+EN > Test with another USB Port.
+
+Swap USB-A Port
+TH > ทดสอบสลับด้วย USB-A Port อื่น
+EN > Test with another USB-A Port.
+
+Swap USB-C cable
+TH > ทดสอบสลับด้วย USB-C cable อื่น
+EN > Test with another USB-C cable.
+
+Swap USB-C Cable
+TH > ทดสอบสลับด้วย USB-C Cable อื่น
+EN > Test with another USB-C Cable.
+
+Swap USB-C Port
+TH > ทดสอบสลับด้วย USB-C Port อื่น
+EN > Test with another USB-C Port.
+
+Swap VGA cable
+TH > ทดสอบสลับด้วย VGA cable อื่น
+EN > Test with another VGA cable.
+
+Swap VGA Cable
+TH > ทดสอบสลับด้วย VGA Cable อื่น
+EN > Test with another VGA Cable.
+
+Swap Wi-Fi / Hotspot
+TH > ทดสอบสลับด้วย Wi-Fi / Hotspot อื่น
+EN > Test with another Wi-Fi / Hotspot.
+
+System Restore
+TH > ทดสอบ System Restore
+EN > Perform System Restore / Reset This PC: Choose an option > Troubleshoot > Advanced options > Reset This PC, then choose Keep my files or Remove everything and follow the on-screen steps.
+
+Test HDMI Port on Notebook
+TH > ทดสอบพอร์ต HDMI บนเครื่องโดยตรง
+EN > Test the HDMI port directly on the notebook.
+
+Test Tiny without TIO Dock
+TH > ทดสอบเครื่อง Tiny โดยไม่ต่อผ่าน TIO Dock
+EN > Test the Tiny without the TIO Dock.
+
+Thinkpad, TC Desktop, TC Tiny, AIO > ทดสอบ Run Diagnostics
+TH > ตรวจสอบหัวข้อ Thinkpad, TC Desktop, TC Tiny, AIO > ทดสอบ Run Diagnostics
+EN > Check Thinkpad, TC Desktop, TC Tiny, AIO > ทดสอบ Run Diagnostics.
+
+Thunderbolt Driver Update
+TH > อัปเดต Driver ของ Thunderbolt ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Thunderbolt driver to the latest version.
+
+Touchpad Driver Update
+TH > อัปเดต Driver ของ Touchpad ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Touchpad driver to the latest version.
+
+Touchpad enabled in Settings
+TH > ตรวจสอบว่า Touchpad เปิดใช้งานใน Settings
+EN > Check whether Touchpad is enabled in Settings.
+
+TrackPoint Driver Update
+TH > อัปเดต Driver ของ TrackPoint ให้เป็นเวอร์ชันล่าสุด
+EN > Update the TrackPoint driver to the latest version.
+
+TrackPoint enabled in BIOS
+TH > ตรวจสอบว่า TrackPoint เปิดใช้งานใน BIOS หรือไม่
+EN > Check whether TrackPoint is enabled in BIOS.
+
+Uninstall Audio Driver and Restart
+TH > ถอนการติดตั้ง Driver ของ Audio แล้ว Restart เครื่อง
+EN > Uninstall the Audio driver, then restart the machine.
+
+Uninstall Bluetooth Driver and Restart
+TH > ถอนการติดตั้ง Driver ของ Bluetooth แล้ว Restart เครื่อง
+EN > Uninstall the Bluetooth driver, then restart the machine.
+
+Uninstall Camera Driver and Restart
+TH > ถอนการติดตั้ง Driver ของ Camera แล้ว Restart เครื่อง
+EN > Uninstall the Camera driver, then restart the machine.
+
+Uninstall Fingerprint Driver and Restart
+TH > ถอนการติดตั้ง Driver ของ Fingerprint แล้ว Restart เครื่อง
+EN > Uninstall the Fingerprint driver, then restart the machine.
+
+Uninstall HID-compliant touch screen Driver and Restart
+TH > ถอนการติดตั้ง Driver ของ HID-compliant touch screen แล้ว Restart เครื่อง
+EN > Uninstall the HID-compliant touch screen driver, then restart the machine.
+
+Uninstall Wireless Driver and Restart
+TH > ถอนการติดตั้ง Driver ของ Wireless แล้ว Restart เครื่อง
+EN > Uninstall the Wireless driver, then restart the machine.
+
+Update Graphics Driver
+TH > อัปเดต Driver ของ Graphics ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Graphics driver to the latest version.
+
+USB Driver Update / Lenovo Vantage
+TH > อัปเดต Driver ของ USB ให้เป็นเวอร์ชันล่าสุด
+EN > Update the USB driver to the latest version.
+
+USB Keyboard test
+TH > ทดสอบด้วย USB Keyboard
+EN > Test with a USB keyboard.
+
+USB Mouse / Keyboard test
+TH > ทดสอบด้วย USB Mouse หรือ USB Keyboard
+EN > Test with a USB mouse or keyboard.
+
+USB to LAN Adapter test
+TH > ทดสอบด้วย USB to LAN Adapter
+EN > Test with a USB to LAN adapter.
+
+Voice Recorder
+TH > ทดสอบบันทึกเสียงผ่าน Voice Recorder
+EN > Test recording with Voice Recorder.
+
+Volume level checked
+TH > ตรวจสอบระดับเสียง
+EN > Check Volume level.
+
+Volume Mixer checked
+TH > ตรวจสอบ Volume Mixer
+EN > Check Volume Mixer.
+
+Wi-Fi Driver Update
+TH > อัปเดต Driver ของ Wi-Fi ให้เป็นเวอร์ชันล่าสุด
+EN > Update the Wi-Fi driver to the latest version.
+
+Wi-Fi test
+TH > ทดสอบเชื่อมต่อ Wi-Fi
+EN > Test Wi-Fi connection.
+
+Windows Hello Face setup
+TH > ตั้งค่า Windows Hello Face ใหม่แล้วทดสอบอีกครั้ง
+EN > Set up Windows Hello Face again and test.
+
+Windows Installation
+TH > รบกวนทดสอบติดตั้ง windows ใหม่
+EN > Please reinstall Windows and test again.
+
+Windows Installation USB recreated
+TH > สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง
+EN > Recreate the Windows installation USB and test again.
+
+Windows update
+TH > ทดสอบอัปเดต Windows ให้เป็นเวอร์ชันล่าสุด
+EN > Update Windows to the latest version.
+
+Windows Update
+TH > ตรวจสอบหัวข้อ Windows Update
+EN > Check Windows Update.
+
+WLAN / WWAN card changed before issue
+TH > ตรวจสอบว่ามีการเปลี่ยน WLAN / WWAN card ก่อนเกิดอาการหรือไม่
+EN > Check whether the WLAN / WWAN card was changed before the issue occurred.
+
+WWAN Driver Update
+TH > อัปเดต Driver ของ WWAN ให้เป็นเวอร์ชันล่าสุด
+EN > Update the WWAN driver to the latest version.
+
+XXX Driver Update
+TH > ทดสอบอัปเดตไรเวอร์ที่มีปัญหา
+EN > Update the affected driver.
+
+กรณีจอ notebook ไม่มีภาพ > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่
+TH > ตรวจสอบหัวข้อ กรณีจอ notebook ไม่มีภาพ > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่
+EN > Check กรณีจอ notebook ไม่มีภาพ > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่.
+
+กรณีจอเสีย หรือเป็นเส้น > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่
+TH > ตรวจสอบหัวข้อ กรณีจอเสีย หรือเป็นเส้น > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่
+EN > Check กรณีจอเสีย หรือเป็นเส้น > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่.
+
+หากไม่มีไฟล์ ให้ไปที่ C:\Windows\MEMORY.DMP
+TH > ตรวจสอบหัวข้อ หากไม่มีไฟล์ ให้ไปที่ C:\Windows\MEMORY.DMP
+EN > Check หากไม่มีไฟล์ ให้ไปที่ C:\Windows\MEMORY.DMP.
+
+
+
+โดยเข้าหน้า Choose an option → Advanced options → Troubleshoot → Reset This PC → เลือก Keep my files หรือ Remove everything → ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น
+TH > ตรวจสอบหัวข้อ โดยเข้าหน้า Choose an option → Advanced options → Troubleshoot → Reset This PC → เลือก Keep my files หรือ Remove everything → ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น
+EN > Check โดยเข้าหน้า Choose an option → Advanced options → Troubleshoot → Reset This PC → เลือก Keep my files หรือ Remove everything → ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น.
+
+โดยเปิด File Explorer → C:\Windows\Minidump → จากนั้น Copy ไฟล์ .dmp และส่งมาทางอีเมลนี้
+TH > ตรวจสอบหัวข้อ โดยเปิด File Explorer → C:\Windows\Minidump → จากนั้น Copy ไฟล์ .dmp และส่งมาทางอีเมลนี้
+EN > Check โดยเปิด File Explorer → C:\Windows\Minidump → จากนั้น Copy ไฟล์ .dmp และส่งมาทางอีเมลนี้.
+
+โดยเปิด Lenovo Vantage → ไปที่ System Update → กด Check for updates
+TH > ตรวจสอบหัวข้อ โดยเปิด Lenovo Vantage → ไปที่ System Update → กด Check for updates
+EN > Check โดยเปิด Lenovo Vantage → ไปที่ System Update → กด Check for updates.
+# v4.9.6 Diagnostics model-specific display rule
+# Run Lenovo Diagnostics, Lenovo Diagnostics Storage, and Lenovo Diagnostics Battery are model-specific mappings.
+# The app must display only the selected product model instructions, not all model instructions together.
+# IdeaPad: Novo Button → UEFI Diagnostics → Run All → Quick.
+# ThinkPad / ThinkCentre Desktop / ThinkCentre Tiny / AIO: F10 → Run All → Quick → Quick Unattended.
+

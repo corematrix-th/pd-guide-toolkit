@@ -12,6 +12,88 @@ function getSymptomName(){
   return current() ? current().name : selectedSymptom;
 }
 
+function getProductModelGroupForMapping(){
+  const key = (typeof getProductKey === "function") ? getProductKey() : "thinkpad";
+  if(key === "ideapad") return "ideapad";
+  return "f10";
+}
+
+function getModelSpecificDiagnosticsText(label, lang){
+  const normalized = String(label || "").trim();
+  const diagLabels = new Set([
+    "Run Lenovo Diagnostics",
+    "Lenovo Diagnostics",
+    "Lenovo Diagnostics Storage",
+    "Lenovo Diagnostics Battery"
+  ]);
+  if(!diagLabels.has(normalized)) return "";
+
+  const modelGroup = getProductModelGroupForMapping();
+  const isStorage = normalized === "Lenovo Diagnostics Storage";
+  const isBattery = normalized === "Lenovo Diagnostics Battery";
+
+  if(lang === "en"){
+    const prefix = isStorage
+      ? "Run Lenovo Diagnostics to check storage."
+      : (isBattery ? "Run Lenovo Diagnostics to check the battery." : "Run Lenovo Diagnostics.");
+    const steps = modelGroup === "ideapad"
+      ? "Press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed."
+      : "Press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.";
+    return prefix + "\n" + steps;
+  }
+
+  const prefix = isStorage
+    ? "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage"
+    : (isBattery ? "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery" : "ทดสอบ Run Diagnostics");
+  const steps = modelGroup === "ideapad"
+    ? "กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed"
+    : "กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed";
+  return prefix + "\n" + steps;
+}
+
+function getGuideTextForCurrentModel(guide){
+  if(!guide) return "";
+  if(String(guide.name || "").trim() === "Lenovo Diagnostics"){
+    return "Lenovo Diagnostics\n\n" + getModelSpecificDiagnosticsText("Run Lenovo Diagnostics", "th") + "\n\n" + getModelSpecificDiagnosticsText("Run Lenovo Diagnostics", "en");
+  }
+  return guide.guide || "";
+}
+
+function getChecklistMappingText(label, lang){
+  const modelSpecific = getModelSpecificDiagnosticsText(label, lang);
+  if(modelSpecific) return modelSpecific;
+  if(typeof GLOBAL_CHECKLIST_MAPPING === "undefined") return "";
+  const canonical = {
+    "LED beside charging port":"Charge LED",
+    "LED beside Type-C port":"Charge LED",
+    "LED beside port":"Charge LED",
+    "LED on power button":"Power LED",
+    "Can Access Windows":"Can access Windows",
+    "Check Task Manager usage":"Check Task Manager Usage",
+    "Check Temperature":"Check temperature / Overheat",
+    "Re-install Windows":"Re-install Windows",
+    "Windows Installation":"Re-install Windows",
+    "Lenovo Vantage update":"Lenovo Vantage Update",
+    "BIOS update":"BIOS Update",
+    "Dump File collected":"Event Viewer / Dump file collected",
+    "Dump file collected":"Event Viewer / Dump file collected",
+    "Minidump collected":"Event Viewer / Dump file collected",
+    "Stop code / Error code":"Stop code / Error code collected",
+    "Fan Check":"Fan spinning",
+    "Caps Lock LED works":"Caps Lock Toggle",
+    "Run Lenovo Diagnostics":"Run Lenovo Diagnostics",
+    "Lenovo Diagnostics":"Run Lenovo Diagnostics",
+    "Load BIOS default":"Load BIOS Default",
+    "Update Graphics Driver":"Graphics Driver Update"
+  };
+  const key = GLOBAL_CHECKLIST_MAPPING[label] ? label : (canonical[label] || label);
+  const item = GLOBAL_CHECKLIST_MAPPING[key];
+  if(!item) return "";
+  if(lang === "th") return item.th || "";
+  if(lang === "en") return item.en || item.th || "";
+  return item.th || "";
+}
+
 
 const PRODUCT_CAPABILITY_EXCLUDE = {
   desktop: {
@@ -132,16 +214,20 @@ function normalizeQuestionOrder(list){
     .filter(q => !removeLabels.includes(q.label))
     .filter(q => !(q.label.includes("Video") || q.label.includes("Photo")));
 
-  // ThinkPad must show Power Reset and Emergency Reset as separate adjacent checklist items.
+  // v4.9.2 ThinkPad Reset Rule:
+  // Emergency Reset is allowed only for ThinkPad Boot > No power / Power on no display / Power on no display + Beep Sound.
+  const emergencyAllowed = product === "thinkpad" && selectedLevel === "boot" && ["no_power", "pond", "pond_beep"].includes(selectedSymptom);
   const expanded = [];
   filtered.forEach(q => {
     if(q.label === "Power Reset / Emergency Reset"){
-      if(product === "thinkpad"){
+      if(emergencyAllowed){
         expanded.push({...q, label:"Power Reset"});
         expanded.push({...q, label:"Emergency Reset"});
       }else{
         expanded.push({...q, label:"Power Reset"});
       }
+    }else if(q.label === "Emergency Reset" && !emergencyAllowed){
+      return;
     }else{
       expanded.push(q);
     }
@@ -152,14 +238,7 @@ function normalizeQuestionOrder(list){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
   }
 
-  // v4.9.1: ThinkCentre Tiny external Keyboard must ask FRU P/N first.
-  if(product === "tiny" && selectedLevel === "keyboard"){
-    const fruItems = filtered.filter(q => q.label === "FRU P/N");
-    filtered = filtered.filter(q => q.label !== "FRU P/N");
-    if(fruItems.length){
-      filtered = [fruItems[0]].concat(filtered);
-    }
-  }
+  // v4.9.2: FRU P/N must remain at the end of every checklist, including ThinkCentre Tiny keyboard.
 
   // v4.9.1: Device Manager check must stay before the matching Uninstall Driver step.
   const checkItems = filtered.filter(q => /^Check .+ in Device Manager$/.test(q.label));
@@ -191,13 +270,22 @@ function normalizeQuestionOrder(list){
 
   const rankUpdateTail = (label) => {
     const l = String(label || "").toLowerCase();
-    if(l === "lenovo vantage update") return 10;
-    if(l.includes("driver update") || l.includes("firmware update") || l.includes("windows update")) return 20;
-    if(l === "bios update") return 30;
-    if(l === "load bios default" || l === "load bios default".toLowerCase() || l === "load default bios") return 40;
-    if(l === "physical damage / liquid spilled") return 50;
-    if(l === "other issue") return 60;
-    if(l === "fru p/n" && !(product === "tiny" && selectedLevel === "keyboard")) return 70;
+    // Standard Troubleshooting Workflow tail order (v4.9.2)
+    if(l.includes("driver update")) return 10;
+    if(l.includes("windows update")) return 20;
+    if(l === "lenovo vantage update") return 30;
+    if(l === "bios update") return 40;
+    if(l.includes("firmware update") || l.includes("thunderbolt")) return 45;
+    if(l === "power reset") return 50;
+    if(l === "emergency reset") return 51;
+    if(l.includes("enabled") && l.includes("bios")) return 70;
+    if(l.includes("lenovo diagnostics") || l === "run lenovo diagnostics") return 80;
+    if(l === "re-install windows") return 110;
+    if(l === "swap ram" || l === "swap ssd" || l === "swap hdd" || l === "swap ssd / hdd") return 112;
+    if(l === "event viewer / dump file collected" || l === "event viewer" || l === "dump file") return 115;
+    if(l === "physical damage / liquid spilled") return 120;
+    if(l === "other issue") return 130;
+    if(l === "fru p/n") return 150;
     return 0;
   };
 
@@ -290,7 +378,7 @@ function getQuestions(){
     if(!qs.some(q => q.label === "Caps Lock LED works")){
       addFront.push({label:"Caps Lock LED works", options:"yesno", text:false, diag:false});
     }
-    const resetLabel = product === "thinkpad" ? "Power Reset / Emergency Reset" : "Power Reset";
+    const resetLabel = "Power Reset";
     if(!qs.some(q => q.label === "Power Reset / Emergency Reset" || q.label === "Power Reset")){
       addFront.push({label:resetLabel, options:"swap", text:false, diag:false});
     }
@@ -375,7 +463,7 @@ function openGuideModal(key){
     symptom: getSymptomName()
   });
   el("modalTitle").textContent = guide.name;
-  el("modalBody").textContent = guide.guide;
+  el("modalBody").textContent = getGuideTextForCurrentModel(guide);
   el("guideModal").classList.remove("hidden");
 }
 
@@ -428,7 +516,7 @@ function shortGuideName(name){
     .replace("Lenovo Vantage Update","Vantage")
     .replace("Lenovo Diagnostics","Diagnostics")
     .replace("Microsoft Office Activation","Office Activation")
-    .replace("Windows Installation","Reinstall Windows")
+    .replace("Re-install Windows","Re-install Windows")
     .replace("Bypass Windows 11 OOBE","Windows 11 Bypass");
 }
 
@@ -465,7 +553,7 @@ function renderMain(){
     el("recommendation").innerHTML = current().name;
     el("recommendation").className = "recommendation recommendation-dispatch";
     checklist.innerHTML = "";
-    manualBox.textContent = current().guide;
+    manualBox.textContent = getGuideTextForCurrentModel(current());
     manualBox.classList.remove("hidden");
     el("suggestion").classList.add("hidden");
     renderRelatedGuide();
@@ -1279,9 +1367,9 @@ function guideFromChecklist(){
 
 function customerStepTH(label){
   const map = {
-    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Battery Report collected": "รบกวนสร้าง Battery Report โดยเปิด Command Prompt (CMD) พิมพ์คำสั่ง powercfg /batteryreport แล้วกด Enter จากนั้นส่งไฟล์ battery-report.html กลับมาให้ทางเราครับ",
     "Dump File collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
     "Dump file collected": "รบกวนส่งไฟล์ Minidump ที่อยู่ในโฟลเดอร์ C:\\Windows\\Minidump กลับมาให้ทางเราครับ",
@@ -1317,9 +1405,9 @@ function customerStepTH(label){
     "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
     "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Windows Startup Repair": "ทดสอบ Startup Repair ของ Windows",
-    "Lenovo Diagnostics": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Storage": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
-    "Lenovo Diagnostics Battery": "รบกวนรัน Lenovo Diagnostics โดยกดปุ่ม F10 ซ้ำ ๆ ขณะเปิดเครื่อง จากนั้นเลือก Run All > Quick > Quick Unattended และแจ้งผลเป็น Pass หรือ Failed ครับ",
+    "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Re-install Windows": "ทดสอบติดตั้ง Windows ใหม่",
     "Windows Update": "ทดสอบอัปเดต Windows เป็นเวอร์ชันล่าสุด",
     "BIOS Update": "ทดสอบอัปเดต BIOS เป็นเวอร์ชันล่าสุด",
@@ -1357,7 +1445,7 @@ function customerStepTH(label){
     "Swap Type-C port charge": "ทดสอบสลับพอร์ตชาร์จ Type-C",
     "LED beside port": "ตรวจสอบไฟแสดงสถานะบริเวณพอร์ตชาร์จ",
     "Battery Report collected": "รบกวนสร้าง Battery Report โดยเปิด Command Prompt (CMD) พิมพ์คำสั่ง powercfg /batteryreport แล้วกด Enter จากนั้นส่งไฟล์ battery-report.html กลับมาให้ทางเราครับ",
-    "Battery Health in Lenovo Vantage": "ตรวจสอบ Battery Health ผ่าน Lenovo Vantage",
+    "Battery Health in Lenovo Vantage": "รบกวนตรวจสอบ Battery Health\nโดยเปิด Lenovo Vantage > Device > Battery Health",
     "Battery swollen confirmed": "ตรวจสอบว่า Battery มีอาการบวมหรือไม่",
     "Photo provided": "รบกวนแนบรูปถ่ายเพิ่มเติมเพื่อตรวจสอบ",
     "Stop using device advised": "หาก Battery บวม รบกวนหยุดใช้งานเครื่องชั่วคราวเพื่อความปลอดภัย",
@@ -1506,7 +1594,7 @@ function customerStepTH(label){
     "WLAN / WWAN card changed before issue": "ตรวจสอบว่ามีการเปลี่ยน WLAN / WWAN Card ก่อนเกิดอาการหรือไม่",
     "WWAN Driver Update": "ทดสอบอัปเดต Driver WWAN เป็นเวอร์ชันล่าสุด",
     "Check WWAN Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ WWAN หรือไม่",
-    "Windows Installation": "ทดสอบติดตั้ง Windows ใหม่",
+    "Re-install Windows": "ทดสอบติดตั้ง Windows ใหม่",
     "Video clip provided": "รบกวนแนบคลิปวิดีโอขณะเกิดอาการเพิ่มเติม",
     "Swap USB-A Port": "ทดลองเปลี่ยนไปใช้งานพอร์ต USB-A ช่องอื่นบน Dock",
     "USB Mouse / Keyboard test": "ทดลองใช้งานด้วย USB Mouse หรือ USB Keyboard",
@@ -1541,21 +1629,21 @@ function customerStepTH(label){
     "Load BIOS Default": "ทำการ Load BIOS Default",
     "Load BIOS default": "ทำการ Load BIOS Default",
     "Load default BIOS": "ทำการ Load BIOS Default",
-    "Lenovo Diagnostics": "รัน Lenovo Diagnostics และแจ้งผลว่า Passed หรือ Failed",
-    "Lenovo Diagnostics Storage": "รัน Lenovo Diagnostics และแจ้งผลว่า Passed หรือ Failed",
-    "Lenovo Diagnostics Battery": "รัน Lenovo Diagnostics และแจ้งผลว่า Passed หรือ Failed",
+    "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Clean Cooling System": "ทำความสะอาดระบบระบายความร้อน แล้วทดลองใช้งานอีกครั้ง",
     "Physical damage / Liquid spilled": "ตรวจสอบว่าตัวเครื่องมีความเสียหาย หรือมีของเหลวหกใส่ตัวเครื่องหรือไม่",
     "Other issue": "ตรวจสอบว่าตัวเครื่องมีอาการอื่นเพิ่มเติมหรือไม่"
   };
-  return standardMap[label] || map[label] || label;
+  return standardMap[label] || map[label] || getChecklistMappingText(label, "th") || label;
 }
 
 function customerStepEN(label){
   const map = {
-    "Lenovo Diagnostics": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Passed or Failed.",
-    "Lenovo Diagnostics Storage": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Passed or Failed.",
-    "Lenovo Diagnostics Battery": "Please run Lenovo Diagnostics by pressing F10 repeatedly during startup, then select Run All > Quick > Quick Unattended, and let us know whether the result is Passed or Failed.",
+    "Lenovo Diagnostics": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Storage": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Battery": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
     "Battery Report collected": "Please generate a Battery Report by opening Command Prompt (CMD), running the command powercfg /batteryreport, and then send us the generated battery-report.html file.",
     "Dump File collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
     "Dump file collected": "Please send us the Minidump files located in C:\\Windows\\Minidump.",
@@ -1667,9 +1755,9 @@ function customerStepTH(label){
     "Driver Update": "อัปเดต Driver ผ่าน Lenovo Vantage แล้วทดลองใช้งานอีกครั้ง",
     "Driver Update / Lenovo Vantage": "อัปเดต Driver ผ่าน Lenovo Vantage แล้วทดลองใช้งานอีกครั้ง",
     "Lenovo Vantage Update": "อัปเดตผ่าน Lenovo Vantage ให้เป็นเวอร์ชันล่าสุด แล้วทดลองใช้งานอีกครั้ง",
-    "Lenovo Diagnostics": "รัน Lenovo Diagnostics เพื่อตรวจสอบ Hardware ของเครื่อง",
-    "Lenovo Diagnostics Storage": "รัน Lenovo Diagnostics เพื่อตรวจสอบ Storage ของเครื่อง",
-    "Lenovo Diagnostics Battery": "รัน Lenovo Diagnostics เพื่อตรวจสอบ Battery ของเครื่อง",
+    "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Clean Cooling System": "ทำความสะอาดระบบระบายความร้อน แล้วทดลองใช้งานอีกครั้ง",
     "External Monitor test": "ทดสอบต่อใช้งานกับจอภายนอก (External Monitor)",
     "Swap Monitor": "ทดสอบสลับ Monitor ตัวอื่นที่ใช้งานได้",
@@ -1693,7 +1781,7 @@ function customerStepTH(label){
     "Camera Shutter": "ตรวจสอบว่า Camera Shutter เปิดอยู่หรือไม่",
     "Check Camera in Device Manager": "ทดลองเปิดใช้งานกล้องผ่านโปรแกรม Camera ของ Windows",
     "Battery Report collected": "สร้าง Battery Report ผ่าน Command Prompt ด้วยคำสั่ง powercfg /batteryreport",
-    "Battery Health in Lenovo Vantage": "ตรวจสอบ Battery Health ผ่าน Lenovo Vantage",
+    "Battery Health in Lenovo Vantage": "รบกวนตรวจสอบ Battery Health\nโดยเปิด Lenovo Vantage > Device > Battery Health",
     "Battery swollen confirmed": "ตรวจสอบว่า Battery มีอาการบวมหรือไม่",
     "Dump File collected": "เก็บไฟล์ Minidump จากโฟลเดอร์ C:\\Windows\\Minidump",
     "Dump file collected": "เก็บไฟล์ Minidump จากโฟลเดอร์ C:\\Windows\\Minidump",
@@ -1744,7 +1832,7 @@ function generateNote(){
   setNote(generateText());
   updateRecommendation();
 }
-function copyGuide(){ setNote(isManual() ? current().guide : guideFromChecklist()); }
+function copyGuide(){ setNote(isManual() ? getGuideTextForCurrentModel(current()) : guideFromChecklist()); }
 function sendEmailTH(){
   gaTrack("email_th", {
     level1: getLevelName(),
@@ -1823,3 +1911,461 @@ document.addEventListener("DOMContentLoaded", () => {
   el("modalCloseBtn").addEventListener("click", closeGuideModal);
   renderAll();
 });
+
+
+// v4.9.3 Email Writing Rules - Full Audit update
+// Customer emails must be concise instructions, not raw checklist labels.
+// One checklist item must become one customer-friendly instruction.
+// Use short imperative wording and preserve the visible checklist order.
+
+function _cleanLabel(label){
+  return String(label || "").trim();
+}
+
+function _stripKnownSuffix(text){
+  return String(text || "").replace(/\s+Driver$/i, "").replace(/\s+Device$/i, "").trim();
+}
+
+function customerStepTH(label){
+  label = _cleanLabel(label);
+  const mapped = getChecklistMappingText(label, "th");
+  if(mapped) return mapped;
+  const map = {
+    // Symptom / information
+    "Can Access Windows": "ตรวจสอบว่าสามารถเข้า Windows ได้หรือไม่",
+    "Can access Windows": "ตรวจสอบว่าสามารถเข้า Windows ได้หรือไม่",
+    "Power LED": "ตรวจสอบว่าไฟ Power LED ติดหรือไม่",
+    "Charge LED": "ตรวจสอบว่าไฟ Charge LED ติดหรือไม่",
+    "LED on power button": "ตรวจสอบว่าไฟที่ปุ่ม Power ติดหรือไม่",
+    "LED beside Type-C port": "ตรวจสอบว่าไฟข้างพอร์ต Type-C ติดหรือไม่",
+    "LED beside charging port": "ตรวจสอบว่าไฟข้างช่องชาร์จติดหรือไม่",
+    "Fan spinning": "ตรวจสอบว่าพัดลมหมุนหรือไม่",
+    "Fan Check": "ตรวจสอบว่าพัดลมทำงานหรือไม่",
+    "Caps Lock Toggle": "ตรวจสอบว่าไฟ Caps Lock เปิด/ปิดได้หรือไม่",
+    "Caps Lock LED works": "ตรวจสอบว่าไฟ Caps Lock ตอบสนองหรือไม่",
+    "Display Backlight": "ตรวจสอบว่าหน้าจอมีแสงหรือภาพจาง ๆ หรือไม่",
+    "Beep sound / pattern": "ตรวจสอบรูปแบบเสียง Beep Sound ที่เกิดขึ้น",
+    "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
+    "Can boot into Safe Mode": "เข้า Safe Mode แล้วทดสอบอาการอีกครั้ง",
+    "Boot order checked": "ตรวจสอบ Boot Order ใน BIOS",
+    "Network boot disabled": "ปิด Network Boot แล้วทดสอบอีกครั้ง",
+    "Disable UEFI IPv4 / IPv6": "ปิด UEFI IPv4 / IPv6 แล้วทดสอบอีกครั้ง",
+    "Set date and time in BIOS": "ตั้งค่าวันและเวลาใน BIOS ให้ถูกต้อง",
+    "CMOS battery / RTC check": "ตรวจสอบ CMOS Battery / RTC",
+    "RTC battery / CMOS check": "ตรวจสอบ RTC Battery / CMOS",
+    "Stop code / Error code collected": "เก็บภาพ Stop Code หรือ Error Code ที่พบ",
+    "Error photo provided": "แนบรูป Error ที่พบเพิ่มเติม",
+    "Auto reboot occurs": "ตรวจสอบว่าเครื่องมีอาการ Restart เองหรือไม่",
+    "BSOD occurs": "ตรวจสอบว่าเครื่องมีอาการจอฟ้า BSOD หรือไม่",
+    "Freeze occurs": "ตรวจสอบว่าเครื่องมีอาการค้างหรือไม่",
+    "Specific keys listed": "ระบุปุ่มที่มีปัญหาให้ครบถ้วน",
+    "Specific hotkey listed": "ระบุปุ่ม Hotkey ที่มีปัญหาให้ครบถ้วน",
+    "Key stuck / sunk": "ตรวจสอบว่ามีปุ่มค้างหรือปุ่มยุบหรือไม่",
+    "Pixel location confirmed": "ระบุตำแหน่ง Pixel ที่พบปัญหา",
+    "Issue happens on all apps": "ตรวจสอบว่าอาการเกิดกับทุกโปรแกรมหรือไม่",
+    "Issue occurs all apps": "ตรวจสอบว่าอาการเกิดกับทุกโปรแกรมหรือไม่",
+    "Noise occurs all apps": "ตรวจสอบว่าเสียงผิดปกติเกิดกับทุกโปรแกรมหรือไม่",
+    "Photo / Video provided": "แนบรูปหรือวิดีโอขณะเกิดอาการ",
+
+    // Settings / software
+    "Windows Camera Privacy Setting": "ตรวจสอบสิทธิ์การใช้งาน Camera ใน Windows Privacy Settings",
+    "Camera Shutter": "ตรวจสอบว่า Camera Shutter เปิดอยู่หรือไม่",
+    "Windows Hello Face setup": "ตั้งค่า Windows Hello Face ใหม่แล้วทดสอบอีกครั้ง",
+    "Fingerprint setup in Windows Hello": "ตั้งค่า Fingerprint ใน Windows Hello ใหม่แล้วทดสอบอีกครั้ง",
+    "Password / PIN reset": "Reset Password หรือ PIN แล้วทดสอบอีกครั้ง",
+    "Can login with another account": "ทดสอบ Login ด้วยบัญชีผู้ใช้อื่น",
+    "Airplane Mode": "ตรวจสอบว่าไม่ได้เปิด Airplane Mode",
+    "Bluetooth toggle available": "ตรวจสอบว่ามีปุ่มเปิด/ปิด Bluetooth ใน Windows หรือไม่",
+    "Battery Conservation Mode": "ตรวจสอบ Battery Conservation Mode ใน Lenovo Vantage",
+    "Battery Health in Lenovo Vantage": "รบกวนตรวจสอบ Battery Health\nโดยเปิด Lenovo Vantage > Device > Battery Health",
+    "Battery charge level checked": "ตรวจสอบระดับแบตเตอรี่ปัจจุบัน",
+    "Battery percentage": "ตรวจสอบเปอร์เซ็นต์แบตเตอรี่ปัจจุบัน",
+    "Battery swollen confirmed": "ตรวจสอบว่าแบตเตอรี่บวมหรือไม่",
+    "Check Power Mode": "ตรวจสอบ Power Mode และทดลองปรับเป็น Balanced",
+    "Check Task Manager Usage": "ตรวจสอบการใช้งาน CPU / RAM / Disk / GPU ใน Task Manager",
+    "Check Temperature": "ตรวจสอบว่าเครื่องร้อนผิดปกติหรือไม่",
+    "Check temperature / Overheat": "ตรวจสอบว่าเครื่องมีอาการร้อนผิดปกติหรือไม่",
+    "Check for Dust and Foreign Objects": "ตรวจสอบฝุ่นหรือสิ่งแปลกปลอมบริเวณช่องระบายอากาศ",
+    "Mute checked": "ตรวจสอบว่าไม่ได้ปิดเสียง Mute",
+    "Mic mute checked": "ตรวจสอบว่าไม่ได้ปิดเสียง Microphone",
+    "Volume level checked": "ตรวจสอบระดับเสียงของเครื่อง",
+    "Input volume level checked": "ตรวจสอบระดับเสียงของ Microphone",
+    "Volume Mixer checked": "ตรวจสอบ Volume Mixer ใน Windows",
+    "Output device selected correctly": "ตรวจสอบว่าเลือก Output Device ถูกต้อง",
+    "Input device selected correctly": "ตรวจสอบว่าเลือก Input Device ถูกต้อง",
+    "Microphone enhancement disabled": "ปิด Microphone Enhancement แล้วทดสอบอีกครั้ง",
+    "Touchpad enabled in Settings": "ตรวจสอบว่า Touchpad เปิดใช้งานใน Settings",
+    "ClickPad enabled": "ตรวจสอบว่า ClickPad เปิดใช้งานอยู่",
+    "Disable Touchpad test": "ปิด Touchpad แล้วทดสอบอาการอีกครั้ง",
+    "TrackPoint enabled in BIOS": "ตรวจสอบว่า TrackPoint เปิดใช้งานใน BIOS",
+    "BIOS Camera enabled": "ตรวจสอบว่า Camera เปิดใช้งานใน BIOS",
+    "BIOS Fingerprint enabled": "ตรวจสอบว่า Fingerprint เปิดใช้งานใน BIOS",
+    "BIOS Touchpad enabled": "ตรวจสอบว่า Touchpad เปิดใช้งานใน BIOS",
+    "BIOS Hotkey mode": "ตรวจสอบการตั้งค่า Hotkey Mode ใน BIOS",
+    "BIOS Keyboard Backlight setting": "ตรวจสอบการตั้งค่า Keyboard Backlight ใน BIOS",
+    "Enable LAN in BIOS": "ตรวจสอบว่า LAN เปิดใช้งานใน BIOS",
+    "BIOS default loaded": "Load BIOS Default แล้วทดสอบอีกครั้ง",
+    "Load BIOS Default": "Load BIOS Default แล้วทดสอบอีกครั้ง",
+    "Load BIOS default": "Load BIOS Default แล้วทดสอบอีกครั้ง",
+    "Secure Boot disabled": "ปิด Secure Boot แล้วทดสอบอีกครั้ง",
+    "Intel RST / Storage Driver loaded": "โหลด Intel RST / Storage Driver แล้วทดสอบอีกครั้ง",
+    "Windows Installation USB recreated": "สร้าง USB สำหรับติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
+    "Proof of ownership checked": "เตรียมหลักฐานความเป็นเจ้าของเครื่อง",
+    "Customer knows password": "ยืนยันว่าทราบรหัสผ่านของเครื่อง",
+    "WLAN / WWAN card changed before issue": "ตรวจสอบว่ามีการเปลี่ยนการ์ด WLAN / WWAN ก่อนเกิดอาการหรือไม่",
+    "Lock on leave setting enabled": "ตรวจสอบการตั้งค่า Lock on Leave",
+    "Lenovo Vantage setting": "ตรวจสอบการตั้งค่าที่เกี่ยวข้องใน Lenovo Vantage",
+    "FN Lock checked": "ตรวจสอบสถานะ FN Lock",
+    "FN & Ctrl Swap": "ตรวจสอบการตั้งค่า Fn และ Ctrl Key Swap",
+
+    // Device Manager
+    "Check Camera in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Camera หรือไม่\nโดยเปิด Device Manager > Cameras",
+    "Check Fingerprint Device in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Fingerprint หรือไม่\nโดยเปิด Device Manager > Biometric Devices",
+    "Check HID-compliant touch screen Driver in Device Manager": "ตรวจสอบว่า Device Manager พบ HID-compliant touch screen หรือไม่\nโดยเปิด Device Manager > Human Interface Devices",
+    "Check Smart Card Reader in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Smart Card Reader หรือไม่\nโดยเปิด Device Manager > Smart card readers",
+    "Check Card Reader in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Card Reader หรือไม่\nโดยเปิด Device Manager > Memory technology devices",
+    "Check Wireless Driver in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Wireless หรือไม่\nโดยเปิด Device Manager > Network adapters",
+    "Check Bluetooth Device in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Bluetooth หรือไม่\nโดยเปิด Device Manager > Bluetooth",
+    "Check WWAN Device in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ WWAN หรือไม่\nโดยเปิด Device Manager > Network adapters",
+    "Check Audio Device in Device Manager": "ตรวจสอบว่า Device Manager พบอุปกรณ์ Audio หรือไม่\nโดยเปิด Device Manager > Sound, video and game controllers",
+    "Check USB Error in Device Manager": "ตรวจสอบว่า Device Manager มี Error ของ USB หรือไม่\nโดยเปิด Device Manager > Universal Serial Bus controllers",
+
+    // Driver uninstall
+    "Uninstall Camera Driver and Restart": "ถอนการติดตั้ง Driver ของ Camera แล้ว Restart เครื่อง",
+    "Uninstall Fingerprint Driver and Restart": "ถอนการติดตั้ง Driver ของ Fingerprint แล้ว Restart เครื่อง",
+    "Uninstall HID-compliant touch screen Driver and Restart": "ถอนการติดตั้ง HID-compliant touch screen แล้ว Restart เครื่อง",
+    "Uninstall Audio Driver and Restart": "ถอนการติดตั้ง Driver ของ Audio แล้ว Restart เครื่อง",
+    "Uninstall Bluetooth Driver and Restart": "ถอนการติดตั้ง Driver ของ Bluetooth แล้ว Restart เครื่อง",
+    "Uninstall Wireless Driver and Restart": "ถอนการติดตั้ง Driver ของ Wireless แล้ว Restart เครื่อง",
+
+    // Updates
+    "Windows Update": "อัปเดต Windows ให้เป็นเวอร์ชันล่าสุด",
+    "Lenovo Vantage Update": "อัปเดต Driver และ BIOS ผ่าน Lenovo Vantage ให้เป็นเวอร์ชันล่าสุด",
+    "BIOS Update": "อัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด",
+    "Driver Update": "อัปเดต Driver ให้เป็นเวอร์ชันล่าสุด",
+    "Driver / Windows Update": "อัปเดต Driver และ Windows ให้เป็นเวอร์ชันล่าสุด",
+    "Driver Update / Lenovo Vantage": "อัปเดต Driver ผ่าน Lenovo Vantage",
+    "Camera Driver Update": "อัปเดต Driver ของ Camera ให้เป็นเวอร์ชันล่าสุด",
+    "Camera Driver Update / Lenovo Vantage": "อัปเดต Driver ของ Camera ผ่าน Lenovo Vantage",
+    "Fingerprint Driver Update / Lenovo Vantage": "อัปเดต Driver ของ Fingerprint ผ่าน Lenovo Vantage",
+    "Wi-Fi Driver Update": "อัปเดต Driver ของ Wi-Fi ให้เป็นเวอร์ชันล่าสุด",
+    "WLAN Driver Update": "อัปเดต Driver ของ WLAN ให้เป็นเวอร์ชันล่าสุด",
+    "WWAN Driver Update": "อัปเดต Driver ของ WWAN ให้เป็นเวอร์ชันล่าสุด",
+    "LAN Driver Update": "อัปเดต Driver ของ LAN ให้เป็นเวอร์ชันล่าสุด",
+    "Bluetooth Driver Update": "อัปเดต Driver ของ Bluetooth ให้เป็นเวอร์ชันล่าสุด",
+    "Audio Driver Update": "อัปเดต Driver ของ Audio ให้เป็นเวอร์ชันล่าสุด",
+    "Graphics Driver Update": "อัปเดต Graphics Driver ให้เป็นเวอร์ชันล่าสุด",
+    "Thunderbolt Driver Update": "อัปเดต Thunderbolt Driver ให้เป็นเวอร์ชันล่าสุด",
+    "USB Driver Update / Lenovo Vantage": "อัปเดต USB Driver ผ่าน Lenovo Vantage",
+    "SD Card Reader Driver Update": "อัปเดต Driver ของ SD Card Reader ให้เป็นเวอร์ชันล่าสุด",
+    "Smart Card Driver Update": "อัปเดต Driver ของ Smart Card ให้เป็นเวอร์ชันล่าสุด",
+    "Touchpad Driver Update": "อัปเดต Driver ของ Touchpad ให้เป็นเวอร์ชันล่าสุด",
+    "TrackPoint Driver Update": "อัปเดต Driver ของ TrackPoint ให้เป็นเวอร์ชันล่าสุด",
+    "Hotkey Driver Update": "อัปเดต Hotkey Driver ให้เป็นเวอร์ชันล่าสุด",
+    "Lenovo Hotkey Features update": "อัปเดต Lenovo Hotkey Features ให้เป็นเวอร์ชันล่าสุด",
+    "Dock Firmware Update": "อัปเดต Dock Firmware ให้เป็นเวอร์ชันล่าสุด",
+    "Storage Firmware Update": "อัปเดต Firmware ของ Storage ให้เป็นเวอร์ชันล่าสุด",
+    "Driver / Firmware Update": "อัปเดต Driver หรือ Firmware ที่เกี่ยวข้องให้เป็นเวอร์ชันล่าสุด",
+
+    // Reset / diagnostics / OS
+    "Power Reset": "ทำ Power Reset แล้วทดสอบอาการอีกครั้ง",
+    "Emergency Reset": "ทดสอบ Emergency Reset โดยกดรูใต้เครื่องค้างไว้ 5–10 วินาที จากนั้นทดลองเปิดเครื่องอีกครั้ง",
+    "Emergency Reset Hole": "กดปุ่ม Emergency Reset แล้วทดลองเปิดเครื่องอีกครั้ง",
+    "Power Reset / Emergency Reset": "ทดสอบ Power Reset โดยกดปุ่มเปิด/ปิดเครื่องค้างไว้ 10–15 วินาที จากนั้นทดสอบ Emergency Reset โดยกดรูใต้เครื่องค้างไว้ 5–10 วินาที แล้วทดลองเปิดเครื่องอีกครั้ง",
+    "Novo Button": "กดปุ่ม Novo Button แล้วตรวจสอบว่าเครื่องตอบสนองหรือไม่",
+    "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
+    "Run Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
+    "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
+    "Re-install Windows": "ติดตั้ง Windows ใหม่แล้วทดสอบอาการอีกครั้ง",
+    "Re-install Windows": "ติดตั้ง Windows ใหม่แล้วทดสอบอาการอีกครั้ง",
+    "Re-install Windows": "ติดตั้ง Windows ใหม่แล้วทดสอบอาการอีกครั้ง",
+    "Windows Startup Repair": "ทำ Windows Startup Repair แล้วทดสอบอาการอีกครั้ง",
+    "System Restore": "ทำ System Restore แล้วทดสอบอาการอีกครั้ง",
+
+    // Swap / isolation
+    "Swap Adapter": "ทดสอบสลับด้วย Adapter อื่น",
+    "Swap AC Adapter": "ทดสอบสลับด้วย AC Adapter อื่น",
+    "Swap AC Power Cord": "ทดสอบสลับด้วยสาย AC Power Cord อื่น",
+    "Swap Adapter / Power Cable": "ทดสอบสลับด้วย Adapter หรือสาย Power Cable อื่น",
+    "Swap Power Cable": "ทดสอบสลับด้วยสาย Power Cable อื่น",
+    "Swap Power Cord": "ทดสอบสลับด้วยสาย Power Cord อื่น",
+    "Swap Power Outlet": "ทดสอบกับปลั๊กไฟช่องอื่น",
+    "Swap PSU": "ทดสอบสลับด้วย PSU อื่น",
+    "Original Adapter used": "ตรวจสอบว่าใช้งานด้วย Adapter ของเครื่อง",
+    "Adapter test": "ทดสอบ Adapter แล้วแจ้งผล",
+    "Adapter test on other machine": "ทดสอบ Adapter กับเครื่องอื่น",
+    "Adapter works with another cord": "ทดสอบ Adapter กับสายไฟเส้นอื่น",
+    "Swap other Type-C port": "ทดสอบพอร์ต Type-C ช่องอื่น",
+    "Swap Type-C port charge": "ทดสอบชาร์จผ่านพอร์ต Type-C ช่องอื่น",
+    "Swap USB-C Cable": "ทดสอบสลับด้วยสาย USB-C อื่น",
+    "Swap USB-C cable": "ทดสอบสลับด้วยสาย USB-C อื่น",
+    "Swap HDMI Cable": "ทดสอบสลับด้วยสาย HDMI อื่น",
+    "Swap HDMI cable": "ทดสอบสลับด้วยสาย HDMI อื่น",
+    "Swap DisplayPort Cable": "ทดสอบสลับด้วยสาย DisplayPort อื่น",
+    "Swap DisplayPort cable": "ทดสอบสลับด้วยสาย DisplayPort อื่น",
+    "Swap VGA Cable": "ทดสอบสลับด้วยสาย VGA อื่น",
+    "Swap LAN Cable": "ทดสอบสลับด้วยสาย LAN อื่น",
+    "Swap LAN cable": "ทดสอบสลับด้วยสาย LAN อื่น",
+    "Swap HDMI / DisplayPort cable": "ทดสอบสลับด้วยสาย HDMI หรือ DisplayPort อื่น",
+    "Swap Monitor": "ทดสอบสลับกับจอภาพอื่น",
+    "External Monitor test": "ทดสอบต่อออกจอภาพภายนอก",
+    "Monitor test on other machine": "ทดสอบจอภาพกับเครื่องอื่น",
+    "HDMI Port on notebook test": "ทดสอบพอร์ต HDMI บนเครื่องโดยตรง",
+    "Test HDMI Port on Notebook": "ทดสอบพอร์ต HDMI บนเครื่องโดยตรง",
+    "LAN Port on notebook test": "ทดสอบสาย LAN กับพอร์ต LAN ของเครื่องโดยตรง",
+    "USB to LAN Adapter test": "ทดสอบด้วย USB to LAN Adapter",
+    "Wi-Fi test": "ทดสอบเชื่อมต่อ Wi-Fi",
+    "Another Router test": "ทดสอบเชื่อมต่อกับ Router อื่น",
+    "Swap Wi-Fi / Hotspot": "ทดสอบสลับไปใช้ Wi-Fi หรือ Hotspot อื่น",
+    "Swap USB Device": "ทดสอบสลับด้วยอุปกรณ์ USB อื่น",
+    "Swap USB Port": "ทดสอบพอร์ต USB ช่องอื่น",
+    "Swap USB-A Port": "ทดสอบพอร์ต USB-A ช่องอื่น",
+    "Swap USB-C Port": "ทดสอบพอร์ต USB-C ช่องอื่น",
+    "Swap Dock": "ทดสอบสลับด้วย Dock อื่น",
+    "Swap SD Card": "ทดสอบสลับด้วย SD Card อื่น",
+    "Swap Smart Card": "ทดสอบสลับด้วย Smart Card อื่น",
+    "Swap SIM": "ทดสอบสลับด้วย SIM อื่น",
+    "Swap Bluetooth Device": "ทดสอบสลับด้วยอุปกรณ์ Bluetooth อื่น",
+    "Swap Mouse": "ทดสอบสลับด้วย Mouse อื่น",
+    "Swap Keyboard": "ทดสอบสลับด้วย Keyboard อื่น",
+    "Swap Headphone": "ทดสอบสลับด้วยหูฟังอื่น",
+    "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
+    "External mic test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
+    "Built-in Speaker test": "ทดสอบลำโพงภายในเครื่อง",
+    "Audio Jack on notebook test": "ทดสอบช่อง Audio Jack บนเครื่องโดยตรง",
+    "Swap RAM": "ทดสอบสลับด้วย RAM อื่น",
+    "Clean / Reseat RAM": "ถอดทำความสะอาดและใส่ RAM ใหม่",
+    "Swap SSD": "ทดสอบสลับด้วย SSD อื่น",
+    "Swap HDD": "ทดสอบสลับด้วย HDD อื่น",
+    "Swap SSD / HDD": "ทดสอบสลับด้วย SSD หรือ HDD อื่น",
+    "Swap Battery": "ทดสอบสลับด้วย Battery อื่น",
+    "SD Card test on other machine": "ทดสอบ SD Card กับเครื่องอื่น",
+    "Mouse test": "ทดสอบการใช้งาน Mouse",
+    "Mouse works": "ตรวจสอบว่า Mouse ใช้งานได้หรือไม่",
+    "Mouse test on other machine": "ทดสอบ Mouse กับเครื่องอื่น",
+    "Keyboard test on other machine": "ทดสอบ Keyboard กับเครื่องอื่น",
+    "Keyboard Online Test": "ทดสอบ Keyboard ผ่าน Online Keyboard Test",
+    "On-Screen Keyboard test": "ทดสอบผ่าน On-Screen Keyboard",
+    "USB Keyboard test": "ทดสอบด้วย USB Keyboard",
+    "USB Mouse / Keyboard test": "ทดสอบด้วย USB Mouse หรือ USB Keyboard",
+    "Voice Recorder": "ทดสอบบันทึกเสียงผ่าน Voice Recorder",
+    "Clean scroll wheel": "ทำความสะอาด Scroll Wheel แล้วทดสอบอีกครั้ง",
+    "Clean touchpad surface": "ทำความสะอาดพื้นผิว Touchpad แล้วทดสอบอีกครั้ง",
+    "Clean camera lens": "ทำความสะอาดเลนส์กล้องแล้วทดสอบอีกครั้ง",
+    "Clean Cooling System": "ทำความสะอาดระบบระบายความร้อนแล้วทดสอบอีกครั้ง",
+    "Check LAN pin / damage": "ตรวจสอบขา LAN และร่องรอยความเสียหาย",
+    "SIM detected": "ตรวจสอบว่าเครื่องตรวจพบ SIM หรือไม่",
+    "SIM card detected": "ตรวจสอบว่าเครื่องตรวจพบ SIM หรือไม่",
+    "SIM tray damage": "ตรวจสอบว่า SIM Tray เสียหายหรือไม่",
+    "BIOS detects storage": "ตรวจสอบว่า BIOS พบ Storage หรือไม่",
+    "BIOS detects HDD": "ตรวจสอบว่า BIOS พบ HDD หรือไม่",
+
+    // Logs / evidence / final checks
+    "Battery Report collected": "สร้าง Battery Report และแนบไฟล์ผลลัพธ์",
+    "Dump File collected": "เก็บไฟล์ Dump จากโฟลเดอร์ C:\\Windows\\Minidump",
+    "Dump file collected": "เก็บไฟล์ Dump จากโฟลเดอร์ C:\\Windows\\Minidump",
+    "Minidump collected": "เก็บไฟล์ Minidump จากโฟลเดอร์ C:\\Windows\\Minidump",
+    "Event Viewer / Dump file collected": "เก็บข้อมูล Event Viewer หรือ Dump File เพิ่มเติม",
+    "Physical damage / Liquid spilled": "ตรวจสอบว่ามีความเสียหายหรือของเหลวหกใส่หรือไม่",
+    "Keyboard / Touchpad affected by swollen battery": "ตรวจสอบว่า Keyboard หรือ Touchpad ได้รับผลจากแบตเตอรี่บวมหรือไม่",
+    "Other issue": "ตรวจสอบว่ามีอาการอื่นเพิ่มเติมหรือไม่",
+    "FRU P/N": "รบกวนส่งภาพถ่ายสติกเกอร์ Serial Number / MTM ที่อยู่ใต้เครื่องหรือด้านหลังเครื่อง"
+  };
+  if(map[label]) return map[label];
+
+  let m;
+  if((m = label.match(/^Check (.+?) in Device Manager$/i))){
+    return `ตรวจสอบว่า Device Manager พบอุปกรณ์ ${_stripKnownSuffix(m[1])} หรือไม่`;
+  }
+  if((m = label.match(/^Uninstall (.+?) Driver and Restart$/i))){
+    return `ถอนการติดตั้ง Driver ของ ${_stripKnownSuffix(m[1])} แล้ว Restart เครื่อง`;
+  }
+  if((m = label.match(/^(.+?) Driver Update(?: \/ Lenovo Vantage)?$/i))){
+    return `อัปเดต Driver ของ ${_stripKnownSuffix(m[1])} ให้เป็นเวอร์ชันล่าสุด`;
+  }
+  if((m = label.match(/^Swap (.+)$/i))){
+    return `ทดสอบสลับด้วย ${m[1]} อื่น`;
+  }
+  if((m = label.match(/^(.+?) test on other machine$/i))){
+    return `ทดสอบ ${m[1]} กับเครื่องอื่น`;
+  }
+  if((m = label.match(/^(.+?) occurs$/i))){
+    return `ตรวจสอบว่าเกิดอาการ ${m[1]} หรือไม่`;
+  }
+  if((m = label.match(/^(.+?) enabled in BIOS$/i))){
+    return `ตรวจสอบว่า ${m[1]} เปิดใช้งานใน BIOS หรือไม่`;
+  }
+  if((m = label.match(/^(.+?) checked$/i))){
+    return `ตรวจสอบ ${m[1]}`;
+  }
+  return `ตรวจสอบหัวข้อ ${label}`;
+}
+
+function customerStepEN(label){
+  label = _cleanLabel(label);
+  const mapped = getChecklistMappingText(label, "en");
+  if(mapped) return mapped;
+  const map = {
+    "Can Access Windows": "Check whether Windows can be accessed.",
+    "Can access Windows": "Check whether Windows can be accessed.",
+    "Power LED": "Check whether the Power LED turns on.",
+    "Charge LED": "Check whether the Charge LED turns on.",
+    "LED on power button": "Check whether the Power button LED turns on.",
+    "LED beside Type-C port": "Check whether the LED beside the Type-C port turns on.",
+    "LED beside charging port": "Check whether the LED beside the charging port turns on.",
+    "Fan spinning": "Check whether the fan spins.",
+    "Fan Check": "Check whether the fan works.",
+    "Caps Lock Toggle": "Check whether the Caps Lock LED toggles.",
+    "Display Backlight": "Check whether the display has backlight or a faint image.",
+    "Beep sound / pattern": "Check the beep sound pattern.",
+    "Can boot into BIOS": "Check whether the machine can enter BIOS.",
+    "Can boot into Safe Mode": "Enter Safe Mode and test the issue again.",
+    "Boot order checked": "Check the Boot Order in BIOS.",
+    "Network boot disabled": "Disable Network Boot and test again.",
+    "Set date and time in BIOS": "Set the correct date and time in BIOS.",
+    "Stop code / Error code collected": "Capture the Stop Code or Error Code.",
+    "Auto reboot occurs": "Check whether the machine reboots automatically.",
+    "BSOD occurs": "Check whether BSOD occurs.",
+    "Freeze occurs": "Check whether the machine freezes.",
+    "Specific keys listed": "List all affected keys.",
+    "Specific hotkey listed": "List all affected hotkeys.",
+    "Key stuck / sunk": "Check whether any key is stuck or sunk.",
+    "Pixel location confirmed": "Confirm the affected pixel location.",
+    "Issue happens on all apps": "Check whether the issue occurs in all applications.",
+    "Issue occurs all apps": "Check whether the issue occurs in all applications.",
+    "Noise occurs all apps": "Check whether the noise occurs in all applications.",
+    "Photo / Video provided": "Attach a photo or video of the issue.",
+    "Airplane Mode": "Check that Airplane Mode is turned off.",
+    "Windows Update": "Update Windows to the latest version.",
+    "Lenovo Vantage Update": "Update drivers and BIOS through Lenovo Vantage to the latest version.",
+    "BIOS Update": "Update BIOS to the latest version.",
+    "Power Reset": "Test Power Reset by holding the power button for 10–15 seconds, then check the issue again.",
+    "Emergency Reset": "Test Emergency Reset by pressing the reset hole on the bottom cover for 5–10 seconds, then power on the machine again.",
+    "Emergency Reset Hole": "Test Emergency Reset by pressing the reset hole on the bottom cover for 5–10 seconds, then power on the machine again.",
+    "Power Reset / Emergency Reset": "Perform Power Reset and Emergency Reset, then power on the machine again.",
+    "Lenovo Diagnostics": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
+    "Run Lenovo Diagnostics": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Storage": "Run Lenovo Diagnostics to check storage by following the steps for the machine model, then report whether the result is Pass or Failed.",
+    "Lenovo Diagnostics Battery": "Run Lenovo Diagnostics to check the battery by following the steps for the machine model, then report whether the result is Pass or Failed.",
+    "Re-install Windows": "Re-install Windows and test the issue again.",
+    "Re-install Windows": "Re-install Windows and test the issue again.",
+    "Re-install Windows": "Re-install Windows and test the issue again.",
+    "Swap Adapter": "Try another Adapter.",
+    "Swap AC Adapter": "Try another AC Adapter.",
+    "Swap AC Power Cord": "Try another AC Power Cord.",
+    "Swap USB-C Cable": "Try another USB-C cable.",
+    "Swap USB-C cable": "Try another USB-C cable.",
+    "Swap HDMI Cable": "Try another HDMI cable.",
+    "Swap HDMI cable": "Try another HDMI cable.",
+    "Swap DisplayPort Cable": "Try another DisplayPort cable.",
+    "Swap DisplayPort cable": "Try another DisplayPort cable.",
+    "Swap VGA Cable": "Try another VGA cable.",
+    "Swap LAN Cable": "Try another LAN cable.",
+    "Swap LAN cable": "Try another LAN cable.",
+    "Swap Monitor": "Try another monitor.",
+    "External Monitor test": "Test with an external monitor.",
+    "HDMI Port on notebook test": "Test the HDMI port on the machine directly.",
+    "Test HDMI Port on Notebook": "Test the HDMI port on the machine directly.",
+    "Swap RAM": "Try another RAM.",
+    "Swap SSD": "Try another SSD.",
+    "Swap HDD": "Try another HDD.",
+    "Swap SSD / HDD": "Try another SSD or HDD.",
+    "Swap USB Device": "Try another USB device.",
+    "Swap USB Port": "Try another USB port.",
+    "Swap Dock": "Try another Dock.",
+    "Swap Mouse": "Try another Mouse.",
+    "Swap Keyboard": "Try another Keyboard.",
+    "Swap Headphone": "Try another headphone.",
+    "Headphone test": "Test with a headphone.",
+    "Voice Recorder": "Test recording with Voice Recorder.",
+    "Adapter test on other machine": "Test the Adapter with another machine.",
+    "Swap other Type-C port": "Test another Type-C port.",
+    "Physical damage / Liquid spilled": "Please send a clear photo of any physical damage or liquid contact area, if present.",
+    "Other issue": "Check whether there is any other issue.",
+    "FRU P/N": "Please send a photo of the Serial Number / MTM sticker on the bottom or rear side of the machine.",
+    "Event Viewer / Dump file collected": "Collect Event Viewer information or Dump files.",
+    "Dump File collected": "Collect Dump files from C:\\Windows\\Minidump.",
+    "Dump file collected": "Collect Dump files from C:\\Windows\\Minidump.",
+    "Minidump collected": "Collect Minidump files from C:\\Windows\\Minidump.",
+    "Battery Report collected": "Generate and attach the Battery Report.",
+    "Check Camera in Device Manager": "Check whether Device Manager detects the Camera device.",
+    "Check Fingerprint Device in Device Manager": "Check whether Device Manager detects the Fingerprint device.",
+    "Check HID-compliant touch screen Driver in Device Manager": "Check whether Device Manager detects HID-compliant touch screen.",
+    "Check Smart Card Reader in Device Manager": "Check whether Device Manager detects the Smart Card Reader.",
+    "Check Card Reader in Device Manager": "Check whether Device Manager detects the Card Reader.",
+    "Check Wireless Driver in Device Manager": "Check whether Device Manager detects the Wireless device.",
+    "Check Bluetooth Device in Device Manager": "Check whether Device Manager detects the Bluetooth device.",
+    "Check WWAN Device in Device Manager": "Check whether Device Manager detects the WWAN device.",
+    "Check Audio Device in Device Manager": "Check whether Device Manager detects the Audio device.",
+    "Uninstall Camera Driver and Restart": "Uninstall the Camera driver and restart the machine.",
+    "Uninstall Fingerprint Driver and Restart": "Uninstall the Fingerprint driver and restart the machine.",
+    "Uninstall HID-compliant touch screen Driver and Restart": "Uninstall HID-compliant touch screen and restart the machine.",
+    "Uninstall Audio Driver and Restart": "Uninstall the Audio driver and restart the machine.",
+    "Uninstall Bluetooth Driver and Restart": "Uninstall the Bluetooth driver and restart the machine.",
+    "Uninstall Wireless Driver and Restart": "Uninstall the Wireless driver and restart the machine."
+  };
+  if(map[label]) return map[label];
+  const globalEN = getChecklistMappingText(label, "en");
+  if(globalEN) return globalEN;
+  let m;
+  if((m = label.match(/^Check (.+?) in Device Manager$/i))){
+    return `Check whether Device Manager detects ${_stripKnownSuffix(m[1])}.`;
+  }
+  if((m = label.match(/^Uninstall (.+?) Driver and Restart$/i))){
+    return `Uninstall the ${_stripKnownSuffix(m[1])} driver and restart the machine.`;
+  }
+  if((m = label.match(/^(.+?) Driver Update(?: \/ Lenovo Vantage)?$/i))){
+    return `Update the ${_stripKnownSuffix(m[1])} driver to the latest version.`;
+  }
+  if((m = label.match(/^Swap (.+)$/i))){
+    return `Try another ${m[1]}.`;
+  }
+  if((m = label.match(/^(.+?) test on other machine$/i))){
+    return `Test ${m[1]} with another machine.`;
+  }
+  if((m = label.match(/^(.+?) occurs$/i))){
+    return `Check whether ${m[1]} occurs.`;
+  }
+  if((m = label.match(/^(.+?) enabled in BIOS$/i))){
+    return `Check whether ${m[1]} is enabled in BIOS.`;
+  }
+  if((m = label.match(/^(.+?) checked$/i))){
+    return `Check ${m[1]}.`;
+  }
+  return `Check ${label}.`;
+}
+
+function _emailVisibleLabels(){
+  const internalOnly = new Set([
+    "Other issue",
+    "Event Viewer / Dump file collected",
+    "Dump File collected",
+    "Dump file collected",
+    "Minidump collected"
+  ]);
+  const labels = getQuestions().map(x => x.label).filter(label => !internalOnly.has(label));
+  // FRU P/N is not shown as an internal FRU request; it is converted into a customer-friendly photo request.
+  return labels;
+}
+
+function _formatStepText(text, index){
+  const parts = String(text || "").split("\n");
+  const first = `${index}. ${parts.shift()}`;
+  return [first].concat(parts.map(p => `   ${p}`)).join("\n");
+}
+
+function emailFromChecklist(lang){
+  if(isManual()) return lang === "EN" ? current().emailEN : current().emailTH;
+  const q = _emailVisibleLabels();
+  if(lang === "EN"){
+    let lines = ["Dear Customer,", "", "Please follow the steps below.", ""];
+    q.forEach((item, i) => lines.push(_formatStepText(customerStepEN(item), i+1), ""));
+    lines.push("Once completed, please send us the result and attach any photo or test result if available, so we can proceed with the next step.");
+    return lines.join("\n");
+  }
+  let lines = ["เรียน คุณลูกค้า", "", "รบกวนดำเนินการตามขั้นตอนด้านล่างนี้", ""];
+  q.forEach((item, i) => lines.push(_formatStepText(customerStepTH(item), i+1), ""));
+  lines.push("หากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับ พร้อมแนบรูปหรือผลการทดสอบ (ถ้ามี) เพื่อให้ทางเราดำเนินการในขั้นตอนถัดไปครับ");
+  return lines.join("\n");
+}
