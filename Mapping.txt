@@ -1,4 +1,4 @@
-# PD Guide Global Checklist Mapping v4.9.6
+# PD Guide Global Checklist Mapping v4.9.9
 # Source of Truth for Checklist / Email TH / Email EN / Generate Note / Export / Copy Result.
 # Every checklist label must have TH and EN mapping. Update this file whenever a new mapping is added.
 
@@ -832,8 +832,8 @@ TH > ทดสอบสลับด้วย Wi-Fi / Hotspot อื่น
 EN > Test with another Wi-Fi / Hotspot.
 
 System Restore
-TH > ทดสอบ System Restore
-EN > Perform System Restore / Reset This PC: Choose an option > Troubleshoot > Advanced options > Reset This PC, then choose Keep my files or Remove everything and follow the on-screen steps.
+TH > เปิดคู่มือ System Restore ภายใต้ Windows Recovery
+EN > Open the System Restore guide under Windows Recovery.
 
 Test HDMI Port on Notebook
 TH > ทดสอบพอร์ต HDMI บนเครื่องโดยตรง
@@ -935,11 +935,11 @@ Windows Hello Face setup
 TH > ตั้งค่า Windows Hello Face ใหม่แล้วทดสอบอีกครั้ง
 EN > Set up Windows Hello Face again and test.
 
-Windows Installation
+Re-install Windows
 TH > รบกวนทดสอบติดตั้ง windows ใหม่
 EN > Please reinstall Windows and test again.
 
-Windows Installation USB recreated
+Re-install Windows USB recreated
 TH > สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง
 EN > Recreate the Windows installation USB and test again.
 
@@ -994,3 +994,14 @@ EN > Check โดยเปิด Lenovo Vantage → ไปที่ System Updat
 # IdeaPad: Novo Button → UEFI Diagnostics → Run All → Quick.
 # ThinkPad / ThinkCentre Desktop / ThinkCentre Tiny / AIO: F10 → Run All → Quick → Quick Unattended.
 
+
+# v4.9.8 Model Scope Rule
+# Swap RAM / Swap SSD / Swap HDD / Swap SSD / HDD are ThinkCentre Desktop-only mapping entries.
+# Keep mapping text for Desktop, but do not display these items for ThinkPad, IdeaPad, ThinkCentre Tiny, or AIO unless explicitly approved.
+
+
+Windows Recovery
+> ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates
+
+Battery Health in Lenovo Vantage
+> ตรวจสอบ Battery Health ใน Lenovo Vantage และเลือกผลลัพธ์: Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test

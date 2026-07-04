@@ -1,26 +1,33 @@
-PD Guide Toolkit v4.9.6
+PD Guide Toolkit v4.9.9
 
-## v4.9.6 Updates
-- Added Mapping.txt into the toolkit root and Reference_Text folder.
-- Added Global Checklist Mapping as the source of truth for checklist action wording.
-- Applied full audit rules for checklist mapping, label aliases, duplicate labels, reset placement, Event Viewer / Dump file placement, and FRU P/N placement.
-- Updated documentation files for mapping maintenance rules.
-- Updated visible version label to v4.9.6.
+## v4.9.9 Updates
 
-## Important Files
-- index.html
-- app.js
-- data.js
-- Mapping.txt
-- Reference_Text/Mapping.txt
-- Reference_Text/*.txt
-- docs/GLOBAL_CHECKLIST_MAPPING.md
-- docs/FULL_AUDIT_v4.9.6.md
+Documentation refactor release based on v4.9.8.
 
-- Cache busting updated to v=4_9_5 for style.css, data.js, and app.js.
+Key updates:
+- Consolidated duplicate documentation files in `docs/`.
+- Kept `Mapping.txt` in the project root because it is runtime/source-of-truth data.
+- Added consolidated `docs/FULL_AUDIT.md` for audit history.
+- Added consolidated `docs/RELEASE_REPORT.md` for release history.
+- Updated visible UI version to v4.9.9 and cache-busting references to `v=4_9_9`.
 
+Important rule:
+When an existing version is patched without a version number change, keep the same filename exactly. For this release, the new version is v4.9.9, so the output filename is `PD_Guide_Toolkit_v4_9_9.zip`.
 
-Email TH/EN Mapping Refactor: v4.9.6 now uses GLOBAL_CHECKLIST_MAPPING from Mapping.txt first. Total mapping entries: 246.
+## Release Report
+See `docs/RELEASE_REPORT.md` for the v4.9.9 release report and previous release history.
 
+## Docs Refactor
+The docs folder now uses consolidated source-of-truth files:
 
-v4.9.6 adds checklist terminology standardization, CHECKLIST_STANDARD.md, Re-install Windows standard term, reset order correction, and internal swap ordering audit.
+- `AI_HANDOVER_GUIDE.md`
+- `CHANGELOG.md`
+- `CHECKLIST_STANDARD.md`
+- `DECISION_LOG.md`
+- `DEVELOPMENT_RULES.md`
+- `Dispatch_Rules.md`
+- `FULL_AUDIT.md`
+- `RELEASE_REPORT.md`
+- `REQUEST_MAPPING.md`
+- `STANDARD_WORKFLOW.md`
+- `TODO.md`

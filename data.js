@@ -3,12 +3,12 @@ const APP_OPTIONS = {
     "-- Select --",
     "Same Issue",
     "Working",
-    "Not Tested"
+    "Not Test"
   ],
   "update_status": [
     "-- Select --",
     "Done",
-    "Not test"
+    "Not Test"
   ],
   "detail_only": [
     "-- Select --"
@@ -22,7 +22,7 @@ const APP_OPTIONS = {
     "-- Select --",
     "Same Issue",
     "Working",
-    "Not Tested"
+    "Not Test"
   ],
   "yesno": [
     "-- Select --",
@@ -39,7 +39,7 @@ const APP_OPTIONS = {
     "-- Select --",
     "Failed",
     "Passed",
-    "Not Tested"
+    "Not Test"
   ],
   "fan": [
     "-- Select --",
@@ -54,8 +54,11 @@ const APP_OPTIONS = {
   "battery_health": [
     "-- Select --",
     "Good",
-    "Warning",
-    "Fair"
+    "Fair",
+    "Poor",
+    "Replace Recommended",
+    "Battery Not Detected",
+    "Not Test"
   ],
   "battery_percent": [
     "-- Select --",
@@ -67,7 +70,7 @@ const APP_OPTIONS = {
     "-- Select --",
     "Same Issue",
     "Working",
-    "Not Tested",
+    "Not Test",
     "No Other Port"
   ],
   "shutter": [
@@ -75,7 +78,7 @@ const APP_OPTIONS = {
     "Open",
     "Closed",
     "No Shutter",
-    "Not Tested"
+    "Not Test"
   ],
   "airplane": [
     "-- Select --",
@@ -88,7 +91,7 @@ const APP_OPTIONS = {
     "During Windows loading",
     "After Windows login",
     "Randomly",
-    "Not Tested"
+    "Not Test"
   ],
   "bsod_occurs": [
     "-- Select --",
@@ -96,7 +99,7 @@ const APP_OPTIONS = {
     "After Windows login",
     "Randomly",
     "While using specific application",
-    "Not Tested"
+    "Not Test"
   ],
   "task_manager_usage": [
     "-- Select --",
@@ -105,7 +108,7 @@ const APP_OPTIONS = {
     "Disk High",
     "GPU High",
     "Normal",
-    "Not Tested"
+    "Not Test"
   ],
   "freeze_occurs": [
     "-- Select --",
@@ -113,13 +116,13 @@ const APP_OPTIONS = {
     "After Windows login",
     "Randomly",
     "While using specific application",
-    "Not Tested"
+    "Not Test"
   ],
   "onoff": [
     "-- Select --",
     "On",
     "Off",
-    "Not Tested"
+    "Not Test"
   ],
   "impact": [
     "-- Select --",
@@ -131,13 +134,13 @@ const APP_OPTIONS = {
     "-- Select --",
     "Disabled",
     "Enabled",
-    "Not Tested"
+    "Not Test"
   ],
   "temperature": [
     "-- Select --",
     "Overheat",
     "Normal",
-    "Not Tested"
+    "Not Test"
   ],
   "fan_check": [
     "-- Select --",
@@ -148,13 +151,13 @@ const APP_OPTIONS = {
     "-- Select --",
     "Balanced",
     "High Performance",
-    "Not Tested"
+    "Not Test"
   ],
   "yesno_test": [
     "-- Select --",
     "Yes",
     "No",
-    "Not Tested"
+    "Not Test"
   ]
 };
 
@@ -703,7 +706,7 @@ const LEVELS = {
         "defaultPart": "Software Troubleshooting / SSD",
         "common": [
           {
-            "label": "System Restore",
+            "label": "Windows Recovery",
             "options": "select",
             "text": false,
             "diag": false
@@ -2889,7 +2892,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "Windows Installation USB recreated",
+            "label": "Re-install Windows USB recreated",
             "options": "select"
           },
           {
@@ -4046,7 +4049,7 @@ const LEVELS = {
         ]
       },
       "dock_not_charging": {
-        "name": "Not charging",
+        "name": "Not Charging",
         "defaultResult": "Escalate L2",
         "defaultPart": "Software Troubleshooting",
         "common": [
@@ -4082,7 +4085,7 @@ const LEVELS = {
         ]
       },
       "dock_not_detected": {
-        "name": "Not detected",
+        "name": "Not Detected",
         "defaultResult": "Escalate L2",
         "defaultPart": "Software Troubleshooting",
         "common": [
@@ -4640,9 +4643,9 @@ const LEVELS = {
       },
       "battery_health": {
         "name": "Battery Health",
-        "guide": "วิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Warning กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Warning กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Warning กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nOnce completed, please provide the result back to us."
       },
       "bios_version": {
         "name": "BIOS Version",
@@ -4663,10 +4666,29 @@ const LEVELS = {
         "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
       },
       "reset_pc": {
-        "name": "Reset this PC",
-        "guide": "Reset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset this PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nReset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset this PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nReset this PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset this PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset this PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nOnce completed, please provide the result back to us."
+        "name": "Reset This PC",
+        "guide": "Reset This PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset This PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset This PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nReset This PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset This PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset This PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nReset This PC\n\nกรณีเข้า Windows ได้\n\n1. ไปที่ Settings\n2. เลือก System\n3. เลือก Recovery\n4. เลือก Reset This PC\n5. เลือก Keep my files หรือ Remove everything\n6. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nกรณีเข้า Windows ไม่ได้\n\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือวงกลมกำลังโหลดของ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. ทำซ้ำประมาณ 3 ครั้ง\n3. ครั้งที่ 4 เครื่องจะเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n4. เลือก Troubleshoot\n5. เลือก Reset This PC\n6. เลือก Keep my files หรือ Remove everything\n7. ทำตามขั้นตอนบนหน้าจอจนเสร็จสิ้น\n\nOnce completed, please provide the result back to us."
+      },
+
+      "startup_repair": {
+        "name": "Startup Repair",
+        "guide": "Startup Repair\n\nวัตถุประสงค์\nซ่อมแซมปัญหาที่ทำให้ Windows ไม่สามารถเริ่มต้นระบบได้\n\nหากไม่สามารถเข้า Windows ได้\nเปิดเครื่อง → เมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง จากนั้นเปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง เครื่องจะเข้าสู่ Preparing Automatic Repair แล้วเลือก Advanced options\n\nขั้นตอน\n1. เลือก Troubleshoot\n2. เลือก Advanced options\n3. เลือก Startup Repair\n4. เลือกระบบปฏิบัติการ (ถ้ามี)\n5. รอให้ระบบตรวจสอบและซ่อมแซม\n6. ตรวจสอบว่าสามารถเข้าสู่ Windows ได้ตามปกติหรือไม่",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ Startup Repair ตามขั้นตอนด้านล่าง\n\nหากไม่สามารถเข้า Windows ได้\nเปิดเครื่อง → เมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง จากนั้นเปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง เครื่องจะเข้าสู่ Preparing Automatic Repair แล้วเลือก Advanced options\n\n1. เลือก Troubleshoot\n\n2. เลือก Advanced options\n\n3. เลือก Startup Repair\n\n4. เลือกระบบปฏิบัติการ (ถ้ามี)\n\n5. รอให้ระบบตรวจสอบและซ่อมแซม\n\n6. ตรวจสอบว่าสามารถเข้าสู่ Windows ได้ตามปกติหรือไม่\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease perform Startup Repair by following the steps below.\n\nIf Windows cannot boot, power on the machine. When the Lenovo or Windows logo appears, press and hold the Power button to turn it off. Turn it on again and repeat this about 3 times until Preparing Automatic Repair appears, then select Advanced options.\n\n1. Select Troubleshoot.\n\n2. Select Advanced options.\n\n3. Select Startup Repair.\n\n4. Select the operating system if prompted.\n\n5. Wait for the repair process to complete.\n\n6. Check whether Windows can boot normally.\n\nOnce completed, please provide the result back to us."
+      },
+      "system_restore": {
+        "name": "System Restore",
+        "guide": "System Restore\n\nวัตถุประสงค์\nย้อนกลับการตั้งค่าระบบไปยัง Restore Point ที่สร้างไว้ก่อนเกิดปัญหา โดยไม่กระทบไฟล์ส่วนตัว\n\nหากไม่สามารถเข้า Windows ได้\nเปิดเครื่อง → เมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง จากนั้นเปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง เครื่องจะเข้าสู่ Preparing Automatic Repair แล้วเลือก Advanced options\n\nขั้นตอน\n1. เลือก Troubleshoot\n2. เลือก Advanced options\n3. เลือก System Restore\n4. เลือก Restore Point ที่ต้องการ\n5. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n6. ตรวจสอบว่าอาการผิดปกติได้รับการแก้ไขหรือไม่",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ System Restore ตามขั้นตอนด้านล่าง\n\nหากไม่สามารถเข้า Windows ได้\nเปิดเครื่อง → เมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง จากนั้นเปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง เครื่องจะเข้าสู่ Preparing Automatic Repair แล้วเลือก Advanced options\n\n1. เลือก Troubleshoot\n\n2. เลือก Advanced options\n\n3. เลือก System Restore\n\n4. เลือก Restore Point ที่ต้องการ\n\n5. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n\n6. ตรวจสอบว่าอาการผิดปกติได้รับการแก้ไขหรือไม่\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease perform System Restore by following the steps below.\n\nIf Windows cannot boot, power on the machine. When the Lenovo or Windows logo appears, press and hold the Power button to turn it off. Turn it on again and repeat this about 3 times until Preparing Automatic Repair appears, then select Advanced options.\n\n1. Select Troubleshoot.\n\n2. Select Advanced options.\n\n3. Select System Restore.\n\n4. Select a restore point.\n\n5. Follow the on-screen instructions until completion.\n\n6. Check whether the issue is resolved.\n\nOnce completed, please provide the result back to us."
+      },
+      "uninstall_updates": {
+        "name": "Uninstall Updates",
+        "guide": "Uninstall Updates\n\nวัตถุประสงค์\nถอนการติดตั้ง Windows Update ล่าสุด หากปัญหาเกิดขึ้นหลังจากอัปเดตระบบ\n\nหากไม่สามารถเข้า Windows ได้\nเปิดเครื่อง → เมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง จากนั้นเปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง เครื่องจะเข้าสู่ Preparing Automatic Repair แล้วเลือก Advanced options\n\nขั้นตอน\n1. เลือก Troubleshoot\n2. เลือก Advanced options\n3. เลือก Uninstall Updates\n4. เลือก Uninstall latest quality update หรือ Uninstall latest feature update\n5. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n6. ตรวจสอบว่าสามารถใช้งาน Windows ได้ตามปกติหรือไม่",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ Uninstall Updates ตามขั้นตอนด้านล่าง\n\nหากไม่สามารถเข้า Windows ได้\nเปิดเครื่อง → เมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง จากนั้นเปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง เครื่องจะเข้าสู่ Preparing Automatic Repair แล้วเลือก Advanced options\n\n1. เลือก Troubleshoot\n\n2. เลือก Advanced options\n\n3. เลือก Uninstall Updates\n\n4. เลือก Uninstall latest quality update หรือ Uninstall latest feature update\n\n5. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n\n6. ตรวจสอบว่าสามารถใช้งาน Windows ได้ตามปกติหรือไม่\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease uninstall the latest Windows update by following the steps below.\n\nIf Windows cannot boot, power on the machine. When the Lenovo or Windows logo appears, press and hold the Power button to turn it off. Turn it on again and repeat this about 3 times until Preparing Automatic Repair appears, then select Advanced options.\n\n1. Select Troubleshoot.\n\n2. Select Advanced options.\n\n3. Select Uninstall Updates.\n\n4. Select Uninstall latest quality update or Uninstall latest feature update.\n\n5. Follow the on-screen instructions until completion.\n\n6. Check whether Windows can be used normally.\n\nOnce completed, please provide the result back to us."
       },
       "reinstall_windows": {
         "name": "Re-install Windows",
@@ -4754,9 +4776,9 @@ const LEVELS = {
       },
       "thinkcentre_raid1_ssd_not_found_os_install": {
         "name": "ThinkCentre : RAID 1 SSD Not Found During OS Installation",
-        "guide": "ThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Windows Installation USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Windows Installation USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the guide below.\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. Download the Intel RST/RSTe Driver that matches the machine model.\n2. Extract the driver to the USB Flash Drive.\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. Enter BIOS > Devices > Storage Setup.\n2. Change Configure storage as to RAID.\n3. Press F10 to Save and Exit.\n4. Enter BIOS again.\n5. Go to Devices > Storage Setup > Intel(R) Rapid Storage Technology.\n6. Select Create RAID Volume and create RAID 1.\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot to the Windows Installation USB.\n2. On Windows Setup, select Load driver.\n3. Open the USB Flash Drive that contains the driver.\n4. Select the VMD or RST folder depending on the downloaded driver.\n5. Select Intel RST/RSTe Driver.\n6. Once the SSD is displayed, continue Windows installation.\n\nOnce completed, please provide the result back to us."
+        "guide": "ThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Re-install Windows USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Re-install Windows USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the guide below.\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. Download the Intel RST/RSTe Driver that matches the machine model.\n2. Extract the driver to the USB Flash Drive.\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. Enter BIOS > Devices > Storage Setup.\n2. Change Configure storage as to RAID.\n3. Press F10 to Save and Exit.\n4. Enter BIOS again.\n5. Go to Devices > Storage Setup > Intel(R) Rapid Storage Technology.\n6. Select Create RAID Volume and create RAID 1.\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot to the Re-install Windows USB.\n2. On Windows Setup, select Load driver.\n3. Open the USB Flash Drive that contains the driver.\n4. Select the VMD or RST folder depending on the downloaded driver.\n5. Select Intel RST/RSTe Driver.\n6. Once the SSD is displayed, continue Windows installation.\n\nOnce completed, please provide the result back to us."
       },
       "fn_ctrl_key_swap": {
         "name": "Fn & Ctrl Key Swap",
@@ -5052,11 +5074,24 @@ ensureSymptom('audio', 'rear_jack', 'audio', 'jack', 'Rear Audio Jack');
 ensureSymptom('dock', 'no_signal', 'dock', 'displayport_not_working', 'No signal');
 ensureSymptom('dock', 'usbc_data_thunderbolt', 'dock', 'usb_a_not_working', 'USB-C Data / Thunderbolt');
 ensureLevel('tio_dock', 'Tiny-in-One (TIO) Dock');
-ensureSymptom('tio_dock', 'not_charging_no_power', 'dock', 'dock_not_charging', 'Not charging / No power to Tiny');
-ensureSymptom('tio_dock', 'not_detected', 'dock', 'dock_not_detected', 'Not detected');
+ensureSymptom('tio_dock', 'not_charging_no_power', 'dock', 'dock_not_charging', 'Not Charging / No power to Tiny');
+ensureSymptom('tio_dock', 'not_detected', 'dock', 'dock_not_detected', 'Not Detected');
+
+
+// v4.9.8 Windows Recovery related guide patch
+(function(){
+  const recoveryGuides = ["reset_pc", "startup_repair", "system_restore", "uninstall_updates"];
+  function ensureRecoveryRelated(levelKey, symptomKey){
+    if(!RELATED_GUIDES[levelKey]) RELATED_GUIDES[levelKey] = {};
+    const current = RELATED_GUIDES[levelKey][symptomKey] || [];
+    RELATED_GUIDES[levelKey][symptomKey] = Array.from(new Set(current.concat(recoveryGuides)));
+  }
+  ["boot_loop", "stuck_logo", "auto_repair"].forEach(sym => ensureRecoveryRelated("boot", sym));
+  ["slow", "freeze", "auto_reboot", "bsod", "login", "black_login"].forEach(sym => ensureRecoveryRelated("windows", sym));
+})();
 
 const GUIDE_ORDER = [
-  'vantage_update','lenovo_diagnostics','battery_report','battery_health','bios_version','product_key','activation','reset_pc','reinstall_windows','event_viewer','sfc','safe_mode','dump_file','bitlocker_recovery','office_activation','windows11_bypass','always_on_usb','bios_password','lock_on_leave','reset_battery','lcd_self_test','disable_audio_enhancements_external_mic','thinkcentre_raid1_ssd_not_found_os_install','fn_ctrl_key_swap','emergency_reset','power_reset'
+  'vantage_update','lenovo_diagnostics','battery_report','battery_health','bios_version','product_key','activation','reset_pc','startup_repair','system_restore','uninstall_updates','reinstall_windows','event_viewer','sfc','safe_mode','dump_file','bitlocker_recovery','office_activation','windows11_bypass','always_on_usb','bios_password','lock_on_leave','reset_battery','lcd_self_test','disable_audio_enhancements_external_mic','thinkcentre_raid1_ssd_not_found_os_install','fn_ctrl_key_swap','emergency_reset','power_reset'
 ];
 
 const MODEL_STRUCTURE = {
@@ -6485,6 +6520,10 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ตรวจสอบหลักฐานความเป็นเจ้าของเครื่อง",
     "en": "Check Proof of ownership."
   },
+  "Windows Recovery": {
+    "th": "ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
+    "en": "Perform Windows Recovery using the recovery option that best matches the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates."
+  },
   "Re-install Windows": {
     "th": "รบกวนทดสอบติดตั้ง windows ใหม่",
     "en": "Please reinstall Windows and test again."
@@ -6842,16 +6881,16 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "en": "Please reinstall Windows and test again."
   },
 
-  "Reinstall Windows": {
+  "Re-install Windows": {
     "th": "รบกวนทดสอบติดตั้ง Windows ใหม่",
     "en": "Please test by re-installing Windows."
   },
 
-  "Windows Installation": {
+  "Re-install Windows": {
     "th": "รบกวนทดสอบติดตั้ง Windows ใหม่",
     "en": "Please test by re-installing Windows."
   },
-  "Windows Installation USB recreated": {
+  "Re-install Windows USB recreated": {
     "th": "สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
     "en": "Recreate the Windows installation USB and test again."
   },
@@ -6915,7 +6954,8 @@ const GLOBAL_CHECKLIST_MAPPING = {
       'Re-install Windows':'Re-install Windows',
       'Lenovo Vantage update':'Lenovo Vantage Update',
       'BIOS update':'BIOS Update',
-      'Windows update':'Windows update',
+      'Windows update':'Windows Update',
+      'System Restore':'Windows Recovery',
       'Lenovo Diagnostics':'Run Lenovo Diagnostics',
       'Dump File collected':'Event Viewer / Dump file collected',
       'Dump file collected':'Event Viewer / Dump file collected',
@@ -6967,4 +7007,77 @@ const GLOBAL_CHECKLIST_MAPPING = {
       }
     });
   });
+})();
+
+
+// v4.9.8 Model Scope Guard
+// User-approved rule: Swap RAM / Swap SSD / Swap HDD are ThinkCentre Desktop-only checklist items.
+// They must be removed from ThinkPad, IdeaPad, ThinkCentre Tiny, and AIO in checklist display, Email TH/EN, Generate Note, and export/copy output.
+// This runtime guard prevents shared COMMON checklists from leaking internal hardware swap steps into non-Desktop models.
+const DESKTOP_ONLY_CHECKLIST_LABELS = new Set([
+  "Swap RAM",
+  "Swap SSD",
+  "Swap HDD",
+  "Swap SSD / HDD"
+]);
+function filterChecklistByModelScope(qs, product){
+  if(product === "desktop") return qs;
+  return (qs || []).filter(q => !DESKTOP_ONLY_CHECKLIST_LABELS.has(q.label));
+}
+
+
+// v4.9.8 Final Full Impact Audit Patch
+// - Windows Recovery is the standard checklist term replacing legacy System Restore checklist usage.
+// - Related Guide for Windows Recovery points to four separate guide files: Reset This PC, Startup Repair, System Restore, Uninstall Updates.
+// - Swap RAM / Swap SSD / Swap HDD / Swap SSD / HDD remain ThinkCentre Desktop-only.
+// - Not Test is the only approved dropdown wording for untested items.
+(function applyV498FinalFullImpactAudit(){
+  if(typeof GLOBAL_CHECKLIST_MAPPING !== 'undefined'){
+    GLOBAL_CHECKLIST_MAPPING['Windows Recovery'] = {
+      th: 'ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates',
+      en: 'Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.'
+    };
+    GLOBAL_CHECKLIST_MAPPING['System Restore'] = GLOBAL_CHECKLIST_MAPPING['Windows Recovery'];
+    GLOBAL_CHECKLIST_MAPPING['Battery Health in Lenovo Vantage'] = {
+      th: 'ตรวจสอบ Battery Health ใน Lenovo Vantage และเลือกผลลัพธ์: Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test',
+      en: 'Check Battery Health in Lenovo Vantage and select the result: Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test.'
+    };
+  }
+
+  const recoveryGuideOrder = ['reset_pc','startup_repair','system_restore','uninstall_updates'];
+  if(typeof RELATED_GUIDES !== 'undefined'){
+    Object.keys(RELATED_GUIDES).forEach(levelKey => {
+      Object.keys(RELATED_GUIDES[levelKey] || {}).forEach(symKey => {
+        const arr = RELATED_GUIDES[levelKey][symKey] || [];
+        if(arr.includes('reinstall_windows') || arr.some(x => recoveryGuideOrder.includes(x))){
+          const nonRecovery = arr.filter(x => !recoveryGuideOrder.includes(x));
+          const withoutReinstall = nonRecovery.filter(x => x !== 'reinstall_windows');
+          const hasReinstall = nonRecovery.includes('reinstall_windows');
+          RELATED_GUIDES[levelKey][symKey] = Array.from(new Set(withoutReinstall.concat(recoveryGuideOrder).concat(hasReinstall ? ['reinstall_windows'] : [])));
+        }
+      });
+    });
+  }
+
+  function normalizeChecklistItem(q){
+    if(!q || !q.label) return q;
+    if(q.label === 'System Restore') q.label = 'Windows Recovery';
+    if(q.label === 'Reinstall Windows' || q.label === 'Windows Installation' || q.label === 'Install Windows') q.label = 'Re-install Windows';
+    if(q.label === 'Lenovo Diagnostics') q.label = 'Run Lenovo Diagnostics';
+    return q;
+  }
+  if(typeof LEVELS !== 'undefined'){
+    Object.keys(LEVELS).forEach(levelKey => {
+      const level = LEVELS[levelKey];
+      Object.keys(level.symptoms || {}).forEach(symKey => {
+        const sym = level.symptoms[symKey];
+        if(Array.isArray(sym.common)) sym.common.forEach(normalizeChecklistItem);
+        if(sym.questions && typeof sym.questions === 'object'){
+          Object.keys(sym.questions).forEach(product => {
+            if(Array.isArray(sym.questions[product])) sym.questions[product].forEach(normalizeChecklistItem);
+          });
+        }
+      });
+    });
+  }
 })();

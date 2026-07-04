@@ -72,7 +72,7 @@ function getChecklistMappingText(label, lang){
     "Check Task Manager usage":"Check Task Manager Usage",
     "Check Temperature":"Check temperature / Overheat",
     "Re-install Windows":"Re-install Windows",
-    "Windows Installation":"Re-install Windows",
+    "Re-install Windows":"Re-install Windows",
     "Lenovo Vantage update":"Lenovo Vantage Update",
     "BIOS update":"BIOS Update",
     "Dump File collected":"Event Viewer / Dump file collected",
@@ -385,7 +385,9 @@ function getQuestions(){
     qs = addFront.concat(qs);
   }
 
-  return normalizeQuestionOrder(applyUpdateChecklistRules(qs));
+  qs = normalizeQuestionOrder(applyUpdateChecklistRules(qs));
+  if(typeof filterChecklistByModelScope === "function") qs = filterChecklistByModelScope(qs, product);
+  return qs;
 }
 
 function getOptions(code){
@@ -450,8 +452,12 @@ function getManualGuide(key){
 function getRelatedGuideKeys(){
   if(isManual()) return [];
   const cfg = (typeof RELATED_GUIDES !== "undefined" && RELATED_GUIDES[selectedLevel]) ? RELATED_GUIDES[selectedLevel] : null;
-  if(!cfg) return [];
-  return cfg[selectedSymptom] || cfg.default || [];
+  let keys = cfg ? (cfg[selectedSymptom] || cfg.default || []) : [];
+  const hasWindowsRecoveryChecklist = getQuestions().some(q => q.label === "Windows Recovery");
+  if(hasWindowsRecoveryChecklist){
+    keys = keys.concat(["reset_pc", "startup_repair", "system_restore", "uninstall_updates"]);
+  }
+  return Array.from(new Set(keys));
 }
 
 function openGuideModal(key){
@@ -617,7 +623,7 @@ function isTailChecklist(label){
 }
 
 // v4.8.6 revision: Checklist Priority Rule
-// Not Tested must not block Dispatch unless the item is truly required to choose a part.
+// Not Test must not block Dispatch unless the item is truly required to choose a part.
 // Optional/Recommended items add confidence only.
 function isOptionalChecklist(label){
   
@@ -640,7 +646,7 @@ function isRequiredChecklist(label){
 
 function decisionProgress(ans){
   const required = ans.filter(r => isRequiredChecklist(r.q));
-  const answered = required.filter(r => isAnsweredValue(r.a) && r.a !== "Not Tested");
+  const answered = required.filter(r => isAnsweredValue(r.a) && r.a !== "Not Test");
   return {required: required.length, answered: answered.length};
 }
 
@@ -853,7 +859,7 @@ function isSame(ans, label){ return selectedAnswer(ans, label) === "Same Issue";
 function isWorking(ans, label){ return selectedAnswer(ans, label) === "Working"; }
 function isNotTested(ans, label){
   const v = selectedAnswer(ans, label);
-  return !v || v === "-- Select --" || v === "Not Tested";
+  return !v || v === "-- Select --" || v === "Not Test";
 }
 function isYes(ans, label){ return selectedAnswer(ans, label) === "Yes"; }
 function isNo(ans, label){ return selectedAnswer(ans, label) === "No"; }
@@ -1366,6 +1372,8 @@ function guideFromChecklist(){
 
 
 function customerStepTH(label){
+  const mapped = getChecklistMappingText(label, "th");
+  if(mapped) return mapped;
   const map = {
     "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
     "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
@@ -1453,7 +1461,7 @@ function customerStepTH(label){
     "Disable UEFI IPv4 / IPv6": "ปิด UEFI IPv4 / IPv6 ใน BIOS เพื่อป้องกันเครื่อง Boot ผ่าน Network",
     "Storage Firmware Update": "ทดสอบติดตั้ง Storage Firmware เป็นเวอร์ชันล่าสุด",
     "Intel RST / Storage Driver loaded": "โหลด Intel RST / Storage Driver ระหว่างติดตั้ง Windows",
-    "Windows Installation USB recreated": "ทดสอบสร้าง USB Windows Installation ใหม่อีกครั้ง",
+    "Re-install Windows USB recreated": "ทดสอบสร้าง USB Re-install Windows ใหม่อีกครั้ง",
     "Fingerprint setup in Windows Hello": "ตรวจสอบการตั้งค่า Fingerprint ใน Windows Hello",
     "Check Fingerprint Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Fingerprint หรือไม่",
     "Uninstall Fingerprint Driver and Restart": "ทดสอบถอนติดตั้ง Driver Fingerprint และ Restart เครื่อง",
@@ -1582,7 +1590,8 @@ function customerStepTH(label){
     "Swap Power Cable": "ทดสอบสลับสาย Power Cable เส้นอื่นที่ใช้งานได้",
     "Swap Power Cord": "ทดสอบสลับสาย Power Cord เส้นอื่นที่ใช้งานได้",
     "Swap Power Outlet": "ทดสอบเสียบใช้งานกับปลั๊กไฟช่องอื่น",
-    "System Restore": "ทดสอบทำ System Restore ย้อนกลับไปก่อนเกิดอาการ",
+    "Windows Recovery": "ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
+    "System Restore": "ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
     "Touchpad enabled in Settings": "ตรวจสอบว่า Touchpad ถูกเปิดใช้งานใน Settings ของ Windows หรือไม่",
     "TrackPoint enabled in BIOS": "ตรวจสอบว่า TrackPoint ถูก Enable ใน BIOS หรือไม่",
     "USB Mouse / Keyboard test": "ทดสอบใช้งานร่วมกับ USB Mouse หรือ USB Keyboard ภายนอก",
@@ -1640,6 +1649,8 @@ function customerStepTH(label){
 }
 
 function customerStepEN(label){
+  const mapped = getChecklistMappingText(label, "en");
+  if(mapped) return mapped;
   const map = {
     "Lenovo Diagnostics": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
     "Lenovo Diagnostics Storage": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
@@ -2009,7 +2020,7 @@ function customerStepTH(label){
     "Load BIOS default": "Load BIOS Default แล้วทดสอบอีกครั้ง",
     "Secure Boot disabled": "ปิด Secure Boot แล้วทดสอบอีกครั้ง",
     "Intel RST / Storage Driver loaded": "โหลด Intel RST / Storage Driver แล้วทดสอบอีกครั้ง",
-    "Windows Installation USB recreated": "สร้าง USB สำหรับติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
+    "Re-install Windows USB recreated": "สร้าง USB สำหรับติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
     "Proof of ownership checked": "เตรียมหลักฐานความเป็นเจ้าของเครื่อง",
     "Customer knows password": "ยืนยันว่าทราบรหัสผ่านของเครื่อง",
     "WLAN / WWAN card changed before issue": "ตรวจสอบว่ามีการเปลี่ยนการ์ด WLAN / WWAN ก่อนเกิดอาการหรือไม่",
@@ -2081,7 +2092,8 @@ function customerStepTH(label){
     "Re-install Windows": "ติดตั้ง Windows ใหม่แล้วทดสอบอาการอีกครั้ง",
     "Re-install Windows": "ติดตั้ง Windows ใหม่แล้วทดสอบอาการอีกครั้ง",
     "Windows Startup Repair": "ทำ Windows Startup Repair แล้วทดสอบอาการอีกครั้ง",
-    "System Restore": "ทำ System Restore แล้วทดสอบอาการอีกครั้ง",
+    "Windows Recovery": "ทำ Windows Recovery แล้วทดสอบอาการอีกครั้ง",
+    "System Restore": "ทำ Windows Recovery แล้วทดสอบอาการอีกครั้ง",
 
     // Swap / isolation
     "Swap Adapter": "ทดสอบสลับด้วย Adapter อื่น",
@@ -2248,6 +2260,8 @@ function customerStepEN(label){
     "Run Lenovo Diagnostics": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.",
     "Lenovo Diagnostics Storage": "Run Lenovo Diagnostics to check storage by following the steps for the machine model, then report whether the result is Pass or Failed.",
     "Lenovo Diagnostics Battery": "Run Lenovo Diagnostics to check the battery by following the steps for the machine model, then report whether the result is Pass or Failed.",
+    "Windows Recovery": "Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.",
+    "System Restore": "Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.",
     "Re-install Windows": "Re-install Windows and test the issue again.",
     "Re-install Windows": "Re-install Windows and test the issue again.",
     "Re-install Windows": "Re-install Windows and test the issue again.",
