@@ -2571,7 +2571,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Wi-Fi Driver Update",
+            "label": "WLAN Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -5688,7 +5688,7 @@ const MODEL_STRUCTURE = {
     makeQ('Check BIOS', 'swap'),
     makeQ('Move LCD lid', 'select'),
     makeQ('External Monitor test', 'swap'),
-    makeQ('Update Graphics Driver', 'select'),
+    makeQ('Graphics Driver Update', 'select'),
     makeQ('Power Reset', 'select'),
     makeQ('Physical damage / Liquid spilled', 'yesno'),
     makeQ('Other issue', 'yesno', {text:true})
@@ -6269,8 +6269,11 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "en": "Check External mic test."
   },
   "External Monitor test": {
-    "th": "ตรวจสอบหัวข้อ External Monitor test",
-    "en": "For notebook no display: connect an external monitor and check whether the image appears.\nFor display line/defect: connect an external monitor and check whether the same issue appears."
+    "th_no_display": "ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
+    "th_display_issue": "ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
+    "en_no_display": "Connect an external monitor and check whether the image appears.",
+    "en_display_issue": "Connect an external monitor and check whether the same issue occurs.",
+    "en": "For no display/no image symptoms, connect an external monitor and check whether the image appears. For display-quality symptoms, connect an external monitor and check whether the same issue occurs."
   },
   "Fan Check": {
     "th": "ตรวจสอบพัดลมหมุนหรือไม่",
@@ -6832,10 +6835,6 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ถอนการติดตั้ง Driver ของ Wireless แล้ว Restart เครื่อง",
     "en": "Uninstall the Wireless driver, then restart the machine."
   },
-  "Update Graphics Driver": {
-    "th": "อัปเดต Driver ของ Graphics ให้เป็นเวอร์ชันล่าสุด",
-    "en": "Update the Graphics driver to the latest version."
-  },
   "USB Driver Update / Lenovo Vantage": {
     "th": "อัปเดต Driver ของ USB ให้เป็นเวอร์ชันล่าสุด",
     "en": "Update the USB driver to the latest version."
@@ -6864,7 +6863,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ตรวจสอบ Volume Mixer",
     "en": "Check Volume Mixer."
   },
-  "Wi-Fi Driver Update": {
+  "WLAN Driver Update": {
     "th": "อัปเดต Driver ของ Wi-Fi ให้เป็นเวอร์ชันล่าสุด",
     "en": "Update the Wi-Fi driver to the latest version."
   },
@@ -6962,7 +6961,14 @@ const GLOBAL_CHECKLIST_MAPPING = {
       'Minidump collected':'Event Viewer / Dump file collected',
       'Stop code / Error code':'Stop code / Error code collected',
       'Fan Check':'Fan spinning',
-      'Caps Lock LED works':'Caps Lock Toggle'
+      'Caps Lock LED works':'Caps Lock Toggle',
+      'Update Graphics Driver':'Graphics Driver Update',
+      'Wi-Fi Driver Update':'WLAN Driver Update',
+      'Wifi Driver Update':'WLAN Driver Update',
+      'WIFI Driver Update':'WLAN Driver Update',
+      'Camera Driver Update / Lenovo Vantage':'Camera Driver Update',
+      'Fingerprint Driver Update / Lenovo Vantage':'Fingerprint Driver Update',
+      'USB Driver Update / Lenovo Vantage':'USB Driver Update'
     };
     return map[label] || label;
   }

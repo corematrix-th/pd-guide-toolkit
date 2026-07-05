@@ -92,11 +92,33 @@ function getChecklistMappingText(label, lang){
     "Run Lenovo Diagnostics":"Run Lenovo Diagnostics",
     "Lenovo Diagnostics":"Run Lenovo Diagnostics",
     "Load BIOS default":"Load BIOS Default",
-    "Update Graphics Driver":"Graphics Driver Update"
+    "Graphics Driver Update":"Graphics Driver Update",
+    "Update Graphics Driver":"Graphics Driver Update",
+    "Wi-Fi Driver Update":"WLAN Driver Update",
+    "Wifi Driver Update":"WLAN Driver Update",
+    "WIFI Driver Update":"WLAN Driver Update",
+    "WLAN Driver Update":"WLAN Driver Update",
+    "Camera Driver Update / Lenovo Vantage":"Camera Driver Update",
+    "Fingerprint Driver Update / Lenovo Vantage":"Fingerprint Driver Update",
+    "USB Driver Update / Lenovo Vantage":"USB Driver Update"
   };
   const key = GLOBAL_CHECKLIST_MAPPING[label] ? label : (canonical[label] || label);
   const item = GLOBAL_CHECKLIST_MAPPING[key];
   if(!item) return "";
+
+  // v5.0.0: External Monitor test uses Mapping as the single source of truth,
+  // but the Thai/English wording must be selected by symptom context.
+  // No Display / No Image / Black Screen asks whether an image appears.
+  // Display-quality symptoms ask whether the same issue appears on the external monitor.
+  if(key === "External Monitor test"){
+    const noDisplayKeys = new Set(["black", "black_login", "no_display", "no_image", "blank", "no_signal"]);
+    const symptomKey = String(typeof selectedSymptom !== "undefined" ? selectedSymptom : "").toLowerCase();
+    const symptomName = String((typeof current === "function" && current() && current().name) ? current().name : "").toLowerCase();
+    const isNoDisplay = noDisplayKeys.has(symptomKey) || /no display|no image|black screen|blank screen/.test(symptomName);
+    if(lang === "th") return isNoDisplay ? (item.th_no_display || item.th || "") : (item.th_display_issue || item.th || "");
+    if(lang === "en") return isNoDisplay ? (item.en_no_display || item.en || item.th_no_display || "") : (item.en_display_issue || item.en || item.th_display_issue || "");
+  }
+
   if(lang === "th") return item.th || "";
   if(lang === "en") return item.en || item.th || "";
   return item.th || "";
@@ -197,7 +219,7 @@ function withDisplayQuestions(sym){
     {label:"Check BIOS", options:"swap"},
     {label:"Move LCD lid", options:"select"},
     {label:"External Monitor test", options:"swap"},
-    {label:"Update Graphics Driver", options:"select"},
+    {label:"Graphics Driver Update", options:"select"},
     {label:"Physical damage / Liquid spilled", options:"yesno"},
     {label:"Other issue", options:"yesno", text:true}
   ];
@@ -214,13 +236,65 @@ function isFruPnAllowed(){
   return part.includes("external mouse") || part.includes("external keyboard") || part.includes("adapter") || part.includes("power cord");
 }
 
+
+// v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
+function canonicalChecklistLabel(label){
+  const raw = String(label || '').trim();
+  const map = {
+    'Update Graphics Driver':'Graphics Driver Update',
+    'Graphics Driver Update':'Graphics Driver Update',
+    'Wi-Fi Driver Update':'WLAN Driver Update',
+    'Wifi Driver Update':'WLAN Driver Update',
+    'WIFI Driver Update':'WLAN Driver Update',
+    'WLAN Driver Update':'WLAN Driver Update',
+    'Bluetooth Driver Update':'Bluetooth Driver Update',
+    'LAN Driver Update':'LAN Driver Update',
+    'Lenovo Vantage update':'Lenovo Vantage Update',
+    'BIOS update':'BIOS Update',
+    'Load BIOS default':'Load BIOS Default',
+    'Can Access Windows':'Can access Windows',
+    'Camera Driver Update / Lenovo Vantage':'Camera Driver Update',
+    'Fingerprint Driver Update / Lenovo Vantage':'Fingerprint Driver Update',
+    'USB Driver Update / Lenovo Vantage':'USB Driver Update',
+    'Reinstall Windows':'Re-install Windows',
+    'Windows Installation':'Re-install Windows',
+    'Install Windows':'Re-install Windows',
+    'Lenovo Diagnostics':'Run Lenovo Diagnostics'
+  };
+  if(map[raw]) return map[raw];
+  const m = raw.match(/^(.+?)\s+Driver Update\s*\/\s*Lenovo Vantage$/i);
+  if(m) return `${m[1].trim()} Driver Update`;
+  return raw;
+}
+
+function dedupeQuestionsByCanonical(list){
+  const seen = new Map();
+  const out = [];
+  (list || []).forEach(q => {
+    if(!q || !q.label) return;
+    const nq = Object.assign({}, q, {label: canonicalChecklistLabel(q.label)});
+    const key = nq.label;
+    if(seen.has(key)){
+      const old = seen.get(key);
+      if(nq.options === 'update_status' || nq.update){
+        old.options = 'update_status';
+        old.update = true;
+      }
+      return;
+    }
+    seen.set(key, nq);
+    out.push(nq);
+  });
+  return out;
+}
+
 function normalizeQuestionOrder(list){
   const product = getProductKey();
   const notebookTestAfterSwapLabels = new Set(["Audio Jack on notebook test"]);
   const removeLabels = ["Clean / Reseat RAM", "Video clip provided", "Photo / Video provided", "Photo / Video evidence", "Photo provided"];
-  let filtered = list.slice()
+  let filtered = dedupeQuestionsByCanonical(list.slice()
     .filter(q => !removeLabels.includes(q.label))
-    .filter(q => !(q.label.includes("Video") || q.label.includes("Photo")));
+    .filter(q => !(q.label.includes("Video") || q.label.includes("Photo"))));
 
   // v4.9.2 ThinkPad Reset Rule:
   // Emergency Reset is allowed only for ThinkPad Boot > No power / Power on no display / Power on no display + Beep Sound.
@@ -240,7 +314,7 @@ function normalizeQuestionOrder(list){
       expanded.push(q);
     }
   });
-  filtered = expanded;
+  filtered = dedupeQuestionsByCanonical(expanded);
 
   if(!isFruPnAllowed()){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
@@ -318,7 +392,7 @@ function normalizeQuestionOrder(list){
   }
 
   orderedTail.sort((a,b) => (a.rank - b.rank) || (a.idx - b.idx));
-  return frontItems.concat(normal).concat(orderedTail.map(x => x.q));
+  return dedupeQuestionsByCanonical(frontItems.concat(normal).concat(orderedTail.map(x => x.q)));
 }
 
 
@@ -357,8 +431,11 @@ function applyUpdateChecklistRules(qs){
   const removeUpdateLabels = new Set([
     "Lenovo Vantage Update", "Lenovo Vantage update", "Driver Update", "Driver update", "Driver / Firmware Update", "Driver / Windows Update",
     "BIOS Update", "BIOS update", "Windows Update", "Audio Driver Update", "Audio driver update", "Camera Driver Update", "Camera driver update", "Camera Driver Update / Lenovo Vantage",
-    "Fingerprint Driver Update / Lenovo Vantage", "Touchpad Driver Update", "TrackPoint Driver Update", "Hotkey Driver Update",
-    "USB Driver Update / Lenovo Vantage", "Dock Firmware Update", "SD Card Reader Driver Update", "Smart Card Driver Update"
+    "Fingerprint Driver Update / Lenovo Vantage", "Fingerprint Driver Update", "Touchpad Driver Update", "TrackPoint Driver Update", "Hotkey Driver Update",
+    "Graphics Driver Update", "Update Graphics Driver", "Wi-Fi Driver Update", "Wifi Driver Update", "WLAN Driver Update",
+    "Bluetooth Driver Update", "LAN Driver Update", "Thunderbolt Driver Update", "Chipset / Power Driver Update",
+    "RST / RSTe Driver Update", "Storage Firmware Update", "WWAN Driver Update", "Serial IO Driver Update",
+    "USB Driver Update / Lenovo Vantage", "USB Driver Update", "Dock Firmware Update", "SD Card Reader Driver Update", "Smart Card Driver Update"
   ]);
   let base = qs.filter(q => !removeUpdateLabels.has(q.label));
   const tailLabels = new Set(["Physical damage / Liquid spilled", "Other issue", "FRU P/N"]);
@@ -368,7 +445,7 @@ function applyUpdateChecklistRules(qs){
   if(rule.vantage) updates.push(updateQuestion("Lenovo Vantage Update"));
   if(rule.driver) updates.push(updateQuestion(`${rule.driver} Driver Update`));
   if(rule.bios) updates.push(updateQuestion("BIOS Update"));
-  return base.concat(updates).concat(tail);
+  return dedupeQuestionsByCanonical(base.concat(updates).concat(tail));
 }
 
 function getQuestions(){
@@ -460,7 +537,7 @@ function getManualGuide(key){
 function getRelatedGuideKeys(){
   if(isManual()) return [];
 
-  // v4.9.9 Full Impact Audit Rule:
+  // v5.0.0 Full Impact Audit Rule:
   // Related Guide must be driven by checklist items for the selected symptom only.
   // Do not show guides for actions that are not present in the checklist.
   // Power Reset and Emergency Reset are routine daily steps and must not appear here.
@@ -1387,7 +1464,7 @@ function formatNoteLine(label, answer){
 
 function nextRequiredActionText(label){
   const map = {
-    "External Monitor test": "Test with an external monitor.",
+    "External Monitor test": "Connect an external monitor and check the display result.",
     "Swap Monitor": "Test with another monitor.",
     "Adapter test on other machine": "Test the adapter on another machine.",
     "Swap Adapter": "Test with another adapter.",
@@ -1474,7 +1551,7 @@ function customerStepTH(label){
     "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Novo Button": "ทดสอบกดปุ่ม Novo Button เพื่อตรวจสอบว่าเครื่องตอบสนองหรือไม่",
-    "External Monitor test": "ทดสอบต่อใช้งานกับจอภายนอก (External Monitor)",
+    "External Monitor test": "ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
     "Clean / Reseat RAM": "ทดสอบถอดทำความสะอาดและใส่ RAM ใหม่",
     "Beep sound / pattern": "ตรวจสอบจำนวนเสียง Beep Sound หรือรูปแบบเสียง Beep Sound ที่เกิดขึ้น",
     "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
@@ -1515,7 +1592,7 @@ function customerStepTH(label){
     "Airplane Mode": "ตรวจสอบว่า Airplane Mode ถูกปิดอยู่หรือไม่",
     "Check Wireless Driver in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบ Wireless Driver หรือไม่",
     "Uninstall Wireless Driver and Restart": "ทดสอบถอนติดตั้ง Wireless Driver และ Restart เครื่อง",
-    "Wi-Fi Driver Update": "ทดสอบอัปเดต Driver Wi-Fi",
+    "WLAN Driver Update": "ทดสอบอัปเดต Driver WLAN",
     "Bluetooth Driver Update": "ทดสอบอัปเดต Driver Bluetooth",
     "Swap Type-C port charge": "ทดสอบสลับพอร์ตชาร์จ Type-C",
     "LED beside port": "ตรวจสอบไฟแสดงสถานะบริเวณพอร์ตชาร์จ",
@@ -1756,7 +1833,7 @@ function customerStepEN(label){
     "Adapter test on other machine": "Test the Adapter with another compatible machine.",
     "Emergency Reset Hole": "Please perform an Emergency Reset by inserting a pin or paper clip into the Emergency Reset hole on the bottom of the system, press and hold for approximately 10 seconds, then power the system on again.",
     "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
-    "External Monitor test": "Test with an external monitor.",
+    "External Monitor test": "Connect an external monitor and check the display result.",
 
     "Audio Driver Update": "Please update the Audio Driver to the latest version.",
     "Camera Driver Update": "Please update the Camera Driver to the latest version.",
@@ -1837,7 +1914,7 @@ function customerStepTH(label){
     "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Clean Cooling System": "ทำความสะอาดระบบระบายความร้อน แล้วทดลองใช้งานอีกครั้ง",
-    "External Monitor test": "ทดสอบต่อใช้งานกับจอภายนอก (External Monitor)",
+    "External Monitor test": "ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
     "Swap Monitor": "ทดสอบสลับ Monitor ตัวอื่นที่ใช้งานได้",
     "Swap HDMI / DisplayPort cable": "ทดสอบสลับสาย HDMI หรือ DisplayPort",
     "Swap HDMI cable": "ทดสอบสลับสาย HDMI",
@@ -2126,7 +2203,6 @@ function customerStepTH(label){
     "Camera Driver Update": "อัปเดต Driver ของ Camera ให้เป็นเวอร์ชันล่าสุด",
     "Camera Driver Update / Lenovo Vantage": "อัปเดต Driver ของ Camera ผ่าน Lenovo Vantage",
     "Fingerprint Driver Update / Lenovo Vantage": "อัปเดต Driver ของ Fingerprint ผ่าน Lenovo Vantage",
-    "Wi-Fi Driver Update": "อัปเดต Driver ของ Wi-Fi ให้เป็นเวอร์ชันล่าสุด",
     "WLAN Driver Update": "อัปเดต Driver ของ WLAN ให้เป็นเวอร์ชันล่าสุด",
     "WWAN Driver Update": "อัปเดต Driver ของ WWAN ให้เป็นเวอร์ชันล่าสุด",
     "LAN Driver Update": "อัปเดต Driver ของ LAN ให้เป็นเวอร์ชันล่าสุด",
@@ -2188,7 +2264,7 @@ function customerStepTH(label){
     "Swap LAN cable": "ทดสอบสลับด้วยสาย LAN อื่น",
     "Swap HDMI / DisplayPort cable": "ทดสอบสลับด้วยสาย HDMI หรือ DisplayPort อื่น",
     "Swap Monitor": "ทดสอบสลับกับจอภาพอื่น",
-    "External Monitor test": "ทดสอบต่อออกจอภาพภายนอก",
+    "External Monitor test": "ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
     "Monitor test on other machine": "ทดสอบจอภาพกับเครื่องอื่น",
     "HDMI Port on notebook test": "ทดสอบพอร์ต HDMI บนเครื่องโดยตรง",
     "Test HDMI Port on Notebook": "ทดสอบพอร์ต HDMI บนเครื่องโดยตรง",
@@ -2345,7 +2421,7 @@ function customerStepEN(label){
     "Swap LAN Cable": "Try another LAN cable.",
     "Swap LAN cable": "Try another LAN cable.",
     "Swap Monitor": "Try another monitor.",
-    "External Monitor test": "Test with an external monitor.",
+    "External Monitor test": "Connect an external monitor and check the display result.",
     "HDMI Port on notebook test": "Test the HDMI port on the machine directly.",
     "Test HDMI Port on Notebook": "Test the HDMI port on the machine directly.",
     "Swap RAM": "Try another RAM.",

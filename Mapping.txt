@@ -1,4 +1,4 @@
-# PD Guide Global Checklist Mapping v4.9.9
+# PD Guide Global Checklist Mapping v5.0.0
 # Source of Truth for Checklist / Email TH / Email EN / Generate Note / Export / Copy Result.
 # Every checklist label must have TH and EN mapping. Update this file whenever a new mapping is added.
 
@@ -323,9 +323,10 @@ TH > ตรวจสอบหัวข้อ External mic test
 EN > Check External mic test.
 
 External Monitor test
-TH > ตรวจสอบหัวข้อ External Monitor test
-EN > For notebook no display: connect an external monitor and check whether the image appears.
-   For display line/defect: connect an external monitor and check whether the same issue appears.
+TH (No Display / No Image) > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่
+TH (Display Quality) > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่
+EN (No Display / No Image) > Connect an external monitor and check whether the image appears.
+EN (Display Quality) > Connect an external monitor and check whether the same issue occurs.
 
 Fan Check
 TH > ตรวจสอบพัดลมหมุนหรือไม่
@@ -891,10 +892,6 @@ Uninstall Wireless Driver and Restart
 TH > ถอนการติดตั้ง Driver ของ Wireless แล้ว Restart เครื่อง
 EN > Uninstall the Wireless driver, then restart the machine.
 
-Update Graphics Driver
-TH > อัปเดต Driver ของ Graphics ให้เป็นเวอร์ชันล่าสุด
-EN > Update the Graphics driver to the latest version.
-
 USB Driver Update / Lenovo Vantage
 TH > อัปเดต Driver ของ USB ให้เป็นเวอร์ชันล่าสุด
 EN > Update the USB driver to the latest version.
@@ -923,9 +920,9 @@ Volume Mixer checked
 TH > ตรวจสอบ Volume Mixer
 EN > Check Volume Mixer.
 
-Wi-Fi Driver Update
-TH > อัปเดต Driver ของ Wi-Fi ให้เป็นเวอร์ชันล่าสุด
-EN > Update the Wi-Fi driver to the latest version.
+WLAN Driver Update
+TH > อัปเดต Driver ของ WLAN ให้เป็นเวอร์ชันล่าสุด
+EN > Update the WLAN driver to the latest version.
 
 Wi-Fi test
 TH > ทดสอบเชื่อมต่อ Wi-Fi
