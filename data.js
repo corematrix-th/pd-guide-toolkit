@@ -6301,8 +6301,8 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "en": "Check whether Freeze occurs."
   },
   "FRU P/N": {
-    "th": "ส่งภาพถ่ายสติกเกอร์ Serial Number / MTM ที่อยู่ใต้เครื่องหรือด้านหลังเครื่อง",
-    "en": "Send a photo of the Serial Number / MTM sticker on the bottom or back of the machine."
+    "th": "ส่งภาพถ่ายอุปกรณ์ที่มีปัญหา ให้เห็น FRU P/N หรือ Barcode",
+    "en": "Please send a photo of the affected accessory showing the FRU P/N or barcode."
   },
   "Graphics Driver Update": {
     "th": "อัปเดต Driver ของ Graphics ให้เป็นเวอร์ชันล่าสุด",

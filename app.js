@@ -1498,7 +1498,7 @@ function customerStepTH(label){
     "Photo / Video provided": "รบกวนแนบรูปหรือวิดีโอขณะเกิดอาการเพิ่มเติม",
     "Specific keys listed": "ระบุปุ่มที่กดไม่ติดเพิ่มเติม",
     "USB Keyboard test": "ทดสอบใช้งานด้วย USB Keyboard ภายนอก",
-    "FRU P/N": "รบกวนแจ้ง FRU P/N เพิ่มเติม",
+    "FRU P/N": "ส่งภาพถ่ายอุปกรณ์ที่มีปัญหา ให้เห็น FRU P/N หรือ Barcode",
     "On-Screen Keyboard test": "ทดสอบใช้งานผ่าน On-Screen Keyboard",
     "Driver / Windows Update": "ทดสอบอัปเดต Windows และ Driver ที่เกี่ยวข้อง",
     "Output device selected correctly": "ตรวจสอบว่าเลือก Output Device ถูกต้องหรือไม่",
@@ -1509,7 +1509,7 @@ function customerStepTH(label){
     "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
     "Voice Recorder": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
     "Physical damage / Liquid spilled": "ตรวจสอบว่ามีร่องรอยชำรุด หรือคราบน้ำหรือไม่",
-    "Other issue": "ตัวเครื่องมีอาการอื่น ๆ เพิ่มเติมหรือไม่",
+    "Other issue": "ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
     "Can detect Wi-Fi signal": "ตรวจสอบว่าเครื่องสามารถค้นหาสัญญาณ Wi-Fi ได้หรือไม่",
     "Another Wi-Fi / Hotspot test": "ทดสอบเชื่อมต่อ Wi-Fi อื่น หรือ Hotspot จากโทรศัพท์มือถือ",
     "Airplane Mode": "ตรวจสอบว่า Airplane Mode ถูกปิดอยู่หรือไม่",
@@ -1710,7 +1710,7 @@ function customerStepTH(label){
     "Lenovo Diagnostics Battery": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
     "Clean Cooling System": "ทำความสะอาดระบบระบายความร้อน แล้วทดลองใช้งานอีกครั้ง",
     "Physical damage / Liquid spilled": "ตรวจสอบว่าตัวเครื่องมีความเสียหาย หรือมีของเหลวหกใส่ตัวเครื่องหรือไม่",
-    "Other issue": "ตรวจสอบว่าตัวเครื่องมีอาการอื่นเพิ่มเติมหรือไม่"
+    "Other issue": "ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่"
   };
   return standardMap[label] || map[label] || getChecklistMappingText(label, "th") || label;
 }
@@ -1791,7 +1791,7 @@ function customerStepEN(label){
     "Audio Jack on notebook test": "Connect the headphone directly to the audio jack on the computer.",
     "Swap Adapter": "Swap the Adapter.",
     "Physical damage / Liquid spilled": "Check for any physical damage or liquid damage.",
-    "Other issue": "Please confirm if there are any other issues with the machine."
+    "Other issue": "Check whether there are any additional issues."
   };
   return map[label] || label;
 }
@@ -1865,8 +1865,8 @@ function customerStepTH(label){
     "Dump file collected": "เก็บไฟล์ Minidump จากโฟลเดอร์ C:\\Windows\\Minidump",
     "Minidump collected": "เก็บไฟล์ Minidump จากโฟลเดอร์ C:\\Windows\\Minidump",
     "Physical damage / Liquid spilled": "ตรวจสอบว่าตัวเครื่องมีความเสียหาย หรือมีของเหลวหกใส่ตัวเครื่องหรือไม่",
-    "Other issue": "ตรวจสอบว่าตัวเครื่องมีอาการอื่นเพิ่มเติมหรือไม่",
-    "FRU P/N": "ตรวจสอบ FRU P/N ของอุปกรณ์ที่เกี่ยวข้อง"
+    "Other issue": "ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+    "FRU P/N": "ส่งภาพถ่ายอุปกรณ์ที่มีปัญหา ให้เห็น FRU P/N หรือ Barcode"
   };
   return map[label] || label;
 }
@@ -2248,8 +2248,8 @@ function customerStepTH(label){
     "Event Viewer / Dump file collected": "เก็บข้อมูล Event Viewer หรือ Dump File เพิ่มเติม",
     "Physical damage / Liquid spilled": "ตรวจสอบว่ามีความเสียหายหรือของเหลวหกใส่หรือไม่",
     "Keyboard / Touchpad affected by swollen battery": "ตรวจสอบว่า Keyboard หรือ Touchpad ได้รับผลจากแบตเตอรี่บวมหรือไม่",
-    "Other issue": "ตรวจสอบว่ามีอาการอื่นเพิ่มเติมหรือไม่",
-    "FRU P/N": "รบกวนส่งภาพถ่ายสติกเกอร์ Serial Number / MTM ที่อยู่ใต้เครื่องหรือด้านหลังเครื่อง"
+    "Other issue": "ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+    "FRU P/N": "ส่งภาพถ่ายอุปกรณ์ที่มีปัญหา ให้เห็น FRU P/N หรือ Barcode"
   };
   if(map[label]) return map[label];
 
@@ -2363,8 +2363,8 @@ function customerStepEN(label){
     "Adapter test on other machine": "Test the Adapter with another machine.",
     "Swap other Type-C port": "Test another Type-C port.",
     "Physical damage / Liquid spilled": "Please send a clear photo of any physical damage or liquid contact area, if present.",
-    "Other issue": "Check whether there is any other issue.",
-    "FRU P/N": "Please send a photo of the Serial Number / MTM sticker on the bottom or rear side of the machine.",
+    "Other issue": "Check whether there are any additional issues.",
+    "FRU P/N": "Please send a photo of the affected accessory showing the FRU P/N or barcode.",
     "Event Viewer / Dump file collected": "Collect Event Viewer information or Dump files.",
     "Dump File collected": "Collect Dump files from C:\\Windows\\Minidump.",
     "Dump file collected": "Collect Dump files from C:\\Windows\\Minidump.",
@@ -2419,7 +2419,6 @@ function customerStepEN(label){
 
 function _emailVisibleLabels(){
   const internalOnly = new Set([
-    "Other issue",
     "Event Viewer / Dump file collected",
     "Dump File collected",
     "Dump file collected",
