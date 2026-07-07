@@ -4775,10 +4775,10 @@ const LEVELS = {
         "emailEN": "Dear Customer,\n\nPlease disable Audio Enhancements for the External Microphone by following the steps below.\n\nMethod 1: Windows Settings\n1. Open Settings > System > Sound.\n2. Select External Microphone.\n3. Go to Advanced > Signal.\n4. Uncheck Enable audio enhancements.\n5. Click Apply and OK.\n\nMethod 2: Control Panel\n1. Open Control Panel > Sound.\n2. Go to the Recording tab.\n3. Double-click External Microphone.\n4. Go to Advanced > Signal.\n5. Uncheck Enable audio enhancements.\n6. Click Apply and OK.\n\nOnce completed, please test the microphone again and provide the result back to us."
       },
       "thinkcentre_raid1_ssd_not_found_os_install": {
-        "name": "ThinkCentre : RAID 1 SSD Not Found During OS Installation",
-        "guide": "ThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Re-install Windows USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. ดาวน์โหลด Intel RST/RSTe Driver ให้ตรงกับรุ่นเครื่อง\n2. แตกไฟล์ลงใน USB Flash Drive\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. เข้า BIOS > Devices > Storage Setup\n2. เปลี่ยน Configure storage as เป็น RAID\n3. กด F10 เพื่อ Save and Exit\n4. เข้า BIOS อีกครั้ง\n5. ไปที่ Devices > Storage Setup > Intel(R) Rapid Storage Technology\n6. เลือก Create RAID Volume และสร้าง RAID 1\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot เข้า Re-install Windows USB\n2. เมื่อถึงหน้า Windows Setup เลือก Load driver\n3. เปิด USB Flash Drive ที่เก็บ Driver ไว้\n4. เลือกโฟลเดอร์ VMD หรือ RST ขึ้นอยู่กับ Driver ที่ดาวน์โหลด\n5. เลือก Intel RST/RSTe Driver\n6. เมื่อ SSD แสดงขึ้นมาแล้ว ให้ดำเนินการติดตั้ง Windows ต่อ\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the guide below.\n\nThinkCentre : RAID 1 SSD Not Found During OS Installation\n\nPrepare Intel RST/RSTe Driver\n1. Download the Intel RST/RSTe Driver that matches the machine model.\n2. Extract the driver to the USB Flash Drive.\n\nDownload:\n[Paste download link]\n\nConfigure RAID in BIOS\n1. Enter BIOS > Devices > Storage Setup.\n2. Change Configure storage as to RAID.\n3. Press F10 to Save and Exit.\n4. Enter BIOS again.\n5. Go to Devices > Storage Setup > Intel(R) Rapid Storage Technology.\n6. Select Create RAID Volume and create RAID 1.\n\nVideo Guide:\nhttps://www.youtube.com/watch?v=ZW_yKI5MVOI\n\nLoad Intel RST/RSTe Driver\n1. Boot to the Re-install Windows USB.\n2. On Windows Setup, select Load driver.\n3. Open the USB Flash Drive that contains the driver.\n4. Select the VMD or RST folder depending on the downloaded driver.\n5. Select Intel RST/RSTe Driver.\n6. Once the SSD is displayed, continue Windows installation.\n\nOnce completed, please provide the result back to us."
+        "name": "SSD Not Found During OS (Windows Setup)",
+        "guide": "SSD Not Found During OS (Windows Setup)\n\nอาการ\n- Windows Setup ไม่พบ SSD\n- ขึ้นข้อความ \"No drives were found.\"\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ตรวจสอบการตั้งค่า Storage Controller ใน BIOS\nตรวจสอบโหมดการทำงานของ Storage Controller ให้ตรงกับรุ่นเครื่อง เช่น\n- AHCI\n- Intel VMD\n- Intel RST / RAID\n\n3. ดาวน์โหลด Intel RST / Storage Driver\nโดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n4. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ \"Where do you want to install Windows?\" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nSSD Not Found During OS (Windows Setup)\n\nอาการ\n- Windows Setup ไม่พบ SSD\n- ขึ้นข้อความ \"No drives were found.\"\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ตรวจสอบการตั้งค่า Storage Controller ใน BIOS\nตรวจสอบโหมดการทำงานของ Storage Controller ให้ตรงกับรุ่นเครื่อง เช่น\n- AHCI\n- Intel VMD\n- Intel RST / RAID\n\n3. ดาวน์โหลด Intel RST / Storage Driver\nโดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n4. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ \"Where do you want to install Windows?\" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the guide below.\n\nSSD Not Found During OS (Windows Setup)\n\nSymptoms\n- Windows Setup cannot detect the SSD.\n- The message \"No drives were found.\" appears.\n\nTroubleshooting\n\n1. Verify whether the SSD is detected in BIOS.\n- Enter BIOS and check whether the SSD is detected.\n- If BIOS does not detect the SSD, follow the SSD Not Detected troubleshooting guide.\n\n2. Check the Storage Controller setting in BIOS.\nVerify that the Storage Controller mode matches the machine platform, such as AHCI, Intel VMD, or Intel RST / RAID.\n\n3. Download Intel RST / Storage Driver by using another PC.\n- Go to Lenovo Support.\n- Download the Intel RST / Storage Driver that matches the machine model.\n- Extract the downloaded package.\n- Copy the extracted driver files to a USB Flash Drive.\n\n4. Load the driver during Windows Setup.\n- On the \"Where do you want to install Windows?\" screen, select Load driver.\n- Browse to the USB Flash Drive.\n- Select the Intel RST / Storage Driver.\n- After the driver loads successfully, verify whether the SSD appears.\n\nOnce completed, please provide the result back to us."
       },
       "fn_ctrl_key_swap": {
         "name": "Fn & Ctrl Key Swap",
@@ -7085,5 +7085,72 @@ function filterChecklistByModelScope(qs, product){
         }
       });
     });
+  }
+})();
+
+
+// v5.0.1 User Requested Full Impact Patch
+// - Tiny No power: Swap AC Power Cord -> Swap Adapter
+// - Mouse > Scroll mouse not work: remove Swap App / Clean scroll wheel, add Swap Mouse
+// - ThinkPad Battery email/checklist cleanup
+// - USB-C Display: remove Windows Update
+// - Keyboard symptom names: Few key not work / All key not work
+// - Fan Noise: remove Clean Cooling System
+// - Guide rename/content: SSD Not Found During OS (Windows Setup)
+(function applyV501UserRequestedPatch(){
+  function makeQ(label, options, extra){ return Object.assign({label:label, options:options||'select', text:false, diag:false}, extra||{}); }
+  function getSym(level, symptom){ return LEVELS && LEVELS[level] && LEVELS[level].symptoms && LEVELS[level].symptoms[symptom]; }
+  function filterLabels(list, labels){ return (list||[]).filter(q => q && !labels.includes(q.label)); }
+  function replaceLabel(list, from, to){ (list||[]).forEach(q => { if(q && q.label === from) q.label = to; }); return list; }
+  function editQuestionArrays(sym, fn){
+    if(!sym) return;
+    if(Array.isArray(sym.common)) sym.common = fn(sym.common);
+    if(sym.questions && typeof sym.questions === 'object') Object.keys(sym.questions).forEach(k => { if(Array.isArray(sym.questions[k])) sym.questions[k] = fn(sym.questions[k]); });
+  }
+
+  const noPower = getSym('boot','no_power');
+  if(noPower && noPower.questions && Array.isArray(noPower.questions.tiny)){
+    noPower.questions.tiny = replaceLabel(noPower.questions.tiny, 'Swap AC Power Cord', 'Swap Adapter');
+  }
+
+  const mouseScroll = getSym('mouse','scroll');
+  if(mouseScroll){
+    mouseScroll.common = [
+      makeQ('Swap Mouse','swap'),
+      makeQ('Mouse test on other machine','swap'),
+      makeQ('Physical damage / Liquid spilled','yesno'),
+      makeQ('Other issue','yesno',{text:true}),
+      makeQ('FRU P/N','detail_only',{text:true})
+    ];
+  }
+
+  const runtime = getSym('charging','runtime');
+  const slowCharge = getSym('charging','slow_charge');
+  const notDetect = getSym('charging','not_detect');
+  editQuestionArrays(slowCharge, qs => filterLabels(qs, ['Battery Conservation Mode']));
+  editQuestionArrays(notDetect, qs => filterLabels(qs, ['Adapter test']));
+
+  const usbcDisplay = getSym('port','usbc_display');
+  editQuestionArrays(usbcDisplay, qs => filterLabels(qs, ['Windows Update']));
+
+  const few = getSym('keyboard','few'); if(few) few.name = 'Few key not work';
+  const all = getSym('keyboard','all'); if(all) all.name = 'All key not work';
+
+  const fanNoise = getSym('fan','noise') || getSym('fan','fan_noise');
+  editQuestionArrays(fanNoise, qs => filterLabels(qs, ['Clean Cooling System']));
+
+  if(typeof GLOBAL_CHECKLIST_MAPPING !== 'undefined'){
+    GLOBAL_CHECKLIST_MAPPING['Battery Health in Lenovo Vantage'] = {
+      th: 'รบกวนส่ง Battery Health โดยเปิด Lenovo Vantage -> Device -> Power -> ตรวจสอบหัวข้อ Battery Health',
+      en: 'Check Battery Health in Lenovo Vantage by opening Lenovo Vantage -> Device -> Power -> Battery Health.'
+    };
+  }
+
+  if(typeof TROUBLESHOOTING_GUIDES !== 'undefined' && TROUBLESHOOTING_GUIDES.storage && TROUBLESHOOTING_GUIDES.storage.thinkcentre_raid1_ssd_not_found_os_install){
+    const g = TROUBLESHOOTING_GUIDES.storage.thinkcentre_raid1_ssd_not_found_os_install;
+    g.name = 'SSD Not Found During OS (Windows Setup)';
+    g.guide = 'SSD Not Found During OS (Windows Setup)\n\nอาการ\n- Windows Setup ไม่พบ SSD\n- ขึ้นข้อความ "No drives were found."\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ตรวจสอบการตั้งค่า Storage Controller ใน BIOS\nตรวจสอบโหมดการทำงานของ Storage Controller ให้ตรงกับรุ่นเครื่อง เช่น\n- AHCI\n- Intel VMD\n- Intel RST / RAID\n\n3. ดาวน์โหลด Intel RST / Storage Driver\nโดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n4. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ "Where do you want to install Windows?" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่';
+    g.emailTH = 'เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nSSD Not Found During OS (Windows Setup)\n\nอาการ\n- Windows Setup ไม่พบ SSD\n- ขึ้นข้อความ "No drives were found."\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ตรวจสอบการตั้งค่า Storage Controller ใน BIOS\nตรวจสอบโหมดการทำงานของ Storage Controller ให้ตรงกับรุ่นเครื่อง เช่น\n- AHCI\n- Intel VMD\n- Intel RST / RAID\n\n3. ดาวน์โหลด Intel RST / Storage Driver\nโดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n4. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ "Where do you want to install Windows?" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+    g.emailEN = 'Dear Customer,\n\nPlease follow the guide below.\n\nSSD Not Found During OS (Windows Setup)\n\nSymptoms\n- Windows Setup cannot detect the SSD.\n- The message "No drives were found." appears.\n\nTroubleshooting\n\n1. Verify whether the SSD is detected in BIOS.\n- Enter BIOS and check whether the SSD is detected.\n- If BIOS does not detect the SSD, follow the SSD Not Detected troubleshooting guide.\n\n2. Check the Storage Controller setting in BIOS.\nVerify that the Storage Controller mode matches the machine platform, such as AHCI, Intel VMD, or Intel RST / RAID.\n\n3. Download Intel RST / Storage Driver by using another PC.\n- Go to Lenovo Support.\n- Download the Intel RST / Storage Driver that matches the machine model.\n- Extract the downloaded package.\n- Copy the extracted driver files to a USB Flash Drive.\n\n4. Load the driver during Windows Setup.\n- On the "Where do you want to install Windows?" screen, select Load driver.\n- Browse to the USB Flash Drive.\n- Select the Intel RST / Storage Driver.\n- After the driver loads successfully, verify whether the SSD appears.\n\nOnce completed, please provide the result back to us.';
   }
 })();

@@ -1,4 +1,4 @@
-# PD Guide Global Checklist Mapping v5.0.0
+# PD Guide Global Checklist Mapping v5.0.1
 # Source of Truth for Checklist / Email TH / Email EN / Generate Note / Export / Copy Result.
 # Every checklist label must have TH and EN mapping. Update this file whenever a new mapping is added.
 
