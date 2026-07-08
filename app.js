@@ -557,6 +557,8 @@ function getRelatedGuideKeys(){
   if(hasLabel("Windows Recovery")){
     ["reset_pc", "startup_repair", "system_restore", "uninstall_updates"].forEach(add);
   }
+  if(hasLabel("Uninstall Windows Update")) add("uninstall_updates");
+  if(hasLabel("Downgrade BIOS")) add("downgrade_bios");
 
   if(hasLabel("Re-install Windows")) add("reinstall_windows");
   if(hasLabel("Run Lenovo Diagnostics") || hasLabel("Lenovo Diagnostics Storage") || hasLabel("Lenovo Diagnostics Battery")) add("lenovo_diagnostics");
@@ -585,7 +587,8 @@ function getRelatedGuideKeys(){
     "reset_pc": ["Windows Recovery"],
     "startup_repair": ["Windows Recovery"],
     "system_restore": ["Windows Recovery"],
-    "uninstall_updates": ["Windows Recovery"],
+    "uninstall_updates": ["Windows Recovery", "Uninstall Windows Update"],
+    "downgrade_bios": ["Downgrade BIOS"],
     "fn_ctrl_key_swap": ["FN & Ctrl Swap"],
     "lock_on_leave": ["Lock on Leave Function"],
     "disable_audio_enhancements_external_mic": ["Disable Audio Enhancements", "Disable Audio Enhancements (External Microphone)"],
@@ -1212,7 +1215,7 @@ function smartBootRule(ans){
 function checklistSummaryText(){
   const lines = [formatSymptomTitle(current().name)];
   answers().forEach(r => {
-    if(r.a && r.a !== "-- Select --") lines.push(formatNoteLine(r.q, r.a));
+    lines.push(formatNoteLine(r.q, r.a));
   });
   const extra = getAdditionalDetail();
   if(extra){
@@ -1453,13 +1456,14 @@ function formatOutputText(text){
 }
 
 function formatNoteLine(label, answer){
+  const isBlank = !answer || answer === "-- Select --";
   if(label === "FRU P/N"){
-    return "- FRU P/N - " + String(answer).toUpperCase();
+    return "- FRU P/N - " + (isBlank ? "" : String(answer).toUpperCase());
   }
   if(label === "Specific keys listed"){
-    return `- ${formatOutputText(label)} - ${String(answer).toUpperCase()}`;
+    return `- ${formatOutputText(label)} - ${isBlank ? "" : String(answer).toUpperCase()}`;
   }
-  return `- ${formatOutputText(label)} - ${formatOutputText(answer)}`;
+  return `- ${formatOutputText(label)} - ${isBlank ? "" : formatOutputText(answer)}`;
 }
 
 function nextRequiredActionText(label){

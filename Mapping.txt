@@ -1,4 +1,4 @@
-# PD Guide Global Checklist Mapping v5.0.1
+# PD Guide Global Checklist Mapping v5.0.2
 # Source of Truth for Checklist / Email TH / Email EN / Generate Note / Export / Copy Result.
 # Every checklist label must have TH and EN mapping. Update this file whenever a new mapping is added.
 
@@ -998,7 +998,25 @@ EN > Check โดยเปิด Lenovo Vantage → ไปที่ System Updat
 
 
 Windows Recovery
-> ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates
+> ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Windows Update
 
 Battery Health in Lenovo Vantage
 > ตรวจสอบ Battery Health ใน Lenovo Vantage และเลือกผลลัพธ์: Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test
+
+
+## v5.0.2 Added Mapping
+
+Uninstall Windows Update
+> ถอนการติดตั้ง Windows Update ล่าสุด ทั้งกรณีเข้า Windows ได้ผ่าน Settings > Windows Update > Update history > Uninstall updates หรือกรณีเข้า Windows ไม่ได้ผ่าน WinRE > Troubleshoot > Advanced options > Uninstall Updates
+TH > ถอนการติดตั้ง Windows Update ล่าสุด ทั้งกรณีเข้า Windows ได้ผ่าน Settings > Windows Update > Update history > Uninstall updates หรือกรณีเข้า Windows ไม่ได้ผ่าน WinRE > Troubleshoot > Advanced options > Uninstall Updates
+EN > Uninstall the latest Windows Update from Settings > Windows Update > Update history > Uninstall updates, or from WinRE > Troubleshoot > Advanced options > Uninstall Updates if Windows cannot boot.
+
+Downgrade BIOS
+> ดาวน์โหลด BIOS Version ก่อนหน้าโดยคลิกขวาที่ Download เลือก Copy link เปิด README หา Package ID ของ Version ก่อนหน้า แล้วแก้ชื่อไฟล์ BIOS ท้ายลิงก์พร้อมเติม .exe
+TH > ดาวน์โหลด BIOS Version ก่อนหน้าโดยคลิกขวาที่ Download เลือก Copy link เปิด README หา Package ID ของ Version ก่อนหน้า แล้วแก้ชื่อไฟล์ BIOS ท้ายลิงก์พร้อมเติม .exe
+EN > Download the previous BIOS version by right-clicking Download, copying the link, checking the README for the previous Package ID, then replacing the BIOS file name at the end of the link and adding .exe.
+
+# v5.0.2 Manual Troubleshooting Guide Visibility
+Downgrade BIOS
+TH > แสดงหัวข้อ Downgrade BIOS ใน TROUBLESHOOTING GUIDE โดยอยู่ถัดจาก Uninstall Windows Update
+EN > Show Downgrade BIOS in TROUBLESHOOTING GUIDE immediately after Uninstall Windows Update.
