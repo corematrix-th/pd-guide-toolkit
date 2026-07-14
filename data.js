@@ -43,8 +43,9 @@ const APP_OPTIONS = {
   ],
   "fan": [
     "-- Select --",
-    "No spin",
-    "Spin"
+    "No Spin",
+    "Spin",
+    "Not Test"
   ],
   "mute": [
     "-- Select --",
@@ -278,7 +279,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Fan spinning",
+              "label": "Fan Check",
               "options": "fan",
               "text": false,
               "diag": false
@@ -322,7 +323,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Fan spinning",
+              "label": "Fan Check",
               "options": "fan",
               "text": false,
               "diag": false
@@ -367,7 +368,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Fan spinning",
+              "label": "Fan Check",
               "options": "fan",
               "text": false,
               "diag": false
@@ -417,7 +418,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Fan spinning",
+              "label": "Fan Check",
               "options": "fan",
               "text": false,
               "diag": false
@@ -467,7 +468,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Fan spinning",
+              "label": "Fan Check",
               "options": "fan",
               "text": false,
               "diag": false
@@ -517,7 +518,7 @@ const LEVELS = {
               "diag": false
             },
             {
-              "label": "Fan spinning",
+              "label": "Fan Check",
               "options": "fan",
               "text": false,
               "diag": false
@@ -573,7 +574,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Fan spinning",
+            "label": "Fan Check",
             "options": "fan",
             "text": false,
             "diag": false
@@ -834,7 +835,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Fan spinning",
+            "label": "Fan Check",
             "options": "fan",
             "text": false,
             "diag": false
@@ -4637,15 +4638,15 @@ const LEVELS = {
       },
       "battery_report": {
         "name": "Battery Report",
-        "guide": "วิธีดึง Battery Report\n\n1. เปิด Command Prompt หรือ CMD\n2. พิมพ์คำสั่ง powercfg /batteryreport\n3. จากนั้นเปิด This PC > Drive C > Windows > System32 และหาชื่อไฟล์ battery-report.html\n\nสิ่งที่ต้องส่งกลับ\n• battery-report.html",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่างเพื่อดึง Battery Report\n\n1. เปิด Command Prompt หรือ CMD\n2. พิมพ์คำสั่ง powercfg /batteryreport\n3. จากนั้นเปิด This PC > Drive C > Windows > System32 และหาชื่อไฟล์ battery-report.html\n\nเมื่อดำเนินการเรียบร้อยแล้ว รบกวนส่งไฟล์ battery-report.html กลับมา เพื่อให้ทางเราตรวจสอบเพิ่มเติมครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below to generate the Battery Report.\n\n1. Open Command Prompt or CMD.\n2. Type the command: powercfg /batteryreport\n3. Open This PC > Drive C > Windows > System32 and locate battery-report.html.\n\nOnce completed, please send the file back to us for further checking."
+        "guide": "วิธีดึง Battery Report\n\n1. เปิด Command Prompt หรือ CMD\n2. พิมพ์คำสั่ง powercfg /batteryreport\n3. จากนั้นเปิด This PC → Drive C → Windows → System32 และหาชื่อไฟล์ battery-report.html\n\nสิ่งที่ต้องส่งกลับ\n• battery-report.html",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่างเพื่อดึง Battery Report\n\n1. เปิด Command Prompt หรือ CMD\n2. พิมพ์คำสั่ง powercfg /batteryreport\n3. จากนั้นเปิด This PC → Drive C → Windows → System32 และหาชื่อไฟล์ battery-report.html\n\nเมื่อดำเนินการเรียบร้อยแล้ว รบกวนส่งไฟล์ battery-report.html กลับมา เพื่อให้ทางเราตรวจสอบเพิ่มเติมครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below to generate the Battery Report.\n\n1. Open Command Prompt or CMD.\n2. Type the command: powercfg /batteryreport\n3. Open This PC → Drive C → Windows → System32 and locate battery-report.html.\n\nOnce completed, please send the file back to us for further checking."
       },
       "battery_health": {
         "name": "Battery Health",
-        "guide": "วิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device > Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device → Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device → Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีดู Battery Health\n\n1. เปิด Lenovo Vantage\n2. ไปที่ Device → Power\n3. ตรวจสอบหัวข้อ Battery Health\n4. แจ้งผล Good / Fair / Poor / Replace Recommended / Battery Not Detected / Not Test กลับมา\n\nสิ่งที่ต้องส่งกลับ\n• Battery Health Status\n\nOnce completed, please provide the result back to us."
       },
       "bios_version": {
         "name": "BIOS Version",
@@ -4661,9 +4662,9 @@ const LEVELS = {
       },
       "activation": {
         "name": "Windows Activation",
-        "guide": "วิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System > Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System → Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System → Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Windows\n\n1. เปิด Settings\n2. ไปที่ System → Activation\n3. กด Change Product Key\n4. ใส่ Product Key แล้วกด Activate\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
       },
       "reset_pc": {
         "name": "Reset This PC",
@@ -4686,21 +4687,21 @@ const LEVELS = {
       },
       "uninstall_updates": {
         "name": "Uninstall Windows Update",
-        "guide": "Uninstall Windows Update\n\nวัตถุประสงค์\nถอนการติดตั้ง Windows Update ล่าสุด หากปัญหาเกิดขึ้นหลังจากอัปเดตระบบ\n\nกรณีเข้า Windows ได้\n1. กด Win + I เพื่อเปิด Settings\n2. ไปที่ Windows Update\n3. เลือก Update history\n4. เลื่อนลงด้านล่าง และเลือก Uninstall updates\n5. เลือก Update ล่าสุด หรือ KB ที่คาดว่าเกี่ยวข้องกับปัญหา\n6. กด Uninstall\n7. Restart เครื่อง\n8. ตรวจสอบอาการอีกครั้ง\n\nหมายเหตุ: หากถอนผ่าน Settings ไม่ได้ ให้เปิด Control Panel > Programs and Features > View installed updates แล้วถอน KB ล่าสุดแทน\n\nกรณีเข้า Windows ไม่ได้\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. เปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง จนเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n3. เลือก Troubleshoot\n4. เลือก Advanced options\n5. เลือก Uninstall Updates\n6. เลือก Uninstall latest Quality Update หรือ Uninstall latest Feature Update\n7. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n8. Restart เครื่อง และตรวจสอบอาการอีกครั้ง",
+        "guide": "Uninstall Windows Update\n\nวัตถุประสงค์\nถอนการติดตั้ง Windows Update ล่าสุด หากปัญหาเกิดขึ้นหลังจากอัปเดตระบบ\n\nกรณีเข้า Windows ได้\n1. กด Win + I เพื่อเปิด Settings\n2. ไปที่ Windows Update\n3. เลือก Update history\n4. เลื่อนลงด้านล่าง และเลือก Uninstall updates\n5. เลือก Update ล่าสุด หรือ KB ที่คาดว่าเกี่ยวข้องกับปัญหา\n6. กด Uninstall\n7. Restart เครื่อง\n8. ตรวจสอบอาการอีกครั้ง\n\nหมายเหตุ: หากถอนผ่าน Settings ไม่ได้ ให้เปิด Control Panel → Programs and Features → View installed updates แล้วถอน KB ล่าสุดแทน\n\nกรณีเข้า Windows ไม่ได้\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. เปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง จนเข้าสู่ Preparing Automatic Repair / Windows Recovery Environment (WinRE)\n3. เลือก Troubleshoot\n4. เลือก Advanced options\n5. เลือก Uninstall Updates\n6. เลือก Uninstall latest Quality Update หรือ Uninstall latest Feature Update\n7. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n8. Restart เครื่อง และตรวจสอบอาการอีกครั้ง",
         "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ Uninstall Windows Update ตามขั้นตอนด้านล่าง\n\nกรณีเข้า Windows ได้\n1. กด Win + I เพื่อเปิด Settings\n2. ไปที่ Windows Update\n3. เลือก Update history\n4. เลือก Uninstall updates\n5. เลือก Update ล่าสุด หรือ KB ที่คาดว่าเกี่ยวข้องกับปัญหา\n6. กด Uninstall และ Restart เครื่อง\n\nกรณีเข้า Windows ไม่ได้\n1. เปิดเครื่อง และเมื่อเห็นโลโก้ Lenovo หรือ Windows ให้กดปุ่ม Power ค้างเพื่อปิดเครื่อง\n2. เปิดเครื่องใหม่ และทำซ้ำประมาณ 3 ครั้ง จนเข้าสู่ Preparing Automatic Repair / WinRE\n3. เลือก Troubleshoot\n4. เลือก Advanced options\n5. เลือก Uninstall Updates\n6. เลือก Uninstall latest Quality Update หรือ Uninstall latest Feature Update\n7. ดำเนินการตามขั้นตอนบนหน้าจอจนเสร็จ\n8. Restart เครื่อง และตรวจสอบอาการอีกครั้ง\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
         "emailEN": "Dear Customer,\n\nPlease uninstall the latest Windows Update by following the steps below.\n\nIf Windows can boot:\n1. Press Win + I to open Settings.\n2. Go to Windows Update.\n3. Select Update history.\n4. Select Uninstall updates.\n5. Select the latest update or the KB that may be related to the issue.\n6. Click Uninstall, then restart the machine.\n\nIf Windows cannot boot:\n1. Power on the machine. When the Lenovo or Windows logo appears, press and hold the Power button to turn it off.\n2. Turn it on again and repeat this about 3 times until Preparing Automatic Repair / WinRE appears.\n3. Select Troubleshoot.\n4. Select Advanced options.\n5. Select Uninstall Updates.\n6. Select Uninstall latest Quality Update or Uninstall latest Feature Update.\n7. Follow the on-screen instructions until completion.\n8. Restart the machine and check the issue again.\n\nOnce completed, please provide the result back to us."
       },
       "reinstall_windows": {
         "name": "Re-install Windows",
-        "guide": "วิธีติดตั้ง Windows\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security > Secure Boot > Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการติดตั้ง Windows ตามขั้นตอนด้านล่าง\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security > Secure Boot > Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบอาการอีกครั้งและแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease perform Windows installation by following the steps below.\n\n1. Download Windows from Microsoft:\nhttps://www.microsoft.com/en-us/software-download/windows11\n\n2. Video guide for creating a USB Installer:\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. After the USB Installer is created:\n• Enter BIOS by repeatedly pressing F1 after powering on the machine.\n• Go to Security > Secure Boot > Disable.\n• Press F10 and select Yes.\nAfter the screen turns off, repeatedly press F12 to enter the Boot Menu.\n• Select the USB device.\n• Then continue following the on-screen instructions.\n\nOnce completed, please test the issue again and provide the result back to us."
+        "guide": "วิธีติดตั้ง Windows\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security → Secure Boot → Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการติดตั้ง Windows ตามขั้นตอนด้านล่าง\n\n1. ดาวน์โหลด Windows จาก Microsoft\nลิงก์ดาวน์โหลด: https://www.microsoft.com/en-us/software-download/windows11\n\n2. วิดีโอแนะนำการสร้าง USB Installer\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. ขั้นตอนการติดตั้ง Windows หลังจากสร้าง USB Installer เรียบร้อยแล้ว\n• เข้า BIOS โดยกดปุ่ม F1 รัว ๆ หลังจากเปิดเครื่อง\n• ไปที่เมนู Security → Secure Boot → Disable\n• กด F10 และเลือก Yes\nหลังจากนั้นหน้าจอจะดับ ให้กดปุ่ม F12 รัว ๆ เพื่อเข้าสู่ Boot Menu\n• เลือก USB\n• จากนั้นสามารถดำเนินการตามขั้นตอนที่แสดงบนหน้าจอได้เลย\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบอาการอีกครั้งและแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease perform Windows installation by following the steps below.\n\n1. Download Windows from Microsoft:\nhttps://www.microsoft.com/en-us/software-download/windows11\n\n2. Video guide for creating a USB Installer:\nhttps://www.youtube.com/watch?v=soASOZeAE9M&t=71s\n\n3. After the USB Installer is created:\n• Enter BIOS by repeatedly pressing F1 after powering on the machine.\n• Go to Security → Secure Boot → Disable.\n• Press F10 and select Yes.\nAfter the screen turns off, repeatedly press F12 to enter the Boot Menu.\n• Select the USB device.\n• Then continue following the on-screen instructions.\n\nOnce completed, please test the issue again and provide the result back to us."
       },
       "event_viewer": {
         "name": "Event Viewer",
-        "guide": "วิธีเปิด Event Viewer\n\n1. คลิกขวาที่ Start\n2. เลือก Event Viewer\n3. ไปที่ Windows Logs > System หรือ Application\n4. ตรวจสอบ Error ที่เกี่ยวข้องกับช่วงเวลาที่เกิดอาการ\n\nสิ่งที่ต้องส่งกลับ\n• Screenshot หรือ Error Code ที่พบ",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีเปิด Event Viewer\n\n1. คลิกขวาที่ Start\n2. เลือก Event Viewer\n3. ไปที่ Windows Logs > System หรือ Application\n4. ตรวจสอบ Error ที่เกี่ยวข้องกับช่วงเวลาที่เกิดอาการ\n\nสิ่งที่ต้องส่งกลับ\n• Screenshot หรือ Error Code ที่พบ\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีเปิด Event Viewer\n\n1. คลิกขวาที่ Start\n2. เลือก Event Viewer\n3. ไปที่ Windows Logs > System หรือ Application\n4. ตรวจสอบ Error ที่เกี่ยวข้องกับช่วงเวลาที่เกิดอาการ\n\nสิ่งที่ต้องส่งกลับ\n• Screenshot หรือ Error Code ที่พบ\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีเปิด Event Viewer\n\n1. คลิกขวาที่ Start\n2. เลือก Event Viewer\n3. ไปที่ Windows Logs → System หรือ Application\n4. ตรวจสอบ Error ที่เกี่ยวข้องกับช่วงเวลาที่เกิดอาการ\n\nสิ่งที่ต้องส่งกลับ\n• Screenshot หรือ Error Code ที่พบ",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีเปิด Event Viewer\n\n1. คลิกขวาที่ Start\n2. เลือก Event Viewer\n3. ไปที่ Windows Logs → System หรือ Application\n4. ตรวจสอบ Error ที่เกี่ยวข้องกับช่วงเวลาที่เกิดอาการ\n\nสิ่งที่ต้องส่งกลับ\n• Screenshot หรือ Error Code ที่พบ\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีเปิด Event Viewer\n\n1. คลิกขวาที่ Start\n2. เลือก Event Viewer\n3. ไปที่ Windows Logs → System หรือ Application\n4. ตรวจสอบ Error ที่เกี่ยวข้องกับช่วงเวลาที่เกิดอาการ\n\nสิ่งที่ต้องส่งกลับ\n• Screenshot หรือ Error Code ที่พบ\n\nOnce completed, please provide the result back to us."
       },
       "sfc": {
         "name": "SFC /scannow",
@@ -4710,9 +4711,9 @@ const LEVELS = {
       },
       "safe_mode": {
         "name": "Safe Mode",
-        "guide": "วิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings > Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings → Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings → Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีเข้า Safe Mode\n\n1. กด Shift ค้างไว้ แล้วเลือก Restart\n2. เลือก Troubleshoot\n3. เลือก Advanced options\n4. เลือก Startup Settings → Restart\n5. กด 4 หรือ F4 เพื่อเข้า Safe Mode\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       },
       "dump_file": {
         "name": "Dump File",
@@ -4728,9 +4729,9 @@ const LEVELS = {
       },
       "office_activation": {
         "name": "Microsoft Office Activation",
-        "guide": "วิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account > Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account → Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account → Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธี Activate Microsoft Office\n\n1. เปิด Word / Excel / PowerPoint\n2. เลือก Sign in\n3. Login ด้วย Microsoft Account ที่มี License\n4. ไปที่ Account → Activate Product\n5. หากพบ Error ให้ถ่ายรูปหรือแจ้ง Error Code\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Error Code\n\nOnce completed, please provide the result back to us."
       },
       "windows11_bypass": {
         "name": "Bypass Windows 11 OOBE",
@@ -4740,9 +4741,9 @@ const LEVELS = {
       },
       "always_on_usb": {
         "name": "Always On USB",
-        "guide": "วิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config > USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
+        "guide": "วิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config → USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config → USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease follow the steps below.\n\nวิธีตั้งค่า Always On USB\n\n1. เข้า BIOS โดยกด F1 หลังเปิดเครื่อง\n2. ไปที่ Config → USB\n3. เปิด Always On USB\n4. กด F10 และเลือก Yes เพื่อ Save\n\nสิ่งที่ต้องส่งกลับ\n• Working หรือ Same Issue\n\nOnce completed, please provide the result back to us."
       },
       "bios_password": {
         "name": "BIOS / Supervisor Password",
@@ -4758,9 +4759,9 @@ const LEVELS = {
       },
       "reset_battery": {
         "name": "Reset Battery",
-        "guide": "Reset Battery เพื่อยืดอายุการใช้งาน\n\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Power\n3. ค้นหาหัวข้อ Battery Gauge Reset\n4. เสียบสายชาร์จไว้ระหว่างทำ Reset\n5. กด Reset และรอให้ระบบทำงานจนเสร็จ\n\nระบบจะดำเนินการอัตโนมัติ\n1. ชาร์จแบตเตอรี่จนถึง 100%\n2. ปล่อยแบตเตอรี่ลงจนเกือบ 0%\n3. ชาร์จกลับขึ้นมา 100%\n\nใช้เวลาประมาณ 4–8 ชั่วโมง\nแนะนำให้ทำช่วงกลางวัน หรือช่วงกลางคืนโดยเปิดเครื่องทิ้งไว้",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ Reset Battery ตามขั้นตอนด้านล่าง\n\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Power\n3. ค้นหาหัวข้อ Battery Gauge Reset\n4. เสียบสายชาร์จไว้ระหว่างทำ Reset\n5. กด Reset และรอให้ระบบทำงานจนเสร็จ\n\nกระบวนการจะใช้เวลาประมาณ 4–8 ชั่วโมง โดยระบบจะชาร์จแบตเตอรี่ 100% จากนั้นปล่อยแบตเตอรี่ลงเกือบ 0% และชาร์จกลับขึ้นมา 100%\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease perform Battery Gauge Reset by following the steps below.\n\n1. Open Lenovo Commercial Vantage or Lenovo Vantage.\n2. Go to Device > Power.\n3. Find Battery Gauge Reset.\n4. Keep the AC adapter connected during the reset.\n5. Click Reset and wait until the process is completed.\n\nThe process may take approximately 4–8 hours.\n\nOnce completed, please provide the result back to us."
+        "guide": "Reset Battery เพื่อยืดอายุการใช้งาน\n\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device → Power\n3. ค้นหาหัวข้อ Battery Gauge Reset\n4. เสียบสายชาร์จไว้ระหว่างทำ Reset\n5. กด Reset และรอให้ระบบทำงานจนเสร็จ\n\nระบบจะดำเนินการอัตโนมัติ\n1. ชาร์จแบตเตอรี่จนถึง 100%\n2. ปล่อยแบตเตอรี่ลงจนเกือบ 0%\n3. ชาร์จกลับขึ้นมา 100%\n\nใช้เวลาประมาณ 4–8 ชั่วโมง\nแนะนำให้ทำช่วงกลางวัน หรือช่วงกลางคืนโดยเปิดเครื่องทิ้งไว้",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการ Reset Battery ตามขั้นตอนด้านล่าง\n\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device → Power\n3. ค้นหาหัวข้อ Battery Gauge Reset\n4. เสียบสายชาร์จไว้ระหว่างทำ Reset\n5. กด Reset และรอให้ระบบทำงานจนเสร็จ\n\nกระบวนการจะใช้เวลาประมาณ 4–8 ชั่วโมง โดยระบบจะชาร์จแบตเตอรี่ 100% จากนั้นปล่อยแบตเตอรี่ลงเกือบ 0% และชาร์จกลับขึ้นมา 100%\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease perform Battery Gauge Reset by following the steps below.\n\n1. Open Lenovo Commercial Vantage or Lenovo Vantage.\n2. Go to Device → Power.\n3. Find Battery Gauge Reset.\n4. Keep the AC adapter connected during the reset.\n5. Click Reset and wait until the process is completed.\n\nThe process may take approximately 4–8 hours.\n\nOnce completed, please provide the result back to us."
       },
       "lcd_self_test": {
         "name": "LCD Self-Test",
@@ -4770,9 +4771,9 @@ const LEVELS = {
       },
       "disable_audio_enhancements_external_mic": {
         "name": "Disable Audio Enhancements (External Microphone)",
-        "guide": "Disable Audio Enhancements (External Microphone)\n\nMethod 1: Windows Settings\n1. เปิด Settings > System > Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced > Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel > Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced > Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยปิด Audio Enhancements ของ External Microphone ตามขั้นตอนด้านล่าง\n\nMethod 1: Windows Settings\n1. เปิด Settings > System > Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced > Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel > Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced > Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบไมโครโฟนอีกครั้งและแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease disable Audio Enhancements for the External Microphone by following the steps below.\n\nMethod 1: Windows Settings\n1. Open Settings > System > Sound.\n2. Select External Microphone.\n3. Go to Advanced > Signal.\n4. Uncheck Enable audio enhancements.\n5. Click Apply and OK.\n\nMethod 2: Control Panel\n1. Open Control Panel > Sound.\n2. Go to the Recording tab.\n3. Double-click External Microphone.\n4. Go to Advanced > Signal.\n5. Uncheck Enable audio enhancements.\n6. Click Apply and OK.\n\nOnce completed, please test the microphone again and provide the result back to us."
+        "guide": "Disable Audio Enhancements (External Microphone)\n\nMethod 1: Windows Settings\n1. เปิด Settings → System → Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced → Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel → Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced → Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยปิด Audio Enhancements ของ External Microphone ตามขั้นตอนด้านล่าง\n\nMethod 1: Windows Settings\n1. เปิด Settings → System → Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced → Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel → Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced → Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบไมโครโฟนอีกครั้งและแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease disable Audio Enhancements for the External Microphone by following the steps below.\n\nMethod 1: Windows Settings\n1. Open Settings → System → Sound.\n2. Select External Microphone.\n3. Go to Advanced → Signal.\n4. Uncheck Enable audio enhancements.\n5. Click Apply and OK.\n\nMethod 2: Control Panel\n1. Open Control Panel → Sound.\n2. Go to the Recording tab.\n3. Double-click External Microphone.\n4. Go to Advanced → Signal.\n5. Uncheck Enable audio enhancements.\n6. Click Apply and OK.\n\nOnce completed, please test the microphone again and provide the result back to us."
       },
       "thinkcentre_raid1_ssd_not_found_os_install": {
         "name": "SSD Not Found During Install OS",
@@ -4782,9 +4783,9 @@ const LEVELS = {
       },
       "fn_ctrl_key_swap": {
         "name": "Fn & Ctrl Key Swap",
-        "guide": "Fn & Ctrl Key Swap\n\nMethod 1: Lenovo Vantage\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Input & Accessories > Keyboard\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. หากเปิดใช้งานอยู่ ให้ปิด Off\n5. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nMethod 2: BIOS\n1. เข้า BIOS\n2. ไปที่ Config > Keyboard/Mouse\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. ตั้งค่าเป็น Disabled\n5. กด F10 เพื่อ Save and Exit\n6. ทดสอบปุ่ม Left Ctrl อีกครั้ง",
-        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยตรวจสอบ Fn & Ctrl Key Swap ตามขั้นตอนด้านล่าง\n\nMethod 1: Lenovo Vantage\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device > Input & Accessories > Keyboard\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. หากเปิดใช้งานอยู่ ให้ปิด Off\n5. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nMethod 2: BIOS\n1. เข้า BIOS\n2. ไปที่ Config > Keyboard/Mouse\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. ตั้งค่าเป็น Disabled\n5. กด F10 เพื่อ Save and Exit\n6. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
-        "emailEN": "Dear Customer,\n\nPlease check Fn & Ctrl Key Swap by following the steps below.\n\nMethod 1: Lenovo Vantage\n1. Open Lenovo Commercial Vantage or Lenovo Vantage.\n2. Go to Device > Input & Accessories > Keyboard.\n3. Check Fn and Ctrl Key Swap.\n4. If it is enabled, turn it Off.\n5. Test the Left Ctrl key again.\n\nMethod 2: BIOS\n1. Enter BIOS.\n2. Go to Config > Keyboard/Mouse.\n3. Check Fn and Ctrl Key Swap.\n4. Set it to Disabled.\n5. Press F10 to Save and Exit.\n6. Test the Left Ctrl key again.\n\nOnce completed, please provide the result back to us."
+        "guide": "Fn & Ctrl Key Swap\n\nMethod 1: Lenovo Vantage\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device → Input & Accessories → Keyboard\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. หากเปิดใช้งานอยู่ ให้ปิด Off\n5. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nMethod 2: BIOS\n1. เข้า BIOS\n2. ไปที่ Config → Keyboard/Mouse\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. ตั้งค่าเป็น Disabled\n5. กด F10 เพื่อ Save and Exit\n6. ทดสอบปุ่ม Left Ctrl อีกครั้ง",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยตรวจสอบ Fn & Ctrl Key Swap ตามขั้นตอนด้านล่าง\n\nMethod 1: Lenovo Vantage\n1. เปิด Lenovo Commercial Vantage หรือ Lenovo Vantage\n2. ไปที่ Device → Input & Accessories → Keyboard\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. หากเปิดใช้งานอยู่ ให้ปิด Off\n5. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nMethod 2: BIOS\n1. เข้า BIOS\n2. ไปที่ Config → Keyboard/Mouse\n3. ตรวจสอบ Fn and Ctrl Key Swap\n4. ตั้งค่าเป็น Disabled\n5. กด F10 เพื่อ Save and Exit\n6. ทดสอบปุ่ม Left Ctrl อีกครั้ง\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease check Fn & Ctrl Key Swap by following the steps below.\n\nMethod 1: Lenovo Vantage\n1. Open Lenovo Commercial Vantage or Lenovo Vantage.\n2. Go to Device → Input & Accessories → Keyboard.\n3. Check Fn and Ctrl Key Swap.\n4. If it is enabled, turn it Off.\n5. Test the Left Ctrl key again.\n\nMethod 2: BIOS\n1. Enter BIOS.\n2. Go to Config → Keyboard/Mouse.\n3. Check Fn and Ctrl Key Swap.\n4. Set it to Disabled.\n5. Press F10 to Save and Exit.\n6. Test the Left Ctrl key again.\n\nOnce completed, please provide the result back to us."
       },
       "downgrade_bios": {
         "name": "Downgrade BIOS",
@@ -5029,7 +5030,7 @@ if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec
   const portNotCharge = {
     ...LEVELS.charging.symptoms.typec,
     name: "Not Charge",
-    aliasOf: "Battery > Not Charge"
+    aliasOf: "Battery → Not Charge"
   };
   LEVELS.port.symptoms = {
     not_charge: portNotCharge,
@@ -5271,7 +5272,7 @@ const MODEL_STRUCTURE = {
     noPower.questions = noPower.questions || {};
     noPower.questions.tiny = [
       makeQ('Power LED', 'led'),
-      makeQ('Fan spinning', 'fan'),
+      makeQ('Fan Check', 'fan'),
       makeQ('Swap AC Power Cord', 'swap'),
       makeQ('Physical damage / Liquid spilled', 'yesno'),
       makeQ('Other issue', 'yesno', {text:true})
@@ -6248,11 +6249,11 @@ const GLOBAL_CHECKLIST_MAPPING = {
   },
   "Dump File collected": {
     "th": "รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
-    "en": "Please send the dump file for further checking. Open File Explorer > C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
+    "en": "Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
   },
   "Dump file collected": {
     "th": "รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
-    "en": "Please send the dump file for further checking. Open File Explorer > C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
+    "en": "Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
   },
   "Emergency Reset": {
     "th": "ทดสอบ Reset Battery โดยจิ้มรูที่ใต้ตัวเครื่องประมาณ 5-10 วินาที จากนั้นเปิดเครื่องใหม่",
@@ -6268,7 +6269,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
   },
   "Event Viewer / Dump file collected": {
     "th": "รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
-    "en": "Please send the dump file for further checking. Open File Explorer > C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
+    "en": "Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
   },
   "External mic test": {
     "th": "ตรวจสอบหัวข้อ External mic test",
@@ -6329,9 +6330,9 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "อัปเดต Driver ของ Hotkey ให้เป็นเวอร์ชันล่าสุด",
     "en": "Update the Hotkey driver to the latest version."
   },
-  "Idepad > ทดสอบ Run Diagnostics": {
-    "th": "ตรวจสอบหัวข้อ Idepad > ทดสอบ Run Diagnostics",
-    "en": "Check Idepad > ทดสอบ Run Diagnostics."
+  "Idepad → ทดสอบ Run Diagnostics": {
+    "th": "ตรวจสอบหัวข้อ Idepad → ทดสอบ Run Diagnostics",
+    "en": "Check Idepad → ทดสอบ Run Diagnostics."
   },
   "Input device selected correctly": {
     "th": "ตรวจสอบว่าเลือก Input Device ถูกต้อง",
@@ -6419,11 +6420,11 @@ const GLOBAL_CHECKLIST_MAPPING = {
   },
   "Lenovo Vantage update": {
     "th": "ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage",
-    "en": "Update all drivers through Lenovo Vantage: open Lenovo Vantage > System Update > Check for updates."
+    "en": "Update all drivers through Lenovo Vantage: open Lenovo Vantage → System Update → Check for updates."
   },
   "Lenovo Vantage Update": {
     "th": "ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage",
-    "en": "Update all drivers through Lenovo Vantage: open Lenovo Vantage > System Update > Check for updates."
+    "en": "Update all drivers through Lenovo Vantage: open Lenovo Vantage → System Update → Check for updates."
   },
   "Load BIOS default": {
     "th": "โหลดค่า BIOS Default แล้วทดสอบอีกครั้ง",
@@ -6447,7 +6448,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
   },
   "Minidump collected": {
     "th": "รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
-    "en": "Please send the dump file for further checking. Open File Explorer > C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
+    "en": "Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
   },
   "Monitor test on other machine": {
     "th": "ทดสอบจอภาพกับเครื่องอื่น",
@@ -6783,7 +6784,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
   },
   "System Restore": {
     "th": "ทดสอบ System Restore",
-    "en": "Perform System Restore / Reset This PC: Choose an option > Troubleshoot > Advanced options > Reset This PC, then choose Keep my files or Remove everything and follow the on-screen steps."
+    "en": "Perform System Restore / Reset This PC: Choose an option → Troubleshoot → Advanced options → Reset This PC, then choose Keep my files or Remove everything and follow the on-screen steps."
   },
   "Test HDMI Port on Notebook": {
     "th": "ทดสอบพอร์ต HDMI บนเครื่องโดยตรง",
@@ -6793,9 +6794,9 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ทดสอบเครื่อง Tiny โดยไม่ต่อผ่าน TIO Dock",
     "en": "Test the Tiny without the TIO Dock."
   },
-  "Thinkpad, TC Desktop, TC Tiny, AIO > ทดสอบ Run Diagnostics": {
-    "th": "ตรวจสอบหัวข้อ Thinkpad, TC Desktop, TC Tiny, AIO > ทดสอบ Run Diagnostics",
-    "en": "Check Thinkpad, TC Desktop, TC Tiny, AIO > ทดสอบ Run Diagnostics."
+  "Thinkpad, TC Desktop, TC Tiny, AIO → ทดสอบ Run Diagnostics": {
+    "th": "ตรวจสอบหัวข้อ Thinkpad, TC Desktop, TC Tiny, AIO → ทดสอบ Run Diagnostics",
+    "en": "Check Thinkpad, TC Desktop, TC Tiny, AIO → ทดสอบ Run Diagnostics."
   },
   "Thunderbolt Driver Update": {
     "th": "อัปเดต Driver ของ Thunderbolt ให้เป็นเวอร์ชันล่าสุด",
@@ -6919,13 +6920,13 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ทดสอบอัปเดตไรเวอร์ที่มีปัญหา",
     "en": "Update the affected driver."
   },
-  "กรณีจอ notebook ไม่มีภาพ > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่": {
-    "th": "ตรวจสอบหัวข้อ กรณีจอ notebook ไม่มีภาพ > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
-    "en": "Check กรณีจอ notebook ไม่มีภาพ > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่."
+  "กรณีจอ notebook ไม่มีภาพ → ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่": {
+    "th": "ตรวจสอบหัวข้อ กรณีจอ notebook ไม่มีภาพ → ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
+    "en": "Check กรณีจอ notebook ไม่มีภาพ → ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่."
   },
-  "กรณีจอเสีย หรือเป็นเส้น > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่": {
-    "th": "ตรวจสอบหัวข้อ กรณีจอเสีย หรือเป็นเส้น > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
-    "en": "Check กรณีจอเสีย หรือเป็นเส้น > ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่."
+  "กรณีจอเสีย หรือเป็นเส้น → ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่": {
+    "th": "ตรวจสอบหัวข้อ กรณีจอเสีย หรือเป็นเส้น → ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
+    "en": "Check กรณีจอเสีย หรือเป็นเส้น → ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่."
   },
   "หากไม่มีไฟล์ ให้ไปที่ C:\\Windows\\MEMORY.DMP": {
     "th": "ตรวจสอบหัวข้อ หากไม่มีไฟล์ ให้ไปที่ C:\\Windows\\MEMORY.DMP",
@@ -6966,7 +6967,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
       'Dump file collected':'Event Viewer / Dump file collected',
       'Minidump collected':'Event Viewer / Dump file collected',
       'Stop code / Error code':'Stop code / Error code collected',
-      'Fan Check':'Fan spinning',
+      'Fan Check':'Fan Check',
       'Caps Lock LED works':'Caps Lock Toggle',
       'Update Graphics Driver':'Graphics Driver Update',
       'Wi-Fi Driver Update':'WLAN Driver Update',
@@ -7107,8 +7108,8 @@ function filterChecklistByModelScope(qs, product){
   }
   if(typeof GLOBAL_CHECKLIST_MAPPING !== 'undefined'){
     GLOBAL_CHECKLIST_MAPPING['Uninstall Windows Update'] = {
-      th: 'ถอนการติดตั้ง Windows Update ล่าสุด ทั้งกรณีเข้า Windows ได้ผ่าน Settings > Windows Update > Update history > Uninstall updates หรือกรณีเข้า Windows ไม่ได้ผ่าน WinRE > Troubleshoot > Advanced options > Uninstall Updates',
-      en: 'Uninstall the latest Windows Update from Settings > Windows Update > Update history > Uninstall updates, or from WinRE > Troubleshoot > Advanced options > Uninstall Updates if Windows cannot boot.'
+      th: 'ถอนการติดตั้ง Windows Update ล่าสุด ทั้งกรณีเข้า Windows ได้ผ่าน Settings → Windows Update → Update history → Uninstall updates หรือกรณีเข้า Windows ไม่ได้ผ่าน WinRE → Troubleshoot → Advanced options → Uninstall Updates',
+      en: 'Uninstall the latest Windows Update from Settings → Windows Update → Update history → Uninstall updates, or from WinRE → Troubleshoot → Advanced options → Uninstall Updates if Windows cannot boot.'
     };
     GLOBAL_CHECKLIST_MAPPING['Downgrade BIOS'] = {
       th: 'ดาวน์โหลด BIOS Version ก่อนหน้าโดยคลิกขวาที่ Download เลือก Copy link เปิด README หา Package ID ของ Version ก่อนหน้า แล้วแก้ชื่อไฟล์ BIOS ท้ายลิงก์พร้อมเติม .exe',
@@ -7180,5 +7181,144 @@ function filterChecklistByModelScope(qs, product){
     g.guide = 'SSD Not Found During Install OS\n\nอาการ\n- Windows Setup ไม่พบ SSD\n- ขึ้นข้อความ "No drives were found."\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ตรวจสอบการตั้งค่า Storage Controller ใน BIOS\nตรวจสอบโหมดการทำงานของ Storage Controller ให้ตรงกับรุ่นเครื่อง เช่น\n- AHCI\n- Intel VMD\n- Intel RST / RAID\n\n3. ดาวน์โหลด Intel RST / Storage Driver\nโดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n4. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ "Where do you want to install Windows?" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่';
     g.emailTH = 'เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\nSSD Not Found During Install OS\n\nอาการ\n- Windows Setup ไม่พบ SSD\n- ขึ้นข้อความ "No drives were found."\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ตรวจสอบการตั้งค่า Storage Controller ใน BIOS\nตรวจสอบโหมดการทำงานของ Storage Controller ให้ตรงกับรุ่นเครื่อง เช่น\n- AHCI\n- Intel VMD\n- Intel RST / RAID\n\n3. ดาวน์โหลด Intel RST / Storage Driver\nโดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n4. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ "Where do you want to install Windows?" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
     g.emailEN = 'Dear Customer,\n\nPlease follow the guide below.\n\nSSD Not Found During Install OS\n\nSymptoms\n- Windows Setup cannot detect the SSD.\n- The message "No drives were found." appears.\n\nTroubleshooting\n\n1. Verify whether the SSD is detected in BIOS.\n- Enter BIOS and check whether the SSD is detected.\n- If BIOS does not detect the SSD, follow the SSD Not Detected troubleshooting guide.\n\n2. Check the Storage Controller setting in BIOS.\nVerify that the Storage Controller mode matches the machine platform, such as AHCI, Intel VMD, or Intel RST / RAID.\n\n3. Download Intel RST / Storage Driver by using another PC.\n- Go to Lenovo Support.\n- Download the Intel RST / Storage Driver that matches the machine model.\n- Extract the downloaded package.\n- Copy the extracted driver files to a USB Flash Drive.\n\n4. Load the driver during Windows Setup.\n- On the "Where do you want to install Windows?" screen, select Load driver.\n- Browse to the USB Flash Drive.\n- Select the Intel RST / Storage Driver.\n- After the driver loads successfully, verify whether the SSD appears.\n\nOnce completed, please provide the result back to us.';
+  }
+})();
+
+
+// v5.0.4 data corrections and additions
+(function(){
+  function q(label, options, extra){ return Object.assign({label:label, options:options, text:false, diag:false}, extra || {}); }
+
+  // Fan checklist standard: Fan Check / No Spin / Spin / Not Test.
+  if(typeof APP_OPTIONS !== 'undefined') APP_OPTIONS.fan = ['-- Select --','No Spin','Spin','Not Test'];
+  function updateFanQuestions(value){
+    if(Array.isArray(value)){
+      value.forEach(function(item){
+        if(item && typeof item === 'object'){
+          if(item.label === 'Fan spinning') item.label = 'Fan Check';
+          if(item.label === 'Fan Check') item.options = 'fan';
+          Object.keys(item).forEach(function(k){ if(k !== 'label') updateFanQuestions(item[k]); });
+        }
+      });
+    } else if(value && typeof value === 'object'){
+      Object.keys(value).forEach(function(k){ updateFanQuestions(value[k]); });
+    }
+  }
+  if(typeof LEVELS !== 'undefined') updateFanQuestions(LEVELS);
+
+  // Error 0183 Bad CRC.
+  if(LEVELS && LEVELS.error && LEVELS.error.symptoms){
+    LEVELS.error.symptoms.e0183 = {
+      name: 'Error 0183 : Bad CRC of Security Settings in EFI Variable',
+      defaultResult: 'Escalate L2',
+      defaultPart: 'Mainboard',
+      common: [
+        q('Load BIOS Default','select'),
+        q('BIOS Update','select'),
+        q('Error photo provided','yesno'),
+        q('Other issue','yesno',{text:true})
+      ],
+      description: 'BIOS ตรวจพบค่า CRC ของข้อมูล Security Settings ใน EFI Variable ไม่ถูกต้อง อาจเกี่ยวข้องกับข้อมูล BIOS หรือ Mainboard'
+    };
+
+    LEVELS.error.symptoms.button_cover_tamper = {
+      name: 'Button cover tamper detection',
+      defaultResult: 'Escalate L2',
+      defaultPart: 'Mainboard / Cover Sensor',
+      common: [
+        q('Load BIOS Default','select'),
+        q('BIOS Update','select'),
+        q('Check bottom cover and screws','select'),
+        q('Error photo provided','yesno'),
+        q('Other issue','yesno',{text:true})
+      ],
+      description: 'ระบบตรวจพบสถานะการเปิดฝาครอบเครื่องหรือสัญญาณจาก Cover Tamper Sensor ผิดปกติ'
+    };
+  }
+
+  // Insert new errors before Boot Device Missing for every product.
+  if(typeof MODEL_STRUCTURE !== 'undefined'){
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var row=(MODEL_STRUCTURE[product]||[]).find(function(x){return x.level==='error';});
+      if(!row) return;
+      var arr=(row.symptoms||[]).filter(function(x){return x!=='e0183' && x!=='button_cover_tamper';});
+      var at=arr.indexOf('boot_missing');
+      if(at<0) at=arr.length;
+      arr.splice(at,0,'e0183','button_cover_tamper');
+      row.symptoms=arr;
+    });
+  }
+
+  var manuals = LEVELS && LEVELS.manual && LEVELS.manual.symptoms;
+  if(manuals){
+    var diag = 'Lenovo Diagnostics (ผ่าน Lenovo Vantage)\n1. เปิด Lenovo Vantage หรือ Lenovo Commercial Vantage\n2. ไปที่ Device Diagnostics → Hardware Scan → Quick Scan → จากนั้นกด Scan\nตรวจสอบผลว่า Pass หรือ Failed\n\nLenovo Diagnostics (ผ่าน F10)\n1. ปิดเครื่อง\n2. เปิดเครื่องแล้วกด F10 รัว ๆ\n3. เลือก Run All → Quick → Quick Unattended\nรอให้ทดสอบเสร็จ และตรวจสอบผลว่า Pass หรือ Failed';
+    manuals.lenovo_diagnostics.guide = diag;
+    manuals.lenovo_diagnostics.emailTH = 'เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n' + diag + '\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+    manuals.lenovo_diagnostics.emailEN = 'Dear Customer,\n\nPlease run Lenovo Diagnostics through Lenovo Vantage or by pressing F10 during startup, then provide the result as Pass or Failed.';
+
+    var battery = 'Battery Health\n\n1. เปิด Lenovo Vantage หรือ Lenovo Commercial Vantage\n2. ไปที่ Device → Power → ตรวจสอบหัวข้อ Battery Health\nแจ้งผลที่แสดง เช่น Good / Fair / Poor พร้อมส่งภาพหน้าจอ';
+    manuals.battery_health.guide = battery;
+    manuals.battery_health.emailTH = 'เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n' + battery + '\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+
+    var resetpc = 'Reset This PC\n\nกรณีเข้า Windows ได้\n1. ไปที่ Settings → System → Recovery\n2. เลือก Reset This PC\n3. เลือก Keep my files หรือ Remove everything\n4. ทำตามขั้นตอนจนเสร็จ\n\nกรณีเข้า Windows ไม่ได้\n1. เปิดเครื่อง แล้วกดปุ่ม Power ค้างเมื่อเห็นโลโก้ Lenovo หรือวงกลมโหลด Windows ทำซ้ำ 3 ครั้ง\n2. ครั้งที่ 4 จะเข้า Windows Recovery (WinRE)\n3. เลือก Troubleshoot → Reset This PC\n4. เลือก Keep my files หรือ Remove everything\n5. ทำตามขั้นตอนจนเสร็จ';
+    manuals.reset_pc.guide=resetpc; manuals.reset_pc.emailTH='เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n'+resetpc+'\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+
+    var startup = 'Startup Repair\n\nกรณีเข้า Windows ได้\n1. ไปที่ Settings → System → Recovery\n2. เลือก Advanced startup → Restart now\n3. เลือก Troubleshoot → Advanced options → Startup Repair\n4. รอให้ระบบซ่อมแซมจนเสร็จ\n\nกรณีเข้า Windows ไม่ได้\n1. เปิดเครื่อง แล้วกดปุ่ม Power ค้างเมื่อเห็นโลโก้ Lenovo หรือวงกลมโหลด Windows ทำซ้ำ 3 ครั้ง\n2. ครั้งที่ 4 จะเข้า Windows Recovery (WinRE)\n3. เลือก Troubleshoot → Advanced options → Startup Repair\n4. รอให้ระบบซ่อมแซมจนเสร็จ';
+    manuals.startup_repair.guide=startup; manuals.startup_repair.emailTH='เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n'+startup+'\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+
+    var restore = 'System Restore\n\nกรณีเข้า Windows ได้\n1. ไปที่ Settings → System → Recovery\n2. เลือก Advanced startup → Restart now\n3. เลือก Troubleshoot → Advanced options → System Restore\n4. เลือก Restore Point และทำตามขั้นตอนจนเสร็จ\n\nกรณีเข้า Windows ไม่ได้\n1. เปิดเครื่อง แล้วกดปุ่ม Power ค้างเมื่อเห็นโลโก้ Lenovo หรือวงกลมโหลด Windows ทำซ้ำ 3 ครั้ง\n2. ครั้งที่ 4 จะเข้า Windows Recovery (WinRE)\n3. เลือก Troubleshoot → Advanced options → System Restore\n4. เลือก Restore Point และทำตามขั้นตอนจนเสร็จ';
+    manuals.system_restore.guide=restore; manuals.system_restore.emailTH='เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n'+restore+'\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+
+    var always = 'วิธีตั้งค่า Always On USB\n\nกรณีปิดด้วยโปรแกรม Lenovo Commercial Vantage\n1. เปิด Lenovo Commercial Vantage\n2. ไปที่ Device → Power → Always On USB → จากนั้นตั้งเป็น Off\n3. Restart เครื่อง 1 ครั้ง แล้วทดสอบใช้งานอีกครั้ง\n\nวิธีปิดด้วย BIOS\n1. เข้า BIOS โดยกด F1 รัวๆขณะเปิดเครื่อง\n2. ไปที่ Config → USB → Always On USB → จากนั้นตั้งเป็น Off\n3. กด F10 และเลือก Yes เพื่อ Save';
+    manuals.always_on_usb.guide=always; manuals.always_on_usb.emailTH='เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n'+always+'\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';
+  }
+})();
+
+
+// v5.0.4 approved content and standardization patch
+(function applyV504ApprovedPatch(){
+  function errorCode(name){
+    var m=String(name||'').match(/\b(\d{3,4})\b/);
+    return m ? parseInt(m[1],10) : null;
+  }
+  // Error headings: remove "Error" prefix; numeric entries ascending; non-numeric entries last.
+  if(typeof LEVELS!=='undefined' && LEVELS.error && LEVELS.error.symptoms){
+    Object.keys(LEVELS.error.symptoms).forEach(function(k){
+      var x=LEVELS.error.symptoms[k];
+      if(!x) return;
+      x.name=String(x.name||'').replace(/^Error\s*/i,'').replace(/^([0-9]{3,4})\s*:\s*/,'$1 ');
+    });
+  }
+  if(typeof MODEL_STRUCTURE!=='undefined'){
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var row=(MODEL_STRUCTURE[product]||[]).find(function(x){return x.level==='error';});
+      if(!row) return;
+      row.symptoms=(row.symptoms||[]).slice().sort(function(a,b){
+        var na=LEVELS.error.symptoms[a]&&LEVELS.error.symptoms[a].name;
+        var nb=LEVELS.error.symptoms[b]&&LEVELS.error.symptoms[b].name;
+        var ca=errorCode(na), cb=errorCode(nb);
+        if(ca!==null && cb!==null) return ca-cb || String(na).localeCompare(String(nb));
+        if(ca!==null) return -1;
+        if(cb!==null) return 1;
+        return String(na).localeCompare(String(nb));
+      });
+    });
+  }
+
+  var manuals=LEVELS&&LEVELS.manual&&LEVELS.manual.symptoms;
+  if(manuals){
+    var ssd='SSD Not Found During Install OS\n\nวิธีตรวจสอบ\n\n1. ตรวจสอบว่า BIOS พบ SSD หรือไม่\n- เข้า BIOS และตรวจสอบว่าเครื่องตรวจพบ SSD หรือไม่\n- หาก BIOS ไม่พบ SSD ให้ดำเนินการตาม Troubleshooting Guide : SSD Not Detected\n\n2. ดาวน์โหลด Intel RST / Storage Driver โดยใช้คอมพิวเตอร์เครื่องอื่น\n- เข้าเว็บไซต์ Lenovo Support\n- ดาวน์โหลด Intel RST / Storage Driver ให้ตรงกับรุ่นเครื่อง\n- แตกไฟล์ (Extract) ที่ดาวน์โหลดมา\n- คัดลอกไฟล์ที่แตกแล้วลงใน USB Flash Drive\n\n3. โหลด Driver ระหว่างติดตั้ง Windows\n- เมื่ออยู่หน้าจอ "Where do you want to install Windows?" ให้เลือก Load driver\n- เลือกตำแหน่งไฟล์จาก USB Flash Drive\n- เลือก Intel RST / Storage Driver\n- เมื่อติดตั้ง Driver สำเร็จ ให้ตรวจสอบว่า SSD ปรากฏในรายการไดรฟ์หรือไม่';
+    var sg=manuals.thinkcentre_raid1_ssd_not_found_os_install;
+    if(sg){sg.name='SSD Not Found During Install OS';sg.guide=ssd;sg.emailTH='เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n'+ssd+'\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';}
+
+    var down='Downgrade BIOS\n\nวัตถุประสงค์\nดาวน์โหลด BIOS Version ก่อนหน้าเพื่อนำมา Downgrade BIOS\n\nวิธีดาวน์โหลด BIOS Version ก่อนหน้า\n\n1. เข้า Lenovo Support ตามรุ่นเครื่อง แล้วไปที่ BIOS/UEFI\n2. เปิด Details ของ BIOS ล่าสุด และ Copy Link จากปุ่ม Download\n3. เปิดไฟล์ README ของ BIOS รุ่นล่าสุด\n4. หา Package ID ของ BIOS Version ที่ต้องการ เช่น r26uj15w\n5. นำ Link ที่ Copy มา แก้เฉพาะชื่อไฟล์ท้าย Link ให้เป็น Package ID ที่ต้องการ แล้วกด Enter\n\nตัวอย่าง\nLatest\nhttps://download.lenovo.com/pccbbs/mobiles/r26uj16w.exe\n\nPrevious\nhttps://download.lenovo.com/pccbbs/mobiles/r26uj15w.exe\n\nหมายเหตุ\n- ใช้ Package ID จาก README เท่านั้น\n- วิธีนี้ใช้ได้เฉพาะ BIOS ที่ยังอยู่บน Server ของ Lenovo\n- ก่อน Downgrade ให้ตรวจสอบ AC Adapter, Battery, BitLocker และ BIOS Back Flash\n- หลัง Downgrade ให้ Load BIOS Default และ Restart เครื่อง';
+    if(manuals.downgrade_bios){manuals.downgrade_bios.guide=down;manuals.downgrade_bios.emailTH='เรียน คุณลูกค้า\n\nรบกวนช่วยดำเนินการตามขั้นตอนด้านล่าง\n\n'+down+'\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ';}
+  }
+
+  // Also update the storage guide object used by Related Guide.
+  if(typeof TROUBLESHOOTING_GUIDES!=='undefined' && TROUBLESHOOTING_GUIDES.storage && TROUBLESHOOTING_GUIDES.storage.thinkcentre_raid1_ssd_not_found_os_install){
+    var g=TROUBLESHOOTING_GUIDES.storage.thinkcentre_raid1_ssd_not_found_os_install;
+    var m=LEVELS.manual.symptoms.thinkcentre_raid1_ssd_not_found_os_install;
+    if(m){g.name=m.name;g.guide=m.guide;g.emailTH=m.emailTH;}
   }
 })();

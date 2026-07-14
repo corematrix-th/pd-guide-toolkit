@@ -61,9 +61,6 @@ function getModelSpecificDiagnosticsGuideText(){
 
 function getGuideTextForCurrentModel(guide){
   if(!guide) return "";
-  if(String(guide.name || "").trim() === "Lenovo Diagnostics"){
-    return getModelSpecificDiagnosticsGuideText();
-  }
   return guide.guide || "";
 }
 
@@ -87,7 +84,7 @@ function getChecklistMappingText(label, lang){
     "Dump file collected":"Event Viewer / Dump file collected",
     "Minidump collected":"Event Viewer / Dump file collected",
     "Stop code / Error code":"Stop code / Error code collected",
-    "Fan Check":"Fan spinning",
+    "Fan Check":"Fan Check",
     "Caps Lock LED works":"Caps Lock Toggle",
     "Run Lenovo Diagnostics":"Run Lenovo Diagnostics",
     "Lenovo Diagnostics":"Run Lenovo Diagnostics",
@@ -524,7 +521,7 @@ function renderSymptoms(){
 
 function updateCurrentSelection(){
   const product = el("product").options[el("product").selectedIndex].text;
-  const text = isManual() ? current().name : `${product} > ${LEVELS[selectedLevel].name} > ${current().name}`;
+  const text = isManual() ? current().name : `${product} → ${LEVELS[selectedLevel].name} → ${current().name}`;
   el("currentSelection").innerHTML = `<b>Current Selection:</b> ${text}`;
 }
 
@@ -1111,7 +1108,7 @@ function smartFanRule(ans){
   }
 
   if(selectedSymptom === "fan_not_spin"){
-    if(selectedAnswer(ans, "Fan Check") === "Not Spin" && isNo(ans, "Check for Dust and Foreign Objects") && (hasFailed(ans, "Lenovo Diagnostics") || (isSame(ans, "BIOS Update") && isSame(ans, "Load BIOS Default")))){
+    if(selectedAnswer(ans, "Fan Check") === "No Spin" && isNo(ans, "Check for Dust and Foreign Objects") && (hasFailed(ans, "Lenovo Diagnostics") || (isSame(ans, "BIOS Update") && isSame(ans, "Load BIOS Default")))){
       return {result:"Dispatch", part:"Fan"};
     }
     if(isYes(ans, "Check for Dust and Foreign Objects")) return {result:"FOP", part:"Clean Fan / Air Vent"};
