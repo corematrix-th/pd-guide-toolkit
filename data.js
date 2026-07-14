@@ -2966,18 +2966,6 @@ const LEVELS = {
         "defaultPart": "Speaker / Mainboard",
         "common": [
           {
-            "label": "Mute checked",
-            "options": "mute",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Output device selected correctly",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Volume Mixer checked",
             "options": "select",
             "text": false,
@@ -3070,12 +3058,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Output device selected correctly",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Uninstall Audio Driver and Restart",
             "options": "select",
             "text": false,
@@ -3107,19 +3089,7 @@ const LEVELS = {
         "defaultPart": "Microphone / Camera Module",
         "common": [
           {
-            "label": "Mic mute checked",
-            "options": "mute",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Input device selected correctly",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Voice Recorder",
+            "label": "Voice Recorder Test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3211,12 +3181,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Output device selected correctly",
-            "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Audio Driver Update",
             "options": "select",
             "text": false,
@@ -3248,19 +3212,11 @@ const LEVELS = {
         "defaultPart": "Microphone / Software Troubleshooting",
         "common": [
           {
-            "label": "Mic mute checked",
-            "options": "mute"
-          },
-          {
-            "label": "Input device selected correctly",
-            "options": "yesno"
-          },
-          {
             "label": "Input volume level checked",
             "options": "select"
           },
           {
-            "label": "Voice Recorder",
+            "label": "Voice Recorder Test",
             "options": "swap"
           },
           {
@@ -4769,6 +4725,12 @@ const LEVELS = {
         "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยทดสอบ LCD Self-Test ตามขั้นตอนด้านล่าง\n\nMethod 1\n1. ถอดอุปกรณ์ภายนอกทั้งหมด\n2. เคลียร์ไฟโดยกดปุ่ม Power ค้าง 10–15 วินาที\n3. กด Fn + Left Ctrl ค้างไว้\n4. ระหว่างกดค้าง ให้กดปุ่ม Power\n5. เครื่องจะเข้าสู่ LCD Self-Test\n\nMethod 2\n1. เปิดเครื่องและกด F10 ย้ำ ๆ\n2. เข้า Lenovo Diagnostics\n3. เลือก Run Test\n4. เลือกหัวข้อ Display\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับมาครับ",
         "emailEN": "Dear Customer,\n\nPlease perform LCD Self-Test by following the steps below.\n\nMethod 1\n1. Disconnect all external devices.\n2. Press and hold the Power button for 10–15 seconds to clear residual power.\n3. Press and hold Fn + Left Ctrl.\n4. While holding the keys, press the Power button.\n5. The system will enter LCD Self-Test.\n\nMethod 2\n1. Power on the machine and press F10 repeatedly.\n2. Enter Lenovo Diagnostics.\n3. Select Run Test.\n4. Select Display.\n\nOnce completed, please provide the result back to us."
       },
+      "disable_audio_enhancements": {
+        "name": "Disable Audio Enhancements",
+        "guide": "Disable Audio Enhancements\n\nMethod 1: Windows Settings\n1. เปิด Settings → System → Sound\n2. เลือก Microphone ที่ใช้งาน\n3. ไปที่ Advanced → Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel → Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก Microphone ที่ใช้งาน\n4. ไปที่ Advanced → Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK",
+        "emailTH": "เรียน คุณลูกค้า\n\nรบกวนช่วยปิด Audio Enhancements ของ Microphone ตามขั้นตอนด้านล่าง\n\nMethod 1: Windows Settings\n1. เปิด Settings → System → Sound\n2. เลือก Microphone ที่ใช้งาน\n3. ไปที่ Advanced → Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel → Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก Microphone ที่ใช้งาน\n4. ไปที่ Advanced → Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK\n\nหลังจากดำเนินการเรียบร้อยแล้ว รบกวนทดสอบอีกครั้งและแจ้งผลกลับมาครับ",
+        "emailEN": "Dear Customer,\n\nPlease disable Audio Enhancements for the microphone by following the steps below.\n\nMethod 1: Windows Settings\n1. Open Settings → System → Sound.\n2. Select the microphone in use.\n3. Go to Advanced → Signal.\n4. Uncheck Enable audio enhancements.\n5. Click Apply and OK.\n\nMethod 2: Control Panel\n1. Open Control Panel → Sound.\n2. Go to the Recording tab.\n3. Double-click the microphone in use.\n4. Go to Advanced → Signal.\n5. Uncheck Enable audio enhancements.\n6. Click Apply and OK.\n\nOnce completed, please test again and provide the result back to us."
+      },
       "disable_audio_enhancements_external_mic": {
         "name": "Disable Audio Enhancements (External Microphone)",
         "guide": "Disable Audio Enhancements (External Microphone)\n\nMethod 1: Windows Settings\n1. เปิด Settings → System → Sound\n2. เลือก External Microphone\n3. ไปที่ Advanced → Signal\n4. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n5. กด Apply และ OK\n\nMethod 2: Control Panel\n1. เปิด Control Panel → Sound\n2. ไปที่แท็บ Recording\n3. ดับเบิลคลิก External Microphone\n4. ไปที่ Advanced → Signal\n5. เอาเครื่องหมายถูกออกที่ Enable audio enhancements\n6. กด Apply และ OK",
@@ -5098,7 +5060,7 @@ ensureSymptom('tio_dock', 'not_detected', 'dock', 'dock_not_detected', 'Not Dete
 })();
 
 const GUIDE_ORDER = [
-  'vantage_update','lenovo_diagnostics','battery_report','battery_health','bios_version','product_key','activation','reset_pc','startup_repair','system_restore','uninstall_updates','downgrade_bios','reinstall_windows','event_viewer','sfc','safe_mode','dump_file','bitlocker_recovery','office_activation','windows11_bypass','always_on_usb','bios_password','lock_on_leave','reset_battery','lcd_self_test','disable_audio_enhancements_external_mic','thinkcentre_raid1_ssd_not_found_os_install','fn_ctrl_key_swap','emergency_reset','power_reset'
+  'vantage_update','lenovo_diagnostics','battery_report','battery_health','bios_version','product_key','activation','reset_pc','startup_repair','system_restore','uninstall_updates','downgrade_bios','reinstall_windows','event_viewer','sfc','safe_mode','dump_file','bitlocker_recovery','office_activation','windows11_bypass','always_on_usb','bios_password','lock_on_leave','reset_battery','lcd_self_test','disable_audio_enhancements','disable_audio_enhancements_external_mic','thinkcentre_raid1_ssd_not_found_os_install','fn_ctrl_key_swap','emergency_reset','power_reset'
 ];
 
 const MODEL_STRUCTURE = {
@@ -6438,10 +6400,6 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ตรวจสอบว่าเปิด Lock on leave setting หรือไม่",
     "en": "Check Lock on leave setting enabled."
   },
-  "Mic mute checked": {
-    "th": "ตรวจสอบว่าไม่ได้ปิดเสียงไมโครโฟน",
-    "en": "Check Mic mute."
-  },
   "Microphone enhancement disabled": {
     "th": "ปิด Microphone Enhancement แล้วทดสอบอีกครั้ง",
     "en": "Disable Microphone Enhancement and test again."
@@ -6858,7 +6816,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ทดสอบด้วย USB to LAN Adapter",
     "en": "Test with a USB to LAN adapter."
   },
-  "Voice Recorder": {
+  "Voice Recorder Test": {
     "th": "ทดสอบบันทึกเสียงผ่าน Voice Recorder",
     "en": "Test recording with Voice Recorder."
   },

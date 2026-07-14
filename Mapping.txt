@@ -379,8 +379,6 @@ EN > Update the Hotkey driver to the latest version.
 Idepad > ทดสอบ Run Diagnostics
 TH > ตรวจสอบหัวข้อ Idepad > ทดสอบ Run Diagnostics
 EN > Check Idepad > ทดสอบ Run Diagnostics.
-
-Input device selected correctly
 TH > ตรวจสอบว่าเลือก Input Device ถูกต้อง
 EN > Check that the correct input device is selected.
 
@@ -488,7 +486,6 @@ Lock on leave setting enabled
 TH > ตรวจสอบว่าเปิด Lock on leave setting หรือไม่
 EN > Check Lock on leave setting enabled.
 
-Mic mute checked
 TH > ตรวจสอบว่าไม่ได้ปิดเสียงไมโครโฟน
 EN > Check Mic mute.
 
@@ -519,8 +516,6 @@ EN > Check whether the mouse works.
 Move LCD lid
 TH > ขยับฝาจอ LCD แล้วสังเกตว่าอาการเปลี่ยนหรือไม่
 EN > Move the LCD lid and check whether the symptom changes.
-
-Mute checked
 TH > ตรวจสอบว่าไม่ได้ปิดเสียงอยู่
 EN > Check Mute.
 
@@ -547,8 +542,6 @@ EN > Check whether the original adapter is being used.
 Other issue
 TH > ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่
 EN > Check whether there are any additional issues.
-
-Output device selected correctly
 TH > ตรวจสอบว่าเลือก Output Device ถูกต้อง
 EN > Check that the correct output device is selected.
 
@@ -908,7 +901,7 @@ USB to LAN Adapter test
 TH > ทดสอบด้วย USB to LAN Adapter
 EN > Test with a USB to LAN adapter.
 
-Voice Recorder
+Voice Recorder Test
 TH > ทดสอบบันทึกเสียงผ่าน Voice Recorder
 EN > Test recording with Voice Recorder.
 

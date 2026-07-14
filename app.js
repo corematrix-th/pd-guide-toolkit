@@ -568,6 +568,11 @@ function getRelatedGuideKeys(){
   if(hasLabel("FN & Ctrl Swap")) add("fn_ctrl_key_swap");
   if(hasLabel("BIOS Password") || hasLabel("Supervisor Password")) add("bios_password");
 
+  // ThinkPad → Audio → Echo only.
+  if(getProductKey() === "thinkpad" && selectedLevel === "audio" && selectedSymptom === "echo" && hasLabel("Microphone enhancement disabled")){
+    add("disable_audio_enhancements");
+  }
+
   // Legacy RELATED_GUIDES entries are allowed only when their trigger checklist exists.
   // This keeps older special guides working while blocking unrelated guides.
   const cfg = (typeof RELATED_GUIDES !== "undefined" && RELATED_GUIDES[selectedLevel]) ? RELATED_GUIDES[selectedLevel] : null;
@@ -1582,10 +1587,9 @@ function customerStepTH(label){
     "Output device selected correctly": "ตรวจสอบว่าเลือก Output Device ถูกต้องหรือไม่",
     "Input device selected correctly": "ตรวจสอบว่าเลือก Input Device ถูกต้องหรือไม่",
     "Mute checked": "ตรวจสอบว่าเครื่องถูกปิดเสียง (Mute) อยู่หรือไม่",
-    "Mic mute checked": "ตรวจสอบว่า Microphone ถูกปิด Mute อยู่หรือไม่",
     "Check Audio Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Audio หรือไม่",
     "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
-    "Voice Recorder": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
+    "Voice Recorder Test": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
     "Physical damage / Liquid spilled": "ตรวจสอบว่ามีร่องรอยชำรุด หรือคราบน้ำหรือไม่",
     "Other issue": "ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
     "Can detect Wi-Fi signal": "ตรวจสอบว่าเครื่องสามารถค้นหาสัญญาณ Wi-Fi ได้หรือไม่",
@@ -1929,7 +1933,7 @@ function customerStepTH(label){
     "On-Screen Keyboard test": "ทดสอบใช้งานผ่าน On-Screen Keyboard",
     "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
     "External mic test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
-    "Voice Recorder": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
+    "Voice Recorder Test": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
     "Check Camera in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Camera หรือไม่",
     "Check Audio Device in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Audio หรือไม่",
     "Check Wireless Driver in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบ Wireless Driver หรือไม่",
@@ -2143,7 +2147,6 @@ function customerStepTH(label){
     "Check temperature / Overheat": "ตรวจสอบว่าเครื่องมีอาการร้อนผิดปกติหรือไม่",
     "Check for Dust and Foreign Objects": "ตรวจสอบฝุ่นหรือสิ่งแปลกปลอมบริเวณช่องระบายอากาศ",
     "Mute checked": "ตรวจสอบว่าไม่ได้ปิดเสียง Mute",
-    "Mic mute checked": "ตรวจสอบว่าไม่ได้ปิดเสียง Microphone",
     "Volume level checked": "ตรวจสอบระดับเสียงของเครื่อง",
     "Input volume level checked": "ตรวจสอบระดับเสียงของ Microphone",
     "Volume Mixer checked": "ตรวจสอบ Volume Mixer ใน Windows",
@@ -2305,7 +2308,7 @@ function customerStepTH(label){
     "On-Screen Keyboard test": "ทดสอบผ่าน On-Screen Keyboard",
     "USB Keyboard test": "ทดสอบด้วย USB Keyboard",
     "USB Mouse / Keyboard test": "ทดสอบด้วย USB Mouse หรือ USB Keyboard",
-    "Voice Recorder": "ทดสอบบันทึกเสียงผ่าน Voice Recorder",
+    "Voice Recorder Test": "ทดสอบบันทึกเสียงผ่าน Voice Recorder",
     "Clean scroll wheel": "ทำความสะอาด Scroll Wheel แล้วทดสอบอีกครั้ง",
     "Clean touchpad surface": "ทำความสะอาดพื้นผิว Touchpad แล้วทดสอบอีกครั้ง",
     "Clean camera lens": "ทำความสะอาดเลนส์กล้องแล้วทดสอบอีกครั้ง",
@@ -2436,7 +2439,7 @@ function customerStepEN(label){
     "Swap Keyboard": "Try another Keyboard.",
     "Swap Headphone": "Try another headphone.",
     "Headphone test": "Test with a headphone.",
-    "Voice Recorder": "Test recording with Voice Recorder.",
+    "Voice Recorder Test": "Test recording with Voice Recorder.",
     "Adapter test on other machine": "Test the Adapter with another machine.",
     "Swap other Type-C port": "Test another Type-C port.",
     "Physical damage / Liquid spilled": "Please send a clear photo of any physical damage or liquid contact area, if present.",
