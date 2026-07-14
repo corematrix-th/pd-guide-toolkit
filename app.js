@@ -264,6 +264,24 @@ function canonicalChecklistLabel(label){
   return raw;
 }
 
+
+
+// v5.0.8 UI naming standard. Display-only; underlying checklist keys and Generate Note remain unchanged.
+function displayChecklistLabel(label){
+  const acronyms = {sd:'SD',ssd:'SSD',hdd:'HDD',usb:'USB',bios:'BIOS',uefi:'UEFI',hdmi:'HDMI',lan:'LAN',wan:'WAN',tpm:'TPM',efi:'EFI',crc:'CRC',rst:'RST',rste:'RSTe',os:'OS'};
+  return String(label || '').split(/(\s+|\/|&|\(|\)|:)/).map(part => {
+    if(/^\s+$/.test(part) || /^(\/|&|\(|\)|:)$/.test(part)) return part;
+    return part.split('-').map(token => {
+      const lower=token.toLowerCase();
+      if(acronyms[lower]) return acronyms[lower];
+      if(lower==='wi') return 'Wi';
+      if(lower==='fi') return 'Fi';
+      if(lower==="can't") return "Can't";
+      if(!token) return token;
+      return token.charAt(0).toUpperCase()+token.slice(1);
+    }).join('-');
+  }).join('').replace(/\bSd Card\b/g,'SD Card');
+}
 function dedupeQuestionsByCanonical(list){
   const seen = new Map();
   const out = [];
@@ -406,10 +424,10 @@ const UPDATE_RULES = {
   dock: {default:{vantage:true, driver:"Thunderbolt", bios:true}},
   monitor: {default:{vantage:true, driver:"Graphics", bios:true}},
   display: {flickering:{vantage:true, driver:"Graphics"}, dim:{vantage:true, driver:"Graphics"}, black:{vantage:true, driver:"Graphics"}, abnormal_line:{vantage:true, driver:"Graphics"}},
-  charging: {typec:{vantage:true, bios:true}, runtime:{vantage:true, bios:true}, not_detect:{vantage:true, bios:true}, slow_charge:{vantage:true}, swollen:{}},
+  charging: {typec:{vantage:true}, runtime:{vantage:true, bios:true}, not_detect:{vantage:true, bios:true}, slow_charge:{vantage:true}, swollen:{}},
   fan: {fan_noise:{vantage:true, bios:true}, fan_spin_high:{vantage:true, bios:true}, fan_overheat:{vantage:true, bios:true}, fan_error:{vantage:true, bios:true}, fan_not_spin:{vantage:true, bios:true}},
   boot: {boot_loop:{vantage:true}, stuck_logo:{vantage:true}, auto_repair:{vantage:true}},
-  storage: {ssd_not_detect_windows_setup:{driver:"RST / RSTe"}}
+  storage: {}
 };
 
 function getUpdateRule(){
@@ -724,7 +742,7 @@ function renderMain(){
   getQuestions().forEach((q, i) => {
     const row = document.createElement("div");
     row.className = "check-row";
-    let html = `<div class="check-label">${q.label}</div><select id="a${i}" onchange="updateRecommendation()">`;
+    let html = `<div class="check-label">${displayChecklistLabel(q.label)}</div><select id="a${i}" onchange="updateRecommendation()">`;
     getOptions(q.options).forEach(opt => html += `<option value="${opt}">${opt}</option>`);
     html += "</select>";
     html += (q.text || q.diag) ? `<input id="t${i}" oninput="updateRecommendation()" placeholder="${q.diag ? 'failed part detail' : 'detail'}">` : "<div></div>";
@@ -916,7 +934,7 @@ function cableAndAccessoryRule(ans){
 
     // Swapping with a known-good cable/accessory and the issue becomes Working = customer cable/accessory is defective.
     if(a === "Working"){
-      if(/Swap AC Power Cord|Swap Power Cable|Swap Power Cord/i.test(q)) return {result:"Dispatch", part:"Power Cord"};
+      if(/Swap Power Cord|Swap Power Cable|Swap Power Cord/i.test(q)) return {result:"Dispatch", part:"Power Cord"};
       if(/Swap HDMI cable/i.test(q)) return {result:"Dispatch", part:"HDMI Cable"};
       if(/Swap DisplayPort cable/i.test(q)) return {result:"Dispatch", part:"DisplayPort Cable"};
       if(/Swap HDMI \/ DisplayPort cable|Swap HDMI\/DP/i.test(q)) return {result:"Dispatch", part:"Display Cable"};
@@ -1160,7 +1178,7 @@ function smartBootRule(ans){
 
     // Desktop/AIO power path.
     if(product === "desktop" || product === "aio"){
-      if(isWorking(ans, "Swap Power Cable") || isWorking(ans, "Swap Power Cord") || isWorking(ans, "Swap AC Power Cord")) return {result:"Dispatch", part:"Power Cord"};
+      if(isWorking(ans, "Swap Power Cable") || isWorking(ans, "Swap Power Cord") || isWorking(ans, "Swap Power Cord")) return {result:"Dispatch", part:"Power Cord"};
       if(isWorking(ans, "Swap Power Outlet")) return {result:"FOP", part:"-"};
       if(isWorking(ans, "Swap PSU")) return {result:"Dispatch", part:"PSU"};
       if(isSame(ans, "Swap Power Cable") && isSame(ans, "Swap Power Outlet")) return {result:"Dispatch", part:"Mainboard"};
@@ -1393,7 +1411,7 @@ function calculateRaw(){
     if(r.q.includes("External Mic Test") && r.a === "Working") return {result:"Dispatch", part:"Microphone"};
     if(r.q.includes("Swap Bluetooth Device") && r.a === "Working") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
     if((r.q.includes("Swap SD Card") || r.q.includes("SD Card test")) && r.a === "Working") return {result:"Dispatch", part:"SD Card Reader"};
-    if(r.q.includes("Novo Button") && r.a === "Yes") return {result:"Dispatch", part:"Power Button / Top Cover"};
+    if(r.q.includes("Novo Button") && (r.a === "Work Fine" || r.a === "Working" || r.a === "Yes")) return {result:"Dispatch", part:"Power Button / Top Cover"};
   }
 
 
@@ -1722,7 +1740,7 @@ function customerStepTH(label){
     "Set date and time in BIOS": "ตั้งค่าวันที่และเวลาใน BIOS ให้ถูกต้อง",
     "Specific hotkey listed": "ระบุปุ่ม Hotkey ที่มีปัญหาเพิ่มเติม",
     "Stop code / Error code collected": "รบกวนแจ้ง Stop Code หรือ Error Code ที่พบเพิ่มเติม",
-    "Swap AC Power Cord": "ทดสอบสลับสาย AC Power Cord เส้นอื่นที่ใช้งานได้",
+    "Swap Power Cord": "ทดสอบสลับสาย AC Power Cord เส้นอื่นที่ใช้งานได้",
     "Swap Adapter / Power Cable": "ทดสอบสลับ Adapter หรือสาย Power Cable ที่ใช้งานได้",
     "Swap Bluetooth Device": "ทดสอบเชื่อมต่อกับอุปกรณ์ Bluetooth ตัวอื่นที่ใช้งานได้",
     "Swap HDMI cable": "ทดสอบสลับสาย HDMI เส้นอื่นที่ใช้งานได้",
@@ -2245,7 +2263,7 @@ function customerStepTH(label){
     // Swap / isolation
     "Swap Adapter": "ทดสอบสลับด้วย Adapter อื่น",
     "Swap AC Adapter": "ทดสอบสลับด้วย AC Adapter อื่น",
-    "Swap AC Power Cord": "ทดสอบสลับด้วยสาย AC Power Cord อื่น",
+    "Swap Power Cord": "ทดสอบสลับด้วยสาย AC Power Cord อื่น",
     "Swap Adapter / Power Cable": "ทดสอบสลับด้วย Adapter หรือสาย Power Cable อื่น",
     "Swap Power Cable": "ทดสอบสลับด้วยสาย Power Cable อื่น",
     "Swap Power Cord": "ทดสอบสลับด้วยสาย Power Cord อื่น",
@@ -2414,7 +2432,7 @@ function customerStepEN(label){
     "Re-install Windows": "Re-install Windows and test the issue again.",
     "Swap Adapter": "Try another Adapter.",
     "Swap AC Adapter": "Try another AC Adapter.",
-    "Swap AC Power Cord": "Try another AC Power Cord.",
+    "Swap Power Cord": "Try another AC Power Cord.",
     "Swap USB-C Cable": "Try another USB-C cable.",
     "Swap USB-C cable": "Try another USB-C cable.",
     "Swap HDMI Cable": "Try another HDMI cable.",

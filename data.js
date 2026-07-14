@@ -1356,7 +1356,7 @@ const LEVELS = {
         "defaultPart": "Adapter",
         "common": [
           {
-            "label": "Swap AC Power Cord",
+            "label": "Swap Power Cord",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1398,7 +1398,7 @@ const LEVELS = {
         "defaultPart": "Power Cord",
         "common": [
           {
-            "label": "Swap AC Power Cord",
+            "label": "Swap Power Cord",
             "options": "swap",
             "text": false,
             "diag": false
@@ -1434,7 +1434,7 @@ const LEVELS = {
     "name": "Battery",
     "symptoms": {
       "typec": {
-        "name": "Not Charge",
+        "name": "Can't Charge",
         "defaultResult": "Dispatch",
         "defaultPart": "Type-C Port / Mainboard",
         "common": [
@@ -4992,13 +4992,13 @@ const RELATED_GUIDES = {
 
 
 // v4.8.6 Alias Symptom Rule
-// Port > Not Charge is an alias of Battery > Not Charge because agents often search by Port/Type-C.
+// Port > Can't Charge is an alias of Battery > Can't Charge because agents often search by Port/Type-C.
 // Checklist, email and dispatch logic are shared from the same source symptom.
 if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec && LEVELS.port && LEVELS.port.symptoms){
   const portNotCharge = {
     ...LEVELS.charging.symptoms.typec,
-    name: "Not Charge",
-    aliasOf: "Battery → Not Charge"
+    name: "Can't Charge",
+    aliasOf: "Battery → Can't Charge"
   };
   LEVELS.port.symptoms = {
     not_charge: portNotCharge,
@@ -5241,7 +5241,7 @@ const MODEL_STRUCTURE = {
     noPower.questions.tiny = [
       makeQ('Power LED', 'led'),
       makeQ('Fan Check', 'fan'),
-      makeQ('Swap AC Power Cord', 'swap'),
+      makeQ('Swap Power Cord', 'swap'),
       makeQ('Physical damage / Liquid spilled', 'yesno'),
       makeQ('Other issue', 'yesno', {text:true})
     ];
@@ -5406,7 +5406,7 @@ const MODEL_STRUCTURE = {
 // - Apply Standard Troubleshooting Workflow ordering support with FRU P/N as the last item.
 // - Emergency Reset is limited by app.js to ThinkPad Boot: No power / Power on no display / Power on no display + Beep Sound.
 // - Port checklist actions must match the selected port/interface and model hardware.
-// - If No power already asks Swap Adapter, do not also ask Swap AC Power Cord.
+// - If No power already asks Swap Adapter, do not also ask Swap Power Cord.
 (function applyV492StandardWorkflowAudit(){
   function makeQ(label, options, extra){
     return Object.assign({label: label, options: options || "select", text: false, diag: false}, extra || {});
@@ -5537,14 +5537,14 @@ const MODEL_STRUCTURE = {
     ]);
   });
 
-  // No power duplicate AC cord rule: if a model checklist has Swap Adapter, remove Swap AC Power Cord.
+  // No power duplicate AC cord rule: if a model checklist has Swap Adapter, remove Swap Power Cord.
   const noPower = getSym('boot', 'no_power');
   if(noPower && noPower.questions){
     Object.keys(noPower.questions).forEach(product => {
       const qs = noPower.questions[product];
       if(!Array.isArray(qs)) return;
       const hasAdapter = qs.some(q => /^Swap (AC )?Adapter$/.test(q.label) || q.label === 'Swap Adapter');
-      if(hasAdapter) noPower.questions[product] = qs.filter(q => q.label !== 'Swap AC Power Cord');
+      if(hasAdapter) noPower.questions[product] = qs.filter(q => q.label !== 'Swap Power Cord');
     });
   }
 
@@ -6578,7 +6578,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "อัปเดต Firmware ของ Storage ให้เป็นเวอร์ชันล่าสุด",
     "en": "Update storage firmware to the latest version."
   },
-  "Swap AC Power Cord": {
+  "Swap Power Cord": {
     "th": "ทดสอบสลับด้วย AC Power Cord อื่น",
     "en": "Test with another AC Power Cord."
   },
@@ -7083,7 +7083,7 @@ function filterChecklistByModelScope(qs, product){
 })();
 
 // v5.0.1 User Requested Full Impact Patch
-// - Tiny No power: Swap AC Power Cord -> Swap Adapter
+// - Tiny No power: Swap Power Cord -> Swap Adapter
 // - Mouse > Scroll mouse not work: remove Swap App / Clean scroll wheel, add Swap Mouse
 // - ThinkPad Battery email/checklist cleanup
 // - USB-C Display: remove Windows Update
@@ -7103,7 +7103,7 @@ function filterChecklistByModelScope(qs, product){
 
   const noPower = getSym('boot','no_power');
   if(noPower && noPower.questions && Array.isArray(noPower.questions.tiny)){
-    noPower.questions.tiny = replaceLabel(noPower.questions.tiny, 'Swap AC Power Cord', 'Swap Adapter');
+    noPower.questions.tiny = replaceLabel(noPower.questions.tiny, 'Swap Power Cord', 'Swap Adapter');
   }
 
   const mouseScroll = getSym('mouse','scroll');
@@ -7286,3 +7286,304 @@ function filterChecklistByModelScope(qs, product){
     if(m){g.name=m.name;g.guide=m.guide;g.emailTH=m.emailTH;}
   }
 })();
+
+
+// v5.0.6 approved symptom placement and checklist consistency patch
+(function applyV506Patch(){
+  function findRow(product, level){
+    return (MODEL_STRUCTURE[product] || []).find(function(row){ return row.level === level; });
+  }
+  function removeAll(arr, key){ return (arr || []).filter(function(x){ return x !== key; }); }
+  function placeFirst(arr, key){ arr=removeAll(arr,key); arr.unshift(key); return arr; }
+  function placeLast(arr, key){ arr=removeAll(arr,key); arr.push(key); return arr; }
+
+  // 1) Novo Button dropdown: Same Issue / Work Fine / Not Test.
+  APP_OPTIONS.novo_button = ['-- Select --','Same Issue','Work Fine','Not Test'];
+  (function walk(value){
+    if(Array.isArray(value)){
+      value.forEach(function(item){
+        if(item && typeof item === 'object'){
+          if(item.label === 'Novo Button') item.options = 'novo_button';
+          Object.keys(item).forEach(function(k){ if(k !== 'label') walk(item[k]); });
+        }
+      });
+    } else if(value && typeof value === 'object'){
+      Object.keys(value).forEach(function(k){ walk(value[k]); });
+    }
+  })(LEVELS);
+
+  // 2) Move Black screen after login from Windows to Boot for every model.
+  if(LEVELS.windows && LEVELS.windows.symptoms && LEVELS.windows.symptoms.black_login){
+    LEVELS.boot.symptoms.black_login = LEVELS.windows.symptoms.black_login;
+    delete LEVELS.windows.symptoms.black_login;
+  }
+  Object.keys(MODEL_STRUCTURE).forEach(function(product){
+    var windowsRow=findRow(product,'windows');
+    var bootRow=findRow(product,'boot');
+    if(windowsRow) windowsRow.symptoms=removeAll(windowsRow.symptoms,'black_login');
+    if(bootRow) bootRow.symptoms=placeLast(bootRow.symptoms,'black_login');
+  });
+
+  // 3) Power cord checklist wording is standardized as Swap Power Cord.
+
+  // 4) Battery and Port share the exact same Can't Charge symptom object.
+  if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec){
+    var cantCharge=LEVELS.charging.symptoms.typec;
+    cantCharge.name="Can't Charge";
+    LEVELS.port.symptoms.not_charge=cantCharge;
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var batteryRow=findRow(product,'charging');
+      var portRow=findRow(product,'port');
+      if(batteryRow) batteryRow.symptoms=placeFirst(batteryRow.symptoms,'typec');
+      if(portRow) portRow.symptoms=placeFirst(portRow.symptoms,'not_charge');
+    });
+  }
+
+  // 5) Audio and Port share the exact same Audio Jack symptom object; place it last.
+  if(LEVELS.audio && LEVELS.audio.symptoms && LEVELS.audio.symptoms.jack){
+    var audioJack=LEVELS.audio.symptoms.jack;
+    LEVELS.port.symptoms.audio_jack=audioJack;
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var audioRow=findRow(product,'audio');
+      var portRow=findRow(product,'port');
+      if(audioRow) audioRow.symptoms=placeLast(audioRow.symptoms,'jack');
+      if(portRow) portRow.symptoms=placeLast(portRow.symptoms,'audio_jack');
+    });
+  }
+})();
+
+// v5.0.7 shared symptom data consistency patch
+(function applyV507Patch(){
+  function findRow(product, level){
+    return (MODEL_STRUCTURE[product] || []).find(function(row){ return row.level === level; });
+  }
+  function removeAll(arr, key){ return (arr || []).filter(function(x){ return x !== key; }); }
+  function placeFirst(arr, key){ arr = removeAll(arr, key); arr.unshift(key); return arr; }
+  function placeLast(arr, key){ arr = removeAll(arr, key); arr.push(key); return arr; }
+  function q(label, options, text){
+    var item = { label: label, options: options, text: !!text, diag: false };
+    return item;
+  }
+
+  // Can't Charge: Battery and Port are two menu entries backed by one shared object.
+  if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec &&
+     LEVELS.port && LEVELS.port.symptoms){
+    var cantCharge = LEVELS.charging.symptoms.typec;
+    cantCharge.name = "Can't Charge";
+    cantCharge.common = [
+      q('Charge LED', 'led'),
+      q('Swap Type-C Port Charge', 'typec_port'),
+      q('Swap Adapter', 'swap'),
+      q('Adapter Test on Other Machine', 'swap'),
+      q('Lenovo Vantage Update', 'select'),
+      q('Power Reset', 'select'),
+      q('Physical Damage / Liquid Spilled', 'yesno'),
+      q('Other Issue', 'yesno', true)
+    ];
+    LEVELS.port.symptoms.not_charge = cantCharge;
+
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var batteryRow = findRow(product, 'charging');
+      var portRow = findRow(product, 'port');
+      if(batteryRow) batteryRow.symptoms = placeFirst(batteryRow.symptoms, 'typec');
+      if(portRow) portRow.symptoms = placeFirst(portRow.symptoms, 'not_charge');
+    });
+  }
+
+  // Audio Jack: Audio and Port are two menu entries backed by one shared object.
+  if(LEVELS.audio && LEVELS.audio.symptoms && LEVELS.audio.symptoms.jack &&
+     LEVELS.port && LEVELS.port.symptoms){
+    var audioJack = LEVELS.audio.symptoms.jack;
+    audioJack.name = 'Audio Jack';
+    audioJack.common = [
+      q('Swap Headphone', 'swap'),
+      q('Uninstall Audio Driver and Restart', 'select'),
+      q('Audio Driver Update', 'select'),
+      q('Lenovo Vantage Update', 'select'),
+      q('Physical Damage / Liquid Spilled', 'yesno'),
+      q('Other Issue', 'yesno', true)
+    ];
+    LEVELS.port.symptoms.audio_jack = audioJack;
+
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var audioRow = findRow(product, 'audio');
+      var portRow = findRow(product, 'port');
+      if(audioRow) audioRow.symptoms = placeLast(audioRow.symptoms, 'jack');
+      if(portRow) portRow.symptoms = placeLast(portRow.symptoms, 'audio_jack');
+    });
+  }
+})();
+
+// v5.0.7 Global Naming Standard Rule — SYMPTOM / GUIDE audit
+// UI-facing Level, Symptom, and Troubleshooting Guide names use the official
+// Title Case format. Generate Note text is intentionally not modified here.
+(function applyGlobalSymptomGuideNamingStandard(){
+  var exactNames = {
+    'Wi-fi': 'Wi-Fi',
+    'Wi-Fi': 'Wi-Fi',
+    'Usb-A': 'USB-A',
+    'Usb-C Data': 'USB-C Data',
+    'Usb-C Display': 'USB-C Display',
+    'Usb-C Thunderbolt': 'USB-C Thunderbolt',
+    'Usb-C Data / Thunderbolt': 'USB-C Data / Thunderbolt',
+    'Hdmi': 'HDMI',
+    'Hdmi In': 'HDMI In',
+    'Hdmi Out': 'HDMI Out',
+    'Vga': 'VGA',
+    'Lan': 'LAN',
+    'Wwan': 'WWAN',
+    'Sim': 'SIM',
+    'Ssd Not Detect': 'SSD Not Detect',
+    'Hdd Not Detect': 'HDD Not Detect',
+    'Ssd Not Found During Install Os': 'SSD Not Found During Install OS',
+    'Bios': 'BIOS',
+    'Bios Password': 'BIOS Password',
+    'Bios Version': 'BIOS Version',
+    'Bios / Supervisor Password': 'BIOS / Supervisor Password',
+    'Bsod': 'BSOD',
+    'Pxe': 'PXE',
+    'Lcd Self-Test': 'LCD Self-Test',
+    'Sfc /Scannow': 'SFC /scannow',
+    'Bitlocker Recovery': 'BitLocker Recovery',
+    'Bypass Windows 11 Oobe': 'Bypass Windows 11 OOBE',
+    'Fn Key': 'FN Key',
+    'Fn & Ctrl Key Swap': 'Fn & Ctrl Key Swap',
+    'Keyboard Left Ctrl': 'Keyboard Left Ctrl',
+    'Tiny-In-One (Tio) Dock': 'Tiny-in-One (TIO) Dock',
+    'Re-Install Windows': 'Re-install Windows',
+    'Can\'t Charge': 'Can\'t Charge',
+    'Displayport': 'DisplayPort',
+    'Trackpoint': 'TrackPoint',
+    'Lock On Leave Function': 'Lock on Leave Function'
+  };
+
+  var wordAcronyms = {
+    'usb':'USB','hdmi':'HDMI','vga':'VGA','lan':'LAN','wwan':'WWAN','sim':'SIM',
+    'ssd':'SSD','hdd':'HDD','bios':'BIOS','bsod':'BSOD','pxe':'PXE','lcd':'LCD',
+    'oobe':'OOBE','rfid':'RFID','uuid':'UUID','tio':'TIO','os':'OS','crc':'CRC','efi':'EFI'
+  };
+
+  function titleToken(token){
+    if(!token) return token;
+    var lower = token.toLowerCase();
+    if(wordAcronyms[lower]) return wordAcronyms[lower];
+    if(/^\d+$/.test(token)) return token;
+    if(/^usb-[ac]$/i.test(token)) return 'USB-' + token.slice(-1).toUpperCase();
+    if(/^wi-fi$/i.test(token)) return 'Wi-Fi';
+    if(/^bitlocker$/i.test(token)) return 'BitLocker';
+    if(/^displayport$/i.test(token)) return 'DisplayPort';
+    if(/^trackpoint$/i.test(token)) return 'TrackPoint';
+    if(/^scannow$/i.test(token)) return 'scannow';
+    if(/^can't$/i.test(token)) return "Can't";
+    return token.charAt(0).toUpperCase() + token.slice(1).toLowerCase();
+  }
+
+  function titlePart(part){
+    return part.split(/(\s+|\/|\+|&|\(|\)|:)/).map(function(piece){
+      if(/^\s+$/.test(piece) || /^(\/|\+|&|\(|\)|:)$/.test(piece)) return piece;
+      return piece.split('-').map(titleToken).join('-');
+    }).join('');
+  }
+
+  function normalizeName(name){
+    if(typeof name !== 'string') return name;
+    var cleaned = name.trim().replace(/^Error\s+/i, '').replace(/\s+:\s+/g, ' ');
+    var titled = titlePart(cleaned);
+    return exactNames[titled] || titled;
+  }
+
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level = LEVELS[levelKey];
+    if(!level) return;
+    if(level.name) level.name = normalizeName(level.name);
+    Object.keys(level.symptoms || {}).forEach(function(symptomKey){
+      var symptom = level.symptoms[symptomKey];
+      if(symptom && symptom.name) symptom.name = normalizeName(symptom.name);
+    });
+  });
+})();
+
+// v5.0.8 authoritative shared-data, duplicate, and naming patch
+(function applyV508Patch(){
+  function findRow(product, level){
+    return (MODEL_STRUCTURE[product] || []).find(function(row){ return row.level === level; });
+  }
+  function removeAll(arr, key){ return (arr || []).filter(function(x){ return x !== key; }); }
+  function placeFirst(arr, key){ arr = removeAll(arr, key); arr.unshift(key); return arr; }
+  function placeLast(arr, key){ arr = removeAll(arr, key); arr.push(key); return arr; }
+  function q(label, options, text){ return {label:label, options:options, text:!!text, diag:false}; }
+
+  // Shared Can't Charge: one data object referenced by Battery and Port.
+  if(LEVELS.charging && LEVELS.charging.symptoms && LEVELS.charging.symptoms.typec &&
+     LEVELS.port && LEVELS.port.symptoms){
+    var sharedCantCharge = LEVELS.charging.symptoms.typec;
+    sharedCantCharge.name = "Can't Charge";
+    sharedCantCharge.common = [
+      q('Charge LED','led'),
+      q('Swap Type-C Port Charge','typec_port'),
+      q('Swap Adapter','swap'),
+      q('Adapter Test on Other Machine','swap'),
+      q('Lenovo Vantage Update','select'),
+      q('Power Reset','select'),
+      q('Physical Damage / Liquid Spilled','yesno'),
+      q('Other Issue','yesno',true)
+    ];
+    LEVELS.port.symptoms.not_charge = sharedCantCharge;
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var batteryRow=findRow(product,'charging');
+      var portRow=findRow(product,'port');
+      if(batteryRow) batteryRow.symptoms=placeFirst(batteryRow.symptoms,'typec');
+      if(portRow) portRow.symptoms=placeFirst(portRow.symptoms,'not_charge');
+    });
+  }
+
+  // Shared Audio Jack: one data object referenced by Audio and Port.
+  if(LEVELS.audio && LEVELS.audio.symptoms && LEVELS.audio.symptoms.jack &&
+     LEVELS.port && LEVELS.port.symptoms){
+    var sharedAudioJack = LEVELS.audio.symptoms.jack;
+    sharedAudioJack.name = 'Audio Jack';
+    sharedAudioJack.common = [
+      q('Swap Headphone','swap'),
+      q('Uninstall Audio Driver and Restart','select'),
+      q('Audio Driver Update','select'),
+      q('Lenovo Vantage Update','select'),
+      q('Physical Damage / Liquid Spilled','yesno'),
+      q('Other Issue','yesno',true)
+    ];
+    LEVELS.port.symptoms.audio_jack = sharedAudioJack;
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var audioRow=findRow(product,'audio');
+      var portRow=findRow(product,'port');
+      if(audioRow) audioRow.symptoms=placeLast(audioRow.symptoms,'jack');
+      if(portRow) portRow.symptoms=placeLast(portRow.symptoms,'audio_jack');
+    });
+  }
+
+  // SSD Windows Setup: remove the duplicate RST / RSTe update item.
+  if(LEVELS.storage && LEVELS.storage.symptoms && LEVELS.storage.symptoms.ssd_not_detect_windows_setup){
+    var storageInstall=LEVELS.storage.symptoms.ssd_not_detect_windows_setup;
+    storageInstall.name='SSD Not Found During Install OS';
+    storageInstall.common=(storageInstall.common || []).filter(function(item){
+      return item && item.label !== 'RST / RSTe Driver Update';
+    });
+  }
+
+  // Industry-standard acronym spelling in SYMPTOM / GUIDE names.
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level=LEVELS[levelKey];
+    if(!level) return;
+    if(level.name === 'Sd Card') level.name='SD Card';
+    Object.keys(level.symptoms || {}).forEach(function(symptomKey){
+      var symptom=level.symptoms[symptomKey];
+      if(!symptom || !symptom.name) return;
+      symptom.name = symptom.name
+        .replace(/\bSd Card\b/g,'SD Card')
+        .replace(/\bSsd\b/g,'SSD')
+        .replace(/\bHdd\b/g,'HDD')
+        .replace(/\bUsb\b/g,'USB')
+        .replace(/\bHdmi\b/g,'HDMI')
+        .replace(/\bBios\b/g,'BIOS');
+    });
+  });
+})();
+
