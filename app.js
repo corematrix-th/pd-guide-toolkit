@@ -427,7 +427,7 @@ function applyUpdateChecklistRules(qs){
   if(!rule) return qs;
   const removeUpdateLabels = new Set([
     "Lenovo Vantage Update", "Lenovo Vantage update", "Driver Update", "Driver update", "Driver / Firmware Update", "Driver / Windows Update",
-    "BIOS Update", "BIOS update", "Windows Update", "Audio Driver Update", "Audio driver update", "Camera Driver Update", "Camera driver update", "Camera Driver Update / Lenovo Vantage",
+    "BIOS Update", "BIOS update", "Windows Update", "Audio Driver Update", "Audio Driver Update", "Camera Driver Update", "Camera driver update", "Camera Driver Update / Lenovo Vantage",
     "Fingerprint Driver Update / Lenovo Vantage", "Fingerprint Driver Update", "Touchpad Driver Update", "TrackPoint Driver Update", "Hotkey Driver Update",
     "Graphics Driver Update", "Update Graphics Driver", "Wi-Fi Driver Update", "Wifi Driver Update", "WLAN Driver Update",
     "Bluetooth Driver Update", "LAN Driver Update", "Thunderbolt Driver Update", "Chipset / Power Driver Update",
@@ -899,7 +899,7 @@ function dockEliminationRule(ans){
   // Peripheral reference tests that work normally indicate the customer's external device,
   // not the Dock, may be the cause. FOP has no FRU part.
   if(val("USB Mouse / Keyboard test") === "Working") return {result:"FOP", part:"-"};
-  if(val("Headphone test") === "Working") return {result:"FOP", part:"-"};
+  if(val("Headphone Test") === "Working") return {result:"FOP", part:"-"};
   if(val("Swap Headphone") === "Working") return {result:"FOP", part:"-"};
 
   // No Dock fallback here. Global Decision State will show Pending until enough
@@ -1389,8 +1389,8 @@ function calculateRaw(){
     if(r.q.includes("Swap SIM") && r.a === "Working") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
     if(r.q.includes("Swap Mouse") && r.a === "Working") return {result:"Dispatch", part:"Mouse Replacement"};
     if((r.q.includes("Mouse test") || r.q.includes("Mouse works")) && (r.a === "Working" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
-    if((r.q.includes("Headphone test") || r.q.includes("Swap Headphone")) && r.a === "Working") return {result:"Dispatch", part:"Speaker"};
-    if(r.q.includes("External mic test") && r.a === "Working") return {result:"Dispatch", part:"Microphone"};
+    if((r.q.includes("Headphone Test") || r.q.includes("Swap Headphone")) && r.a === "Working") return {result:"Dispatch", part:"Speaker"};
+    if(r.q.includes("External Mic Test") && r.a === "Working") return {result:"Dispatch", part:"Microphone"};
     if(r.q.includes("Swap Bluetooth Device") && r.a === "Working") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
     if((r.q.includes("Swap SD Card") || r.q.includes("SD Card test")) && r.a === "Working") return {result:"Dispatch", part:"SD Card Reader"};
     if(r.q.includes("Novo Button") && r.a === "Yes") return {result:"Dispatch", part:"Power Button / Top Cover"};
@@ -1588,7 +1588,7 @@ function customerStepTH(label){
     "Input device selected correctly": "ตรวจสอบว่าเลือก Input Device ถูกต้องหรือไม่",
     "Mute checked": "ตรวจสอบว่าเครื่องถูกปิดเสียง (Mute) อยู่หรือไม่",
     "Check Audio Device in Device Manager": "ตรวจสอบใน Device Manager ว่ายังพบอุปกรณ์ Audio หรือไม่",
-    "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
+    "Headphone Test": "ทดสอบใช้งานร่วมกับหูฟัง",
     "Voice Recorder Test": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
     "Physical damage / Liquid spilled": "ตรวจสอบว่ามีร่องรอยชำรุด หรือคราบน้ำหรือไม่",
     "Other issue": "ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
@@ -1672,7 +1672,7 @@ function customerStepTH(label){
     "Enable LAN in BIOS": "ตรวจสอบว่า LAN ถูก Enable ใน BIOS หรือไม่",
     "Error photo provided": "รบกวนแนบรูป Error ที่พบเพิ่มเติม",
     "Event Viewer / Dump file collected": "รบกวนเก็บข้อมูล Event Viewer หรือ Dump file เพิ่มเติมเพื่อตรวจสอบ",
-    "External mic test": "ทดสอบใช้งานร่วมกับ Microphone ภายนอก",
+    "External Mic Test": "ทดสอบใช้งานร่วมกับ Microphone ภายนอก",
     "Mouse test": "ทดสอบใช้งานร่วมกับ Mouse ภายนอก",
     "Mouse works": "ตรวจสอบว่า Mouse ภายนอกสามารถใช้งานได้ปกติหรือไม่",
     "FN & Ctrl Swap": "ตรวจสอบการตั้งค่า FN & Ctrl Swap ใน BIOS หรือ Lenovo Vantage",
@@ -1767,7 +1767,7 @@ function customerStepTH(label){
     "Swap LAN cable": "ทดลองสลับสาย LAN",
     "LAN Port on notebook test": "ทดลองเชื่อมต่อสาย LAN เข้ากับเครื่องคอมพิวเตอร์โดยตรง",
     "Built-in Speaker test": "ทดลองใช้งานลำโพงของเครื่องคอมพิวเตอร์",
-    "Headphone test": "ทดลองใช้งานด้วย Headphone",
+    "Headphone Test": "ทดลองใช้งานด้วย Headphone",
     "Audio Jack on notebook test": "ทดลองเชื่อมต่อ Headphone กับ Audio Jack ของเครื่องคอมพิวเตอร์โดยตรง",
     "Swap Adapter": "ทดลองสลับ Adapter"
   };
@@ -1869,7 +1869,7 @@ function customerStepEN(label){
     "Swap LAN cable": "Swap the LAN cable.",
     "LAN Port on notebook test": "Connect the LAN cable directly to the computer.",
     "Built-in Speaker test": "Test the built-in speaker on the computer.",
-    "Headphone test": "Test with a headphone.",
+    "Headphone Test": "Test with a headphone.",
     "Audio Jack on notebook test": "Connect the headphone directly to the audio jack on the computer.",
     "Swap Adapter": "Swap the Adapter.",
     "Physical damage / Liquid spilled": "Check for any physical damage or liquid damage.",
@@ -1931,8 +1931,8 @@ function customerStepTH(label){
     "USB Keyboard test": "ทดสอบใช้งานด้วย USB Keyboard ภายนอก",
     "USB Mouse / Keyboard test": "ทดสอบใช้งานด้วย USB Mouse หรือ USB Keyboard ภายนอก",
     "On-Screen Keyboard test": "ทดสอบใช้งานผ่าน On-Screen Keyboard",
-    "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
-    "External mic test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
+    "Headphone Test": "ทดสอบใช้งานร่วมกับหูฟัง",
+    "External Mic Test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
     "Voice Recorder Test": "ทดสอบบันทึกเสียงผ่านโปรแกรม Voice Recorder",
     "Check Camera in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Camera หรือไม่",
     "Check Audio Device in Device Manager": "เปิด Device Manager และตรวจสอบว่ายังพบอุปกรณ์ Audio หรือไม่",
@@ -2289,8 +2289,8 @@ function customerStepTH(label){
     "Swap Mouse": "ทดสอบสลับด้วย Mouse อื่น",
     "Swap Keyboard": "ทดสอบสลับด้วย Keyboard อื่น",
     "Swap Headphone": "ทดสอบสลับด้วยหูฟังอื่น",
-    "Headphone test": "ทดสอบใช้งานร่วมกับหูฟัง",
-    "External mic test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
+    "Headphone Test": "ทดสอบใช้งานร่วมกับหูฟัง",
+    "External Mic Test": "ทดสอบใช้งานร่วมกับไมโครโฟนภายนอก",
     "Built-in Speaker test": "ทดสอบลำโพงภายในเครื่อง",
     "Audio Jack on notebook test": "ทดสอบช่อง Audio Jack บนเครื่องโดยตรง",
     "Swap RAM": "ทดสอบสลับด้วย RAM อื่น",
@@ -2438,7 +2438,7 @@ function customerStepEN(label){
     "Swap Mouse": "Try another Mouse.",
     "Swap Keyboard": "Try another Keyboard.",
     "Swap Headphone": "Try another headphone.",
-    "Headphone test": "Test with a headphone.",
+    "Headphone Test": "Test with a headphone.",
     "Voice Recorder Test": "Test recording with Voice Recorder.",
     "Adapter test on other machine": "Test the Adapter with another machine.",
     "Swap other Type-C port": "Test another Type-C port.",

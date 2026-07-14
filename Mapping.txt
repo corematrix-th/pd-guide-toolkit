@@ -1,4 +1,4 @@
-# PD Guide Global Checklist Mapping v5.0.4
+# PD Guide Global Checklist Mapping v5.0.5
 # Source of Truth for Checklist / Email TH / Email EN / Generate Note / Export / Copy Result.
 # Every checklist label must have TH and EN mapping. Update this file whenever a new mapping is added.
 
@@ -318,9 +318,9 @@ Event Viewer / Dump file collected
 TH > รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม
 EN > Please send the dump file for further checking. Open File Explorer > C:\Windows\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\Windows\MEMORY.DMP.
 
-External mic test
-TH > ตรวจสอบหัวข้อ External mic test
-EN > Check External mic test.
+External Mic Test
+TH > ตรวจสอบหัวข้อ External Mic Test
+EN > Check External Mic Test.
 
 External Monitor test
 TH (No Display / No Image) > ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่
@@ -368,7 +368,7 @@ HDMI Port on notebook test
 TH > ทดสอบพอร์ต HDMI บนเครื่องโดยตรง
 EN > Test the HDMI port directly on the notebook.
 
-Headphone test
+Headphone Test
 TH > ทดสอบใช้งานร่วมกับหูฟังอื่น
 EN > Test with another headphone.
 

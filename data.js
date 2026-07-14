@@ -2990,7 +2990,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Headphone test",
+            "label": "Headphone Test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3021,7 +3021,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Headphone test",
+            "label": "Headphone Test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3095,7 +3095,13 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Uninstall Audio Driver and Restart",
+            "label": "Check Microphone in Device Manager",
+            "options": "select",
+            "text": false,
+            "diag": false
+          },
+          {
+            "label": "Uninstall Microphone Driver and Restart",
             "options": "select",
             "text": false,
             "diag": false
@@ -3107,7 +3113,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "External mic test",
+            "label": "External Mic Test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3150,7 +3156,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "External mic test",
+            "label": "External Mic Test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3187,7 +3193,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Headphone test",
+            "label": "Headphone Test",
             "options": "swap",
             "text": false,
             "diag": false
@@ -3228,7 +3234,7 @@ const LEVELS = {
             "options": "select"
           },
           {
-            "label": "External mic test",
+            "label": "External Mic Test",
             "options": "swap"
           },
           {
@@ -6233,9 +6239,9 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
     "en": "Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP."
   },
-  "External mic test": {
-    "th": "ตรวจสอบหัวข้อ External mic test",
-    "en": "Check External mic test."
+  "External Mic Test": {
+    "th": "ตรวจสอบหัวข้อ External Mic Test",
+    "en": "Check External Mic Test."
   },
   "External Monitor test": {
     "th_no_display": "ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
@@ -6284,7 +6290,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ทดสอบพอร์ต HDMI บนเครื่องโดยตรง",
     "en": "Test the HDMI port directly on the notebook."
   },
-  "Headphone test": {
+  "Headphone Test": {
     "th": "ทดสอบใช้งานร่วมกับหูฟังอื่น",
     "en": "Test with another headphone."
   },
@@ -7147,7 +7153,7 @@ function filterChecklistByModelScope(qs, product){
 (function(){
   function q(label, options, extra){ return Object.assign({label:label, options:options, text:false, diag:false}, extra || {}); }
 
-  // Fan checklist standard: Fan Check / No Spin / Spin / Not Test.
+  // Fan Checklist standard: Fan Check / No Spin / Spin / Not Test.
   if(typeof APP_OPTIONS !== 'undefined') APP_OPTIONS.fan = ['-- Select --','No Spin','Spin','Not Test'];
   function updateFanQuestions(value){
     if(Array.isArray(value)){

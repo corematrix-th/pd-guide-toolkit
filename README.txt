@@ -1,4 +1,4 @@
-PD Guide Toolkit v5.0.4
+PD Guide Toolkit v5.0.5
 
 ## v5.0.4 Updates
 
