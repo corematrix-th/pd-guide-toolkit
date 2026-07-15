@@ -249,7 +249,7 @@ function canonicalChecklistLabel(label){
     'Lenovo Vantage update':'Lenovo Vantage Update',
     'BIOS update':'BIOS Update',
     'Load BIOS default':'Load BIOS Default',
-    'Can Access Windows':'Can access Windows',
+    'Can Access Windows':'Can Access Windows',
     'Camera Driver Update / Lenovo Vantage':'Camera Driver Update',
     'Fingerprint Driver Update / Lenovo Vantage':'Fingerprint Driver Update',
     'USB Driver Update / Lenovo Vantage':'USB Driver Update',
@@ -266,21 +266,29 @@ function canonicalChecklistLabel(label){
 
 
 
-// v5.0.8 UI naming standard. Display-only; underlying checklist keys and Generate Note remain unchanged.
+// v5.0.9 UI naming standard. Display-only; underlying checklist keys and Generate Note remain unchanged.
 function displayChecklistLabel(label){
-  const acronyms = {sd:'SD',ssd:'SSD',hdd:'HDD',usb:'USB',bios:'BIOS',uefi:'UEFI',hdmi:'HDMI',lan:'LAN',wan:'WAN',tpm:'TPM',efi:'EFI',crc:'CRC',rst:'RST',rste:'RSTe',os:'OS'};
-  return String(label || '').split(/(\s+|\/|&|\(|\)|:)/).map(part => {
-    if(/^\s+$/.test(part) || /^(\/|&|\(|\)|:)$/.test(part)) return part;
+  const acronyms = {sd:'SD',ssd:'SSD',hdd:'HDD',usb:'USB',bios:'BIOS',uefi:'UEFI',hdmi:'HDMI',lan:'LAN',wan:'WAN',tpm:'TPM',efi:'EFI',crc:'CRC',rst:'RST',rste:'RSTe',os:'OS',fru:'FRU',pin:'PIN'};
+  const minorWords = new Set(['and','or','of','to','in','on','for','at','by','from','with']);
+  let wordIndex = 0;
+  return String(label || '').split(/(\s+|\/|&|\+|\(|\)|:)/).map(part => {
+    if(/^\s+$/.test(part) || /^(\/|&|\+|\(|\)|:)$/.test(part)) return part;
     return part.split('-').map(token => {
       const lower=token.toLowerCase();
+      const currentIndex=wordIndex++;
       if(acronyms[lower]) return acronyms[lower];
       if(lower==='wi') return 'Wi';
       if(lower==='fi') return 'Fi';
+      if(lower==='trackpoint') return 'TrackPoint';
+      if(lower==='displayport') return 'DisplayPort';
+      if(lower==='bitlocker') return 'BitLocker';
+      if(/^re-install$/i.test(token)) return 'Re-install';
       if(lower==="can't") return "Can't";
+      if(minorWords.has(lower) && currentIndex > 0) return lower;
       if(!token) return token;
-      return token.charAt(0).toUpperCase()+token.slice(1);
+      return token.charAt(0).toUpperCase()+token.slice(1).toLowerCase();
     }).join('-');
-  }).join('').replace(/\bSd Card\b/g,'SD Card');
+  }).join('').replace(/\bSd Card\b/g,'SD Card').replace(/\bRe-Install\b/g,'Re-install');
 }
 function dedupeQuestionsByCanonical(list){
   const seen = new Map();
@@ -372,6 +380,7 @@ function normalizeQuestionOrder(list){
     if(l.includes("windows update")) return 20;
     if(l === "lenovo vantage update") return 30;
     if(l === "bios update") return 40;
+    if(l === "load default bios" || l === "load bios default") return 41;
     if(l.includes("firmware update") || l.includes("thunderbolt")) return 45;
     if(l === "power reset") return 50;
     if(l === "emergency reset") return 51;
@@ -426,7 +435,7 @@ const UPDATE_RULES = {
   display: {flickering:{vantage:true, driver:"Graphics"}, dim:{vantage:true, driver:"Graphics"}, black:{vantage:true, driver:"Graphics"}, abnormal_line:{vantage:true, driver:"Graphics"}},
   charging: {typec:{vantage:true}, runtime:{vantage:true, bios:true}, not_detect:{vantage:true, bios:true}, slow_charge:{vantage:true}, swollen:{}},
   fan: {fan_noise:{vantage:true, bios:true}, fan_spin_high:{vantage:true, bios:true}, fan_overheat:{vantage:true, bios:true}, fan_error:{vantage:true, bios:true}, fan_not_spin:{vantage:true, bios:true}},
-  boot: {boot_loop:{vantage:true}, stuck_logo:{vantage:true}, auto_repair:{vantage:true}},
+  boot: {boot_loop:{vantage:true}, stuck_logo:{}, auto_repair:{vantage:true}},
   storage: {}
 };
 
@@ -573,6 +582,7 @@ function getRelatedGuideKeys(){
     ["reset_pc", "startup_repair", "system_restore", "uninstall_updates"].forEach(add);
   }
   if(hasLabel("Uninstall Windows Update")) add("uninstall_updates");
+  if(hasLabel("System Restore")) add("system_restore");
   if(hasLabel("Downgrade BIOS")) add("downgrade_bios");
 
   if(hasLabel("Re-install Windows")) add("reinstall_windows");
@@ -581,7 +591,7 @@ function getRelatedGuideKeys(){
   if(hasLabel("Battery Report collected")) add("battery_report");
   if(hasLabel("Battery Health in Lenovo Vantage")) add("battery_health");
   if(hasLabel("Event Viewer / Dump file collected")) add("dump_file");
-  if(hasLabel("Safe Mode test") || hasLabel("Can boot into Safe Mode")) add("safe_mode");
+  if(hasLabel("Safe Mode Test") || hasLabel("Can Access Safe Mode")) add("safe_mode");
   if(hasAnyLabel(["LCD Self-Test", "LCD self-test", "LCD Self Test"])) add("lcd_self_test");
   if(hasLabel("FN & Ctrl Swap")) add("fn_ctrl_key_swap");
   if(hasLabel("BIOS Password") || hasLabel("Supervisor Password")) add("bios_password");
@@ -599,14 +609,14 @@ function getRelatedGuideKeys(){
     "battery_report": ["Battery Report collected"],
     "battery_health": ["Battery Health in Lenovo Vantage"],
     "reset_battery": ["Emergency Reset"],
-    "safe_mode": ["Safe Mode test", "Can boot into Safe Mode"],
+    "safe_mode": ["Safe Mode Test", "Can Access Safe Mode"],
     "dump_file": ["Event Viewer / Dump file collected"],
     "lcd_self_test": ["LCD Self-Test", "LCD self-test", "LCD Self Test"],
     // Lenovo Vantage Update is intentionally excluded from Related Guide.
     "reinstall_windows": ["Re-install Windows"],
     "reset_pc": ["Windows Recovery"],
     "startup_repair": ["Windows Recovery"],
-    "system_restore": ["Windows Recovery"],
+    "system_restore": ["Windows Recovery", "System Restore"],
     "uninstall_updates": ["Windows Recovery", "Uninstall Windows Update"],
     "downgrade_bios": ["Downgrade BIOS"],
     "fn_ctrl_key_swap": ["FN & Ctrl Swap"],
@@ -961,7 +971,7 @@ function recoveryActionRule(ans){
     "Power Reset / Emergency Reset", "Power Reset", "Emergency Reset", "Emergency Reset Hole",
     "BIOS Update", "Load BIOS Default", "Windows Update", "Driver Update", "Driver / Windows Update",
     "Lenovo Vantage Update", "Dock Firmware Update", "Clean Cooling System",
-    "Windows Startup Repair", "Re-install Windows", "Safe Mode test"
+    "Windows Startup Repair", "Re-install Windows", "Safe Mode Test"
   ];
   for(const label of recoveryLabels){
     if(isWorking(ans, label)) return {result:"FOP", part:"-"};
@@ -1554,7 +1564,7 @@ function customerStepTH(label){
     "Power Reset": "รบกวนทำ Power Reset โดยปิดเครื่อง ถอดสายชาร์จ จากนั้นกดปุ่ม Power ค้างประมาณ 30 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Emergency Reset": "รบกวนทำ Emergency Reset โดยกดที่รู Emergency Reset ใต้เครื่องประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
     "Emergency Reset Hole": "รบกวนทำ Emergency Reset โดยใช้เข็มหรือคลิปหนีบกระดาษกดที่รู Emergency Reset ใต้เครื่องค้างประมาณ 10 วินาที แล้วเปิดเครื่องใหม่ครับ",
-    "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
+    "Can Access Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Adapter test on other machine": "รบกวนนำ Adapter ของเครื่องไปทดลองใช้งานกับเครื่อง Lenovo รุ่นที่รองรับอีกเครื่องหนึ่ง แล้วแจ้งผลว่าสามารถใช้งานได้ปกติหรือไม่",
     "Swap Adapter": "รบกวนสลับ Adapter ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
     "Swap PSU": "หากสะดวก รบกวนสลับ PSU ที่ใช้งานได้มาทดสอบกับเครื่อง แล้วแจ้งผลว่าอาการเดิมหรือใช้งานได้ปกติครับ",
@@ -1578,8 +1588,8 @@ function customerStepTH(label){
     "External Monitor test": "ทดสอบต่อจอนอกและตรวจสอบว่าพบปัญหาเดียวกันหรือไม่",
     "Clean / Reseat RAM": "ทดสอบถอดทำความสะอาดและใส่ RAM ใหม่",
     "Beep sound / pattern": "ตรวจสอบจำนวนเสียง Beep Sound หรือรูปแบบเสียง Beep Sound ที่เกิดขึ้น",
-    "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
-    "Can boot into Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
+    "Can Access BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
+    "Can Access Safe Mode": "รบกวนเข้า Safe Mode เพื่อตรวจสอบว่าอาการยังคงเกิดขึ้นหรือไม่ แล้วแจ้งผลกลับมาครับ",
     "Windows Startup Repair": "ทดสอบ Startup Repair ของ Windows",
     "Lenovo Diagnostics": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
     "Lenovo Diagnostics Storage": "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage โดยใช้ขั้นตอนตามรุ่นเครื่อง จากนั้นแจ้งผลว่า Pass หรือ Failed",
@@ -1735,7 +1745,7 @@ function customerStepTH(label){
     "SIM card detected": "ตรวจสอบว่าเครื่องสามารถตรวจพบ SIM Card หรือไม่",
     "SIM detected": "ตรวจสอบว่าเครื่องสามารถตรวจพบ SIM หรือไม่",
     "SIM tray damage": "ตรวจสอบถาด SIM ว่ามีร่องรอยชำรุดหรือไม่",
-    "Safe Mode test": "ทดสอบใช้งานใน Safe Mode",
+    "Safe Mode Test": "ทดสอบใช้งานใน Safe Mode",
     "Secure Boot disabled": "ทดสอบปิด Secure Boot แล้วตรวจสอบอีกครั้ง",
     "Set date and time in BIOS": "ตั้งค่าวันที่และเวลาใน BIOS ให้ถูกต้อง",
     "Specific hotkey listed": "ระบุปุ่ม Hotkey ที่มีปัญหาเพิ่มเติม",
@@ -1830,7 +1840,7 @@ function customerStepEN(label){
     "Power Reset / Emergency Reset": "Please perform Power Reset / Emergency Reset to clear residual power, then power the system on again.",
     "Power Reset": "Please perform a Power Reset by turning the system off, disconnecting the power source, then press and hold the Power button for approximately 30 seconds before turning the system back on.",
     "Emergency Reset": "Please perform Emergency Reset by pressing the Emergency Reset hole on the bottom cover for approximately 10 seconds, then power the system on again.",
-    "Can boot into Safe Mode": "Please boot the system into Safe Mode and let us know whether the issue still occurs.",
+    "Can Access Safe Mode": "Please boot the system into Safe Mode and let us know whether the issue still occurs.",
     "Adapter test on other machine": "Please test the Adapter with another compatible Lenovo machine and let us know whether it works fine.",
     "Swap Adapter": "Please test the system with another known-good Adapter.",
     "Swap PSU": "Please test the system with another working PSU and let us know whether the issue remains or works fine.",
@@ -2123,8 +2133,8 @@ function customerStepTH(label){
     "Caps Lock LED works": "ตรวจสอบว่าไฟ Caps Lock ตอบสนองหรือไม่",
     "Display Backlight": "ตรวจสอบว่าหน้าจอมีแสงหรือภาพจาง ๆ หรือไม่",
     "Beep sound / pattern": "ตรวจสอบรูปแบบเสียง Beep Sound ที่เกิดขึ้น",
-    "Can boot into BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
-    "Can boot into Safe Mode": "เข้า Safe Mode แล้วทดสอบอาการอีกครั้ง",
+    "Can Access BIOS": "ตรวจสอบว่าสามารถเข้า BIOS ได้หรือไม่",
+    "Can Access Safe Mode": "เข้า Safe Mode แล้วทดสอบอาการอีกครั้ง",
     "Boot order checked": "ตรวจสอบ Boot Order ใน BIOS",
     "Network boot disabled": "ปิด Network Boot แล้วทดสอบอีกครั้ง",
     "Disable UEFI IPv4 / IPv6": "ปิด UEFI IPv4 / IPv6 แล้วทดสอบอีกครั้ง",
@@ -2396,8 +2406,8 @@ function customerStepEN(label){
     "Caps Lock Toggle": "Check whether the Caps Lock LED toggles.",
     "Display Backlight": "Check whether the display has backlight or a faint image.",
     "Beep sound / pattern": "Check the beep sound pattern.",
-    "Can boot into BIOS": "Check whether the machine can enter BIOS.",
-    "Can boot into Safe Mode": "Enter Safe Mode and test the issue again.",
+    "Can Access BIOS": "Check whether the machine can enter BIOS.",
+    "Can Access Safe Mode": "Enter Safe Mode and test the issue again.",
     "Boot order checked": "Check the Boot Order in BIOS.",
     "Network boot disabled": "Disable Network Boot and test again.",
     "Set date and time in BIOS": "Set the correct date and time in BIOS.",

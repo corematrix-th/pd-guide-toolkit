@@ -615,13 +615,13 @@ const LEVELS = {
         "defaultPart": "Software Troubleshooting / SSD / Mainboard",
         "common": [
           {
-            "label": "Can boot into BIOS",
+            "label": "Can Access BIOS",
             "options": "yesno",
             "text": false,
             "diag": false
           },
           {
-            "label": "Can boot into Safe Mode",
+            "label": "Can Access Safe Mode",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -658,7 +658,7 @@ const LEVELS = {
         "defaultPart": "SSD / Mainboard",
         "common": [
           {
-            "label": "Can boot into BIOS",
+            "label": "Can Access BIOS",
             "options": "yesno",
             "text": false,
             "diag": false
@@ -1067,7 +1067,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Safe Mode test",
+            "label": "Safe Mode Test",
             "options": "select"
           },
           {
@@ -1108,7 +1108,7 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Safe Mode test",
+            "label": "Safe Mode Test",
             "options": "select",
             "text": false,
             "diag": false
@@ -6059,11 +6059,11 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "สามารถเข้าหน้า Windows ได้หรือไม่",
     "en": "Check whether Windows can be accessed."
   },
-  "Can boot into BIOS": {
+  "Can Access BIOS": {
     "th": "สามารถเข้าหน้า BIOS ได้หรือไม่",
     "en": "Check whether the machine can enter BIOS."
   },
-  "Can boot into Safe Mode": {
+  "Can Access Safe Mode": {
     "th": "สามารถเข้าหน้า Safe Mode ได้หรือไม่",
     "en": "Check whether the machine can enter Safe Mode."
   },
@@ -6514,7 +6514,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
     "th": "ทดสอบ Run Diagnostics\nสำหรับ ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny และ AIO: กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed\nสำหรับ IdeaPad: กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed",
     "en": "Run Lenovo Diagnostics.\nFor ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.\nFor IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed."
   },
-  "Safe Mode test": {
+  "Safe Mode Test": {
     "th": "เข้า Safe Mode แล้วทดสอบอาการอีกครั้ง",
     "en": "Enter Safe Mode and test again."
   },
@@ -6950,7 +6950,7 @@ const GLOBAL_CHECKLIST_MAPPING = {
     const mappingKey = GLOBAL_CHECKLIST_MAPPING[out.label] ? out.label : (GLOBAL_CHECKLIST_MAPPING[original] ? original : null);
     if(mappingKey) out.mappingKey = mappingKey;
     if(out.label === 'Run Lenovo Diagnostics') out.options = 'diag';
-    if(out.label === 'Can access Windows' || out.label === 'Can boot into BIOS' || out.label === 'Can boot into Safe Mode' || out.label === 'Physical damage / Liquid spilled' || out.label === 'Other issue') out.options = out.options || 'yesno';
+    if(out.label === 'Can access Windows' || out.label === 'Can Access BIOS' || out.label === 'Can Access Safe Mode' || out.label === 'Physical damage / Liquid spilled' || out.label === 'Other issue') out.options = out.options || 'yesno';
     return out;
   }
   function dedupe(list){
@@ -7503,7 +7503,7 @@ function filterChecklistByModelScope(qs, product){
   });
 })();
 
-// v5.0.8 authoritative shared-data, duplicate, and naming patch
+// v5.0.9 authoritative shared-data, duplicate, and naming patch
 (function applyV508Patch(){
   function findRow(product, level){
     return (MODEL_STRUCTURE[product] || []).find(function(row){ return row.level === level; });
@@ -7587,3 +7587,305 @@ function filterChecklistByModelScope(qs, product){
   });
 })();
 
+
+
+// v5.0.9 authoritative content, Safe Mode removal, and Title Case patch
+(function applyV509Patch(){
+  function findRow(product, level){
+    return (MODEL_STRUCTURE[product] || []).find(function(row){ return row.level === level; });
+  }
+  function removeAll(arr, key){ return (arr || []).filter(function(x){ return x !== key; }); }
+  function placeLast(arr, key){ arr=removeAll(arr,key); arr.push(key); return arr; }
+  function q(label, options, text, diag){
+    return {label:label, options:options, text:!!text, diag:!!diag};
+  }
+  var minorWords={and:1,or:1,of:1,to:1,in:1,on:1,for:1,at:1,by:1,from:1,with:1};
+  var acronyms={usb:'USB',bios:'BIOS',uefi:'UEFI',hdmi:'HDMI',ssd:'SSD',hdd:'HDD',os:'OS',efi:'EFI',crc:'CRC',tpm:'TPM',fru:'FRU',pin:'PIN',lan:'LAN',wwan:'WWAN',sim:'SIM',lcd:'LCD',bsod:'BSOD',pxe:'PXE'};
+  function titleCase(value){
+    if(typeof value!=='string') return value;
+    var index=0;
+    return value.split(/(\s+|\/|&|\+|\(|\)|:)/).map(function(part){
+      if(/^\s+$/.test(part)||/^(\/|&|\+|\(|\)|:)$/.test(part)) return part;
+      return part.split('-').map(function(token){
+        var lower=token.toLowerCase(), current=index++;
+        if(acronyms[lower]) return acronyms[lower];
+        if(lower==='wi') return 'Wi';
+        if(lower==='fi') return 'Fi';
+        if(lower==='trackpoint') return 'TrackPoint';
+        if(lower==='displayport') return 'DisplayPort';
+        if(lower==='bitlocker') return 'BitLocker';
+        if(/^re-install$/i.test(token)) return 'Re-install';
+        if(lower==="can't") return "Can't";
+        if(minorWords[lower] && current>0) return lower;
+        return token ? token.charAt(0).toUpperCase()+token.slice(1).toLowerCase() : token;
+      }).join('-');
+    }).join('').replace(/\bRe-Install\b/g,'Re-install');
+  }
+
+  // Required terminology and global Safe Mode checklist removal.
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level=LEVELS[levelKey];
+    if(!level) return;
+    if(level.name) level.name=titleCase(level.name);
+    Object.keys(level.symptoms || {}).forEach(function(symptomKey){
+      var symptom=level.symptoms[symptomKey];
+      if(!symptom) return;
+      if(symptom.name) symptom.name=titleCase(symptom.name);
+      if(Array.isArray(symptom.common)){
+        symptom.common=symptom.common.filter(function(item){
+          if(!item || !item.label) return true;
+          return !/Safe Mode Test|Can (?:Boot Into|Access) Safe Mode/i.test(item.label);
+        }).map(function(item){
+          if(/^Can (?:Boot Into|boot into) Windows$/i.test(item.label)) item.label='Can Access Windows';
+          if(/^Can (?:Boot Into|boot into) BIOS$/i.test(item.label)) item.label='Can Access BIOS';
+          item.label=titleCase(item.label);
+          return item;
+        });
+      }
+    });
+  });
+
+  // Remove Safe Mode troubleshooting guide and every Related Guide reference.
+  if(typeof TROUBLESHOOTING_GUIDES!=='undefined'){
+    Object.keys(TROUBLESHOOTING_GUIDES).forEach(function(group){
+      if(TROUBLESHOOTING_GUIDES[group]) delete TROUBLESHOOTING_GUIDES[group].safe_mode;
+    });
+  }
+  if(typeof GUIDE_ORDER!=='undefined' && Array.isArray(GUIDE_ORDER)){
+    for(var i=GUIDE_ORDER.length-1;i>=0;i--) if(GUIDE_ORDER[i]==='safe_mode') GUIDE_ORDER.splice(i,1);
+  }
+  if(typeof RELATED_GUIDES!=='undefined'){
+    Object.keys(RELATED_GUIDES).forEach(function(levelKey){
+      Object.keys(RELATED_GUIDES[levelKey] || {}).forEach(function(symptomKey){
+        RELATED_GUIDES[levelKey][symptomKey]=(RELATED_GUIDES[levelKey][symptomKey] || []).filter(function(x){ return x!=='safe_mode'; });
+      });
+    });
+  }
+
+  // Boot > Stuck Lenovo Logo.
+  if(LEVELS.boot && LEVELS.boot.symptoms && LEVELS.boot.symptoms.stuck_logo){
+    var stuck=LEVELS.boot.symptoms.stuck_logo;
+    stuck.common=(stuck.common || []).filter(function(item){ return item && item.label!=='Lenovo Vantage Update'; });
+    stuck.common.forEach(function(item){ if(item.label==='Lenovo Diagnostics Storage') item.label='Lenovo Diagnostics'; });
+  }
+
+  // Boot > Black Screen After Login: Can Access BIOS is the first checklist item.
+  if(LEVELS.boot && LEVELS.boot.symptoms && LEVELS.boot.symptoms.black_login){
+    var black=LEVELS.boot.symptoms.black_login;
+    black.common=(black.common || []).filter(function(item){
+      return item && !/Safe Mode Test|Can (?:Boot Into|Access) Safe Mode/i.test(item.label || '');
+    });
+    black.common=black.common.filter(function(item){ return item.label!=='Can Access BIOS'; });
+    black.common.unshift(q('Can Access BIOS','yesno'));
+  }
+
+  // Windows > Can't Resume After Sleep.
+  if(LEVELS.windows && LEVELS.windows.symptoms){
+    LEVELS.windows.symptoms.cant_resume_after_sleep={
+      name:"Can't Resume After Sleep",
+      defaultResult:'Dispatch',
+      defaultPart:'Software Troubleshooting / Mainboard',
+      common:[
+        q('Lenovo Vantage Update','select'),
+        q('BIOS Update','select'),
+        q('Load Default BIOS','select'),
+        q('Run Lenovo Diagnostics','diag',false,true),
+        q('Re-install Windows','select'),
+        q('Physical Damage / Liquid Spilled','yesno'),
+        q('Other Issue','yesno',true)
+      ]
+    };
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var row=findRow(product,'windows');
+      if(row) row.symptoms=placeLast(row.symptoms,'cant_resume_after_sleep');
+    });
+  }
+
+  // Mouse > Cursor Auto Move or Jump.
+  if(LEVELS.mouse && LEVELS.mouse.symptoms){
+    LEVELS.mouse.symptoms.cursor_auto_move_or_jump={
+      name:'Cursor Auto Move or Jump',
+      defaultResult:'Dispatch',
+      defaultPart:'Mouse / Touchpad / TrackPoint / Touch Screen / Mainboard',
+      common:[
+        q('Remove External Mouse','select'),
+        q('Disable Touchpad','select'),
+        q('Disable TrackPoint','select'),
+        q('Disable Touch Screen','select'),
+        q('Lenovo Vantage Update','select'),
+        q('System Restore','select'),
+        q('Physical Damage / Liquid Spilled','yesno'),
+        q('Other Issue','yesno',true)
+      ]
+    };
+    Object.keys(MODEL_STRUCTURE).forEach(function(product){
+      var row=findRow(product,'mouse');
+      if(row) row.symptoms=placeLast(row.symptoms,'cursor_auto_move_or_jump');
+    });
+  }
+
+  // Final UI-facing Title Case pass for symptoms, errors, guides, and checklist labels.
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level=LEVELS[levelKey];
+    if(!level) return;
+    if(level.name) level.name=titleCase(level.name);
+    Object.keys(level.symptoms || {}).forEach(function(symptomKey){
+      var symptom=level.symptoms[symptomKey];
+      if(!symptom) return;
+      if(symptom.name) symptom.name=titleCase(symptom.name);
+      (symptom.common || []).forEach(function(item){ if(item && item.label) item.label=titleCase(item.label); });
+    });
+  });
+  if(typeof TROUBLESHOOTING_GUIDES!=='undefined'){
+    Object.keys(TROUBLESHOOTING_GUIDES).forEach(function(group){
+      Object.keys(TROUBLESHOOTING_GUIDES[group] || {}).forEach(function(key){
+        var guide=TROUBLESHOOTING_GUIDES[group][key];
+        if(guide && guide.name) guide.name=titleCase(guide.name);
+        if(guide && guide.title) guide.title=titleCase(guide.title);
+      });
+    });
+  }
+})();
+
+// v5.0.9 hotfix: Wi-Fi duplicate cleanup and BIOS sequence enforcement
+(function applyV509Hotfix(){
+  function q(label, options, text, diag){
+    return {label:label, options:options, text:!!text, diag:!!diag};
+  }
+
+  // Network > Wi-Fi: keep Windows Update and WLAN Driver Update exactly once.
+  if(LEVELS.network && LEVELS.network.symptoms && LEVELS.network.symptoms.wifi){
+    LEVELS.network.symptoms.wifi.common=[
+      q('Can Detect Wi-Fi Signal','yesno'),
+      q('Swap Wi-Fi / Hotspot','swap'),
+      q('Airplane Mode','airplane'),
+      q('Check Wireless Driver in Device Manager','yesno'),
+      q('Uninstall Wireless Driver and Restart','select'),
+      q('WLAN Driver Update','select'),
+      q('Windows Update','select'),
+      q('Lenovo Vantage Update','select'),
+      q('Physical Damage / Liquid Spilled','yesno'),
+      q('Other Issue','yesno',true)
+    ];
+  }
+
+  // Windows > Can't Resume After Sleep: BIOS Update must be immediately followed by Load Default BIOS.
+  if(LEVELS.windows && LEVELS.windows.symptoms && LEVELS.windows.symptoms.cant_resume_after_sleep){
+    LEVELS.windows.symptoms.cant_resume_after_sleep.common=[
+      q('Lenovo Vantage Update','select'),
+      q('BIOS Update','select'),
+      q('Load Default BIOS','select'),
+      q('Run Lenovo Diagnostics','diag',false,true),
+      q('Re-install Windows','select'),
+      q('Physical Damage / Liquid Spilled','yesno'),
+      q('Other Issue','yesno',true)
+    ];
+  }
+})();
+
+
+// v5.0.9 hotfix 2: checklist cleanup, Related Guide, Display symptoms, and Diagnostics naming
+(function applyV509Hotfix2(){
+  // 1. Boot > Stuck Lenovo Logo: remove Lenovo Vantage Update.
+  if(LEVELS.boot && LEVELS.boot.symptoms && LEVELS.boot.symptoms.stuck_logo){
+    LEVELS.boot.symptoms.stuck_logo.common=(LEVELS.boot.symptoms.stuck_logo.common || []).filter(function(item){
+      return item && item.label !== 'Lenovo Vantage Update';
+    });
+  }
+
+  // 2. Any symptom containing System Restore must show the System Restore Related Guide.
+  if(typeof RELATED_GUIDES !== 'undefined'){
+    Object.keys(LEVELS || {}).forEach(function(levelKey){
+      var level=LEVELS[levelKey];
+      if(!level || !level.symptoms) return;
+      Object.keys(level.symptoms).forEach(function(symptomKey){
+        var symptom=level.symptoms[symptomKey];
+        var hasSystemRestore=(symptom.common || []).some(function(item){
+          return item && item.label === 'System Restore';
+        });
+        if(!hasSystemRestore) return;
+        if(!RELATED_GUIDES[levelKey]) RELATED_GUIDES[levelKey]={};
+        var guides=RELATED_GUIDES[levelKey][symptomKey] || [];
+        if(guides.indexOf('system_restore') < 0) guides.push('system_restore');
+        RELATED_GUIDES[levelKey][symptomKey]=guides;
+      });
+    });
+  }
+
+  // 3. Display: remove Dead Pixel and Bright Pixel.
+  if(LEVELS.display && LEVELS.display.symptoms){
+    delete LEVELS.display.symptoms.dead;
+    delete LEVELS.display.symptoms.bright;
+  }
+  if(typeof RELATED_GUIDES !== 'undefined' && RELATED_GUIDES.display){
+    delete RELATED_GUIDES.display.dead;
+    delete RELATED_GUIDES.display.bright;
+  }
+  Object.keys(MODEL_STRUCTURE || {}).forEach(function(product){
+    (MODEL_STRUCTURE[product] || []).forEach(function(row){
+      if(row && row.level === 'display' && Array.isArray(row.symptoms)){
+        row.symptoms=row.symptoms.filter(function(key){ return key !== 'dead' && key !== 'bright'; });
+      }
+    });
+  });
+
+  // 4. ThinkPad > Storage > SSD Not Found During Install OS: remove Storage Firmware Update.
+  if(LEVELS.storage && LEVELS.storage.symptoms){
+    Object.keys(LEVELS.storage.symptoms).forEach(function(key){
+      var symptom=LEVELS.storage.symptoms[key];
+      if(symptom && symptom.name === 'SSD Not Found During Install OS'){
+        symptom.common=(symptom.common || []).filter(function(item){
+          return item && item.label !== 'Storage Firmware Update';
+        });
+      }
+    });
+  }
+
+  // 5. Normalize every part-specific Lenovo Diagnostics checklist label.
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level=LEVELS[levelKey];
+    Object.keys((level && level.symptoms) || {}).forEach(function(symptomKey){
+      var symptom=level.symptoms[symptomKey];
+      (symptom.common || []).forEach(function(item){
+        if(item && /^Lenovo Diagnostics(?:\s+.+)?$/i.test(item.label || '')){
+          item.label='Run Lenovo Diagnostics';
+          item.options='diag';
+          item.diag=true;
+        }
+      });
+    });
+  });
+})();
+
+
+// v5.0.9 final enforcement: Stuck Lenovo Logo and System Restore naming
+(function applyV509FinalEnforcement(){
+  // Prevent dynamic update rules from restoring Lenovo Vantage Update for Stuck Lenovo Logo.
+  if(typeof UPDATE_RULES !== 'undefined' && UPDATE_RULES.boot){
+    UPDATE_RULES.boot.stuck_logo={};
+  }
+
+  if(LEVELS.boot && LEVELS.boot.symptoms && LEVELS.boot.symptoms.stuck_logo){
+    LEVELS.boot.symptoms.stuck_logo.common=(LEVELS.boot.symptoms.stuck_logo.common || []).filter(function(item){
+      return item && item.label !== 'Lenovo Vantage Update';
+    });
+  }
+
+  // Use the official checklist label so Related Guide detection works directly.
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level=LEVELS[levelKey];
+    Object.keys((level && level.symptoms) || {}).forEach(function(symptomKey){
+      var symptom=level.symptoms[symptomKey];
+      (symptom.common || []).forEach(function(item){
+        if(item && item.label === 'Windows System Restore') item.label='System Restore';
+      });
+      if(symptom.questions){
+        Object.keys(symptom.questions).forEach(function(product){
+          (symptom.questions[product] || []).forEach(function(item){
+            if(item && item.label === 'Windows System Restore') item.label='System Restore';
+          });
+        });
+      }
+    });
+  });
+})();

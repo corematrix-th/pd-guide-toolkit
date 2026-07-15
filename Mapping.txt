@@ -138,11 +138,11 @@ Can access Windows
 TH > สามารถเข้าหน้า Windows ได้หรือไม่
 EN > Check whether Windows can be accessed.
 
-Can boot into BIOS
+Can Access BIOS
 TH > สามารถเข้าหน้า BIOS ได้หรือไม่
 EN > Check whether the machine can enter BIOS.
 
-Can boot into Safe Mode
+Can Access Safe Mode
 TH > สามารถเข้าหน้า Safe Mode ได้หรือไม่
 EN > Check whether the machine can enter Safe Mode.
 
@@ -593,7 +593,7 @@ EN > Run Lenovo Diagnostics.
 For ThinkPad, ThinkCentre Desktop, ThinkCentre Tiny, and AIO: press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.
 For IdeaPad: press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed.
 
-Safe Mode test
+Safe Mode Test
 TH > เข้า Safe Mode แล้วทดสอบอาการอีกครั้ง
 EN > Enter Safe Mode and test again.
 
