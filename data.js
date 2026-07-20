@@ -3470,12 +3470,6 @@ const LEVELS = {
             "diag": false
           },
           {
-            "label": "Touchpad Driver Update",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
             "label": "Physical damage / Liquid spilled",
             "options": "yesno",
             "text": false,
@@ -3503,12 +3497,6 @@ const LEVELS = {
           {
             "label": "ClickPad enabled",
             "options": "yesno",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Touchpad Driver Update",
-            "options": "select",
             "text": false,
             "diag": false
           },
@@ -3545,12 +3533,6 @@ const LEVELS = {
           },
           {
             "label": "Clean touchpad surface",
-            "options": "select",
-            "text": false,
-            "diag": false
-          },
-          {
-            "label": "Touchpad Driver Update",
             "options": "select",
             "text": false,
             "diag": false
@@ -7442,7 +7424,7 @@ function filterChecklistByModelScope(qs, product){
     'Bios / Supervisor Password': 'BIOS / Supervisor Password',
     'Bsod': 'BSOD',
     'Pxe': 'PXE',
-    'Lcd Self-Test': 'LCD Self-Test',
+    'LCD Self-Test': 'LCD Self-Test',
     'Sfc /Scannow': 'SFC /scannow',
     'Bitlocker Recovery': 'BitLocker Recovery',
     'Bypass Windows 11 Oobe': 'Bypass Windows 11 OOBE',
@@ -7888,4 +7870,138 @@ function filterChecklistByModelScope(qs, product){
       }
     });
   });
+})();
+
+// v5.1.0 checklist and naming enforcement
+(function applyV510Patch(){
+  function removeLabels(list, labels){
+    return (list || []).filter(function(item){ return item && labels.indexOf(item.label) < 0; });
+  }
+  function replaceResetWithEmergency(list){
+    var output=[];
+    var inserted=false;
+    (list || []).forEach(function(item){
+      if(item && (item.label==='Power Reset' || item.label==='Power Reset / Emergency Reset')){
+        if(!inserted){ output.push({label:'Emergency Reset',options:'select',text:false,diag:false}); inserted=true; }
+      }else if(item && item.label==='Emergency Reset'){
+        if(!inserted){ output.push(item); inserted=true; }
+      }else output.push(item);
+    });
+    if(!inserted) output.push({label:'Emergency Reset',options:'select',text:false,diag:false});
+    return output;
+  }
+  function addAfterUsbKeyboard(list){
+    var output=(list || []).filter(function(item){ return item && item.label!=='On-Screen Keyboard Test'; });
+    var index=output.findIndex(function(item){ return item && /^(USB Keyboard test|USB Keyboard Test)$/.test(item.label); });
+    if(index>=0) output.splice(index+1,0,{label:'On-Screen Keyboard Test',options:'swap',text:false,diag:false});
+    return output;
+  }
+  function normalizeLabels(list){
+    (list || []).forEach(function(item){
+      if(!item || !item.label) return;
+      item.label=item.label.replace(/\bPower LED\b/g,'Power LED').replace(/\bCharge LED\b/g,'Charge LED').replace(/\bLcd\b/g,'LCD');
+    });
+    return list || [];
+  }
+
+  if(LEVELS.camera && LEVELS.camera.symptoms){
+    Object.keys(LEVELS.camera.symptoms).forEach(function(key){
+      var symptom=LEVELS.camera.symptoms[key];
+      if(symptom.common) symptom.common=removeLabels(symptom.common,['Issue Happens on All Apps','Issue happens on all apps']);
+    });
+  }
+
+  if(LEVELS.keyboard && LEVELS.keyboard.symptoms && LEVELS.keyboard.symptoms.few){
+    var few=LEVELS.keyboard.symptoms.few;
+    few.name='Few Key Not Work';
+    if(few.questions){
+      Object.keys(few.questions).forEach(function(product){ few.questions[product]=addAfterUsbKeyboard(few.questions[product]); });
+    }
+    if(few.common) few.common=addAfterUsbKeyboard(few.common);
+  }
+
+  if(LEVELS.touchpad && LEVELS.touchpad.symptoms){
+    Object.keys(LEVELS.touchpad.symptoms).forEach(function(key){
+      var symptom=LEVELS.touchpad.symptoms[key];
+      if(symptom.common) symptom.common=removeLabels(symptom.common,['Touchpad Driver Update']);
+    });
+  }
+
+  if(LEVELS.fan && LEVELS.fan.symptoms){
+    Object.keys(LEVELS.fan.symptoms).forEach(function(key){
+      var symptom=LEVELS.fan.symptoms[key];
+      if(symptom.common) symptom.common=removeLabels(symptom.common,[
+        'Check Temperature / Overheat','Check Temperature','Check temperature / Overheat',
+        'Check for Dust and Foreign Objects','Load BIOS Default','Load Default BIOS','Load BIOS default'
+      ]);
+    });
+  }
+
+  Object.keys(LEVELS || {}).forEach(function(levelKey){
+    var level=LEVELS[levelKey]; if(!level) return;
+    if(level.name) level.name=level.name.replace(/\bLcd\b/g,'LCD');
+    Object.keys(level.symptoms || {}).forEach(function(symptomKey){
+      var symptom=level.symptoms[symptomKey]; if(!symptom) return;
+      if(symptom.name) symptom.name=symptom.name.replace(/\bLcd\b/g,'LCD');
+      if(symptom.defaultPart) symptom.defaultPart=symptom.defaultPart.replace(/\bLcd\b/g,'LCD');
+      if(symptom.common) normalizeLabels(symptom.common);
+      Object.keys(symptom.questions || {}).forEach(function(product){ normalizeLabels(symptom.questions[product]); });
+    });
+  });
+
+  if(LEVELS.boot && LEVELS.boot.symptoms){
+    ['no_power','pond'].forEach(function(key){
+      var symptom=LEVELS.boot.symptoms[key];
+      if(symptom && symptom.questions && symptom.questions.thinkpad){
+        symptom.questions.thinkpad=replaceResetWithEmergency(symptom.questions.thinkpad);
+      }
+    });
+    if(LEVELS.boot.symptoms.pond_beep && LEVELS.boot.symptoms.pond_beep.common){
+      LEVELS.boot.symptoms.pond_beep.common=replaceResetWithEmergency(LEVELS.boot.symptoms.pond_beep.common);
+    }
+    if(LEVELS.boot.symptoms.auto_repair){
+      LEVELS.boot.symptoms.auto_repair.common=removeLabels(LEVELS.boot.symptoms.auto_repair.common,['Lenovo Vantage Update']);
+    }
+    if(LEVELS.boot.symptoms.black_login){
+      LEVELS.boot.symptoms.black_login.common=removeLabels(LEVELS.boot.symptoms.black_login.common,['Graphics Driver Update']);
+    }
+  }
+})();
+
+
+
+// v5.1.0 final source enforcement (revision 2)
+(function applyV510FinalSourceEnforcement(){
+  function clean(list, removed){
+    return (list || []).filter(function(item){ return item && removed.indexOf(item.label) < 0; }).map(function(item){
+      if(item.label){
+        item.label=String(item.label).replace(/\bPower LED\b/g,'Power LED').replace(/\bCharge LED\b/g,'Charge LED').replace(/\bLcd\b/g,'LCD');
+      }
+      return item;
+    });
+  }
+  function emergencyOnly(list){
+    var out=clean(list,['Power Reset','Power Reset / Emergency Reset','Emergency Reset']);
+    var pos=Math.min(3,out.length);
+    out.splice(pos,0,{label:'Emergency Reset',options:'select',text:false,diag:false});
+    return out;
+  }
+  var fanRemoved=['Check Temperature / Overheat','Check Temperature','Check temperature / Overheat','Check for Dust and Foreign Objects','Load BIOS Default','Load Default BIOS','Load BIOS default'];
+  if(LEVELS.fan && LEVELS.fan.symptoms){
+    Object.keys(LEVELS.fan.symptoms).forEach(function(k){
+      var x=LEVELS.fan.symptoms[k];
+      x.common=clean(x.common,fanRemoved);
+      Object.keys(x.questions || {}).forEach(function(p){ x.questions[p]=clean(x.questions[p],fanRemoved); });
+    });
+  }
+  if(LEVELS.boot && LEVELS.boot.symptoms){
+    ['no_power','pond','pond_beep'].forEach(function(k){
+      var x=LEVELS.boot.symptoms[k]; if(!x) return;
+      if(x.questions && x.questions.thinkpad) x.questions.thinkpad=emergencyOnly(x.questions.thinkpad);
+      else if(k==='pond_beep') x.common=emergencyOnly(x.common);
+    });
+    var a=LEVELS.boot.symptoms.auto_repair; if(a){ a.common=clean(a.common,['Lenovo Vantage Update']); Object.keys(a.questions||{}).forEach(function(p){a.questions[p]=clean(a.questions[p],['Lenovo Vantage Update']);}); }
+    var b=LEVELS.boot.symptoms.black_login; if(b){ b.common=clean(b.common,['Graphics Driver Update']); Object.keys(b.questions||{}).forEach(function(p){b.questions[p]=clean(b.questions[p],['Graphics Driver Update']);}); }
+  }
+  Object.keys(LEVELS || {}).forEach(function(lk){ var l=LEVELS[lk]; if(l.name) l.name=l.name.replace(/\bLcd\b/g,'LCD'); Object.keys(l.symptoms||{}).forEach(function(sk){var x=l.symptoms[sk]; if(x.name)x.name=x.name.replace(/\bLcd\b/g,'LCD'); x.common=clean(x.common,[]); Object.keys(x.questions||{}).forEach(function(p){x.questions[p]=clean(x.questions[p],[]);});});});
 })();

@@ -268,7 +268,7 @@ function canonicalChecklistLabel(label){
 
 // v5.0.9 UI naming standard. Display-only; underlying checklist keys and Generate Note remain unchanged.
 function displayChecklistLabel(label){
-  const acronyms = {sd:'SD',ssd:'SSD',hdd:'HDD',usb:'USB',bios:'BIOS',uefi:'UEFI',hdmi:'HDMI',lan:'LAN',wan:'WAN',tpm:'TPM',efi:'EFI',crc:'CRC',rst:'RST',rste:'RSTe',os:'OS',fru:'FRU',pin:'PIN'};
+  const acronyms = {sd:'SD',ssd:'SSD',hdd:'HDD',usb:'USB',bios:'BIOS',uefi:'UEFI',hdmi:'HDMI',lan:'LAN',wan:'WAN',tpm:'TPM',efi:'EFI',crc:'CRC',rst:'RST',rste:'RSTe',os:'OS',fru:'FRU',pin:'PIN',led:'LED',lcd:'LCD'};
   const minorWords = new Set(['and','or','of','to','in','on','for','at','by','from','with']);
   let wordIndex = 0;
   return String(label || '').split(/(\s+|\/|&|\+|\(|\)|:)/).map(part => {
@@ -319,25 +319,52 @@ function normalizeQuestionOrder(list){
     .filter(q => !removeLabels.includes(q.label))
     .filter(q => !(q.label.includes("Video") || q.label.includes("Photo"))));
 
-  // v4.9.2 ThinkPad Reset Rule:
+  // v5.1.0 ThinkPad Reset Rule:
   // Emergency Reset is allowed only for ThinkPad Boot > No power / Power on no display / Power on no display + Beep Sound.
   const emergencyAllowed = product === "thinkpad" && selectedLevel === "boot" && ["no_power", "pond", "pond_beep"].includes(selectedSymptom);
   const expanded = [];
   filtered.forEach(q => {
     if(q.label === "Power Reset / Emergency Reset"){
-      if(emergencyAllowed){
-        expanded.push({...q, label:"Power Reset"});
-        expanded.push({...q, label:"Emergency Reset"});
-      }else{
-        expanded.push({...q, label:"Power Reset"});
-      }
+      expanded.push({...q, label: emergencyAllowed ? "Emergency Reset" : "Power Reset"});
     }else if(q.label === "Emergency Reset" && !emergencyAllowed){
+      return;
+    }else if(q.label === "Power Reset" && emergencyAllowed){
       return;
     }else{
       expanded.push(q);
     }
   });
   filtered = dedupeQuestionsByCanonical(expanded);
+
+  // v5.1.0 final UI enforcement: apply requested removals after all dynamic checklist rules.
+  filtered = filtered.map(q => ({...q, label: String(q.label || "")
+    .replace(/\bPower LED\b/g, "Power LED")
+    .replace(/\bCharge LED\b/g, "Charge LED")
+    .replace(/\bLcd\b/g, "LCD")}));
+
+  if(selectedLevel === "fan"){
+    const removedFanLabels = new Set([
+      "Check Temperature / Overheat", "Check Temperature", "Check temperature / Overheat",
+      "Check for Dust and Foreign Objects",
+      "Load BIOS Default", "Load Default BIOS", "Load BIOS default"
+    ]);
+    filtered = filtered.filter(q => !removedFanLabels.has(q.label));
+  }
+
+  if(selectedLevel === "boot" && selectedSymptom === "auto_repair"){
+    filtered = filtered.filter(q => q.label !== "Lenovo Vantage Update");
+  }
+  if(selectedLevel === "boot" && selectedSymptom === "black_login"){
+    filtered = filtered.filter(q => q.label !== "Graphics Driver Update");
+  }
+  if(product === "thinkpad" && selectedLevel === "boot" && ["no_power", "pond", "pond_beep"].includes(selectedSymptom)){
+    filtered = filtered.filter(q => q.label !== "Power Reset" && q.label !== "Power Reset / Emergency Reset");
+    if(!filtered.some(q => q.label === "Emergency Reset")){
+      const insertAt = Math.min(3, filtered.length);
+      filtered.splice(insertAt, 0, {label:"Emergency Reset", options:"select"});
+    }
+  }
+  filtered = dedupeQuestionsByCanonical(filtered);
 
   if(!isFruPnAllowed()){
     filtered = filtered.filter(q => q.label !== "FRU P/N");
@@ -990,11 +1017,11 @@ function nextRequiredChecklist(ans){
       addIfMissing("Swap Power Outlet");
     }else{
       addIfMissing("Adapter test on other machine");
-      addIfMissing("Power Reset / Emergency Reset");
+      addIfMissing(product === "thinkpad" ? "Emergency Reset" : "Power Reset");
     }
   }else if(selectedLevel === "boot" && selectedSymptom === "pond"){
     addIfMissing("External Monitor test");
-    addIfMissing("Power Reset / Emergency Reset");
+    addIfMissing(getProductKey() === "thinkpad" ? "Emergency Reset" : "Power Reset");
   }else{
     getQuestions().forEach(q => {
       if(isRequiredChecklist(q.label) && isNotTested(ans, q.label) && missing.length < 3) missing.push(q.label);
