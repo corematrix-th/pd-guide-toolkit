@@ -1,44 +1,29 @@
-PD Guide Toolkit v5.0.5
+PD Guide Toolkit v5.1.6
 
-## v5.0.4 Updates
+Open index.html to start the Toolkit.
 
-Documentation refactor release based on v4.9.8.
+MASTER DATABASE
+PD_Guide_Database.xlsx is the sole source of truth for model checklist data.
 
-Key updates:
-- Consolidated duplicate documentation files in `docs/`.
-- Kept `Mapping.txt` in the project root because it is runtime/source-of-truth data.
-- Added consolidated `docs/FULL_AUDIT.md` for audit history.
-- Added consolidated `docs/RELEASE_REPORT.md` for release history.
-- Updated visible UI version to v5.0.4 and cache-busting references to `v=5_0_2`.
+Workflow:
+PD_Guide_Database.xlsx
+        ↓
+Generate database.js
+        ↓
+Toolkit
 
-Important rule:
-When an existing version is patched without a version number change, keep the same filename exactly. For this release, the new version is v5.0.4, so the output filename is `PD_Guide_Toolkit_v5.0.4.zip`.
+Workbook structure:
+- Thinkpad
+- Ideapad
+- Desktop
+- Tiny
+- AIO
+- Dropdown_Master
+- Related_Guide_Master
+- README
 
-## Release Report
-See `docs/RELEASE_REPORT.md` for the v5.0.4 release report and previous release history.
+Dropdown values are stored as DDxxx IDs and resolved through Dropdown_Master.
+Related guides are stored as readable keys and resolved through Related_Guide_Master.
+Do not edit checklist text directly in JavaScript.
 
-## Docs Refactor
-The docs folder now uses consolidated source-of-truth files:
-
-- `AI_HANDOVER_GUIDE.md`
-- `CHANGELOG.md`
-- `CHECKLIST_STANDARD.md`
-- `DECISION_LOG.md`
-- `DEVELOPMENT_RULES.md`
-- `Dispatch_Rules.md`
-- `FULL_AUDIT.md`
-- `RELEASE_REPORT.md`
-- `REQUEST_MAPPING.md`
-- `STANDARD_WORKFLOW.md`
-- `TODO.md`
-
-
-## v5.0.4 Full Audit
-- External Monitor test mapping fixed with context-aware Thai/English wording.
-- Graphics driver checklist normalized to `Graphics Driver Update` only.
-- Duplicate checklist audit completed.
-
-
-## Final Normalization Patch
-- Runtime duplicate checklist issue fixed for Graphics/WLAN/LAN/Bluetooth Driver Update items.
-- Output filename for this user-requested package: `PD_Guide_Toolkit_v5.0.4.zip`.
+Version 5.1.6
