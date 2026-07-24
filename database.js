@@ -1,4 +1,4 @@
-// AUTO-GENERATED from PD_Guide_Database.xlsx for v5.1.6. Edit Excel first, then regenerate this file.
+// AUTO-GENERATED from PD_Guide_Database.xlsx for v5.1.7. Edit Excel first, then regenerate this file.
 const LEVELS = {
   "manual": {
     "name": "Troubleshooting Guide",
@@ -319,7 +319,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -332,7 +333,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -417,7 +419,7 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "Same Issue",
-                "Work Fine",
+                "Working",
                 "Not Test"
               ],
               "text": false,
@@ -431,7 +433,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -444,7 +447,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -543,7 +547,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -556,7 +561,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -627,7 +633,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -640,7 +647,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -711,7 +719,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -724,7 +733,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -771,8 +781,8 @@ const LEVELS = {
               "label": "Caps Lock Toggle",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -813,8 +823,8 @@ const LEVELS = {
               "label": "Display Backlight",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -828,7 +838,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -841,7 +852,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -883,8 +895,8 @@ const LEVELS = {
               "label": "Caps Lock Toggle",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -911,8 +923,8 @@ const LEVELS = {
               "label": "Display Backlight",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -940,7 +952,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -953,7 +966,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -995,8 +1009,8 @@ const LEVELS = {
               "label": "Caps Lock Toggle",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -1052,7 +1066,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1065,7 +1080,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1107,8 +1123,8 @@ const LEVELS = {
               "label": "Caps Lock Toggle",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -1118,7 +1134,7 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "Emergency Reset",
+              "label": "Swap Monitor",
               "optionsList": [
                 "-- Select --",
                 "Same Issue",
@@ -1127,36 +1143,22 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "4. ทดสอบเคลียร์ไฟ (Emergency Reset) โดยถอดสายชาร์จออก และจิ้มรูที่ใต้ตัวเครื่องประมาณ 5-10 วินาที จากนั้นเปิดเครื่องใหม่",
-              "emailEN": "4. Perform an Emergency Reset by disconnecting the adapter and pressing the emergency-reset hole on the bottom of the computer for approximately 5–10 seconds, then turn the computer on again.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "External Monitor Test",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "5. ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
-              "emailEN": "5. Connect an external monitor and check whether an image is displayed.",
+              "emailTH": "4. ทดสอบสลับใช้จอ Monitor ตัวอื่น แล้วตรวจสอบว่าภาพแสดงผลหรือไม่",
+              "emailEN": "4. Test with another monitor and check whether an image is displayed.",
               "relatedGuide": ""
             },
             {
               "label": "Display Backlight",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "6. ตรวจสอบว่ามีแสงสว่างจากหน้าจอหรือไม่",
-              "emailEN": "6. Check whether the display backlight is on.",
+              "emailTH": "5. ตรวจสอบว่ามีแสงสว่างจากหน้าจอหรือไม่",
+              "emailEN": "5. Check whether the display backlight is on.",
               "relatedGuide": ""
             },
             {
@@ -1164,12 +1166,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "7. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "7. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "6. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "6. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -1177,12 +1180,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "8. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "8. Check whether the computer has any other issues.",
+              "emailTH": "7. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "7. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -1219,8 +1223,8 @@ const LEVELS = {
               "label": "Caps Lock Toggle",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -1247,8 +1251,8 @@ const LEVELS = {
               "label": "Display Backlight",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -1276,7 +1280,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1289,7 +1294,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1309,7 +1315,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1378,7 +1385,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1391,7 +1399,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1406,7 +1415,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1475,7 +1485,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1488,7 +1499,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1503,7 +1515,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1526,7 +1539,7 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "External Monitor Test",
+              "label": "Swap Monitor",
               "optionsList": [
                 "-- Select --",
                 "Same Issue",
@@ -1535,36 +1548,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
-              "emailEN": "3. Connect an external monitor and check whether an image is displayed.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "Emergency Reset",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "4. ทดสอบเคลียร์ไฟ (Emergency Reset) โดยถอดสายชาร์จออก และจิ้มรูที่ใต้ตัวเครื่องประมาณ 5-10 วินาที จากนั้นเปิดเครื่องใหม่",
-              "emailEN": "4. Perform an Emergency Reset by disconnecting the adapter and pressing the emergency-reset hole on the bottom of the computer for approximately 5–10 seconds, then turn the computer on again.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "Swap RAM",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "5. ทดสอบสลับ RAM ตัวอื่น (หากสะดวก)",
-              "emailEN": "5. Test with another RAM module, if available.",
+              "emailTH": "3. ทดสอบสลับใช้จอ Monitor ตัวอื่น แล้วตรวจสอบว่าภาพแสดงผลหรือไม่",
+              "emailEN": "3. Test with another monitor and check whether an image is displayed.",
               "relatedGuide": ""
             },
             {
@@ -1572,12 +1557,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "6. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "6. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "4. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "4. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -1585,12 +1571,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "7. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "7. Check whether the computer has any other issues.",
+              "emailTH": "5. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "5. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ]
@@ -1605,7 +1592,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1639,7 +1627,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -1653,14 +1641,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1673,7 +1662,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1688,7 +1678,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1722,7 +1713,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -1736,14 +1727,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1756,7 +1748,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1771,7 +1764,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1805,7 +1799,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -1819,14 +1813,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1839,7 +1834,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1854,7 +1850,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1888,7 +1885,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -1902,14 +1899,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1922,7 +1920,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -1937,7 +1936,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -1971,7 +1971,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -1985,14 +1985,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2005,7 +2006,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2025,7 +2027,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2038,7 +2041,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2072,7 +2076,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2086,14 +2090,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2106,7 +2111,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2121,7 +2127,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2134,7 +2141,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2168,7 +2176,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2182,14 +2190,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2202,7 +2211,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2217,7 +2227,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2230,7 +2241,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2264,7 +2276,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2278,14 +2290,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2298,7 +2311,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2313,7 +2327,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2326,7 +2341,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2360,7 +2376,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2374,14 +2390,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2394,7 +2411,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2409,7 +2427,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2422,7 +2441,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2456,7 +2476,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2470,14 +2490,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2490,7 +2511,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2517,7 +2539,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "1. ทดสอบ Windows Recovery\nหากเข้า Windows ได้ ให้ไปที่ Settings → System → Recovery → Reset This PC\nหากเข้า Windows ไม่ได้ ให้เข้า Windows Recovery → Troubleshoot → Reset This PC\nเลือก Keep my files หรือ Remove everything แล้วดำเนินการตามขั้นตอนจนเสร็จ",
               "emailEN": "1. Test Windows Recovery. If Windows is accessible, go to Settings → System → Recovery → Reset This PC. If Windows is not accessible, enter Windows Recovery → Troubleshoot → Reset This PC. Select Keep my files or Remove everything, then follow the on-screen instructions until complete.",
-              "relatedGuide": "Reset This PC | Startup Repair | System Restore | Uninstall Windows Update"
+              "relatedGuide": "RESET_THIS_PC | STARTUP_REPAIR | SYSTEM_RESTORE | UNINSTALL_WINDOWS_UPDATE"
             },
             {
               "label": "Power Reset",
@@ -2545,7 +2567,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2559,14 +2581,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2579,7 +2602,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2601,7 +2625,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "1. ทดสอบ Windows Recovery\nหากเข้า Windows ได้ ให้ไปที่ Settings → System → Recovery → Reset This PC\nหากเข้า Windows ไม่ได้ ให้เข้า Windows Recovery → Troubleshoot → Reset This PC\nเลือก Keep my files หรือ Remove everything แล้วดำเนินการตามขั้นตอนจนเสร็จ",
               "emailEN": "1. Test Windows Recovery. If Windows is accessible, go to Settings → System → Recovery → Reset This PC. If Windows is not accessible, enter Windows Recovery → Troubleshoot → Reset This PC. Select Keep my files or Remove everything, then follow the on-screen instructions until complete.",
-              "relatedGuide": "Reset This PC | Startup Repair | System Restore | Uninstall Windows Update"
+              "relatedGuide": "RESET_THIS_PC | STARTUP_REPAIR | SYSTEM_RESTORE | UNINSTALL_WINDOWS_UPDATE"
             },
             {
               "label": "Power Reset",
@@ -2629,7 +2653,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2643,14 +2667,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2663,7 +2688,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2685,7 +2711,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "1. ทดสอบ Windows Recovery\nหากเข้า Windows ได้ ให้ไปที่ Settings → System → Recovery → Reset This PC\nหากเข้า Windows ไม่ได้ ให้เข้า Windows Recovery → Troubleshoot → Reset This PC\nเลือก Keep my files หรือ Remove everything แล้วดำเนินการตามขั้นตอนจนเสร็จ",
               "emailEN": "1. Test Windows Recovery. If Windows is accessible, go to Settings → System → Recovery → Reset This PC. If Windows is not accessible, enter Windows Recovery → Troubleshoot → Reset This PC. Select Keep my files or Remove everything, then follow the on-screen instructions until complete.",
-              "relatedGuide": "Reset This PC | Startup Repair | System Restore | Uninstall Windows Update"
+              "relatedGuide": "RESET_THIS_PC | STARTUP_REPAIR | SYSTEM_RESTORE | UNINSTALL_WINDOWS_UPDATE"
             },
             {
               "label": "Power Reset",
@@ -2713,7 +2739,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2727,14 +2753,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2747,7 +2774,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2769,7 +2797,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "1. ทดสอบ Windows Recovery\nหากเข้า Windows ได้ ให้ไปที่ Settings → System → Recovery → Reset This PC\nหากเข้า Windows ไม่ได้ ให้เข้า Windows Recovery → Troubleshoot → Reset This PC\nเลือก Keep my files หรือ Remove everything แล้วดำเนินการตามขั้นตอนจนเสร็จ",
               "emailEN": "1. Test Windows Recovery. If Windows is accessible, go to Settings → System → Recovery → Reset This PC. If Windows is not accessible, enter Windows Recovery → Troubleshoot → Reset This PC. Select Keep my files or Remove everything, then follow the on-screen instructions until complete.",
-              "relatedGuide": "Reset This PC | Startup Repair | System Restore | Uninstall Windows Update"
+              "relatedGuide": "RESET_THIS_PC | STARTUP_REPAIR | SYSTEM_RESTORE | UNINSTALL_WINDOWS_UPDATE"
             },
             {
               "label": "Power Reset",
@@ -2797,7 +2825,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2811,14 +2839,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2831,7 +2860,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2853,7 +2883,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "1. ทดสอบ Windows Recovery\nหากเข้า Windows ได้ ให้ไปที่ Settings → System → Recovery → Reset This PC\nหากเข้า Windows ไม่ได้ ให้เข้า Windows Recovery → Troubleshoot → Reset This PC\nเลือก Keep my files หรือ Remove everything แล้วดำเนินการตามขั้นตอนจนเสร็จ",
               "emailEN": "1. Test Windows Recovery. If Windows is accessible, go to Settings → System → Recovery → Reset This PC. If Windows is not accessible, enter Windows Recovery → Troubleshoot → Reset This PC. Select Keep my files or Remove everything, then follow the on-screen instructions until complete.",
-              "relatedGuide": "Reset This PC | Startup Repair | System Restore | Uninstall Windows Update"
+              "relatedGuide": "RESET_THIS_PC | STARTUP_REPAIR | SYSTEM_RESTORE | UNINSTALL_WINDOWS_UPDATE"
             },
             {
               "label": "Power Reset",
@@ -2881,7 +2911,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -2895,14 +2925,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2915,7 +2946,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -2935,7 +2967,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -2983,14 +3016,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3003,7 +3037,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3018,7 +3053,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3066,14 +3102,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3086,7 +3123,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3101,7 +3139,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3149,14 +3188,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3169,7 +3209,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3184,7 +3225,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3193,7 +3235,7 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "External Monitor Test",
+              "label": "Swap Monitor",
               "optionsList": [
                 "-- Select --",
                 "Same Issue",
@@ -3202,8 +3244,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "2. ทดสอบต่อจอนอกและตรวจสอบว่าภาพออกหรือไม่",
-              "emailEN": "2. Connect an external monitor and check whether an image is displayed.",
+              "emailTH": "2. ทดสอบสลับใช้จอ Monitor ตัวอื่น แล้วตรวจสอบว่าภาพแสดงผลหรือไม่",
+              "emailEN": "2. Test with another monitor and check whether an image is displayed.",
               "relatedGuide": ""
             },
             {
@@ -3232,14 +3274,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3252,7 +3295,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3267,7 +3311,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3315,14 +3360,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3335,7 +3381,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3410,7 +3457,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -3424,14 +3471,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3444,7 +3492,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3511,7 +3560,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -3525,14 +3574,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3545,7 +3595,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3612,7 +3663,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -3626,14 +3677,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3646,7 +3698,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3713,7 +3766,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -3727,14 +3780,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3747,7 +3801,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3814,7 +3869,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -3828,14 +3883,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3848,7 +3904,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -3931,7 +3988,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -3945,14 +4002,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "6. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -3965,7 +4023,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4045,7 +4104,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -4059,14 +4118,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "6. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4079,7 +4139,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4159,7 +4220,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -4173,14 +4234,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "6. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4193,7 +4255,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4273,7 +4336,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -4287,14 +4350,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "6. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4307,7 +4371,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4387,7 +4452,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -4401,14 +4466,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "6. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4421,7 +4487,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4441,7 +4508,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4454,7 +4522,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4488,7 +4557,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -4521,7 +4590,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4534,7 +4604,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4549,7 +4620,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4562,7 +4634,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4596,7 +4669,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -4631,7 +4704,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4644,7 +4718,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4659,7 +4734,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4672,7 +4748,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4706,7 +4783,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -4741,7 +4818,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4754,7 +4832,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4769,7 +4848,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4782,7 +4862,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4816,7 +4897,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -4851,7 +4932,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4864,7 +4946,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -4879,7 +4962,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4892,7 +4976,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4926,7 +5011,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -4961,7 +5046,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -4974,7 +5060,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5043,7 +5130,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -5057,7 +5144,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Swap Ram",
@@ -5092,20 +5179,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนแนบ Dump File เพื่อตรวจสอบเพิ่มเติม\nโดยไปที่ C:\\Windows\\Minidump หากมีหลายไฟล์ รบกวนบีบอัดเป็นไฟล์ ZIP แล้วแนบส่งกลับมา",
               "emailEN": "8. Please attach the dump file for further investigation. Go to C:\\Windows\\Minidump. If there are multiple files, compress them into a ZIP file and attach it.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5118,7 +5207,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5184,7 +5274,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -5198,7 +5288,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap RAM",
@@ -5233,20 +5323,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
               "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5259,7 +5351,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5325,7 +5418,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -5339,7 +5432,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap RAM",
@@ -5374,20 +5467,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
               "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5400,7 +5495,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5466,7 +5562,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -5480,60 +5576,34 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
-            },
-            {
-              "label": "Swap RAM",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "6. ทดสอบสลับ RAM ตัวอื่น (หากสะดวก)",
-              "emailEN": "6. Test with another RAM module, if available.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "Swap SSD",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "7. ทดสอบสลับ SSD ตัวอื่น (หากสะดวก)",
-              "emailEN": "7. Test with another SSD, if available.",
-              "relatedGuide": ""
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Event Viewer / Dump File Collected",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
-              "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "emailTH": "6. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
+              "emailEN": "6. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "9. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "9. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "7. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "7. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -5541,12 +5611,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "10. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "10. Check whether the computer has any other issues.",
+              "emailTH": "8. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "8. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -5607,7 +5678,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -5621,7 +5692,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap RAM",
@@ -5656,20 +5727,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
               "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5682,7 +5755,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5718,7 +5792,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5738,7 +5813,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Lenovo Vantage Update",
@@ -5765,7 +5840,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Swap Ram",
@@ -5800,20 +5875,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนแนบ Dump File เพื่อตรวจสอบเพิ่มเติม โดยไปที่ C:\\Windows\\Minidump หากมีหลายไฟล์ รบกวนบีบอัดเป็นไฟล์ ZIP แล้วแนบส่งกลับมา",
               "emailEN": "8. Please attach the dump file for further investigation by going to C:\\Windows\\Minidump. If there are multiple files, compress them into a ZIP file and attach it.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5826,7 +5903,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5857,7 +5935,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5877,7 +5956,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Lenovo Vantage Update",
@@ -5905,7 +5984,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Swap RAM",
@@ -5940,20 +6019,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
               "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -5966,7 +6047,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -5997,7 +6079,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6017,7 +6100,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Lenovo Vantage Update",
@@ -6045,7 +6128,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Swap RAM",
@@ -6080,20 +6163,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
               "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6106,7 +6191,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6137,7 +6223,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6157,7 +6244,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Lenovo Vantage Update",
@@ -6185,60 +6272,34 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
-            },
-            {
-              "label": "Swap RAM",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "6. ทดสอบสลับ RAM ตัวอื่น (หากสะดวก)",
-              "emailEN": "6. Test with another RAM module, if available.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "Swap SSD",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "7. ทดสอบสลับ SSD ตัวอื่น (หากสะดวก)",
-              "emailEN": "7. Test with another SSD, if available.",
-              "relatedGuide": ""
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Event Viewer / Dump File Collected",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
-              "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "emailTH": "6. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
+              "emailEN": "6. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "9. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "9. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "7. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "7. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -6246,12 +6307,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "10. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "10. Check whether the computer has any other issues.",
+              "emailTH": "8. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "8. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -6277,7 +6339,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6297,7 +6360,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Lenovo Vantage Update",
@@ -6325,7 +6388,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Swap RAM",
@@ -6360,20 +6423,22 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "8. รบกวนส่ง Dump file เพื่อตรวจสอบเพิ่มเติม",
               "emailEN": "8. Please send the dump file for further checking. Open File Explorer → C:\\Windows\\Minidump, copy the .dmp file and send it by email. If there is no file, check C:\\Windows\\MEMORY.DMP.",
-              "relatedGuide": "Dump File"
+              "relatedGuide": "DUMP_FILE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6386,7 +6451,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6475,7 +6541,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6488,7 +6555,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6501,7 +6569,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6586,7 +6655,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6599,7 +6669,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6612,7 +6683,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6697,7 +6769,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6710,7 +6783,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6723,7 +6797,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6808,7 +6883,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6821,7 +6897,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6834,7 +6911,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -6937,7 +7015,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -6950,7 +7029,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7035,7 +7115,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7048,7 +7129,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7061,7 +7143,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7102,14 +7185,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "2. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7122,7 +7206,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7137,7 +7222,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7171,14 +7257,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "3. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7191,7 +7278,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7206,7 +7294,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7240,14 +7329,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "3. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7260,7 +7350,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7275,7 +7366,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7309,14 +7401,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "3. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7329,7 +7422,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7344,7 +7438,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7378,14 +7473,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "3. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7398,7 +7494,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7465,14 +7562,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7485,7 +7583,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7549,7 +7648,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -7563,14 +7662,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7583,7 +7683,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7647,7 +7748,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -7661,14 +7762,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7681,7 +7783,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7745,7 +7848,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -7759,14 +7862,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7779,7 +7883,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7843,7 +7948,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -7857,14 +7962,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "5. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7877,7 +7983,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -7957,7 +8064,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -7970,7 +8078,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8040,7 +8149,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8053,7 +8163,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8123,7 +8234,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8136,7 +8248,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8224,7 +8337,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8237,7 +8351,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8308,7 +8423,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8321,7 +8437,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8392,7 +8509,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8405,7 +8523,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8507,7 +8626,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8520,7 +8640,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8617,7 +8738,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8630,7 +8752,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8727,7 +8850,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8740,7 +8864,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8816,7 +8941,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8829,7 +8955,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -8914,7 +9041,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -8927,7 +9055,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9012,7 +9141,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9025,7 +9155,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9100,7 +9231,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9113,7 +9245,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9183,7 +9316,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9196,7 +9330,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9266,7 +9401,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9279,7 +9415,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9355,7 +9492,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9368,7 +9506,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9425,7 +9564,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9438,7 +9578,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9495,7 +9636,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9508,7 +9650,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9609,7 +9752,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9622,7 +9766,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9698,7 +9843,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9711,7 +9857,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9782,7 +9929,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9795,7 +9943,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9862,7 +10011,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9875,7 +10025,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9886,7 +10037,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9943,7 +10096,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -9956,7 +10110,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -9967,7 +10122,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10024,7 +10181,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10037,7 +10195,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10048,7 +10207,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10082,7 +10243,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10095,7 +10257,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10108,7 +10271,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10119,7 +10283,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10148,7 +10314,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10161,7 +10328,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10174,7 +10342,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10185,7 +10354,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10214,7 +10385,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10227,7 +10399,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10240,7 +10413,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10251,7 +10425,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10280,7 +10456,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10293,7 +10470,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10306,7 +10484,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10317,7 +10496,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10426,7 +10607,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10439,7 +10621,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10539,7 +10722,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10552,7 +10736,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10595,7 +10780,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. ตรวจสอบ Battery Health โดยเปิด Lenovo Vantage → Device → Power → จากนั้นตรวจสอบหัวข้อ Battery Health พร้อมแนบถาพถ่าย",
               "emailEN": "2. Open Lenovo Vantage → Device → Power, then check Battery Health and attach a photo of the result.",
-              "relatedGuide": "Battery Health"
+              "relatedGuide": "BATTERY_HEALTH"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -10609,27 +10794,29 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Battery Report Collected",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "4. รบกวนแนบ Battery Report เพื่อให้ทางเราตรวจสอบเพิ่มเติม\nโดยเปิด CMD → พิมพ์คำสั่ง powercfg /batteryreport\nจากนั้นเปิด This PC → Drive C → Windows → System32 และหาชื่อไฟล์ battery-report.html",
               "emailEN": "4. Please attach the Battery Report for further investigation. Open Command Prompt → enter powercfg /batteryreport, then open This PC → Drive C → Windows → System32 and locate the battery-report.html file.",
-              "relatedGuide": "Battery Report"
+              "relatedGuide": "BATTERY_REPORT"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10642,7 +10829,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10657,13 +10845,14 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "1. รบกวนแนบ Battery Report เพื่อให้ทางเราตรวจสอบเพิ่มเติม\nโดยเปิด CMD → พิมพ์คำสั่ง powercfg /batteryreport\nจากนั้นเปิด This PC → Drive C → Windows → System32 และหาชื่อไฟล์ battery-report.html",
               "emailEN": "1. Please attach the Battery Report for further investigation. Open Command Prompt → enter powercfg /batteryreport, then open This PC → Drive C → Windows → System32 and locate the battery-report.html file.",
-              "relatedGuide": "Battery Report"
+              "relatedGuide": "BATTERY_REPORT"
             },
             {
               "label": "Battery Health in Lenovo Vantage",
@@ -10680,7 +10869,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. รบกวนส่ง Battery Health โดยเปิด Lenovo Vantage -> Device -> Power -> ตรวจสอบหัวข้อ Battery Health",
               "emailEN": "2. Check Battery Health in Lenovo Vantage by opening Lenovo Vantage -> Device -> Power -> Battery Health.",
-              "relatedGuide": "Battery Health"
+              "relatedGuide": "BATTERY_HEALTH"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -10694,7 +10883,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -10715,7 +10904,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10728,7 +10918,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10748,7 +10939,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10762,7 +10954,7 @@ const LEVELS = {
                 "-- Select --",
                 "No",
                 "Yes",
-                "Not sure"
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10775,7 +10967,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10788,7 +10981,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10803,7 +10997,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10817,7 +11012,7 @@ const LEVELS = {
                 "-- Select --",
                 "No",
                 "Yes",
-                "Not sure"
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10830,7 +11025,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10843,7 +11039,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10863,7 +11060,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10911,14 +11109,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10931,7 +11130,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -10946,7 +11146,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -10994,14 +11195,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11014,7 +11216,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11047,8 +11250,8 @@ const LEVELS = {
               "label": "Charging Test",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -11086,27 +11289,29 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ตรวจสอบ Battery Health โดยเปิด Lenovo Vantage → Device → Power → จากนั้นตรวจสอบหัวข้อ Battery Health พร้อมแนบถาพถ่าย",
               "emailEN": "4. Open Lenovo Vantage → Device → Power, then check Battery Health and attach a photo of the result.",
-              "relatedGuide": "Battery Health"
+              "relatedGuide": "BATTERY_HEALTH"
             },
             {
               "label": "Battery Report Collected",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "5. รบกวนแนบ Battery Report เพื่อให้ทางเราตรวจสอบเพิ่มเติม\nโดยเปิด CMD → พิมพ์คำสั่ง powercfg /batteryreport\nจากนั้นเปิด This PC → Drive C → Windows → System32 และหาชื่อไฟล์ battery-report.html",
               "emailEN": "5. Please attach the Battery Report for further investigation. Open Command Prompt → enter powercfg /batteryreport, then open This PC → Drive C → Windows → System32 and locate the battery-report.html file.",
-              "relatedGuide": "Battery Report"
+              "relatedGuide": "BATTERY_REPORT"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11119,7 +11324,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11147,8 +11353,8 @@ const LEVELS = {
               "label": "Charging Test",
               "optionsList": [
                 "-- Select --",
-                "Yes",
                 "No",
+                "Yes",
                 "Not Test"
               ],
               "text": false,
@@ -11186,27 +11392,29 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ตรวจสอบ Battery Health โดยเปิด Lenovo Vantage → Device → Power → จากนั้นตรวจสอบหัวข้อ Battery Health พร้อมแนบถาพถ่าย",
               "emailEN": "4. Open Lenovo Vantage → Device → Power, then check Battery Health and attach a photo of the result.",
-              "relatedGuide": "Battery Health"
+              "relatedGuide": "BATTERY_HEALTH"
             },
             {
               "label": "Battery Report Collected",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "5. รบกวนแนบ Battery Report เพื่อให้ทางเราตรวจสอบเพิ่มเติม\nโดยเปิด CMD → พิมพ์คำสั่ง powercfg /batteryreport\nจากนั้นเปิด This PC → Drive C → Windows → System32 และหาชื่อไฟล์ battery-report.html",
               "emailEN": "5. Please attach the Battery Report for further investigation. Open Command Prompt → enter powercfg /batteryreport, then open This PC → Drive C → Windows → System32 and locate the battery-report.html file.",
-              "relatedGuide": "Battery Report"
+              "relatedGuide": "BATTERY_REPORT"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11219,7 +11427,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11328,7 +11537,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11341,7 +11551,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11441,7 +11652,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11454,7 +11666,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11554,7 +11767,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11567,7 +11781,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11667,7 +11882,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11680,7 +11896,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11780,7 +11997,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11793,7 +12011,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -11908,7 +12127,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -11921,7 +12141,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12031,7 +12252,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12044,7 +12266,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12132,7 +12355,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12145,7 +12369,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12244,7 +12469,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12257,7 +12483,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12356,7 +12583,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12369,7 +12597,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12468,7 +12697,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12481,7 +12711,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12580,7 +12811,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12593,7 +12825,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12694,7 +12927,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12707,7 +12941,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12816,7 +13051,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12829,7 +13065,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12938,7 +13175,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -12951,7 +13189,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -12976,20 +13215,6 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "Swap HDMI Cable",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "2. ทดสอบสลับสาย HDMI เส้นอื่น",
-              "emailEN": "2. Test with another HDMI cable.",
-              "relatedGuide": ""
-            },
-            {
               "label": "Swap Monitor",
               "optionsList": [
                 "-- Select --",
@@ -12999,8 +13224,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. ทดสอบสลับ Monitor ตัวอื่น",
-              "emailEN": "3. Test with another monitor.",
+              "emailTH": "2. ทดสอบสลับ Monitor ตัวอื่น",
+              "emailEN": "2. Test with another monitor.",
               "relatedGuide": ""
             },
             {
@@ -13012,8 +13237,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "4. อัปเดตไดรเวอร์ Graphics จากเว็บไซต์ Lenovo ให้เป็นเวอร์ชันล่าสุด",
-              "emailEN": "4. Update the Graphics driver from the Lenovo website to the latest version.",
+              "emailTH": "3. อัปเดตไดรเวอร์ Graphics จากเว็บไซต์ Lenovo ให้เป็นเวอร์ชันล่าสุด",
+              "emailEN": "3. Update the Graphics driver from the Lenovo website to the latest version.",
               "relatedGuide": ""
             },
             {
@@ -13025,8 +13250,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "5. ทดสอบ Windows Update → ไปที่ Settings → Windows Update จากนั้นตรวจสอบและติดตั้งอัปเดตทั้งหมด",
-              "emailEN": "5. Go to Settings → Windows Update, then check for and install all available updates.",
+              "emailTH": "4. ทดสอบ Windows Update → ไปที่ Settings → Windows Update จากนั้นตรวจสอบและติดตั้งอัปเดตทั้งหมด",
+              "emailEN": "4. Go to Settings → Windows Update, then check for and install all available updates.",
               "relatedGuide": ""
             },
             {
@@ -13038,8 +13263,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "6. ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage",
-              "emailEN": "6. Open Lenovo Vantage and install all available driver updates.",
+              "emailTH": "5. ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage",
+              "emailEN": "5. Open Lenovo Vantage and install all available driver updates.",
               "relatedGuide": ""
             },
             {
@@ -13051,8 +13276,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "7. ทดสอบอัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด",
-              "emailEN": "7. Update the BIOS to the latest version.",
+              "emailTH": "6. ทดสอบอัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด",
+              "emailEN": "6. Update the BIOS to the latest version.",
               "relatedGuide": ""
             },
             {
@@ -13060,12 +13285,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "8. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "8. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "7. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "7. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -13073,12 +13299,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "9. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "9. Check whether the computer has any other issues.",
+              "emailTH": "8. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "8. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ]
@@ -13161,7 +13388,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13174,7 +13402,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13259,7 +13488,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13272,7 +13502,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13357,7 +13588,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13370,7 +13602,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13458,7 +13691,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13471,7 +13705,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13560,7 +13795,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13573,7 +13809,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13644,7 +13881,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13657,7 +13895,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13728,7 +13967,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13741,7 +13981,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13812,7 +14053,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13825,7 +14067,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13896,7 +14139,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -13909,7 +14153,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -13999,7 +14244,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14012,7 +14258,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14097,7 +14344,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14110,7 +14358,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14195,7 +14444,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14208,7 +14458,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14293,7 +14544,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14306,7 +14558,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14406,7 +14659,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14419,7 +14673,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14430,20 +14685,6 @@ const LEVELS = {
           ],
           "tiny": [
             {
-              "label": "Swap DisplayPort Cable",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "1. ทดสอบสลับด้วย DisplayPort Cable อื่น",
-              "emailEN": "1. Test with another DisplayPort Cable.",
-              "relatedGuide": ""
-            },
-            {
               "label": "Swap Monitor",
               "optionsList": [
                 "-- Select --",
@@ -14453,8 +14694,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "2. ทดสอบสลับ Monitor ตัวอื่น",
-              "emailEN": "2. Test with another monitor.",
+              "emailTH": "1. ทดสอบสลับ Monitor ตัวอื่น",
+              "emailEN": "1. Test with another monitor.",
               "relatedGuide": ""
             },
             {
@@ -14466,8 +14707,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. อัปเดตไดรเวอร์ Graphics จากเว็บไซต์ Lenovo ให้เป็นเวอร์ชันล่าสุด",
-              "emailEN": "3. Update the Graphics driver from the Lenovo website to the latest version.",
+              "emailTH": "2. อัปเดตไดรเวอร์ Graphics จากเว็บไซต์ Lenovo ให้เป็นเวอร์ชันล่าสุด",
+              "emailEN": "2. Update the Graphics driver from the Lenovo website to the latest version.",
               "relatedGuide": ""
             },
             {
@@ -14479,8 +14720,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "4. ทดสอบ Windows Update → ไปที่ Settings → Windows Update จากนั้นตรวจสอบและติดตั้งอัปเดตทั้งหมด",
-              "emailEN": "4. Go to Settings → Windows Update, then check for and install all available updates.",
+              "emailTH": "3. ทดสอบ Windows Update → ไปที่ Settings → Windows Update จากนั้นตรวจสอบและติดตั้งอัปเดตทั้งหมด",
+              "emailEN": "3. Go to Settings → Windows Update, then check for and install all available updates.",
               "relatedGuide": ""
             },
             {
@@ -14492,8 +14733,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "5. ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage",
-              "emailEN": "5. Open Lenovo Vantage and install all available driver updates.",
+              "emailTH": "4. ทดสอบอัปเดตไดรเวอร์ทั้งหมดผ่านโปรแกรม Lenovo Vantage",
+              "emailEN": "4. Open Lenovo Vantage and install all available driver updates.",
               "relatedGuide": ""
             },
             {
@@ -14505,8 +14746,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "6. ทดสอบอัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด",
-              "emailEN": "6. Update the BIOS to the latest version.",
+              "emailTH": "5. ทดสอบอัปเดต BIOS ให้เป็นเวอร์ชันล่าสุด",
+              "emailEN": "5. Update the BIOS to the latest version.",
               "relatedGuide": ""
             },
             {
@@ -14514,12 +14755,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "7. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "7. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "6. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "6. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -14527,12 +14769,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "8. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "8. Check whether the computer has any other issues.",
+              "emailTH": "7. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "7. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ]
@@ -14627,7 +14870,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14640,7 +14884,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14735,7 +14980,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14748,7 +14994,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14836,7 +15083,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14849,7 +15097,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -14932,7 +15181,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -14945,7 +15195,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15045,7 +15296,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15058,7 +15310,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15158,7 +15411,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15171,7 +15425,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15194,7 +15449,9 @@ const LEVELS = {
             {
               "label": "Specific Keys Listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15235,7 +15492,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15248,7 +15506,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15261,7 +15520,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15302,7 +15563,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15315,7 +15577,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15326,7 +15589,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15339,7 +15604,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15380,7 +15647,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15393,7 +15661,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15404,7 +15673,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15417,7 +15688,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15458,7 +15731,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15471,7 +15745,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15482,7 +15757,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15495,7 +15772,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15536,7 +15815,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15549,7 +15829,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15560,7 +15841,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15635,7 +15918,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15648,7 +15932,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15719,7 +16004,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15732,7 +16018,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15743,7 +16030,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15761,7 +16050,9 @@ const LEVELS = {
             {
               "label": "Specific Keys Listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15774,7 +16065,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15829,7 +16121,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15842,7 +16135,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15855,7 +16149,9 @@ const LEVELS = {
             {
               "label": "Specific Keys Listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15868,7 +16164,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15937,7 +16234,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -15950,7 +16248,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15961,7 +16260,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15974,7 +16275,9 @@ const LEVELS = {
             {
               "label": "Specific Keys Listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -15987,7 +16290,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16042,7 +16346,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16055,7 +16360,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16066,7 +16372,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16079,7 +16387,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16092,7 +16402,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16147,7 +16458,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16160,7 +16472,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16171,7 +16484,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16184,7 +16499,9 @@ const LEVELS = {
             {
               "label": "Specific Keys Listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16197,7 +16514,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16252,7 +16570,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16265,7 +16584,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16276,7 +16596,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16350,7 +16672,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16363,7 +16686,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16420,7 +16744,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16433,7 +16758,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16444,7 +16770,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16518,7 +16846,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16531,7 +16860,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16588,7 +16918,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16601,7 +16932,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16642,7 +16974,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. เปิด Lenovo Vantage → Device → Input & Accessories → ตรวจสอบหัวข้อ Fn and Ctrl Key Swap และตั้งค่าเป็น Disabled แล้วทดสอบการใช้งานอีกครั้ง",
               "emailEN": "2. Open Lenovo Vantage → Device → Input & Accessories → Fn and Ctrl Key Swap, set it to Disabled, then test again.",
-              "relatedGuide": "Fn & Ctrl Key Swap"
+              "relatedGuide": "FN_AND_CTRL_KEY_SWAP"
             },
             {
               "label": "USB Keyboard Test",
@@ -16663,7 +16995,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16676,7 +17009,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16724,7 +17058,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16751,7 +17086,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16764,7 +17100,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16807,7 +17144,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16834,7 +17172,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16847,7 +17186,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16890,7 +17230,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16917,7 +17258,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -16930,7 +17272,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16941,7 +17284,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -16984,7 +17329,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17011,7 +17357,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17024,7 +17371,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17042,7 +17390,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17083,7 +17433,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17096,7 +17447,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17107,7 +17459,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17120,7 +17474,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17161,7 +17517,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17174,7 +17531,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17185,7 +17543,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17198,7 +17558,9 @@ const LEVELS = {
             {
               "label": "Specific keys listed",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17239,7 +17601,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17252,7 +17615,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17263,7 +17627,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17339,7 +17705,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17352,7 +17719,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17363,7 +17731,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17434,7 +17804,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17447,7 +17818,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17458,7 +17830,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17529,7 +17903,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17542,7 +17917,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17553,7 +17929,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17620,7 +17998,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17633,7 +18012,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17644,7 +18024,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17701,7 +18083,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17714,7 +18097,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17725,7 +18109,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17782,7 +18168,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17795,7 +18182,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17806,7 +18194,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17863,7 +18253,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17876,7 +18267,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17887,7 +18279,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17944,7 +18338,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -17957,7 +18352,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -17968,7 +18364,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18044,7 +18442,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18057,7 +18456,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18068,7 +18468,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18139,7 +18541,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18152,7 +18555,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18163,7 +18567,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18234,7 +18640,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18247,7 +18654,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18258,7 +18666,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18329,7 +18739,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18342,7 +18753,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18353,7 +18765,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18424,7 +18838,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18437,7 +18852,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18448,7 +18864,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18496,7 +18914,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18509,7 +18928,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18520,7 +18940,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18563,7 +18985,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18576,7 +18999,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18587,7 +19011,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18630,7 +19056,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18643,7 +19070,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18654,7 +19082,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18697,7 +19127,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18710,7 +19141,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18721,7 +19153,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18764,7 +19198,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18777,7 +19212,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18788,7 +19224,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18836,7 +19274,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18849,7 +19288,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18860,7 +19300,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18903,7 +19345,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18916,7 +19359,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18927,7 +19371,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18970,7 +19416,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -18983,7 +19430,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -18994,7 +19442,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19037,7 +19487,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19050,7 +19501,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19061,7 +19513,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19104,7 +19558,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19117,7 +19572,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19128,7 +19584,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19225,14 +19683,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
               "emailEN": "6. Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.",
-              "relatedGuide": "System Restore"
+              "relatedGuide": "SYSTEM_RESTORE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19245,7 +19704,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19337,14 +19797,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
               "emailEN": "6. Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.",
-              "relatedGuide": "System Restore"
+              "relatedGuide": "SYSTEM_RESTORE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19357,7 +19818,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19449,14 +19911,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
               "emailEN": "6. Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.",
-              "relatedGuide": "System Restore"
+              "relatedGuide": "SYSTEM_RESTORE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19469,7 +19932,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19561,14 +20025,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "6. ทดสอบ Windows Recovery โดยเลือกวิธีที่เหมาะสมกับอาการ เช่น Reset This PC, Startup Repair, System Restore หรือ Uninstall Updates",
               "emailEN": "6. Perform Windows Recovery using the most appropriate recovery option for the issue, such as Reset This PC, Startup Repair, System Restore, or Uninstall Updates.",
-              "relatedGuide": "System Restore"
+              "relatedGuide": "SYSTEM_RESTORE"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19581,7 +20046,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19633,7 +20099,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19646,7 +20113,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19659,7 +20127,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19672,7 +20141,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19719,7 +20189,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19732,7 +20203,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19821,7 +20293,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19834,7 +20307,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19868,7 +20342,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19894,7 +20369,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19907,7 +20383,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19927,7 +20404,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19940,7 +20418,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19953,7 +20432,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19966,7 +20446,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -19979,7 +20460,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -19999,7 +20481,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20012,7 +20495,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20025,7 +20509,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20038,7 +20523,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20100,7 +20586,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20113,7 +20600,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20138,7 +20626,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20165,7 +20654,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "Off",
-                "On"
+                "On",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20234,7 +20724,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20247,7 +20738,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20262,7 +20754,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20289,7 +20782,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "Off",
-                "On"
+                "On",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20372,7 +20866,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20385,7 +20880,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20400,7 +20896,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20427,7 +20924,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "Off",
-                "On"
+                "On",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20510,7 +21008,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20523,7 +21022,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20538,7 +21038,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20565,7 +21066,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "Off",
-                "On"
+                "On",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20648,7 +21150,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20661,7 +21164,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20676,7 +21180,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20703,7 +21208,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "Off",
-                "On"
+                "On",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20786,7 +21292,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20799,7 +21306,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20888,7 +21396,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20901,7 +21410,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -20914,7 +21424,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -20957,7 +21468,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21012,7 +21524,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21025,7 +21538,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21038,7 +21552,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21081,7 +21596,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21136,7 +21652,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21149,7 +21666,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21162,7 +21680,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21205,7 +21724,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21260,7 +21780,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21273,7 +21794,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21286,7 +21808,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21329,7 +21852,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21384,7 +21908,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21397,7 +21922,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21410,7 +21936,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21444,7 +21971,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21499,7 +22027,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21512,7 +22041,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21527,7 +22057,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21610,7 +22141,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21623,7 +22155,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21638,7 +22171,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21721,7 +22255,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21734,7 +22269,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21749,7 +22285,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21832,7 +22369,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21845,7 +22383,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21860,7 +22399,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21943,7 +22483,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -21956,7 +22497,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -21989,8 +22531,8 @@ const LEVELS = {
               "label": "WWAN Enabled in Windows",
               "optionsList": [
                 "-- Select --",
-                "On",
                 "Off",
+                "On",
                 "Not Test"
               ],
               "text": false,
@@ -22031,7 +22573,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22044,7 +22587,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22132,7 +22676,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22145,7 +22690,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22170,7 +22716,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22190,7 +22737,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. เข้า BIOS → กด F9 เพื่อ Setup Defaults → กด F10 → เลือก Yes → จากนั้นทดสอบการใช้งานอีกครั้ง",
               "emailEN": "2. Enter BIOS → press F9 to load Setup Defaults → press F10 → select Yes, then test again.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap SSD",
@@ -22211,7 +22758,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22224,7 +22772,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22239,7 +22788,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22252,7 +22802,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22272,7 +22823,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap SSD",
@@ -22293,7 +22844,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22306,7 +22858,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22321,7 +22874,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22334,7 +22888,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22354,7 +22909,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap SSD",
@@ -22375,7 +22930,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22388,7 +22944,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22403,7 +22960,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22416,7 +22974,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22436,33 +22995,20 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
-            },
-            {
-              "label": "Swap SSD",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "4. ทดสอบสลับ SSD ตัวอื่น (หากสะดวก)",
-              "emailEN": "4. Test with another SSD, if available.",
-              "relatedGuide": ""
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "5. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "5. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "4. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "4. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -22470,12 +23016,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "6. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "6. Check whether the computer has any other issues.",
+              "emailTH": "5. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "5. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -22485,7 +23032,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22498,7 +23046,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22518,7 +23067,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap SSD",
@@ -22539,7 +23088,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22552,7 +23102,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22572,7 +23123,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22627,7 +23179,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22640,7 +23193,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22655,7 +23209,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22703,7 +23258,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
               "emailEN": "4. Recreate the Windows installation USB and test again.",
-              "relatedGuide": "SSD Not Found During Install OS"
+              "relatedGuide": "SSD_NOT_FOUND_DURING_INSTALL_OS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -22717,14 +23272,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22737,7 +23293,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22752,7 +23309,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22800,7 +23358,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
               "emailEN": "4. Recreate the Windows installation USB and test again.",
-              "relatedGuide": "SSD Not Found During Install OS"
+              "relatedGuide": "SSD_NOT_FOUND_DURING_INSTALL_OS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -22814,14 +23372,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22834,7 +23393,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22849,7 +23409,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22897,7 +23458,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
               "emailEN": "4. Recreate the Windows installation USB and test again.",
-              "relatedGuide": "SSD Not Found During Install OS"
+              "relatedGuide": "SSD_NOT_FOUND_DURING_INSTALL_OS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -22911,14 +23472,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22931,7 +23493,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -22946,7 +23509,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -22994,7 +23558,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. สร้าง USB ติดตั้ง Windows ใหม่แล้วทดสอบอีกครั้ง",
               "emailEN": "4. Recreate the Windows installation USB and test again.",
-              "relatedGuide": "SSD Not Found During Install OS"
+              "relatedGuide": "SSD_NOT_FOUND_DURING_INSTALL_OS"
             },
             {
               "label": "Run Lenovo Diagnostics",
@@ -23008,14 +23572,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "5. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "5. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23028,7 +23593,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23048,7 +23614,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23061,7 +23628,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23081,7 +23649,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap HDD",
@@ -23102,7 +23670,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23115,7 +23684,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23130,7 +23700,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23143,7 +23714,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23163,7 +23735,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Swap HDD",
@@ -23184,7 +23756,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23197,7 +23770,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23292,7 +23866,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23305,7 +23880,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23390,7 +23966,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23403,7 +23980,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23488,7 +24066,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23501,7 +24080,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23586,7 +24166,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23599,7 +24180,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23684,7 +24266,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23697,7 +24280,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23717,7 +24301,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23758,7 +24343,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23771,7 +24357,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23786,7 +24373,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23827,7 +24415,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23840,7 +24429,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23855,7 +24445,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23896,7 +24487,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23909,7 +24501,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23924,7 +24517,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23965,7 +24559,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -23978,7 +24573,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -23993,7 +24589,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24034,7 +24631,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24047,7 +24645,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24137,7 +24736,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24150,7 +24750,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24235,7 +24836,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24248,7 +24850,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24333,7 +24936,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24346,7 +24950,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24366,7 +24971,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24386,7 +24992,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. คลิกขวาที่ไอคอนลำโพง จากนั้นเลือก Sound settings → Microphone → Audio enhancements แล้วเลือก Off จากนั้นทดสอบการใช้งานอีกครั้ง",
               "emailEN": "2. Right-click the speaker icon → Sound settings → Microphone → Audio enhancements, select Off, then test again.",
-              "relatedGuide": "Disable Audio Enhancements"
+              "relatedGuide": "DISABLE_AUDIO_ENHANCEMENTS"
             },
             {
               "label": "Audio Driver Update",
@@ -24421,7 +25027,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24434,7 +25041,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24449,7 +25057,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24504,7 +25113,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24517,7 +25127,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24532,7 +25143,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24587,7 +25199,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24600,7 +25213,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24662,7 +25276,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24675,7 +25290,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24732,7 +25348,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24745,7 +25362,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24802,7 +25420,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24815,7 +25434,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -24905,7 +25525,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -24918,7 +25539,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25003,7 +25625,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25016,7 +25639,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25101,7 +25725,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25114,7 +25739,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25189,7 +25815,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25202,7 +25829,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25273,7 +25901,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25286,7 +25915,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25357,7 +25987,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25370,7 +26001,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25441,7 +26073,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25454,7 +26087,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25525,7 +26159,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25538,7 +26173,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25614,7 +26250,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25627,7 +26264,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25698,7 +26336,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25711,7 +26350,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25787,7 +26427,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25800,7 +26441,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25871,7 +26513,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25884,7 +26527,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -25966,11 +26610,12 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "5. เข้า BIOS → Security → I/O Port Access → Camera → แล้วเปิดใช้งานหากถูกปิดไว้ ",
+              "emailTH": "5. เข้า BIOS → Security → I/O Port Access → Camera → แล้วเปิดใช้งานหากถูกปิดไว้",
               "emailEN": "5. Enter BIOS → Security → I/O Port Access → Camera, then enable it if it is disabled.",
               "relatedGuide": ""
             },
@@ -25979,7 +26624,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -25992,7 +26638,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26064,7 +26711,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26077,7 +26725,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26090,7 +26739,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26162,7 +26812,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26175,7 +26826,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26188,7 +26840,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26250,7 +26903,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26263,7 +26917,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26320,7 +26975,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26333,7 +26989,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26390,7 +27047,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26403,7 +27061,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26506,7 +27165,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26519,7 +27179,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26539,13 +27200,14 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "1. เปิด Lenovo Vantage จากนั้นไปที่ Device → Smart Assist → มองหาหัวข้อ Lock on Leave → จากนั้นกดปิด และทดสอบใช้งานอีกครั้ง",
               "emailEN": "1. Open Lenovo Vantage → Device → Smart Assist → Lock on Leave, turn it off, then test again.",
-              "relatedGuide": "Lock on Leave Function"
+              "relatedGuide": "LOCK_ON_LEAVE_FUNCTION"
             },
             {
               "label": "Uninstall Camera Driver and Restart",
@@ -26579,7 +27241,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26592,7 +27255,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26617,7 +27281,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26664,14 +27329,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26684,7 +27350,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26699,7 +27366,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26747,14 +27415,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26767,7 +27436,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26782,7 +27452,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26830,14 +27501,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26850,7 +27522,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26865,7 +27538,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26913,14 +27587,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26933,7 +27608,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -26948,7 +27624,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -26996,14 +27673,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27016,7 +27694,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27070,14 +27749,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27090,7 +27770,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27140,7 +27821,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27161,7 +27842,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27174,7 +27856,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27224,7 +27907,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27245,7 +27928,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27258,7 +27942,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27308,7 +27993,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27329,7 +28014,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27342,7 +28028,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27392,7 +28079,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27413,7 +28100,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27426,7 +28114,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27494,14 +28183,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "4. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Physical Damage / Liquid Spilled",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27514,7 +28204,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27550,7 +28241,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "2. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27571,7 +28262,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27584,7 +28276,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27620,7 +28313,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "2. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27641,7 +28334,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27654,7 +28348,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27690,7 +28385,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "2. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27711,7 +28406,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27724,7 +28420,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27760,7 +28457,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "2. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "2. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "BIOS Update",
@@ -27781,7 +28478,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27794,7 +28492,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27871,7 +28570,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27884,7 +28584,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -27958,7 +28659,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -27971,7 +28673,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28045,7 +28748,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28058,7 +28762,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28132,7 +28837,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28145,7 +28851,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28219,7 +28926,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28232,7 +28940,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28282,7 +28991,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28295,7 +29005,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28341,7 +29052,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28354,7 +29066,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28400,7 +29113,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28413,7 +29127,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28459,7 +29174,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28472,7 +29188,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28518,7 +29235,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28531,7 +29249,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28639,7 +29358,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28652,7 +29372,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28741,7 +29462,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28754,7 +29476,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28843,7 +29566,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28856,7 +29580,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -28945,7 +29670,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -28958,7 +29684,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29061,7 +29788,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29074,7 +29802,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29191,7 +29920,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29204,7 +29934,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29320,7 +30051,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29333,7 +30065,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29358,7 +30091,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29371,7 +30105,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29384,7 +30119,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29397,7 +30133,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29412,7 +30149,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29425,7 +30163,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29438,7 +30177,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29451,7 +30191,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29466,7 +30207,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29479,7 +30221,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29492,7 +30235,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29505,7 +30249,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29520,7 +30265,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29533,7 +30279,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29546,7 +30293,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29559,7 +30307,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29579,7 +30328,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29592,7 +30342,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29605,7 +30356,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29618,7 +30370,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29633,7 +30386,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29646,7 +30400,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29659,7 +30414,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29672,7 +30428,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29687,7 +30444,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29700,7 +30458,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29713,7 +30472,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29726,7 +30486,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29741,7 +30502,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29754,7 +30516,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29767,7 +30530,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29780,7 +30544,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29847,7 +30612,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29860,7 +30626,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29917,7 +30684,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -29930,7 +30698,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -29969,30 +30738,17 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "Cmos Battery / Rtc Check",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "3. ตรวจสอบ CMOS Battery / RTC",
-              "emailEN": "3. Check CMOS battery / RTC check.",
-              "relatedGuide": ""
-            },
-            {
               "label": "Error Photo Provided",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "4. แนบรูป Error ที่พบเพิ่มเติม",
-              "emailEN": "4. Attach a photo of the error.",
+              "emailTH": "3. แนบรูป Error ที่พบเพิ่มเติม",
+              "emailEN": "3. Attach a photo of the error.",
               "relatedGuide": ""
             },
             {
@@ -30000,12 +30756,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "5. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "5. Check whether the computer has any other issues.",
+              "emailTH": "4. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "4. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -30057,7 +30814,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30070,7 +30828,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30118,7 +30877,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30131,7 +30891,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30174,7 +30935,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30187,7 +30949,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30230,7 +30993,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30243,7 +31007,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30286,7 +31051,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30299,7 +31065,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30347,7 +31114,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30360,7 +31128,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30403,7 +31172,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30416,7 +31186,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30459,7 +31230,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30472,7 +31244,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30515,7 +31288,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30528,7 +31302,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30576,7 +31351,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30619,7 +31395,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30662,7 +31439,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30705,7 +31483,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30767,7 +31546,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30824,7 +31604,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30863,30 +31644,17 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "Rtc Battery / Cmos Check",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "3. ตรวจสอบ RTC Battery / CMOS",
-              "emailEN": "3. Check RTC battery / CMOS check.",
-              "relatedGuide": ""
-            },
-            {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "4. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "4. Check whether the computer has any other issues.",
+              "emailTH": "3. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "3. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -30938,7 +31706,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -30958,7 +31727,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30971,7 +31741,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -30998,7 +31769,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31013,7 +31785,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31026,7 +31799,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31053,7 +31827,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31068,7 +31843,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31081,7 +31857,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31108,7 +31885,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31123,7 +31901,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31136,7 +31915,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31163,7 +31943,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31183,7 +31964,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31217,7 +31999,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -31231,14 +32013,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31253,7 +32036,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31287,7 +32071,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -31301,14 +32085,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31323,7 +32108,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31357,7 +32143,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -31371,14 +32157,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31393,7 +32180,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31427,7 +32215,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -31441,14 +32229,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31468,7 +32257,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31502,14 +32292,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31524,7 +32315,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31558,14 +32350,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31580,26 +32373,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "1. ตรวจสอบใน BIOS ว่าพบ SSD หรือไม่",
               "emailEN": "1. Enter BIOS and check whether the SSD is detected.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "Swap SSD / HDD",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "2. ทดสอบสลับด้วย SSD / HDD อื่น",
-              "emailEN": "2. Test with another SSD / HDD.",
               "relatedGuide": ""
             },
             {
@@ -31612,21 +32392,22 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
-              "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "emailTH": "2. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
+              "emailEN": "2. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "4. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "4. Check whether the computer has any other issues.",
+              "emailTH": "3. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "3. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -31636,7 +32417,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31670,14 +32452,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31697,7 +32480,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31731,14 +32515,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31753,7 +32538,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31787,14 +32573,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31809,26 +32596,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
               "emailTH": "1. ตรวจสอบหัวข้อ BIOS detects HDD",
               "emailEN": "1. Check BIOS detects HDD.",
-              "relatedGuide": ""
-            },
-            {
-              "label": "Swap HDD",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "2. ทดสอบสลับ HDD ตัวอื่น",
-              "emailEN": "2. Test with another HDD.",
               "relatedGuide": ""
             },
             {
@@ -31841,21 +32615,22 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
-              "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "emailTH": "2. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
+              "emailEN": "2. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "4. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "4. Check whether the computer has any other issues.",
+              "emailTH": "3. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "3. Check whether the computer has any other issues.",
               "relatedGuide": ""
             }
           ],
@@ -31865,7 +32640,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31899,14 +32675,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -31954,7 +32731,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -31967,7 +32745,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32010,7 +32789,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32023,7 +32803,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32066,7 +32847,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32079,7 +32861,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32122,7 +32905,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32135,7 +32919,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32183,7 +32968,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32196,7 +32982,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32239,7 +33026,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32252,7 +33040,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32295,7 +33084,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32308,7 +33098,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32351,7 +33142,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32364,7 +33156,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32384,7 +33177,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32418,7 +33212,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -32432,14 +33226,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32454,7 +33249,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32488,7 +33284,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -32502,14 +33298,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32524,7 +33321,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32558,7 +33356,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -32572,14 +33370,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32594,7 +33393,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32628,7 +33428,7 @@ const LEVELS = {
               "diag": false,
               "emailTH": "3. ทดสอบ Run Diagnostics โดยกด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed พร้อมแนบผลเทส",
               "emailEN": "3. Run Lenovo Diagnostics by repeatedly pressing F10 while turning on the computer → select Run All → Quick → Quick Unattended, then check whether the result is Passed or Failed and attach the test result.",
-              "relatedGuide": "Lenovo Diagnostics"
+              "relatedGuide": "LENOVO_DIAGNOSTICS"
             },
             {
               "label": "Re-install Windows",
@@ -32642,14 +33442,15 @@ const LEVELS = {
               "diag": false,
               "emailTH": "4. รบกวนทดสอบติดตั้ง Windows ใหม่",
               "emailEN": "4. Please reinstall Windows and test again.",
-              "relatedGuide": "Re-install Windows"
+              "relatedGuide": "REINSTALL_WINDOWS"
             },
             {
               "label": "Other Issue",
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32711,7 +33512,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32724,7 +33526,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32781,7 +33584,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32794,7 +33598,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32851,7 +33656,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32864,7 +33670,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32921,7 +33728,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -32934,7 +33742,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -32954,7 +33763,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33009,7 +33819,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33024,7 +33835,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33079,7 +33891,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33094,7 +33907,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33149,7 +33963,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33164,7 +33979,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33219,7 +34035,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33286,7 +34103,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33299,7 +34117,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33310,7 +34129,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33321,20 +34142,6 @@ const LEVELS = {
           ],
           "tiny": [
             {
-              "label": "Swap HDMI / DisplayPort Cable",
-              "optionsList": [
-                "-- Select --",
-                "Same Issue",
-                "Working",
-                "Not Test"
-              ],
-              "text": false,
-              "diag": false,
-              "emailTH": "1. ทดสอบสลับสาย HDMI / DisplayPort เส้นอื่น",
-              "emailEN": "1. Test with another HDMI or DisplayPort cable.",
-              "relatedGuide": ""
-            },
-            {
               "label": "Monitor Test on Other Machine",
               "optionsList": [
                 "-- Select --",
@@ -33344,8 +34151,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "2. ทดสอบจอภาพกับเครื่องอื่น",
-              "emailEN": "2. Test the Monitor with another machine.",
+              "emailTH": "1. ทดสอบจอภาพกับเครื่องอื่น",
+              "emailEN": "1. Test the Monitor with another machine.",
               "relatedGuide": ""
             },
             {
@@ -33358,8 +34165,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. ทดสอบสลับ Monitor ตัวอื่น",
-              "emailEN": "3. Test with another monitor.",
+              "emailTH": "2. ทดสอบสลับ Monitor ตัวอื่น",
+              "emailEN": "2. Test with another monitor.",
               "relatedGuide": ""
             },
             {
@@ -33367,12 +34174,13 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
-              "emailTH": "4. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
-              "emailEN": "4. Check whether the computer has any physical damage or signs of liquid spill.",
+              "emailTH": "3. ตัวเครื่องมีรอยชำรุด เสียหาย หรือมีประวัติน้ำหกใส่หรือไม่",
+              "emailEN": "3. Check whether the computer has any physical damage or signs of liquid spill.",
               "relatedGuide": ""
             },
             {
@@ -33380,23 +34188,26 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "5. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
-              "emailEN": "5. Check whether the computer has any other issues.",
+              "emailTH": "4. ตัวเครื่องมีอาการผิดปกติอื่น ๆ เพิ่มเติมหรือไม่",
+              "emailEN": "4. Check whether the computer has any other issues.",
               "relatedGuide": ""
             },
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
-              "emailTH": "6. ส่งภาพถ่ายอุปกรณ์ที่มีปัญหา ให้เห็น FRU P/N หรือ Barcode",
-              "emailEN": "6. Please send a photo of the affected device showing the FRU P/N or barcode.",
+              "emailTH": "5. ส่งภาพถ่ายอุปกรณ์ที่มีปัญหา ให้เห็น FRU P/N หรือ Barcode",
+              "emailEN": "5. Please send a photo of the affected device showing the FRU P/N or barcode.",
               "relatedGuide": ""
             }
           ]
@@ -33453,7 +34264,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33466,7 +34278,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33477,7 +34290,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33534,7 +34349,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33547,7 +34363,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33558,7 +34375,9 @@ const LEVELS = {
             {
               "label": "FRU P/N",
               "optionsList": [
-                "-- Select --"
+                "-- Select --",
+                "Blank",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33646,7 +34465,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33659,7 +34479,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33698,7 +34519,7 @@ const LEVELS = {
               "relatedGuide": ""
             },
             {
-              "label": "External Monitor Test",
+              "label": "Swap Monitor",
               "optionsList": [
                 "-- Select --",
                 "Same Issue",
@@ -33707,8 +34528,8 @@ const LEVELS = {
               ],
               "text": false,
               "diag": false,
-              "emailTH": "3. ทดสอบต่อจอนอก และตรวจสอบว่าใช้งานได้ปกติหรือไม่",
-              "emailEN": "3. Connect an external monitor and check whether it works normally.",
+              "emailTH": "3. ทดสอบสลับใช้จอ Monitor ตัวอื่น แล้วตรวจสอบว่าภาพแสดงผลหรือไม่",
+              "emailEN": "3. Test with another monitor and check whether an image is displayed.",
               "relatedGuide": ""
             },
             {
@@ -33742,7 +34563,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33755,7 +34577,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33864,7 +34687,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33877,7 +34701,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -33953,7 +34778,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Not Test"
               ],
               "text": false,
               "diag": false,
@@ -33966,7 +34792,8 @@ const LEVELS = {
               "optionsList": [
                 "-- Select --",
                 "No",
-                "Yes"
+                "Yes",
+                "Text Input"
               ],
               "text": true,
               "diag": false,
@@ -34203,7 +35030,7 @@ const MODEL_STRUCTURE_SOURCE = {
         "USB-C Display",
         "USB-A",
         "HDMI",
-        "Sd Card",
+        "SD Card",
         "Audio Jack"
       ]
     },
@@ -34630,7 +35457,7 @@ const MODEL_STRUCTURE_SOURCE = {
         "USB-C Data",
         "HDMI in",
         "HDMI Out",
-        "Sd Card",
+        "SD Card",
         "Audio Jack"
       ]
     },
@@ -34740,15 +35567,12 @@ const MODEL_STRUCTURE = Object.fromEntries(
   ])
 );
 
-// v5.1.6: Restore Toolkit-owned Level 1 entries for every product.
+// v5.1.7: Restore Toolkit-owned Level 1 entries for every product.
 // BIOS, Code, and Troubleshooting Guide remain Toolkit logic/data and are not controlled by Excel model rows.
 Object.keys(MODEL_STRUCTURE).forEach(product => {
   ["bios", "error", "manual"].forEach(levelKey => {
     if(!LEVELS[levelKey]) return;
     if(MODEL_STRUCTURE[product].some(item => item.level === levelKey)) return;
-    MODEL_STRUCTURE[product].push({
-      level: levelKey,
-      symptoms: Object.keys(LEVELS[levelKey].symptoms || {})
-    });
+    MODEL_STRUCTURE[product].push({ level: levelKey, symptoms: Object.keys(LEVELS[levelKey].symptoms || {}) });
   });
 });

@@ -186,7 +186,7 @@ function isFruPnAllowed(){
 
 
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.1.6)
+// Excel-only data rule (v5.1.7)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
@@ -1275,7 +1275,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.1.6 Excel-Only Data Rules
+// v5.1.7 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,
