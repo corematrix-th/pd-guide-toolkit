@@ -1327,6 +1327,12 @@ function getRelatedGuideKeys(){
   )).filter(Boolean);
 }
 
+function stripLegacyItemNumber(text){
+  return String(text || "")
+    .replace(/^\s*(?:ข้อ\s*)?\d+\s*[.\)\-:]\s*/i, "")
+    .trim();
+}
+
 function emailFromChecklist(lang){
   if(isManual()) return lang === "EN" ? (current().emailEN || "") : (current().emailTH || "");
   const field = lang === "EN" ? "emailEN" : "emailTH";
@@ -1336,7 +1342,10 @@ function emailFromChecklist(lang){
   const footer = lang === "EN"
     ? "Once completed, please send us the result and attach any photo or test result if available, so we can proceed with the next step."
     : "หากดำเนินการเรียบร้อยแล้ว รบกวนแจ้งผลกลับ พร้อมแนบรูปหรือผลการทดสอบ (ถ้ามี) เพื่อให้ทางเราดำเนินการในขั้นตอนถัดไปครับ";
-  const body = getQuestions().map(row => String(row[field] || '').trim()).filter(Boolean);
+  const body = getQuestions()
+    .map(row => stripLegacyItemNumber(row[field]))
+    .filter(Boolean)
+    .map((line, index) => `${index + 1}. ${line}`);
   const spacedBody = [];
   body.forEach((line, index) => {
     if(index) spacedBody.push("");
