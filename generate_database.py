@@ -20,7 +20,7 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 XLSX = ROOT / "PD_Guide_Database.xlsx"
 OUTPUT = ROOT / "database.js"
-VERSION = "5.1.7"
+VERSION = "5.1.9"
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
       "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
       "pr": "http://schemas.openxmlformats.org/package/2006/relationships"}
@@ -147,10 +147,14 @@ def main() -> None:
                 raise ValueError(f"Unknown symptom in {sheet_name}: {level_name} > {symptom_name}")
 
             options = dropdowns.get(str(ddid or "").strip(), [])
+            checklist_label = str(checklist).strip()
+            # Specific Keys Listed must keep the free-text input while its dropdown
+            # remains placeholder-only (no Blank / Text Input choices).
+            specific_keys = norm(checklist_label) == norm("Specific Keys Listed")
             q = {
-                "label": str(checklist).strip(),
-                "optionsList": ["-- Select --"] + options,
-                "text": "Text Input" in "|".join(options),
+                "label": checklist_label,
+                "optionsList": ["-- Select --"] if specific_keys else ["-- Select --"] + options,
+                "text": True if specific_keys else "Text Input" in "|".join(options),
                 "diag": False,
                 "emailTH": str(email_th or "").strip(),
                 "emailEN": str(email_en or "").strip(),
@@ -171,8 +175,8 @@ def main() -> None:
 
     js = (
         f"// AUTO-GENERATED from PD_Guide_Database.xlsx for v{VERSION}. Edit Excel first, then regenerate this file.\n"
-        "const LEVELS = " + json.dumps(levels, ensure_ascii=False, indent=2) + ";\n\n"
-        "const MODEL_STRUCTURE_SOURCE = " + json.dumps(model_source, ensure_ascii=False, indent=2) + ";\n\n"
+        "const LEVELS = " + json.dumps(levels, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
+        "const MODEL_STRUCTURE_SOURCE = " + json.dumps(model_source, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
         "const MODEL_STRUCTURE = Object.fromEntries(\n"
         "  Object.entries(MODEL_STRUCTURE_SOURCE).map(([product, levelRows]) => [\n"
         "    product,\n"
