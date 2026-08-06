@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Generate database.js from PD_Guide_Database.xlsx.
 
-The workbook is the master source for product checklist rows. Existing Toolkit-owned
-BIOS, Code and Troubleshooting Guide data are preserved from the current database.js
-file used as the generation template.
+PD_Guide_Database.xlsx is the master source for product-facing data. Toolkit-owned
+BIOS, Code, Troubleshooting Guide and decision logic remain in JavaScript.
 
 Requirements: Python 3 and Node.js. No third-party Python packages are required.
 """
@@ -20,10 +19,11 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 XLSX = ROOT / "PD_Guide_Database.xlsx"
 OUTPUT = ROOT / "database.js"
-VERSION = "5.1.9"
-NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-      "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
-      "pr": "http://schemas.openxmlformats.org/package/2006/relationships"}
+VERSION = "5.2.2"
+NS = {
+    "m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+}
 PRODUCT_SHEETS = {
     "Thinkpad": "thinkpad",
     "Ideapad": "ideapad",
@@ -31,57 +31,76 @@ PRODUCT_SHEETS = {
     "Tiny": "tiny",
     "AIO": "aio",
 }
+REQUIRED_SHEETS = set(PRODUCT_SHEETS) | {"Dropdown_Master", "Related_Guide_Master", "README"}
+PRODUCT_HEADERS = [
+    "LEVEL 1",
+    "SYMPTOM / GUIDE",
+    "CHECKLIST",
+    "Dropdown ID",
+    "Email TH",
+    "Email EN",
+    "Related Guide Key",
+]
+CONTROL_TOKENS = {"blank", "text input"}
+NO_PHYSICAL_DAMAGE_LEVELS = {"windows", "battery", "network", "storage", "audio", "camera"}
+EXTERNAL_FRU_SHEETS = {"Desktop", "Tiny", "AIO"}
+EXTERNAL_FRU_LEVELS = {"monitor", "adapter", "keyboard", "mouse"}
 
 
 def col_index(ref: str) -> int:
-    letters = re.match(r"[A-Z]+", ref).group(0)
+    match = re.match(r"[A-Z]+", ref)
+    if not match:
+        raise ValueError(f"Invalid cell reference: {ref}")
     n = 0
-    for ch in letters:
+    for ch in match.group(0):
         n = n * 26 + ord(ch) - 64
     return n - 1
 
 
 def read_xlsx(path: Path) -> dict[str, list[list[str | None]]]:
+    """Read raw cell values from an XLSX using only the standard library."""
     with zipfile.ZipFile(path) as z:
-        shared = []
+        shared: list[str] = []
         if "xl/sharedStrings.xml" in z.namelist():
             root = ET.fromstring(z.read("xl/sharedStrings.xml"))
             for si in root.findall("m:si", NS):
                 shared.append("".join(t.text or "" for t in si.iterfind(".//m:t", NS)))
 
-        wb = ET.fromstring(z.read("xl/workbook.xml"))
+        workbook = ET.fromstring(z.read("xl/workbook.xml"))
         rels = ET.fromstring(z.read("xl/_rels/workbook.xml.rels"))
         relmap = {r.attrib["Id"]: r.attrib["Target"] for r in rels}
-        sheets = {}
-        for s in wb.find("m:sheets", NS):
-            name = s.attrib["name"]
-            target = relmap[s.attrib[f"{{{NS['r']}}}id"]]
-            target = target.lstrip("/")
+        sheets: dict[str, list[list[str | None]]] = {}
+
+        sheet_root = workbook.find("m:sheets", NS)
+        if sheet_root is None:
+            return sheets
+
+        for sheet in sheet_root:
+            name = sheet.attrib["name"]
+            target = relmap[sheet.attrib[f"{{{NS['r']}}}id"]].lstrip("/")
             if not target.startswith("xl/"):
                 target = "xl/" + target
             xml = ET.fromstring(z.read(target))
-            rows = []
-            max_col = 0
+            rows: list[list[str | None]] = []
             for row in xml.findall(".//m:sheetData/m:row", NS):
-                vals = {}
-                for c in row.findall("m:c", NS):
-                    idx = col_index(c.attrib["r"])
-                    max_col = max(max_col, idx)
-                    typ = c.attrib.get("t")
-                    v = c.find("m:v", NS)
-                    inline = c.find("m:is", NS)
-                    value = None
-                    if typ == "s" and v is not None:
-                        value = shared[int(v.text)]
-                    elif typ == "inlineStr" and inline is not None:
+                values: dict[int, str | None] = {}
+                for cell in row.findall("m:c", NS):
+                    idx = col_index(cell.attrib["r"])
+                    cell_type = cell.attrib.get("t")
+                    value_node = cell.find("m:v", NS)
+                    inline = cell.find("m:is", NS)
+                    value: str | None = None
+                    if cell_type == "s" and value_node is not None:
+                        value = shared[int(value_node.text or "0")]
+                    elif cell_type == "inlineStr" and inline is not None:
                         value = "".join(t.text or "" for t in inline.iterfind(".//m:t", NS))
-                    elif v is not None:
-                        value = v.text
-                    vals[idx] = value
-                if vals:
-                    arr = [None] * (max(vals) + 1)
-                    for i, value in vals.items():
-                        arr[i] = value
+                    elif value_node is not None:
+                        value = value_node.text
+                    values[idx] = value
+                if values:
+                    arr: list[str | None] = [None] * (max(values) + 1)
+                    for idx, value in values.items():
+                        arr[idx] = value
                     rows.append(arr)
             sheets[name] = rows
         return sheets
@@ -95,87 +114,338 @@ const src=fs.readFileSync(p,'utf8')+'\n;globalThis.__OUT={LEVELS,MODEL_STRUCTURE
 const ctx={}; vm.createContext(ctx); vm.runInContext(src,ctx);
 process.stdout.write(JSON.stringify(ctx.__OUT));
 '''
-    proc = subprocess.run(["node", "-e", helper, str(path)], check=True, capture_output=True, text=True)
+    proc = subprocess.run(
+        ["node", "-e", helper, str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     return json.loads(proc.stdout)
 
 
-def norm(s) -> str:
-    return str(s or "").strip().casefold()
+def norm(value: object) -> str:
+    return str(value or "").strip().casefold()
 
 
-def main() -> None:
+def clean(value: object) -> str:
+    return str(value or "").strip()
+
+
+def split_pipe(value: object) -> list[str]:
+    return [part.strip() for part in str(value or "").split("|") if part.strip()]
+
+
+def slugify(value: str) -> str:
+    text = value.strip().casefold().replace("&", " and ")
+    text = re.sub(r"[^a-z0-9]+", "_", text).strip("_")
+    return text or "item"
+
+
+def unique_key(base: str, existing: set[str]) -> str:
+    key = base
+    suffix = 2
+    while key in existing:
+        key = f"{base}_{suffix}"
+        suffix += 1
+    return key
+
+
+def parse_dropdown_definition(raw: object) -> dict[str, object]:
+    """Convert Dropdown_Master syntax into UI choices and text-input behavior.
+
+    Text Input                -> textbox only
+    Blank | Text Input        -> placeholder-only dropdown + textbox
+    No|Yes                    -> dropdown only
+    No|Yes | Text Input       -> dropdown + textbox
+    ""                        -> no dropdown and no textbox
+    """
+    text = clean(raw)
+    if not text:
+        return {"choices": [], "text": False, "placeholder": False}
+
+    separator = "|" if "|" in text else ","
+    tokens = [part.strip() for part in text.split(separator) if part.strip()]
+    lowered = [norm(token) for token in tokens]
+    has_text = "text input" in lowered
+    has_blank = "blank" in lowered
+    choices: list[str] = []
+    seen: set[str] = set()
+    for token in tokens:
+        token_norm = norm(token)
+        if token_norm in CONTROL_TOKENS or token_norm in seen:
+            continue
+        seen.add(token_norm)
+        choices.append(token)
+    return {"choices": choices, "text": has_text, "placeholder": has_blank}
+
+
+def build_dropdowns(sheets: dict[str, list[list[str | None]]]) -> dict[str, dict[str, object]]:
+    dropdowns: dict[str, dict[str, object]] = {}
+    for row in sheets["Dropdown_Master"][1:]:
+        row = list(row) + [None] * (3 - len(row))
+        dropdown_id, _name, options = row[:3]
+        dropdown_id = clean(dropdown_id)
+        if not dropdown_id:
+            continue
+        dropdowns[dropdown_id] = parse_dropdown_definition(options)
+    return dropdowns
+
+
+def build_related_guides(sheets: dict[str, list[list[str | None]]]) -> dict[str, str]:
+    related: dict[str, str] = {}
+    for row in sheets["Related_Guide_Master"][1:]:
+        row = list(row) + [None] * (3 - len(row))
+        key, display_name, _source = row[:3]
+        key = clean(key)
+        display_name = clean(display_name)
+        if key:
+            related[key] = display_name
+    return related
+
+
+def validate_workbook(sheets: dict[str, list[list[str | None]]]) -> tuple[list[str], list[str]]:
+    errors: list[str] = []
+    warnings: list[str] = []
+
+    missing = sorted(REQUIRED_SHEETS - set(sheets))
+    if missing:
+        errors.append("Missing required sheet(s): " + ", ".join(missing))
+        return errors, warnings
+
+    dropdown_rows = sheets["Dropdown_Master"]
+    dropdowns: dict[str, dict[str, object]] = {}
+    dropdown_ids: set[str] = set()
+    for excel_row, row in enumerate(dropdown_rows[1:], start=2):
+        row = list(row) + [None] * (3 - len(row))
+        dropdown_id, name, options = map(clean, row[:3])
+        if not any((dropdown_id, name, options)):
+            continue
+        if not dropdown_id:
+            errors.append(f"Dropdown_Master row {excel_row}: missing Dropdown ID")
+            continue
+        if dropdown_id in dropdown_ids:
+            errors.append(f"Dropdown_Master row {excel_row}: duplicate Dropdown ID {dropdown_id}")
+        dropdown_ids.add(dropdown_id)
+        if not options:
+            errors.append(f"Dropdown_Master row {excel_row}: {dropdown_id} has no Options value")
+        spec = parse_dropdown_definition(options)
+        dropdowns[dropdown_id] = spec
+        if not spec["choices"] and not spec["text"] and not spec["placeholder"]:
+            errors.append(f"Dropdown_Master row {excel_row}: {dropdown_id} has no usable dropdown/text behavior")
+
+    related_rows = sheets["Related_Guide_Master"]
+    related: dict[str, str] = {}
+    related_ids: set[str] = set()
+    related_names: set[str] = set()
+    for excel_row, row in enumerate(related_rows[1:], start=2):
+        row = list(row) + [None] * (3 - len(row))
+        key, display_name, source = map(clean, row[:3])
+        if not any((key, display_name, source)):
+            continue
+        if not key or not display_name:
+            errors.append(f"Related_Guide_Master row {excel_row}: key and display name are required")
+            continue
+        if key in related_ids:
+            errors.append(f"Related_Guide_Master row {excel_row}: duplicate key {key}")
+        if norm(display_name) in related_names:
+            errors.append(f"Related_Guide_Master row {excel_row}: duplicate display name {display_name}")
+        related_ids.add(key)
+        related_names.add(norm(display_name))
+        related[key] = display_name
+        if source and source != "TROUBLESHOOTING_GUIDE.md":
+            warnings.append(f"Related_Guide_Master row {excel_row}: unexpected source file {source}")
+
+    for sheet_name in PRODUCT_SHEETS:
+        rows = sheets[sheet_name]
+        if not rows:
+            errors.append(f"{sheet_name}: sheet is empty")
+            continue
+        header = [clean(value) for value in (list(rows[0]) + [None] * 7)[:7]]
+        if header != PRODUCT_HEADERS:
+            errors.append(f"{sheet_name}: header mismatch. Expected {PRODUCT_HEADERS!r}, got {header!r}")
+
+        seen_rows: dict[tuple[str, str, str], int] = {}
+        grouped_rows: dict[tuple[str, str], list[tuple[int, str]]] = {}
+        for excel_row, row in enumerate(rows[1:], start=2):
+            row = list(row) + [None] * (7 - len(row))
+            level_name, symptom_name, checklist, dropdown_id, email_th, email_en, related_cell = map(clean, row[:7])
+            if not any((level_name, symptom_name, checklist, dropdown_id, email_th, email_en, related_cell)):
+                continue
+            if not level_name or not symptom_name or not checklist:
+                errors.append(
+                    f"{sheet_name} row {excel_row}: LEVEL 1, SYMPTOM / GUIDE and CHECKLIST are required"
+                )
+                continue
+            if dropdown_id and dropdown_id not in dropdowns:
+                errors.append(f"{sheet_name} row {excel_row}: unknown Dropdown ID {dropdown_id}")
+            if not email_th:
+                warnings.append(f"{sheet_name} row {excel_row}: Email TH is blank")
+            if not email_en:
+                warnings.append(f"{sheet_name} row {excel_row}: Email EN is blank")
+            if re.match(r"^\s*(?:ข้อ\s*)?\d+\s*[.\)\-:]", email_th, re.I):
+                warnings.append(f"{sheet_name} row {excel_row}: Email TH starts with a manual item number")
+            if re.match(r"^\s*\d+\s*[.\)\-:]", email_en):
+                warnings.append(f"{sheet_name} row {excel_row}: Email EN starts with a manual item number")
+
+            duplicate_key = (norm(level_name), norm(symptom_name), norm(checklist))
+            if duplicate_key in seen_rows:
+                errors.append(
+                    f"{sheet_name} row {excel_row}: duplicate checklist '{checklist}' "
+                    f"for {level_name} > {symptom_name}; first found at row {seen_rows[duplicate_key]}"
+                )
+            else:
+                seen_rows[duplicate_key] = excel_row
+
+            level_norm = norm(level_name)
+            checklist_norm = norm(checklist)
+            grouped_rows.setdefault((level_name, symptom_name), []).append((excel_row, checklist))
+            if level_norm in NO_PHYSICAL_DAMAGE_LEVELS and checklist_norm == "physical damage":
+                errors.append(
+                    f"{sheet_name} row {excel_row}: Physical Damage is not allowed in {level_name} checklists"
+                )
+            if level_norm == "monitor" and checklist_norm == "other issue":
+                errors.append(
+                    f"{sheet_name} row {excel_row}: Other Issue is not allowed in Monitor checklists"
+                )
+
+            for related_key in split_pipe(related_cell):
+                if related_key not in related:
+                    errors.append(f"{sheet_name} row {excel_row}: unknown Related Guide Key {related_key}")
+
+        for (level_name, symptom_name), checklist_rows in grouped_rows.items():
+            labels = [norm(label) for _row_number, label in checklist_rows]
+            fru_positions = [index for index, label in enumerate(labels) if label == "fru p/n"]
+
+            if fru_positions and fru_positions[-1] != len(labels) - 1:
+                errors.append(
+                    f"{sheet_name}: {level_name} > {symptom_name} FRU P/N must be the final checklist item"
+                )
+
+            if sheet_name in EXTERNAL_FRU_SHEETS and norm(level_name) in EXTERNAL_FRU_LEVELS:
+                if len(fru_positions) != 1:
+                    errors.append(
+                        f"{sheet_name}: {level_name} > {symptom_name} must contain exactly one FRU P/N row"
+                    )
+
+    readme_rows = sheets.get("README", [])
+    readme_text = "\n".join(clean(cell) for row in readme_rows for cell in row if clean(cell))
+    versions = re.findall(r"v\d+\.\d+\.\d+", readme_text, re.I)
+    stale = sorted({v for v in versions if v.casefold() != f"v{VERSION}".casefold()})
+    if stale:
+        warnings.append("README sheet contains stale version reference(s): " + ", ".join(stale))
+
+    return errors, warnings
+
+
+def ensure_level_and_symptom(levels: dict, level_name: str, symptom_name: str) -> tuple[str, str]:
+    level_by_name = {norm(value.get("name")): key for key, value in levels.items()}
+    level_key = level_by_name.get(norm(level_name))
+    if level_key is None:
+        level_key = unique_key(slugify(level_name), set(levels))
+        levels[level_key] = {"name": level_name, "symptoms": {}}
+    else:
+        levels[level_key]["name"] = level_name
+        levels[level_key].setdefault("symptoms", {})
+
+    symptoms = levels[level_key]["symptoms"]
+    symptom_by_name = {norm(value.get("name")): key for key, value in symptoms.items()}
+    symptom_key = symptom_by_name.get(norm(symptom_name))
+    if symptom_key is None:
+        symptom_key = unique_key(slugify(symptom_name), set(symptoms))
+        symptoms[symptom_key] = {"name": symptom_name, "questions": {}}
+    else:
+        symptoms[symptom_key]["name"] = symptom_name
+        symptoms[symptom_key].setdefault("questions", {})
+    return level_key, symptom_key
+
+
+def generate() -> dict[str, int]:
     if not XLSX.exists() or not OUTPUT.exists():
         raise SystemExit("PD_Guide_Database.xlsx and database.js must be in the same folder as this script.")
 
     sheets = read_xlsx(XLSX)
+    errors, warnings = validate_workbook(sheets)
+    for warning in warnings:
+        print(f"WARNING: {warning}", file=sys.stderr)
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}", file=sys.stderr)
+        raise SystemExit(f"Validation failed with {len(errors)} error(s). database.js was not changed.")
+
     data = extract_template(OUTPUT)
     levels = data["LEVELS"]
+    dropdowns = build_dropdowns(sheets)
+    related_guides = build_related_guides(sheets)
 
-    dropdown_rows = sheets["Dropdown_Master"]
-    dropdowns = {}
-    for row in dropdown_rows[1:]:
-        if len(row) >= 3 and row[0]:
-            dropdowns[str(row[0]).strip()] = [x.strip() for x in str(row[2] or "").split("|") if x.strip()]
+    # Remove all generated product question lists before rebuilding from Excel.
+    for level in levels.values():
+        for symptom in level.get("symptoms", {}).values():
+            questions = symptom.get("questions")
+            if isinstance(questions, dict):
+                for product in PRODUCT_SHEETS.values():
+                    questions.pop(product, None)
 
-    level_by_name = {norm(v.get("name")): k for k, v in levels.items()}
-    symptom_by_level = {
-        lk: {norm(sv.get("name")): sk for sk, sv in lv.get("symptoms", {}).items()}
-        for lk, lv in levels.items()
-    }
-
-    model_source = {}
+    model_source: dict[str, list[dict[str, object]]] = {}
+    question_count = 0
     for sheet_name, product in PRODUCT_SHEETS.items():
-        rows = sheets[sheet_name]
-        # Clear this product's generated question lists before rebuilding them.
-        for lv in levels.values():
-            for symptom in lv.get("symptoms", {}).values():
-                if "questions" in symptom:
-                    symptom["questions"].pop(product, None)
+        ordered_levels: list[str] = []
+        ordered_symptoms: dict[str, list[str]] = {}
 
-        ordered_levels = []
-        ordered_symptoms = {}
-        for row in rows[1:]:
+        for row in sheets[sheet_name][1:]:
             row = list(row) + [None] * (7 - len(row))
-            level_name, symptom_name, checklist, ddid, email_th, email_en, related = row[:7]
+            level_name, symptom_name, checklist, dropdown_id, email_th, email_en, related_cell = map(clean, row[:7])
             if not level_name or not symptom_name or not checklist:
                 continue
-            lk = level_by_name.get(norm(level_name))
-            if not lk:
-                raise ValueError(f"Unknown Level 1 in {sheet_name}: {level_name}")
-            sk = symptom_by_level.get(lk, {}).get(norm(symptom_name))
-            if not sk:
-                raise ValueError(f"Unknown symptom in {sheet_name}: {level_name} > {symptom_name}")
 
-            options = dropdowns.get(str(ddid or "").strip(), [])
-            checklist_label = str(checklist).strip()
-            # Specific Keys Listed must keep the free-text input while its dropdown
-            # remains placeholder-only (no Blank / Text Input choices).
-            specific_keys = norm(checklist_label) == norm("Specific Keys Listed")
-            q = {
-                "label": checklist_label,
-                "optionsList": ["-- Select --"] if specific_keys else ["-- Select --"] + options,
-                "text": True if specific_keys else "Text Input" in "|".join(options),
+            level_key, symptom_key = ensure_level_and_symptom(levels, level_name, symptom_name)
+            if level_key not in ordered_levels:
+                ordered_levels.append(level_key)
+                ordered_symptoms[level_key] = []
+            if symptom_key not in ordered_symptoms[level_key]:
+                ordered_symptoms[level_key].append(symptom_key)
+
+            if dropdown_id:
+                spec = dropdowns[dropdown_id]
+                choices = list(spec["choices"])
+                if choices:
+                    options_list = ["-- Select --", *choices]
+                elif spec["placeholder"]:
+                    options_list = ["-- Select --"]
+                else:
+                    options_list = []
+                has_text = bool(spec["text"])
+            else:
+                options_list = []
+                has_text = False
+
+            related_names = [related_guides[key] for key in split_pipe(related_cell)]
+            question = {
+                "label": checklist,
+                "optionsList": options_list,
+                "text": has_text,
                 "diag": False,
-                "emailTH": str(email_th or "").strip(),
-                "emailEN": str(email_en or "").strip(),
-                "relatedGuide": str(related or "").strip(),
+                "emailTH": email_th,
+                "emailEN": email_en,
+                "relatedGuide": " | ".join(related_names),
             }
-            levels[lk]["symptoms"][sk].setdefault("questions", {}).setdefault(product, []).append(q)
-            if lk not in ordered_levels:
-                ordered_levels.append(lk)
-                ordered_symptoms[lk] = []
-            if sk not in ordered_symptoms[lk]:
-                ordered_symptoms[lk].append(sk)
+            levels[level_key]["symptoms"][symptom_key].setdefault("questions", {}).setdefault(product, []).append(question)
+            question_count += 1
 
         model_source[product] = [
-            {"levelName": levels[lk]["name"],
-             "symptomNames": [levels[lk]["symptoms"][sk]["name"] for sk in ordered_symptoms[lk]]}
-            for lk in ordered_levels
+            {
+                "levelName": levels[level_key]["name"],
+                "symptomNames": [
+                    levels[level_key]["symptoms"][symptom_key]["name"]
+                    for symptom_key in ordered_symptoms[level_key]
+                ],
+            }
+            for level_key in ordered_levels
         ]
 
     js = (
         f"// AUTO-GENERATED from PD_Guide_Database.xlsx for v{VERSION}. Edit Excel first, then regenerate this file.\n"
         "const LEVELS = " + json.dumps(levels, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
+        "const RELATED_GUIDE_MASTER = " + json.dumps(related_guides, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
         "const MODEL_STRUCTURE_SOURCE = " + json.dumps(model_source, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
         "const MODEL_STRUCTURE = Object.fromEntries(\n"
         "  Object.entries(MODEL_STRUCTURE_SOURCE).map(([product, levelRows]) => [\n"
@@ -199,7 +469,20 @@ def main() -> None:
         "});\n"
     )
     OUTPUT.write_text(js, encoding="utf-8")
-    print(f"Generated {OUTPUT.name} from {XLSX.name} for v{VERSION}")
+    return {
+        "questions": question_count,
+        "dropdowns": len(dropdowns),
+        "related_guides": len(related_guides),
+    }
+
+
+def main() -> None:
+    stats = generate()
+    print(
+        f"Generated {OUTPUT.name} from {XLSX.name} for v{VERSION} "
+        f"({stats['questions']} checklist rows, {stats['dropdowns']} dropdowns, "
+        f"{stats['related_guides']} related guides)."
+    )
 
 
 if __name__ == "__main__":

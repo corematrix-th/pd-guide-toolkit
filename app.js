@@ -12,116 +12,6 @@ function getSymptomName(){
   return current() ? current().name : selectedSymptom;
 }
 
-function getProductModelGroupForMapping(){
-  const key = (typeof getProductKey === "function") ? getProductKey() : "thinkpad";
-  if(key === "ideapad") return "ideapad";
-  return "f10";
-}
-
-function getModelSpecificDiagnosticsText(label, lang){
-  const normalized = String(label || "").trim();
-  const diagLabels = new Set([
-    "Run Lenovo Diagnostics",
-    "Lenovo Diagnostics",
-    "Lenovo Diagnostics Storage",
-    "Lenovo Diagnostics Battery"
-  ]);
-  if(!diagLabels.has(normalized)) return "";
-
-  const modelGroup = getProductModelGroupForMapping();
-  const isStorage = normalized === "Lenovo Diagnostics Storage";
-  const isBattery = normalized === "Lenovo Diagnostics Battery";
-
-  if(lang === "en"){
-    const prefix = isStorage
-      ? "Run Lenovo Diagnostics to check storage."
-      : (isBattery ? "Run Lenovo Diagnostics to check the battery." : "Run Lenovo Diagnostics.");
-    const steps = modelGroup === "ideapad"
-      ? "Press the Novo Button → select UEFI Diagnostics → Run All → Quick, then check whether the result is Pass or Failed."
-      : "Press F10 repeatedly while turning on the machine → select Run All → Quick → Quick Unattended, then check whether the result is Pass or Failed.";
-    return prefix + "\n" + steps;
-  }
-
-  const prefix = isStorage
-    ? "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Storage"
-    : (isBattery ? "ทดสอบ Run Lenovo Diagnostics เพื่อตรวจสอบ Battery" : "ทดสอบ Run Diagnostics");
-  const steps = modelGroup === "ideapad"
-    ? "กด Novo Button → เลือก UEFI Diagnostics → Run All → Quick จากนั้นตรวจสอบว่า Pass หรือ Failed"
-    : "กด F10 รัว ๆ ขณะเปิดเครื่อง → เลือก Run All → Quick → Quick Unattended จากนั้นตรวจสอบว่า Pass หรือ Failed";
-  return prefix + "\n" + steps;
-}
-
-function getModelSpecificDiagnosticsGuideText(){
-  const modelGroup = getProductModelGroupForMapping();
-  if(modelGroup === "ideapad"){
-    return "Lenovo Diagnostics\n\nทดสอบ Run Diagnostics\n\n1. กด Novo Button\n2. เลือก UEFI Diagnostics\n3. เลือก Run All\n4. เลือก Quick\n5. รอจนการทดสอบเสร็จสิ้น\n6. ตรวจสอบว่าผลการทดสอบเป็น Pass หรือ Failed";
-  }
-  return "Lenovo Diagnostics\n\nทดสอบ Run Diagnostics\n\n1. เปิดเครื่องและกด F10 รัว ๆ\n2. เลือก Run All\n3. เลือก Quick\n4. เลือก Quick Unattended\n5. รอจนการทดสอบเสร็จสิ้น\n6. ตรวจสอบว่าผลการทดสอบเป็น Pass หรือ Failed";
-}
-
-function getGuideTextForCurrentModel(guide){
-  if(!guide) return "";
-  return guide.guide || "";
-}
-
-function getChecklistMappingText(label, lang){
-  const modelSpecific = getModelSpecificDiagnosticsText(label, lang);
-  if(modelSpecific) return modelSpecific;
-  if(typeof GLOBAL_CHECKLIST_MAPPING === "undefined") return "";
-  const canonical = {
-    "LED beside charging port":"Charge LED",
-    "LED beside Type-C port":"Charge LED",
-    "LED beside port":"Charge LED",
-    "LED on power button":"Power LED",
-    "Can Access Windows":"Can access Windows",
-    "Check Task Manager usage":"Check Task Manager Usage",
-    "Check Temperature":"Check temperature / Overheat",
-    "Re-install Windows":"Re-install Windows",
-    "Re-install Windows":"Re-install Windows",
-    "Lenovo Vantage update":"Lenovo Vantage Update",
-    "BIOS update":"BIOS Update",
-    "Dump File collected":"Event Viewer / Dump file collected",
-    "Dump file collected":"Event Viewer / Dump file collected",
-    "Minidump collected":"Event Viewer / Dump file collected",
-    "Stop code / Error code":"Stop code / Error code collected",
-    "Fan Check":"Fan Check",
-    "Caps Lock LED works":"Caps Lock Toggle",
-    "Run Lenovo Diagnostics":"Run Lenovo Diagnostics",
-    "Lenovo Diagnostics":"Run Lenovo Diagnostics",
-    "Load BIOS default":"Load BIOS Default",
-    "Graphics Driver Update":"Graphics Driver Update",
-    "Update Graphics Driver":"Graphics Driver Update",
-    "Wi-Fi Driver Update":"WLAN Driver Update",
-    "Wifi Driver Update":"WLAN Driver Update",
-    "WIFI Driver Update":"WLAN Driver Update",
-    "WLAN Driver Update":"WLAN Driver Update",
-    "Camera Driver Update / Lenovo Vantage":"Camera Driver Update",
-    "Fingerprint Driver Update / Lenovo Vantage":"Fingerprint Driver Update",
-    "USB Driver Update / Lenovo Vantage":"USB Driver Update"
-  };
-  const key = GLOBAL_CHECKLIST_MAPPING[label] ? label : (canonical[label] || label);
-  const item = GLOBAL_CHECKLIST_MAPPING[key];
-  if(!item) return "";
-
-  // v5.0.0: External Monitor test uses Mapping as the single source of truth,
-  // but the Thai/English wording must be selected by symptom context.
-  // No Display / No Image / Black Screen asks whether an image appears.
-  // Display-quality symptoms ask whether the same issue appears on the external monitor.
-  if(key === "External Monitor test"){
-    const noDisplayKeys = new Set(["black", "black_login", "no_display", "no_image", "blank", "no_signal"]);
-    const symptomKey = String(typeof selectedSymptom !== "undefined" ? selectedSymptom : "").toLowerCase();
-    const symptomName = String((typeof current === "function" && current() && current().name) ? current().name : "").toLowerCase();
-    const isNoDisplay = noDisplayKeys.has(symptomKey) || /no display|no image|black screen|blank screen/.test(symptomName);
-    if(lang === "th") return isNoDisplay ? (item.th_no_display || item.th || "") : (item.th_display_issue || item.th || "");
-    if(lang === "en") return isNoDisplay ? (item.en_no_display || item.en || item.th_no_display || "") : (item.en_display_issue || item.en || item.th_display_issue || "");
-  }
-
-  if(lang === "th") return item.th || "";
-  if(lang === "en") return item.en || item.th || "";
-  return item.th || "";
-}
-
-
 function getProductKey(){
   const productEl = el("product");
   return productEl ? productEl.value : "thinkpad";
@@ -174,28 +64,12 @@ function withDisplayQuestions(sym){
   return {...sym, common};
 }
 
-function isFruPnAllowed(){
-  // FRU P/N is requested only for optional external accessories when appropriate.
-  const product = getProductKey();
-  if(selectedLevel === "adapter_power") return true; // Adapter / Power Cord
-  if(selectedLevel === "mouse") return true; // External Mouse
-  if(selectedLevel === "keyboard" && (product === "desktop" || product === "tiny" || product === "aio")) return true; // External Keyboard
-  const part = (current().defaultPart || "").toLowerCase();
-  return part.includes("external mouse") || part.includes("external keyboard") || part.includes("adapter") || part.includes("power cord");
-}
-
-
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.1.9)
+// Excel-only data rule (v5.2.2)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
 // removal, reordering, or fallback mapping is allowed here.
-
-// v4.8.7 Software / Driver / BIOS Update mapping
-function getOptions(code){
-  return APP_OPTIONS[code] || APP_OPTIONS.select;
-}
 
 function renderLevel1(){
   const box = el("level1");
@@ -366,18 +240,38 @@ function renderMain(){
   getQuestions().forEach((q, i) => {
     const row = document.createElement("div");
     row.className = "check-row";
-    let html = `<div class="check-label">${q.label}</div>`;
+
+    const label = document.createElement("div");
+    label.className = "check-label";
+    label.textContent = q.label;
+    row.appendChild(label);
+
     const options = getQuestionOptions(q);
     if(options.length){
-      html += `<select id="a${i}" onchange="updateRecommendation()">`;
-      options.forEach(opt => html += `<option value="${opt}">${opt}</option>`);
-      html += "</select>";
+      const select = document.createElement("select");
+      select.id = `a${i}`;
+      options.forEach(value => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+      });
+      select.addEventListener("change", updateRecommendation);
+      row.appendChild(select);
     }else{
-      html += "<div></div>";
+      row.appendChild(document.createElement("div"));
     }
-    // Excel-only rule: show a text box only when the Drop Down cell contains Text Input.
-    html += q.text ? `<input id="t${i}" oninput="updateRecommendation()" placeholder="detail">` : "<div></div>";
-    row.innerHTML = html;
+
+    // Excel-only rule: show a text box only when the dropdown syntax contains Text Input.
+    if(q.text){
+      const input = document.createElement("input");
+      input.id = `t${i}`;
+      input.placeholder = "detail";
+      input.addEventListener("input", updateRecommendation);
+      row.appendChild(input);
+    }else{
+      row.appendChild(document.createElement("div"));
+    }
     checklist.appendChild(row);
   });
   if(shouldShowAdditionalDetail()){
@@ -1108,11 +1002,12 @@ function formatOutputText(text){
 
 function formatNoteLine(label, answer){
   const isBlank = !answer || answer === "-- Select --";
-  if(label === "FRU P/N"){
+  const normalizedLabel = String(label || "").trim().toLowerCase();
+  if(normalizedLabel === "fru p/n"){
     return "- FRU P/N - " + (isBlank ? "" : String(answer).toUpperCase());
   }
-  if(label === "Specific keys listed"){
-    return `- ${formatOutputText(label)} - ${isBlank ? "" : String(answer).toUpperCase()}`;
+  if(normalizedLabel === "specific keys listed"){
+    return "- Specific Keys Listed - " + (isBlank ? "" : String(answer).toUpperCase());
   }
   return `- ${formatOutputText(label)} - ${isBlank ? "" : formatOutputText(answer)}`;
 }
@@ -1275,7 +1170,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.1.9 Excel-Only Data Rules
+// v5.2.2 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,
@@ -1314,17 +1209,29 @@ function getQuestionOptions(question){
 function getRelatedGuideKeys(){
   if(isManual()) return [];
   const manuals = (LEVELS.manual && LEVELS.manual.symptoms) ? LEVELS.manual.symptoms : {};
-  const names = [];
+  const tokens = [];
   getQuestions().forEach(row => {
     String(row.relatedGuide || '')
       .split(/\s*\|\s*|\r?\n|\s*;\s*/)
       .map(x => x.trim())
       .filter(Boolean)
-      .forEach(name => { if(!names.includes(name)) names.push(name); });
+      .forEach(token => { if(!tokens.includes(token)) tokens.push(token); });
   });
-  return names.map(name => Object.keys(manuals).find(key =>
-    String(manuals[key].name || '').trim().toLowerCase() === name.toLowerCase()
-  )).filter(Boolean);
+
+  const resolved = [];
+  tokens.forEach(token => {
+    let key = manuals[token] ? token : null;
+    const displayName = (typeof RELATED_GUIDE_MASTER !== "undefined" && RELATED_GUIDE_MASTER[token])
+      ? RELATED_GUIDE_MASTER[token]
+      : token;
+    if(!key){
+      key = Object.keys(manuals).find(candidate =>
+        String(manuals[candidate].name || '').trim().toLowerCase() === String(displayName).trim().toLowerCase()
+      );
+    }
+    if(key && !resolved.includes(key)) resolved.push(key);
+  });
+  return resolved;
 }
 
 function stripLegacyItemNumber(text){

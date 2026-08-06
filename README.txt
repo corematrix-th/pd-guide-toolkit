@@ -1,14 +1,18 @@
-PD Guide Toolkit v5.1.9
+PD Guide Toolkit v5.2.2
 
 Open index.html to start the Toolkit.
 
 MASTER DATABASE
-PD_Guide_Database.xlsx is the sole source of truth for model checklist data.
+PD_Guide_Database.xlsx is the sole source of truth for product-facing checklist data.
 
 Workflow:
 PD_Guide_Database.xlsx
         ↓
-Generate database.js
+python generate_database.py
+        ↓
+database.js
+        ↓
+python validate_database.py
         ↓
 Toolkit
 
@@ -24,6 +28,21 @@ Workbook structure:
 
 Dropdown values are stored as DDxxx IDs and resolved through Dropdown_Master.
 Related guides are stored as readable keys and resolved through Related_Guide_Master.
-Do not edit checklist text directly in JavaScript.
+Do not edit checklist, dropdown, email, or related-guide text directly in JavaScript.
 
-Version 5.1.9
+Checklist scope rules:
+- Windows, Battery, Network, Storage, Audio, and Camera must not contain Physical Damage.
+- Desktop, Tiny, and AIO external-device levels Monitor, Adapter, Keyboard, and Mouse must contain exactly one FRU P/N.
+- Wherever FRU P/N exists, it must be the final checklist item for that symptom.
+- Monitor checklists must not contain Other Issue.
+
+Dropdown control syntax:
+- Text Input = textbox only
+- Blank | Text Input = placeholder-only dropdown plus textbox
+- No|Yes = dropdown only
+- No|Yes | Text Input = dropdown plus textbox
+- Empty Dropdown ID = no dropdown and no textbox
+
+Run python validate_database.py before packaging every release.
+
+Version 5.2.2
