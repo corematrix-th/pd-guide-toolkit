@@ -159,8 +159,16 @@ vm.createContext(context);
 
 const root = __dirname;
 const indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
-assert(!/Visitors\s*:|Views\s*:|Online\s*:/.test(indexHtml), "Website statistics text still exists in index.html");
-assert(!/firebase|siteStats|visitorCount|viewCount|onlineCount/i.test(indexHtml), "Website statistics/Firebase code still exists in index.html");
+assert(/Visitors\s*:.*visitorCount.*Views\s*:.*viewCount.*Online\s*:.*onlineCount/s.test(indexHtml), "Website statistics are missing from index.html");
+assert(/PD_FIREBASE_CONFIG/.test(indexHtml), "Firebase site-statistics configuration is missing");
+assert(/siteStats\/global/.test(indexHtml), "Global site-statistics path is missing");
+assert(/\.info\/connected/.test(indexHtml), "Firebase presence connection monitor is missing");
+assert(/browserPresenceRef/.test(indexHtml), "Firebase presence is not scoped to a persistent browser/profile ID");
+assert(/onlineUsers\/\$\{visitorUuid\}/.test(indexHtml), "Firebase presence path is not grouped by visitorUuid");
+assert(/push\(browserPresenceRef\)/.test(indexHtml), "Firebase tab sessions are not nested under the browser/profile presence node");
+assert(/onDisconnect\(nextPresenceRef\)\.remove\(\)/.test(indexHtml), "Firebase presence cleanup is not registered before session write");
+assert(/PD_SITE_STATS_STATUS/.test(indexHtml), "Background site-statistics status object is missing");
+assert(/Initialization attempt/.test(indexHtml), "Site-statistics retry/error reporting is missing");
 
 const source = ["database.js", "data.js", "knowledge.js", "app.js"]
   .map(filename => fs.readFileSync(path.join(root, filename), "utf8"))
@@ -227,6 +235,39 @@ assert(keyboardFruIndex === keyboardLabels.length - 1, "Desktop USB Keyboard FRU
 assert(formatNoteLine("FRU P/N", "01fr208") === "- FRU P/N - 01FR208", "FRU P/N detail is not uppercased in Generate Note");
 assert(formatNoteLine("Specific Keys Listed", "a,b,c") === "- Specific Keys Listed - A,B,C", "Specific Keys Listed detail is not uppercased in Generate Note");
 assert(formatNoteLine("Specific keys listed", "x,y,z") === "- Specific Keys Listed - X,Y,Z", "Specific Keys Listed case variant is not normalized");
+
+const diagnostics = collectDiagnostics();
+assert(diagnostics.status === "PASS", "Runtime diagnostics did not pass: " + diagnostics.errors.join(" | "));
+assert(diagnostics.meta.version === "5.2.3", "Diagnostics/database version is not v5.2.3");
+assert(diagnostics.checklistRows === 2314, "Diagnostics checklist-row count is incorrect");
+const backgroundDiagnostics = runBackgroundDiagnostics();
+assert(backgroundDiagnostics.status === "PASS", "Background diagnostics did not pass");
+assert(!document.getElementById("diagBtn"), "Diagnostics button must not be present in the user UI");
+
+el("product").value = "thinkpad";
+selectedLevel = "boot";
+selectedSymptom = "no_power";
+let dispatchCase = smartBootRule([{q:"Adapter test on other machine", a:"Same Issue"}]);
+assert(dispatchCase && dispatchCase.result === "Dispatch" && dispatchCase.part === "Adapter", "No Power adapter cross-test dispatch regression");
+dispatchCase = smartBootRule([{q:"Swap Adapter", a:"Working"}]);
+assert(dispatchCase && dispatchCase.result === "Dispatch" && dispatchCase.part === "Adapter", "No Power known-good adapter dispatch regression");
+
+selectedSymptom = "pond";
+dispatchCase = smartBootRule([
+  {q:"Power LED", a:"Yes"},
+  {q:"Caps Lock Toggle", a:"No"},
+  {q:"External Monitor test", a:"Same Issue"}
+]);
+assert(dispatchCase && dispatchCase.result === "Dispatch" && dispatchCase.part === "Mainboard", "Power On No Display mainboard dispatch regression");
+
+selectedLevel = "boot";
+selectedSymptom = "no_power";
+renderAll();
+const swapAdapterIndex = getQuestions().findIndex(row => row.label === "Swap Adapter");
+assert(swapAdapterIndex >= 0, "Generate Note regression target Swap Adapter not found");
+el("a" + swapAdapterIndex).value = "Working";
+generateNote();
+assert(document.getElementById("note").value.includes("Conclusion: Dispatch Adapter"), "Generate Note did not include Dispatch Adapter conclusion");
 
 el("product").value = "thinkpad";
 
@@ -296,7 +337,10 @@ console.log(JSON.stringify({
   fruPlaceholderOnly: true,
   desktopKeyboardFruLast: true,
   uppercaseDetailOutput: true,
-  statsRemoved: true,
+  diagnosticsPass: true,
+  dispatchRegression: true,
+  generateNoteRegression: true,
+  statsRestored: true,
   checklistScopeRules: true,
   otherIssueOptions: otherSelect.options.map(option => option.textContent),
   emailGenerated: true

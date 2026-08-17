@@ -1,4 +1,4 @@
-PD Guide Toolkit v5.2.2
+PD Guide Toolkit v5.2.3
 
 Open index.html to start the Toolkit.
 
@@ -10,7 +10,7 @@ PD_Guide_Database.xlsx
         ↓
 python generate_database.py
         ↓
-database.js
+database.js + Reference_Text/*.txt
         ↓
 python validate_database.py
         ↓
@@ -28,6 +28,7 @@ Workbook structure:
 
 Dropdown values are stored as DDxxx IDs and resolved through Dropdown_Master.
 Related guides are stored as readable keys and resolved through Related_Guide_Master.
+Reference_Text files are generated mirrors of the visible runtime structure; do not maintain their hierarchy manually.
 Do not edit checklist, dropdown, email, or related-guide text directly in JavaScript.
 
 Checklist scope rules:
@@ -43,6 +44,10 @@ Dropdown control syntax:
 - No|Yes | Text Input = dropdown plus textbox
 - Empty Dropdown ID = no dropdown and no textbox
 
-Run python validate_database.py before packaging every release.
+Diagnostics:
+- Runtime diagnostics run silently in the background when the Toolkit loads; there is no user-facing Diagnostics button.
+- Background diagnostics are a runtime aid; the release gate remains python validate_database.py.
 
-Version 5.2.2
+Run python generate_database.py and python validate_database.py before packaging every release.
+
+Version 5.2.3

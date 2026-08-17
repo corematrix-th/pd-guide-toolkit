@@ -19,7 +19,7 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 XLSX = ROOT / "PD_Guide_Database.xlsx"
 OUTPUT = ROOT / "database.js"
-VERSION = "5.2.2"
+VERSION = "5.2.3"
 NS = {
     "m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
@@ -45,6 +45,20 @@ CONTROL_TOKENS = {"blank", "text input"}
 NO_PHYSICAL_DAMAGE_LEVELS = {"windows", "battery", "network", "storage", "audio", "camera"}
 EXTERNAL_FRU_SHEETS = {"Desktop", "Tiny", "AIO"}
 EXTERNAL_FRU_LEVELS = {"monitor", "adapter", "keyboard", "mouse"}
+REFERENCE_FILES = {
+    "thinkpad": ("ThinkPad.txt", "ThinkPad"),
+    "ideapad": ("IdeaPad.txt", "IdeaPad"),
+    "desktop": ("ThinkCentre Desktop.txt", "ThinkCentre Desktop"),
+    "tiny": ("ThinkCentre Tiny.txt", "ThinkCentre Tiny"),
+    "aio": ("AIO.txt", "IdeaCentre AIO"),
+}
+REFERENCE_SCOPE_NOTES = {
+    "thinkpad": "Notebook master. IdeaPad follows this structure unless hardware behavior differs.",
+    "ideapad": "Notebook-family variant. Keep only genuine IdeaPad-specific hardware differences.",
+    "desktop": "Desktop-family master. Swap RAM / SSD / HDD customer-facing checks are allowed only where explicitly present in the Master Database.",
+    "tiny": "Desktop-family variant. Keep Tiny/TIO-specific hardware differences only where present in the Master Database.",
+    "aio": "Desktop-family AIO variant. Keep integrated-display/camera differences only where present in the Master Database.",
+}
 
 
 def col_index(ref: str) -> int:
@@ -359,6 +373,69 @@ def ensure_level_and_symptom(levels: dict, level_name: str, symptom_name: str) -
     return level_key, symptom_key
 
 
+def full_model_structure(levels: dict, model_source: dict[str, list[dict[str, object]]]) -> dict[str, list[dict[str, object]]]:
+    """Return the same visible model hierarchy that the browser receives at runtime."""
+    output = json.loads(json.dumps(model_source, ensure_ascii=False))
+    for product, rows in output.items():
+        existing = {norm(row.get("levelName")) for row in rows}
+        for level_key in ("bios", "error", "manual"):
+            level = levels.get(level_key)
+            if not level or norm(level.get("name")) in existing:
+                continue
+            rows.append({
+                "levelName": clean(level.get("name")),
+                "symptomNames": [clean(item.get("name")) for item in level.get("symptoms", {}).values()],
+            })
+    return output
+
+
+def render_reference_text(product: str, title: str, rows: list[dict[str, object]]) -> str:
+    lines = [
+        f"GLOBAL MAPPING SOURCE (v{VERSION})",
+        "- Generated from PD_Guide_Database.xlsx and Toolkit-owned knowledge structure.",
+        "- Do not edit the hierarchy in this file manually; run generate_database.py instead.",
+        "- After changing Excel or Toolkit-owned knowledge, run generate_database.py and validate_database.py in the same release.",
+        "",
+        "---",
+        "",
+        title,
+        "",
+    ]
+    for row in rows:
+        level_name = clean(row.get("levelName"))
+        symptoms = [clean(value) for value in row.get("symptomNames", []) if clean(value)]
+        if not level_name:
+            continue
+        lines.append(level_name)
+        for index, symptom in enumerate(symptoms):
+            branch = "└──" if index == len(symptoms) - 1 else "├──"
+            lines.append(f"{branch} {symptom}")
+        lines.append("")
+    lines.extend([
+        "=== GENERATED STRUCTURE SOURCE ===",
+        "PD_Guide_Database.xlsx is the source of truth for product-facing structure and checklist data.",
+        "Toolkit-owned BIOS, Code, Troubleshooting Guide content, Generate Note, and Dispatch logic remain in JavaScript/Markdown.",
+        f"Structure version: v{VERSION}",
+        "",
+        f"[v{VERSION} MODEL SCOPE NOTE]",
+        REFERENCE_SCOPE_NOTES[product],
+        "",
+    ])
+    return "\n".join(lines)
+
+
+def write_reference_texts(levels: dict, model_source: dict[str, list[dict[str, object]]]) -> int:
+    reference_dir = ROOT / "Reference_Text"
+    reference_dir.mkdir(exist_ok=True)
+    full_structure = full_model_structure(levels, model_source)
+    written = 0
+    for product, (filename, title) in REFERENCE_FILES.items():
+        path = reference_dir / filename
+        path.write_text(render_reference_text(product, title, full_structure[product]), encoding="utf-8")
+        written += 1
+    return written
+
+
 def generate() -> dict[str, int]:
     if not XLSX.exists() or not OUTPUT.exists():
         raise SystemExit("PD_Guide_Database.xlsx and database.js must be in the same folder as this script.")
@@ -442,8 +519,18 @@ def generate() -> dict[str, int]:
             for level_key in ordered_levels
         ]
 
+    metadata = {
+        "version": VERSION,
+        "source": XLSX.name,
+        "productSheets": len(PRODUCT_SHEETS),
+        "checklistRows": question_count,
+        "dropdowns": len(dropdowns),
+        "relatedGuides": len(related_guides),
+    }
+
     js = (
         f"// AUTO-GENERATED from PD_Guide_Database.xlsx for v{VERSION}. Edit Excel first, then regenerate this file.\n"
+        "const DATABASE_META = " + json.dumps(metadata, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
         "const LEVELS = " + json.dumps(levels, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
         "const RELATED_GUIDE_MASTER = " + json.dumps(related_guides, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
         "const MODEL_STRUCTURE_SOURCE = " + json.dumps(model_source, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
@@ -469,10 +556,12 @@ def generate() -> dict[str, int]:
         "});\n"
     )
     OUTPUT.write_text(js, encoding="utf-8")
+    reference_count = write_reference_texts(levels, model_source)
     return {
         "questions": question_count,
         "dropdowns": len(dropdowns),
         "related_guides": len(related_guides),
+        "reference_files": reference_count,
     }
 
 
@@ -481,7 +570,7 @@ def main() -> None:
     print(
         f"Generated {OUTPUT.name} from {XLSX.name} for v{VERSION} "
         f"({stats['questions']} checklist rows, {stats['dropdowns']} dropdowns, "
-        f"{stats['related_guides']} related guides)."
+        f"{stats['related_guides']} related guides, {stats['reference_files']} reference files)."
     )
 
 

@@ -65,7 +65,7 @@ function withDisplayQuestions(sym){
 }
 
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.2.2)
+// Excel-only data rule (v5.2.3)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
@@ -141,6 +141,112 @@ function openGuideModal(key){
 
 function closeGuideModal(){
   el("guideModal").classList.add("hidden");
+}
+
+function collectDiagnostics(){
+  const meta = (typeof DATABASE_META !== "undefined" && DATABASE_META) ? DATABASE_META : {};
+  const errors = [];
+  const relatedNames = new Set(
+    Object.values(typeof RELATED_GUIDE_MASTER !== "undefined" ? RELATED_GUIDE_MASTER : {})
+      .map(value => String(value || "").trim().toLowerCase())
+      .filter(Boolean)
+  );
+  const noPhysicalLevels = new Set(["windows", "battery", "network", "storage", "audio", "camera"]);
+  const externalFruProducts = new Set(["desktop", "tiny", "aio"]);
+  const externalFruLevels = new Set(["monitor", "adapter", "keyboard", "mouse"]);
+  let checklistRows = 0;
+  let fruRows = 0;
+  let levelEntries = 0;
+  let symptomEntries = 0;
+
+  Object.entries(typeof MODEL_STRUCTURE !== "undefined" ? MODEL_STRUCTURE : {}).forEach(([product, structureRows]) => {
+    levelEntries += structureRows.length;
+    structureRows.forEach(structureRow => {
+      const level = LEVELS[structureRow.level];
+      if(!level){
+        errors.push(`${product}: missing Level 1 key ${structureRow.level}`);
+        return;
+      }
+      const levelName = String(level.name || "").trim();
+      const levelNameNorm = levelName.toLowerCase();
+      structureRow.symptoms.forEach(symptomKey => {
+        symptomEntries += 1;
+        const symptom = (level.symptoms || {})[symptomKey];
+        if(!symptom){
+          errors.push(`${product} > ${levelName}: missing symptom key ${symptomKey}`);
+          return;
+        }
+        const questions = symptom.questions && Array.isArray(symptom.questions[product])
+          ? symptom.questions[product]
+          : null;
+        if(!questions) return;
+        checklistRows += questions.length;
+        const labels = questions.map(row => String(row.label || "").trim().toLowerCase());
+        const seen = new Set();
+        labels.forEach((label, index) => {
+          if(seen.has(label)) errors.push(`${product} > ${levelName} > ${symptom.name}: duplicate checklist ${questions[index].label}`);
+          seen.add(label);
+        });
+        if(noPhysicalLevels.has(levelNameNorm) && labels.includes("physical damage")){
+          errors.push(`${product} > ${levelName} > ${symptom.name}: Physical Damage is not allowed`);
+        }
+        if(levelNameNorm === "monitor" && labels.includes("other issue")){
+          errors.push(`${product} > Monitor > ${symptom.name}: Other Issue is not allowed`);
+        }
+        const fruIndexes = labels.map((label, index) => label === "fru p/n" ? index : -1).filter(index => index >= 0);
+        fruRows += fruIndexes.length;
+        if(fruIndexes.length && fruIndexes[fruIndexes.length - 1] !== labels.length - 1){
+          errors.push(`${product} > ${levelName} > ${symptom.name}: FRU P/N is not the final checklist item`);
+        }
+        if(externalFruProducts.has(product) && externalFruLevels.has(levelNameNorm) && fruIndexes.length !== 1){
+          errors.push(`${product} > ${levelName} > ${symptom.name}: expected exactly one FRU P/N`);
+        }
+        questions.forEach(row => {
+          (row.optionsList || []).forEach(value => {
+            const option = String(value || "").trim().toLowerCase();
+            if(option === "blank" || option === "text input"){
+              errors.push(`${product} > ${levelName} > ${symptom.name} > ${row.label}: internal dropdown token is visible`);
+            }
+          });
+          String(row.relatedGuide || "")
+            .split("|")
+            .map(value => value.trim())
+            .filter(Boolean)
+            .forEach(name => {
+              if(!relatedNames.has(name.toLowerCase())){
+                errors.push(`${product} > ${levelName} > ${symptom.name} > ${row.label}: unresolved Related Guide ${name}`);
+              }
+            });
+        });
+      });
+    });
+  });
+
+  if(meta.checklistRows !== undefined && Number(meta.checklistRows) !== checklistRows){
+    errors.push(`Checklist row count mismatch: metadata=${meta.checklistRows}, runtime=${checklistRows}`);
+  }
+  const runtimeProducts = Object.keys(typeof MODEL_STRUCTURE !== "undefined" ? MODEL_STRUCTURE : {}).length;
+  if(meta.productSheets !== undefined && Number(meta.productSheets) !== runtimeProducts){
+    errors.push(`Product count mismatch: metadata=${meta.productSheets}, runtime=${runtimeProducts}`);
+  }
+
+  return {
+    status: errors.length ? "FAIL" : "PASS",
+    errors,
+    meta,
+    checklistRows,
+    fruRows,
+    levelEntries,
+    symptomEntries,
+  };
+}
+
+function runBackgroundDiagnostics(){
+  const info = collectDiagnostics();
+  if(info.status !== "PASS" && typeof console !== "undefined" && console.error){
+    console.error("PD Guide Toolkit runtime diagnostics failed", info.errors);
+  }
+  return info;
 }
 
 function renderRelatedGuide(){
@@ -1153,6 +1259,7 @@ document.addEventListener("DOMContentLoaded", () => {
   el("clearBtn").addEventListener("click", clearAll);
   el("modalCloseBtn").addEventListener("click", closeGuideModal);
   renderAll();
+  runBackgroundDiagnostics();
 });
 
 
@@ -1170,7 +1277,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.2.2 Excel-Only Data Rules
+// v5.2.3 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,

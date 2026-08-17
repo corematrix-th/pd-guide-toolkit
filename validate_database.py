@@ -14,10 +14,13 @@ from generate_database import (
     NO_PHYSICAL_DAMAGE_LEVELS,
     OUTPUT,
     PRODUCT_SHEETS,
+    REFERENCE_FILES,
     ROOT,
     VERSION,
     XLSX,
+    full_model_structure,
     read_xlsx,
+    render_reference_text,
     validate_workbook,
 )
 
@@ -37,7 +40,7 @@ def load_runtime() -> dict:
     helper = r'''
 const fs=require('fs'),vm=require('vm');
 const p=process.argv[1];
-const src=fs.readFileSync(p,'utf8')+'\n;globalThis.__OUT={LEVELS,MODEL_STRUCTURE_SOURCE,RELATED_GUIDE_MASTER};';
+const src=fs.readFileSync(p,'utf8')+'\n;globalThis.__OUT={DATABASE_META,LEVELS,MODEL_STRUCTURE_SOURCE,RELATED_GUIDE_MASTER};';
 const ctx={}; vm.createContext(ctx); vm.runInContext(src,ctx);
 process.stdout.write(JSON.stringify(ctx.__OUT));
 '''
@@ -54,10 +57,16 @@ def validate_runtime() -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
     runtime = load_runtime()
+    metadata = runtime.get("DATABASE_META", {})
     levels = runtime["LEVELS"]
     structure = runtime["MODEL_STRUCTURE_SOURCE"]
     related_master = runtime.get("RELATED_GUIDE_MASTER", {})
     related_names = {str(name).strip().casefold() for name in related_master.values()}
+
+    if str(metadata.get("version", "")) != VERSION:
+        errors.append(f"Runtime DATABASE_META version mismatch: {metadata.get('version')} != {VERSION}")
+    if str(metadata.get("source", "")) != XLSX.name:
+        errors.append(f"Runtime DATABASE_META source mismatch: {metadata.get('source')} != {XLSX.name}")
 
     for product in PRODUCT_SHEETS.values():
         if product not in structure:
@@ -126,6 +135,26 @@ def validate_runtime() -> tuple[list[str], list[str]]:
     return errors, warnings
 
 
+def validate_reference_texts() -> list[str]:
+    """Reference_Text is a generated human-readable mirror of the visible runtime structure."""
+    errors: list[str] = []
+    runtime = load_runtime()
+    full_structure = full_model_structure(runtime["LEVELS"], runtime["MODEL_STRUCTURE_SOURCE"])
+    for product, (filename, title) in REFERENCE_FILES.items():
+        path = ROOT / "Reference_Text" / filename
+        if not path.exists():
+            errors.append(f"Missing reference structure file: Reference_Text/{filename}")
+            continue
+        expected = render_reference_text(product, title, full_structure[product]).replace("\r\n", "\n").strip()
+        actual = path.read_text(encoding="utf-8", errors="replace").replace("\r\n", "\n").strip()
+        if actual != expected:
+            errors.append(
+                f"Reference_Text/{filename} is out of sync with database.js. "
+                "Run python generate_database.py to regenerate it."
+            )
+    return errors
+
+
 def validate_javascript() -> list[str]:
     errors: list[str] = []
     for filename in JS_FILES:
@@ -189,6 +218,7 @@ def main() -> None:
     errors.extend(validate_javascript())
     errors.extend(validate_guides())
     errors.extend(validate_smoke_test())
+    errors.extend(validate_reference_texts())
 
     if not errors:
         runtime_errors, runtime_warnings = validate_runtime()
