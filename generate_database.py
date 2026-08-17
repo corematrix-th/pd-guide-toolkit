@@ -55,7 +55,7 @@ REFERENCE_FILES = {
 REFERENCE_SCOPE_NOTES = {
     "thinkpad": "Notebook master. IdeaPad follows this structure unless hardware behavior differs.",
     "ideapad": "Notebook-family variant. Keep only genuine IdeaPad-specific hardware differences.",
-    "desktop": "Desktop-family master. Swap RAM / SSD / HDD customer-facing checks are allowed only where explicitly present in the Master Database.",
+    "desktop": "Desktop-family master. Keep desktop-specific hardware differences only where present in the Master Database.",
     "tiny": "Desktop-family variant. Keep Tiny/TIO-specific hardware differences only where present in the Master Database.",
     "aio": "Desktop-family AIO variant. Keep integrated-display/camera differences only where present in the Master Database.",
 }
@@ -320,6 +320,14 @@ def validate_workbook(sheets: dict[str, list[list[str | None]]]) -> tuple[list[s
             if level_norm == "monitor" and checklist_norm == "other issue":
                 errors.append(
                     f"{sheet_name} row {excel_row}: Other Issue is not allowed in Monitor checklists"
+                )
+            if checklist_norm in {"swap ssd", "swap ram", "swap ssd / hdd", "swap psu"}:
+                errors.append(
+                    f"{sheet_name} row {excel_row}: {checklist} is no longer allowed in customer-facing checklists"
+                )
+            if level_norm == "adapter" and norm(symptom_name) in {"adapter", "power cord"}:
+                errors.append(
+                    f"{sheet_name} row {excel_row}: Adapter symptom must use 'Adapter Not Work' or 'Power Cord Not Work'"
                 )
 
             for related_key in split_pipe(related_cell):

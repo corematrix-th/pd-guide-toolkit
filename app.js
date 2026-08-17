@@ -35,6 +35,8 @@ let activeModule = "troubleshooting";
 const CODE_CATEGORIES = {
   "All Codes": [],
   "BIOS / Firmware": [
+    "BIOS Password",
+    "Supervisor Password",
     "0162 Setup Data Integrity Check Failure",
     "0183 Bad CRC of Security Settings in EFI Variable",
     "0271 Date and Time Error"
@@ -154,10 +156,10 @@ function referenceConfig(moduleName = activeModule){
     return {
       module: "code",
       section: "Code",
-      listTitle: "CODE / ERROR",
+      listTitle: "ERROR POST",
       categories: CODE_CATEGORIES,
       allCategory: "All Codes",
-      emptyText: "No codes available."
+      emptyText: "No error/post references available."
     };
   }
   return {
@@ -171,6 +173,11 @@ function referenceConfig(moduleName = activeModule){
 }
 
 function referenceData(moduleName = activeModule){
+  if(moduleName === "code"){
+    const codeData = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE["Code"]) ? KNOWLEDGE_BASE["Code"] : {};
+    const biosData = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE["BIOS"]) ? KNOWLEDGE_BASE["BIOS"] : {};
+    return {...biosData, ...codeData};
+  }
   const cfg = referenceConfig(moduleName);
   return (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[cfg.section])
     ? KNOWLEDGE_BASE[cfg.section]
@@ -269,11 +276,11 @@ function renderReferenceDetail(){
   const body = el("referenceDetailBody");
   if(!title || !body) return;
 
-  if(heading) heading.textContent = moduleName === "code" ? "CODE DETAIL" : "USER GUIDE DETAIL";
+  if(heading) heading.textContent = moduleName === "code" ? "ERROR POST DETAIL" : "USER GUIDE DETAIL";
   if(infoTitle) infoTitle.textContent = moduleName === "code" ? "RELATED" : "REFERENCE INFO";
 
   if(currentSelection){
-    if(moduleName === "code") currentSelection.textContent = name ? `CODE → ${name}` : "CODE → Select a code";
+    if(moduleName === "code") currentSelection.textContent = name ? `ERROR POST → ${name}` : "ERROR POST → Select an item";
     else currentSelection.textContent = name ? `GUIDE → ${name}` : "GUIDE → Select a user guide";
   }
 
@@ -294,7 +301,7 @@ function renderReferenceDetail(){
   if(hint){
     if(moduleName === "code") hint.textContent = name
       ? "Use Search All to find related Symptoms or User Guides for this code."
-      : "Select a code above to view its detail and related reference information.";
+      : "Select an ERROR POST item above to view its detail and related reference information.";
     else hint.textContent = name
       ? "User guide content is shown in the left panel."
       : "Select a user guide above to view the reference.";
@@ -303,10 +310,10 @@ function renderReferenceDetail(){
   body.innerHTML = "";
   body.className = "reference-detail-body";
   if(!name || !data[name]){
-    title.textContent = moduleName === "code" ? "Select a code" : "Select a user guide";
+    title.textContent = moduleName === "code" ? "Select an ERROR POST item" : "Select a user guide";
     body.className = "reference-detail-body empty-state reference-detail-empty";
     body.textContent = moduleName === "code"
-      ? "Select a code above to view information."
+      ? "Select an ERROR POST item above to view information."
       : "Select a user guide to view information.";
     return;
   }
@@ -404,18 +411,26 @@ function collectGlobalSearchResults(keyword){
     });
   });
 
-  [["Code", "code"], ["Troubleshooting Guide", "guide"]].forEach(([section, moduleName]) => {
-    const data = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[section]) ? KNOWLEDGE_BASE[section] : {};
-    Object.entries(data).forEach(([name, item]) => {
-      if(knowledgeSearchText(section, name, item).includes(kw)){
-        results.push({
-          type: moduleName === "code" ? "Code" : "User Guide",
-          title: name,
-          subtitle: referenceCategoryForItem(moduleName, name),
-          moduleName
-        });
-      }
-    });
+  Object.entries(referenceData("code")).forEach(([name, item]) => {
+    if(knowledgeSearchText("Code", name, item).includes(kw)){
+      results.push({
+        type: "Error Post",
+        title: name,
+        subtitle: referenceCategoryForItem("code", name),
+        moduleName: "code"
+      });
+    }
+  });
+
+  Object.entries(referenceData("guide")).forEach(([name, item]) => {
+    if(knowledgeSearchText("Troubleshooting Guide", name, item).includes(kw)){
+      results.push({
+        type: "User Guide",
+        title: name,
+        subtitle: referenceCategoryForItem("guide", name),
+        moduleName: "guide"
+      });
+    }
   });
   return results;
 }
@@ -473,8 +488,8 @@ function renderGlobalSearch(){
     const row = document.createElement("div");
     row.className = "global-search-result";
     const badge = document.createElement("span");
-    badge.className = "search-badge " + (result.type === "Troubleshooting" ? "badge-ts" : result.type === "Code" ? "badge-code" : "badge-guide");
-    badge.textContent = result.type === "Troubleshooting" ? "TS" : result.type === "Code" ? "CODE" : "GUIDE";
+    badge.className = "search-badge " + (result.type === "Troubleshooting" ? "badge-ts" : result.type === "Error Post" ? "badge-code" : "badge-guide");
+    badge.textContent = result.type === "Troubleshooting" ? "TS" : result.type === "Error Post" ? "POST" : "GUIDE";
     const text = document.createElement("div");
     text.className = "global-search-result-text";
     const title = document.createElement("div");
@@ -661,10 +676,10 @@ function collectDiagnostics(){
   }
 
   [
-    ["Code", CODE_CATEGORIES, "All Codes"],
-    ["Troubleshooting Guide", GUIDE_CATEGORIES, "All"]
-  ].forEach(([section, categories, allCategory]) => {
-    const data = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[section]) ? KNOWLEDGE_BASE[section] : {};
+    ["Error Post", "code", CODE_CATEGORIES, "All Codes"],
+    ["Troubleshooting Guide", "guide", GUIDE_CATEGORIES, "All"]
+  ].forEach(([section, moduleName, categories, allCategory]) => {
+    const data = referenceData(moduleName);
     const actualNames = Object.keys(data);
     const mappedNames = Object.entries(categories)
       .filter(([category]) => category !== allCategory)
@@ -1025,12 +1040,12 @@ function storageEliminationRule(ans){
   if(selectedLevel !== "storage") return null;
   let part = null;
   let swapLabel = null;
-  if(selectedSymptom === "ssd") { part = "SSD"; swapLabel = "Swap SSD"; }
+  if(selectedSymptom === "ssd") { part = "SSD"; }
   if(selectedSymptom === "hdd") { part = "HDD"; swapLabel = "Swap HDD"; }
   if(!part) return null;
 
   const bios = answerValue(ans, "BIOS detects storage");
-  const swap = answerValue(ans, swapLabel);
+  const swap = swapLabel ? answerValue(ans, swapLabel) : undefined;
   if(swap === "Same Issue") return {result:"Dispatch", part:"Mainboard"};
   if(swap === "Working") return {result:"Dispatch", part:part};
   if(bios === "No") return {result:"Dispatch", part:part};
@@ -1560,10 +1575,7 @@ function calculateRaw(){
     if(r.q.includes("Swap Monitor") && r.a === "Working") return {result:"Dispatch", part:"Monitor"};
     if((r.q.includes("USB Keyboard") || r.q.includes("Swap Keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Working") return {result:"Dispatch", part:"Keyboard"};
     if(r.q.includes("USB Keyboard") && r.a === "Same Issue") return {result:"Dispatch", part:"Mainboard"};
-    if(r.q.includes("Swap SSD / HDD") && r.a === "Working") return {result:"Dispatch", part:"SSD / HDD"};
-    if(r.q.includes("Swap SSD") && r.a === "Working") return {result:"Dispatch", part:"SSD"};
     if(r.q.includes("Swap HDD") && r.a === "Working") return {result:"Dispatch", part:"HDD"};
-    if(r.q.includes("Swap RAM") && r.a === "Working") return {result:"Dispatch", part:"RAM"};
     if(r.q.includes("Swap Smart Card") && r.a === "Working") return {result:"Dispatch", part:"Smart Card Reader"};
     if(r.q.includes("Swap SIM") && r.a === "Working") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
     if(r.q.includes("Swap Mouse") && r.a === "Working") return {result:"Dispatch", part:"Mouse Replacement"};

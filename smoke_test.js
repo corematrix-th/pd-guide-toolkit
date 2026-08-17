@@ -183,15 +183,15 @@ assert((indexHtml.match(/class="action-secondary"/g) || []).length === 2, "Email
 assert(/id="clearBtn" class="action-clear"/.test(indexHtml), "Clear outline action styling is missing");
 assert((indexHtml.match(/<svg viewBox="0 0 24 24"/g) || []).length >= 5, "Action/search icons are missing");
 assert(/id="tabTroubleshooting"/.test(indexHtml) && /id="tabCode"/.test(indexHtml) && /id="tabUserGuide"/.test(indexHtml), "v5.2.4 module navigation is missing");
-assert(/id="tabTroubleshooting"[\s\S]*?<span class="module-label">SYMPTOMS<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabCode"[\s\S]*?<span class="module-label">CODE<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabUserGuide"[\s\S]*?<span class="module-label">GUIDE<\/span>[\s\S]*?<\/button>/.test(indexHtml), "v5.2.4 module labels must be SYMPTOMS / CODE / GUIDE");
+assert(/id="tabTroubleshooting"[\s\S]*?<span class="module-label">SYMPTOMS<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabCode"[\s\S]*?<span class="module-label">ERROR POST<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabUserGuide"[\s\S]*?<span class="module-label">GUIDE<\/span>[\s\S]*?<\/button>/.test(indexHtml), "v5.2.4 module labels must be SYMPTOMS / ERROR POST / GUIDE");
 assert(/id="globalSearchPanel"/.test(indexHtml), "Global Search panel is missing");
 assert(/id="referenceCategoryColumn"/.test(indexHtml) && /id="referenceCategories"/.test(indexHtml) && /id="referenceItemsColumn"/.test(indexHtml) && /id="referenceItems"/.test(indexHtml) && /id="referenceDetailBody"/.test(indexHtml), "Code/User Guide reference layout is missing");
 assert(/id="referenceInfoTitle"/.test(indexHtml), "Reference info/related heading is missing");
 assert(/Version 5\.2\.4/.test(indexHtml), "Visible version is not v5.2.4");
 
 const styleCss = fs.readFileSync(path.join(root, "style.css"), "utf8");
-assert(/\.module-tab\{[\s\S]*?min-height:28px;[\s\S]*?font-size:10px;/.test(styleCss), "Module navigation should stay compact, around Generate Note size");
-assert(/\.module-tab\{[\s\S]*?font-weight:800;/.test(styleCss), "Module labels should use bold font");
+assert(/\.module-tab\{[\s\S]*?min-height:26px;[\s\S]*?font-size:10px;/.test(styleCss), "Module navigation should stay compact");
+assert(/\.module-tab\{[\s\S]*?font-weight:700;/.test(styleCss), "Module labels should retain clear bold text");
 assert(/class="module-icon"/.test(indexHtml) && /\.module-icon\{/.test(styleCss), "Module navigation icons are missing");
 assert(!/!important/.test(styleCss), "style.css still contains !important overrides");
 assert(!/V4\.5|V4\.6/.test(styleCss), "Legacy V4.x CSS override blocks remain");
@@ -199,11 +199,15 @@ assert(/--radius:8px/.test(styleCss), "Card radius token is missing");
 assert(/\.item\.active[\s\S]*box-shadow:inset 3px 0 0/.test(styleCss), "Selected item emphasis is missing");
 assert(/\.check-row:focus-within/.test(styleCss), "Checklist selected/focus state is missing");
 assert(/transition:background var\(--transition\)/.test(styleCss), "Hover/click transition feedback is missing");
-assert(/\.module-nav\{/.test(styleCss) && /\.module-tab\.active\{/.test(styleCss), "Module navigation styling is missing");
+assert(/\.module-nav\{/.test(styleCss) && /\.module-tab\.active/.test(styleCss), "Module navigation styling is missing");
+assert(/\.module-tab\{[\s\S]*?background:#f2f3f3;[\s\S]*?color:#4b5358;/.test(styleCss), "Inactive module navigation should use the light neutral button style");
+assert(/\.module-tab\.active,[\s\S]*?background:#6f9eaf;[\s\S]*?color:#fff;/.test(styleCss), "Active module navigation should use the selected blue-gray style");
+assert(/\.module-icon\{display:none\}/.test(styleCss), "Minimal module navigation should hide decorative icons");
 assert(/\.reference-tree,\.reference-main\{/.test(styleCss) && /reference-tree/.test(indexHtml) && /reference-main/.test(indexHtml), "Locked Code/User Guide layout styling is missing");
 assert(/\.reference-view\.code-mode \.reference-tree,[\s\S]*?\.reference-view\.guide-mode \.reference-tree\{grid-template-columns:1fr\}/.test(styleCss), "Code/User Guide direct-list locked layout styling is missing");
 assert(/\.global-search-panel\{/.test(styleCss), "Global Search styling is missing");
 assert(/#mainTitle\{font-size:10px;letter-spacing:\.25px\}/.test(styleCss), "Troubleshooting heading does not match Level 1 / Symptom scale");
+assert(/#note\{height:270px;min-height:240px;max-height:270px;resize:none\}/.test(styleCss), "Result / Email detail height should stay compact");
 
 const source = ["database.js", "data.js", "knowledge.js", "app.js"]
   .map(filename => fs.readFileSync(path.join(root, filename), "utf8"))
@@ -231,7 +235,7 @@ assert(document.getElementById("checkRow0").classList.contains("is-complete"), "
 const defaultLevelNames = document.getElementById("level1").children.map(node => node.textContent);
 assert(!defaultLevelNames.includes("Code"), "Code must not remain as a Troubleshooting Level 1 entry");
 assert(!defaultLevelNames.includes("Troubleshooting Guide"), "Troubleshooting Guide must not remain as a Troubleshooting Level 1 entry");
-assert(!defaultLevelNames.includes("BIOS"), "BIOS must not remain as a SYMPTOMS Level 1 entry because the BIOS password reference is available under GUIDE > BIOS / Firmware");
+assert(!defaultLevelNames.includes("BIOS"), "BIOS must not remain as a SYMPTOMS Level 1 entry because BIOS Password / Supervisor Password are available under ERROR POST");
 
 document.getElementById("search").value = "__definitely_no_match__";
 filterSymptoms();
@@ -241,23 +245,26 @@ assert(descendants(noMatchPanel).some(node => node.textContent === "No matching 
 document.getElementById("search").value = "2100";
 filterSymptoms();
 const searchNodes = descendants(document.getElementById("globalSearchPanel"));
-assert(searchNodes.some(node => node.textContent === "CODE"), "Global Search did not return a Code result");
+assert(searchNodes.some(node => node.textContent === "POST"), "Global Search did not return an Error Post result");
 assert(searchNodes.some(node => node.textContent === "2100 Detection Error on Storage Device"), "Global Search did not find Code 2100");
 
 document.getElementById("search").value = "";
 renderAll();
 
 switchModule("code");
-assert(document.getElementById("tabCode").className.includes("active"), "Code module tab did not activate");
-assert(document.getElementById("referenceListTitle").textContent === "CODE / ERROR", "Code list title is incorrect");
+assert(document.getElementById("tabCode").className.includes("active"), "Error Post module tab did not activate");
+assert(document.getElementById("referenceListTitle").textContent === "ERROR POST", "Error Post list title is incorrect");
 assert(document.getElementById("referenceCategoryColumn").classList.contains("hidden"), "Code module must hide Category and show the direct code list");
 assert(document.getElementById("referenceCategories").children.length === 0, "Code module should not render Category choices");
 const code2100 = document.getElementById("referenceItems").children.find(node => node.textContent === "2100 Detection Error on Storage Device");
-assert(code2100, "Code 2100 is missing from the direct Code / Error list");
+assert(code2100, "Code 2100 is missing from the direct Error Post list");
+const biosPasswordPost = document.getElementById("referenceItems").children.find(node => node.textContent === "BIOS Password");
+const supervisorPasswordPost = document.getElementById("referenceItems").children.find(node => node.textContent === "Supervisor Password");
+assert(biosPasswordPost && supervisorPasswordPost, "BIOS Password and Supervisor Password must be available in ERROR POST");
 code2100.onclick();
-assert(document.getElementById("referenceDetailHeading").textContent === "CODE DETAIL", "Code detail heading is incorrect");
+assert(document.getElementById("referenceDetailHeading").textContent === "ERROR POST DETAIL", "Error Post detail heading is incorrect");
 assert(document.getElementById("referenceInfoTitle").textContent === "RELATED", "Code lower-right panel must be RELATED");
-assert(document.getElementById("referenceCurrentSelection").textContent === "CODE → 2100 Detection Error on Storage Device", "Code current selection is incorrect");
+assert(document.getElementById("referenceCurrentSelection").textContent === "ERROR POST → 2100 Detection Error on Storage Device", "Error Post current selection is incorrect");
 assert(document.getElementById("referenceDetailTitle").textContent === "2100 Detection Error on Storage Device", "Code detail did not open");
 assert(descendants(document.getElementById("referenceDetailBody")).some(node => node.textContent === "DESCRIPTION"), "Code detail Description section is missing");
 
@@ -310,7 +317,7 @@ assert(relatedBox && descendants(relatedBox).some(node => node.className === "gu
 
 const adapterLevel = Object.keys(LEVELS).find(key => LEVELS[key].name === "Adapter");
 const adapterSymptom = Object.keys(LEVELS[adapterLevel].symptoms)
-  .find(key => LEVELS[adapterLevel].symptoms[key].name === "Adapter");
+  .find(key => LEVELS[adapterLevel].symptoms[key].name === "Adapter Not Work");
 selectedLevel = adapterLevel;
 selectedSymptom = adapterSymptom;
 renderAll();
@@ -342,10 +349,31 @@ assert(formatNoteLine("Specific keys listed", "x,y,z") === "- Specific Keys List
 const diagnostics = collectDiagnostics();
 assert(diagnostics.status === "PASS", "Runtime diagnostics did not pass: " + diagnostics.errors.join(" | "));
 assert(diagnostics.meta.version === "5.2.4", "Diagnostics/database version is not v5.2.4");
-assert(diagnostics.checklistRows === 2314, "Diagnostics checklist-row count is incorrect");
+assert(diagnostics.checklistRows === 2285, "Diagnostics checklist-row count is incorrect");
 const backgroundDiagnostics = runBackgroundDiagnostics();
 assert(backgroundDiagnostics.status === "PASS", "Background diagnostics did not pass");
 assert(!document.getElementById("diagBtn"), "Diagnostics button must not be present in the user UI");
+
+// v5.2.4 data hygiene: SSD/RAM swap checks were removed from all customer-facing checklists.
+for(const [product, rows] of Object.entries(MODEL_STRUCTURE)){
+  for(const row of rows){
+    for(const symptomKey of row.symptoms || []){
+      const questions = (((LEVELS[row.level] || {}).symptoms || {})[symptomKey] || {}).questions || {};
+      const labels = (questions[product] || []).map(item => String(item.label || "").trim().toLowerCase());
+      assert(!labels.includes("swap ssd"), product + ": Swap SSD must not appear in customer-facing checklists");
+      assert(!labels.includes("swap ram"), product + ": Swap RAM must not appear in customer-facing checklists");
+      assert(!labels.includes("swap ssd / hdd"), product + ": Swap SSD / HDD must not appear in customer-facing checklists");
+      assert(!labels.includes("swap psu"), product + ": Swap PSU must not appear in customer-facing checklists");
+    }
+  }
+}
+for(const product of Object.keys(MODEL_STRUCTURE)){
+  const adapterRow = MODEL_STRUCTURE[product].find(item => item.level === adapterLevel);
+  if(!adapterRow) continue;
+  const names = adapterRow.symptoms.map(key => LEVELS[adapterLevel].symptoms[key].name);
+  assert(!names.includes("Adapter"), product + ": legacy Adapter symptom name must not be visible");
+  assert(!names.includes("Power Cord"), product + ": legacy Power Cord symptom name must not be visible");
+}
 
 el("product").value = "thinkpad";
 selectedLevel = "boot";

@@ -112,6 +112,11 @@ def validate_runtime() -> tuple[list[str], list[str]]:
                             f"{symptom.get('name')} > {label}"
                         )
                     seen.add(label_norm)
+                    if label_norm in {"swap ssd", "swap ram", "swap ssd / hdd", "swap psu"}:
+                        errors.append(
+                            f"Runtime forbidden checklist: {product} > {level.get('name')} > "
+                            f"{symptom.get('name')} > {label}"
+                        )
                     options = row.get("optionsList", [])
                     bad_controls = [value for value in options if str(value).strip().casefold() in {"blank", "text input"}]
                     if bad_controls:
