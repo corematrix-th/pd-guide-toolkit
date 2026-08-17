@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>PD Guide Toolkit</title>
-  <link rel="stylesheet" href="style.css?v=523r2">
+  <link rel="stylesheet" href="style.css?v=524r4">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
   <script>
@@ -20,9 +20,24 @@
       <div class="title">PD Guide Toolkit</div>
       <div class="byline">by Nasree Jehteh</div>
     </div>
-    <div class="site-stats topbar-stats" aria-label="Website statistics">
-      Visitors : <span id="visitorCount">-</span> | Views : <span id="viewCount">-</span> | Online : <span id="onlineCount">-</span>
+    <div class="site-stats topbar-stats" aria-label="Website statistics" title="Visitors and Views are counters. Online shows active browser profiles in real time.">
+      Visitors : <span id="visitorCount">-</span> <span class="stat-separator">|</span> Views : <span id="viewCount">-</span> <span class="stat-separator">|</span> <span id="onlineDot" class="online-dot" aria-hidden="true"></span>Online : <span id="onlineCount">-</span>
     </div>
+  </div>
+
+  <div class="module-nav" role="tablist" aria-label="Toolkit sections">
+    <button id="tabTroubleshooting" class="module-tab active" type="button" role="tab" aria-selected="true">
+      <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+      <span class="module-label">SYMPTOMS</span>
+    </button>
+    <button id="tabCode" class="module-tab" type="button" role="tab" aria-selected="false">
+      <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h4M10 12l-2 2 2 2M16 12l2 2-2 2M13 11l-2 6"/></svg></span>
+      <span class="module-label">CODE</span>
+    </button>
+    <button id="tabUserGuide" class="module-tab" type="button" role="tab" aria-selected="false">
+      <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg></span>
+      <span class="module-label">GUIDE</span>
+    </button>
   </div>
 
   <div class="controlbar">
@@ -37,12 +52,24 @@
       </select>
     </div>
     <div class="field">
-      <label>Search</label>
-      <input id="search" placeholder="no power, bsod, battery report, 2100">
+      <label for="search">Search All</label>
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+        </span>
+        <input id="search" placeholder="Search troubleshooting, code, or user guide..." autocomplete="off">
+        <button type="button" class="search-clear hidden" id="searchClearBtn" aria-label="Clear search" title="Clear search">×</button>
+      </div>
     </div>
-    <button class="clear" id="topClearBtn">Clear</button>
+    <button class="clear action-clear compact-action" id="topClearBtn" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>
+      <span>Clear</span>
+    </button>
   </div>
 
+  <div id="globalSearchPanel" class="global-search-panel hidden" aria-live="polite"></div>
+
+  <div id="troubleshootingView">
   <div class="tree">
     <div class="col">
       <div class="col-title">LEVEL 1</div>
@@ -57,7 +84,11 @@
   <div class="main">
     <div class="left">
       <div id="currentSelection" class="current-selection"></div>
-      <div id="mainTitle" class="section-title">TROUBLESHOOTING CHECKLIST</div>
+      <div class="section-heading">
+        <div id="mainTitle" class="section-title">TROUBLESHOOTING CHECKLIST</div>
+        <div id="checklistProgressText" class="progress-text">Checklist 0 / 0 completed</div>
+      </div>
+      <div id="checklistProgress" class="progress-track" aria-hidden="true"><div id="checklistProgressBar" class="progress-bar"></div></div>
       <div id="checklist"></div>
       <div id="manualBox" class="manual hidden"></div>
     </div>
@@ -69,14 +100,60 @@
 <div class="section-title">RESULT / EMAIL</div>
       <textarea id="note" placeholder="Result note, guide, or email will show here..."></textarea>
 
-      <div class="buttons">
-        <button id="generateBtn">Generate Note</button>
-        <button class="green" id="emailThBtn">Email TH</button>
-        <button class="green" id="emailEnBtn">Email EN</button>
-        <button class="gray" id="clearBtn">Clear</button>
+      <div class="buttons action-buttons">
+        <button id="generateBtn" class="action-primary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h4M9 12h6M9 16h6"/></svg>
+          <span>Generate Note</span>
+        </button>
+        <button id="emailThBtn" class="action-secondary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+          <span>Email TH</span>
+        </button>
+        <button id="emailEnBtn" class="action-secondary" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z"/><path d="m3 7 9 6 9-6"/></svg>
+          <span>Email EN</span>
+        </button>
+        <button id="clearBtn" class="action-clear" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>
+          <span>Clear</span>
+        </button>
       </div>
 
-      <div class="version">Version 5.2.3</div>
+      <div class="version">Version 5.2.4</div>
+    </div>
+  </div>
+  </div>
+
+  <div id="referenceView" class="reference-view hidden">
+    <div class="tree reference-tree">
+      <div id="referenceCategoryColumn" class="col">
+        <div class="col-title">CATEGORY</div>
+        <div id="referenceCategories"></div>
+      </div>
+      <div id="referenceItemsColumn" class="col wide">
+        <div id="referenceListTitle" class="col-title">ITEMS</div>
+        <div id="referenceItems"></div>
+      </div>
+    </div>
+
+    <div class="main reference-main">
+      <div class="left reference-detail-panel">
+        <div id="referenceCurrentSelection" class="current-selection reference-current-selection">Select an item</div>
+        <div id="referenceDetailHeading" class="section-title">REFERENCE DETAIL</div>
+        <div id="referenceDetailTitle" class="reference-detail-title">Select an item</div>
+        <div id="referenceDetailBody" class="reference-detail-body empty-state">Select an item to view information.</div>
+      </div>
+
+      <div class="right reference-info-panel">
+        <div id="referenceInfoTitle" class="section-title">REFERENCE INFO</div>
+        <div id="referenceMeta" class="reference-meta">
+          <div class="reference-meta-row"><span>Module</span><strong>-</strong></div>
+          <div class="reference-meta-row"><span>Category</span><strong>-</strong></div>
+          <div class="reference-meta-row"><span>Item</span><strong>-</strong></div>
+        </div>
+        <div id="referenceInfoHint" class="reference-info-hint">Select an item from the list above to view the reference.</div>
+        <div class="version reference-version">Version 5.2.4</div>
+      </div>
     </div>
   </div>
 </div>
@@ -92,10 +169,10 @@
   </div>
 </div>
 
-<script src="database.js?v=523r2"></script>
-<script src="data.js?v=523r2"></script>
-<script src="knowledge.js?v=523r2"></script>
-<script src="app.js?v=523r2"></script>
+<script src="database.js?v=524r2"></script>
+<script src="data.js?v=524r2"></script>
+<script src="knowledge.js?v=524r2"></script>
+<script src="app.js?v=524r4"></script>
 <script>
   // Firebase Realtime Database counters for PD Guide Toolkit.
   // Global path remains siteStats/global so historical counters are preserved.
@@ -119,7 +196,15 @@
   const visitorEl = document.getElementById("visitorCount");
   const viewEl = document.getElementById("viewCount");
   const onlineEl = document.getElementById("onlineCount");
+  const onlineDotEl = document.getElementById("onlineDot");
   const statsStatus = window.PD_SITE_STATS_STATUS;
+
+  function updateOnlineIndicator(){
+    if(!onlineDotEl) return;
+    const active = statsStatus.connected === true && statsStatus.onlineReadable === true;
+    onlineDotEl.classList.toggle("is-online", active);
+    onlineDotEl.title = active ? "Realtime stats connected" : "Realtime stats unavailable";
+  }
 
   function formatCount(value){
     const number = Number(value);
@@ -131,6 +216,7 @@
       state: statsStatus.errors.length ? "degraded" : state,
       lastUpdated: new Date().toISOString()
     });
+    updateOnlineIndicator();
   }
 
   function reportStatsError(stage, error){
@@ -193,7 +279,13 @@
     onValue(onlineUsersRef, snapshot => {
       const count = snapshot.exists() ? snapshot.size : 0;
       if(onlineEl) onlineEl.textContent = formatCount(count);
-    }, error => reportStatsError("Online read", error));
+      statsStatus.onlineReadable = true;
+      updateOnlineIndicator();
+    }, error => {
+      statsStatus.onlineReadable = false;
+      updateOnlineIndicator();
+      reportStatsError("Online read", error);
+    });
 
     // Views increase on each page load. A failed write is reported but does not stop reads/presence.
     runTransaction(viewsRef, current => (Number(current) || 0) + 1)

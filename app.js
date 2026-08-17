@@ -30,6 +30,83 @@ function ensureSelectionAvailable(){
 
 let selectedLevel = "boot";
 let selectedSymptom = "no_power";
+let activeModule = "troubleshooting";
+
+const CODE_CATEGORIES = {
+  "All Codes": [],
+  "BIOS / Firmware": [
+    "0162 Setup Data Integrity Check Failure",
+    "0183 Bad CRC of Security Settings in EFI Variable",
+    "0271 Date and Time Error"
+  ],
+  "Power / Battery": ["0190 Critical Low-Battery Error"],
+  "Boot / Storage": [
+    "1962 No Operating System Found",
+    "2100 Detection Error on Storage Device",
+    "2101 Detection Error on HDD",
+    "Boot Device Missing"
+  ],
+  "Network / PXE": [
+    "1802 Unauthorized Network Card Is Plugged in",
+    "PXE"
+  ],
+  "System Information": [
+    "0188 Invalid Rfid Serialization Information Area",
+    "2200 Machine Type and Serial Number Are Invalid",
+    "2201 Machine Uuid Is Invalid"
+  ],
+  "Chassis / Security": ["Button Cover Tamper Detection"]
+};
+
+const GUIDE_CATEGORIES = {
+  "All": [],
+  "Windows": [
+    "Uninstall Windows Update", "Safe Mode", "Bypass Windows 11 Oobe", "Sfc /Scannow"
+  ],
+  "Diagnostics": [
+    "Lenovo Diagnostics", "Event Viewer", "Dump File"
+  ],
+  "Recovery": [
+    "Reset This Pc", "Startup Repair", "System Restore", "Re-install Windows"
+  ],
+  "Power": [
+    "Emergency Reset", "Power Reset"
+  ],
+  "Battery": [
+    "Battery Report"
+  ],
+  "Storage": [
+    "SSD Not Found During Install OS"
+  ],
+  "Display": [
+    "LCD Self-Test"
+  ],
+  "Audio": [
+    "Disable Audio Enhancements"
+  ],
+  "Lenovo Vantage": [
+    "Lenovo Vantage Update", "Battery Health", "Reset Battery",
+    "Fn & Ctrl Key Swap", "Always on USB", "Lock on Leave Function"
+  ],
+  "USB / Port": [],
+  "Security / Activation": [
+    "Windows Product Key", "Windows Activation", "BitLocker Recovery",
+    "Microsoft Office Activation"
+  ],
+  "BIOS / Firmware": [
+    "BIOS Version", "BIOS / Supervisor Password", "Downgrade BIOS"
+  ],
+  "Tools / Commands": []
+};
+
+const selectedReferenceCategory = {
+  code: "All Codes",
+  guide: "All"
+};
+const selectedReferenceItem = {
+  code: null,
+  guide: null
+};
 
 function el(id){ return document.getElementById(id); }
 function forceConclusionRed(){
@@ -38,8 +115,8 @@ function forceConclusionRed(){
   r.className = "recommendation recommendation-dispatch";
 }
 
-function current(){ return LEVELS[selectedLevel].symptoms[selectedSymptom]; }
-function isManual(){ return LEVELS[selectedLevel].manual === true; }
+function current(){ return LEVELS[selectedLevel] && LEVELS[selectedLevel].symptoms ? (LEVELS[selectedLevel].symptoms[selectedSymptom] || null) : null; }
+function isManual(){ return !!(LEVELS[selectedLevel] && LEVELS[selectedLevel].manual === true); }
 function isKnowledgeLevel(){ return selectedLevel === "bios" || selectedLevel === "error" || selectedLevel === "manual"; }
 function getKnowledgeText(){
   const section = selectedLevel === "bios" ? "BIOS" : selectedLevel === "error" ? "Code" : "Troubleshooting Guide";
@@ -65,11 +142,356 @@ function withDisplayQuestions(sym){
 }
 
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.2.3)
+// Excel-only data rule (v5.2.4)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
 // removal, reordering, or fallback mapping is allowed here.
+
+
+function referenceConfig(moduleName = activeModule){
+  if(moduleName === "code"){
+    return {
+      module: "code",
+      section: "Code",
+      listTitle: "CODE / ERROR",
+      categories: CODE_CATEGORIES,
+      allCategory: "All Codes",
+      emptyText: "No codes available."
+    };
+  }
+  return {
+    module: "guide",
+    section: "Troubleshooting Guide",
+    listTitle: "USER GUIDE",
+    categories: GUIDE_CATEGORIES,
+    allCategory: "All",
+    emptyText: "No user guides available."
+  };
+}
+
+function referenceData(moduleName = activeModule){
+  const cfg = referenceConfig(moduleName);
+  return (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[cfg.section])
+    ? KNOWLEDGE_BASE[cfg.section]
+    : {};
+}
+
+function referenceCategoryForItem(moduleName, itemName){
+  const cfg = referenceConfig(moduleName);
+  return Object.entries(cfg.categories)
+    .find(([category, names]) => category !== cfg.allCategory && names.includes(itemName))?.[0]
+    || cfg.allCategory;
+}
+
+function referenceItemsForCategory(moduleName, category){
+  const cfg = referenceConfig(moduleName);
+  const data = referenceData(moduleName);
+  if(category === cfg.allCategory) return Object.keys(data);
+  return (cfg.categories[category] || []).filter(name => data[name]);
+}
+
+function renderModuleTabs(){
+  const tabs = {
+    troubleshooting: el("tabTroubleshooting"),
+    code: el("tabCode"),
+    guide: el("tabUserGuide")
+  };
+  Object.entries(tabs).forEach(([key, tab]) => {
+    if(!tab) return;
+    const selected = key === activeModule;
+    tab.className = "module-tab" + (selected ? " active" : "");
+    tab.ariaSelected = selected ? "true" : "false";
+  });
+}
+
+function showModuleView(){
+  const trouble = el("troubleshootingView");
+  const reference = el("referenceView");
+  if(trouble){
+    if(activeModule === "troubleshooting") trouble.classList.remove("hidden");
+    else trouble.classList.add("hidden");
+  }
+  if(reference){
+    if(activeModule === "troubleshooting") reference.classList.add("hidden");
+    else reference.classList.remove("hidden");
+  }
+}
+
+function switchModule(moduleName, options = {}){
+  if(!["troubleshooting", "code", "guide"].includes(moduleName)) return;
+  activeModule = moduleName;
+  if(!options.keepSearch && el("search")) el("search").value = "";
+  setSearchClearVisibility();
+  const searchPanel = el("globalSearchPanel");
+  if(searchPanel) searchPanel.classList.add("hidden");
+  renderAll();
+  gaTrack("module_selected", { module: moduleName });
+}
+
+function appendReferenceSection(parent, title, textOrItems){
+  const section = document.createElement("div");
+  section.className = "reference-detail-section";
+  const heading = document.createElement("div");
+  heading.className = "reference-detail-heading";
+  heading.textContent = title;
+  section.appendChild(heading);
+
+  if(Array.isArray(textOrItems)){
+    const list = document.createElement("ul");
+    list.className = "reference-bullets";
+    textOrItems.forEach(value => {
+      const li = document.createElement("li");
+      li.textContent = value;
+      list.appendChild(li);
+    });
+    section.appendChild(list);
+  }else{
+    const body = document.createElement("div");
+    body.className = "reference-detail-text";
+    body.textContent = String(textOrItems || "-");
+    section.appendChild(body);
+  }
+  parent.appendChild(section);
+}
+
+function renderReferenceDetail(){
+  const moduleName = activeModule === "code" ? "code" : "guide";
+  const data = referenceData(moduleName);
+  const name = selectedReferenceItem[moduleName];
+  const category = name ? referenceCategoryForItem(moduleName, name) : selectedReferenceCategory[moduleName];
+  const title = el("referenceDetailTitle");
+  const heading = el("referenceDetailHeading");
+  const currentSelection = el("referenceCurrentSelection");
+  const infoTitle = el("referenceInfoTitle");
+  const meta = el("referenceMeta");
+  const hint = el("referenceInfoHint");
+  const body = el("referenceDetailBody");
+  if(!title || !body) return;
+
+  if(heading) heading.textContent = moduleName === "code" ? "CODE DETAIL" : "USER GUIDE DETAIL";
+  if(infoTitle) infoTitle.textContent = moduleName === "code" ? "RELATED" : "REFERENCE INFO";
+
+  if(currentSelection){
+    if(moduleName === "code") currentSelection.textContent = name ? `CODE → ${name}` : "CODE → Select a code";
+    else currentSelection.textContent = name ? `GUIDE → ${name}` : "GUIDE → Select a user guide";
+  }
+
+  if(meta){
+    if(moduleName === "code"){
+      meta.innerHTML = `
+        <div class="reference-meta-row"><span>Category</span><strong>${category || "-"}</strong></div>
+        <div class="reference-meta-row"><span>Reference</span><strong>${name || "-"}</strong></div>
+      `;
+    }else{
+      meta.innerHTML = `
+        <div class="reference-meta-row"><span>Module</span><strong>User Guide</strong></div>
+        <div class="reference-meta-row"><span>Item</span><strong>${name || "-"}</strong></div>
+      `;
+    }
+  }
+
+  if(hint){
+    if(moduleName === "code") hint.textContent = name
+      ? "Use Search All to find related Symptoms or User Guides for this code."
+      : "Select a code above to view its detail and related reference information.";
+    else hint.textContent = name
+      ? "User guide content is shown in the left panel."
+      : "Select a user guide above to view the reference.";
+  }
+
+  body.innerHTML = "";
+  body.className = "reference-detail-body";
+  if(!name || !data[name]){
+    title.textContent = moduleName === "code" ? "Select a code" : "Select a user guide";
+    body.className = "reference-detail-body empty-state reference-detail-empty";
+    body.textContent = moduleName === "code"
+      ? "Select a code above to view information."
+      : "Select a user guide to view information.";
+    return;
+  }
+
+  title.textContent = name;
+  const item = data[name];
+  if(moduleName === "guide"){
+    const content = document.createElement("div");
+    content.className = "guide-content";
+    content.textContent = item.content || "No information available.";
+    body.appendChild(content);
+    return;
+  }
+
+  appendReferenceSection(body, "DESCRIPTION", item.description || "-");
+  appendReferenceSection(body, "POSSIBLE CAUSE", Array.isArray(item.possibleCause) ? item.possibleCause : [item.possibleCause || "-"]);
+  appendReferenceSection(body, "RECOMMENDED ACTION", Array.isArray(item.recommendedAction) ? item.recommendedAction : [item.recommendedAction || "-"]);
+}
+
+function renderReferenceView(){
+  if(activeModule === "troubleshooting") return;
+  const moduleName = activeModule === "code" ? "code" : "guide";
+  const cfg = referenceConfig(moduleName);
+  const referenceView = el("referenceView");
+  const categoryColumn = el("referenceCategoryColumn");
+  const categoriesBox = el("referenceCategories");
+  const itemsBox = el("referenceItems");
+  const listTitle = el("referenceListTitle");
+  if(!categoriesBox || !itemsBox || !listTitle) return;
+
+  if(referenceView){
+    referenceView.classList.remove("code-mode", "guide-mode");
+    referenceView.classList.add(moduleName === "code" ? "code-mode" : "guide-mode");
+  }
+
+  listTitle.textContent = cfg.listTitle;
+  categoriesBox.innerHTML = "";
+
+  // v5.2.4: Code and Guide are direct-reference lists. Category mappings remain
+  // internal metadata for Search/Diagnostics, but are not shown as navigation.
+  selectedReferenceCategory[moduleName] = cfg.allCategory;
+  if(categoryColumn) categoryColumn.classList.add("hidden");
+
+  const names = Object.keys(referenceData(moduleName));
+
+  if(selectedReferenceItem[moduleName] && !names.includes(selectedReferenceItem[moduleName])){
+    selectedReferenceItem[moduleName] = null;
+  }
+  itemsBox.innerHTML = "";
+  if(!names.length){
+    const empty = document.createElement("div");
+    empty.className = "empty-state list-empty";
+    empty.textContent = cfg.emptyText;
+    itemsBox.appendChild(empty);
+  }else{
+    names.forEach(name => {
+      const div = document.createElement("div");
+      div.className = "item reference-item" + (name === selectedReferenceItem[moduleName] ? " active" : "");
+      div.textContent = name;
+      div.onclick = () => {
+        selectedReferenceItem[moduleName] = name;
+        renderReferenceView();
+      };
+      itemsBox.appendChild(div);
+    });
+  }
+  renderReferenceDetail();
+}
+
+function knowledgeSearchText(section, name, item){
+  if(section === "Troubleshooting Guide") return `${name} ${item && item.content ? item.content : ""}`.toLowerCase();
+  const causes = Array.isArray(item && item.possibleCause) ? item.possibleCause.join(" ") : (item && item.possibleCause) || "";
+  const actions = Array.isArray(item && item.recommendedAction) ? item.recommendedAction.join(" ") : (item && item.recommendedAction) || "";
+  return `${name} ${(item && item.description) || ""} ${causes} ${actions}`.toLowerCase();
+}
+
+function collectGlobalSearchResults(keyword){
+  const kw = String(keyword || "").trim().toLowerCase();
+  if(!kw) return [];
+  const results = [];
+
+  getVisibleLevelKeys().forEach(levelKey => {
+    getVisibleSymptomKeys(levelKey).forEach(symKey => {
+      const obj = LEVELS[levelKey].symptoms[symKey];
+      const hay = `${LEVELS[levelKey].name} ${obj.name} ${obj.description || ""}`.toLowerCase();
+      if(hay.includes(kw)){
+        results.push({
+          type: "Troubleshooting",
+          title: obj.name,
+          subtitle: LEVELS[levelKey].name,
+          levelKey,
+          symKey
+        });
+      }
+    });
+  });
+
+  [["Code", "code"], ["Troubleshooting Guide", "guide"]].forEach(([section, moduleName]) => {
+    const data = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[section]) ? KNOWLEDGE_BASE[section] : {};
+    Object.entries(data).forEach(([name, item]) => {
+      if(knowledgeSearchText(section, name, item).includes(kw)){
+        results.push({
+          type: moduleName === "code" ? "Code" : "User Guide",
+          title: name,
+          subtitle: referenceCategoryForItem(moduleName, name),
+          moduleName
+        });
+      }
+    });
+  });
+  return results;
+}
+
+function openGlobalSearchResult(result){
+  if(result.type === "Troubleshooting"){
+    activeModule = "troubleshooting";
+    selectedLevel = result.levelKey;
+    selectedSymptom = result.symKey;
+  }else{
+    activeModule = result.moduleName;
+    selectedReferenceCategory[result.moduleName] = referenceCategoryForItem(result.moduleName, result.title);
+    selectedReferenceItem[result.moduleName] = result.title;
+  }
+  if(el("search")) el("search").value = "";
+  setSearchClearVisibility();
+  renderAll();
+}
+
+function renderGlobalSearch(){
+  const search = el("search");
+  const panel = el("globalSearchPanel");
+  if(!search || !panel) return;
+  const kw = search.value.trim();
+  setSearchClearVisibility();
+  if(!kw){
+    panel.innerHTML = "";
+    panel.classList.add("hidden");
+    showModuleView();
+    return;
+  }
+
+  if(el("troubleshootingView")) el("troubleshootingView").classList.add("hidden");
+  if(el("referenceView")) el("referenceView").classList.add("hidden");
+  panel.classList.remove("hidden");
+  panel.innerHTML = "";
+
+  const results = collectGlobalSearchResults(kw);
+  const heading = document.createElement("div");
+  heading.className = "global-search-heading";
+  heading.textContent = `SEARCH RESULTS — “${kw}” (${results.length})`;
+  panel.appendChild(heading);
+
+  if(!results.length){
+    const empty = document.createElement("div");
+    empty.className = "empty-state global-search-empty";
+    empty.textContent = "No matching results";
+    panel.appendChild(empty);
+    return;
+  }
+
+  const list = document.createElement("div");
+  list.className = "global-search-list";
+  results.forEach(result => {
+    const row = document.createElement("div");
+    row.className = "global-search-result";
+    const badge = document.createElement("span");
+    badge.className = "search-badge " + (result.type === "Troubleshooting" ? "badge-ts" : result.type === "Code" ? "badge-code" : "badge-guide");
+    badge.textContent = result.type === "Troubleshooting" ? "TS" : result.type === "Code" ? "CODE" : "GUIDE";
+    const text = document.createElement("div");
+    text.className = "global-search-result-text";
+    const title = document.createElement("div");
+    title.className = "global-search-result-title";
+    title.textContent = result.title;
+    const subtitle = document.createElement("div");
+    subtitle.className = "global-search-result-subtitle";
+    subtitle.textContent = result.subtitle;
+    text.appendChild(title);
+    text.appendChild(subtitle);
+    row.appendChild(badge);
+    row.appendChild(text);
+    row.onclick = () => openGlobalSearchResult(result);
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+}
 
 function renderLevel1(){
   const box = el("level1");
@@ -97,7 +519,15 @@ function renderLevel1(){
 function renderSymptoms(){
   const box = el("symptom");
   box.innerHTML = "";
-  getVisibleSymptomKeys(selectedLevel).forEach(key => {
+  const symptomKeys = getVisibleSymptomKeys(selectedLevel);
+  if(!symptomKeys.length){
+    const empty = document.createElement("div");
+    empty.className = "empty-state list-empty";
+    empty.textContent = "No symptoms available for this product.";
+    box.appendChild(empty);
+    return;
+  }
+  symptomKeys.forEach(key => {
     const div = document.createElement("div");
     div.className = "item" + (key === selectedSymptom ? " active" : "");
     div.textContent = LEVELS[selectedLevel].symptoms[key].name;
@@ -230,6 +660,26 @@ function collectDiagnostics(){
     errors.push(`Product count mismatch: metadata=${meta.productSheets}, runtime=${runtimeProducts}`);
   }
 
+  [
+    ["Code", CODE_CATEGORIES, "All Codes"],
+    ["Troubleshooting Guide", GUIDE_CATEGORIES, "All"]
+  ].forEach(([section, categories, allCategory]) => {
+    const data = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[section]) ? KNOWLEDGE_BASE[section] : {};
+    const actualNames = Object.keys(data);
+    const mappedNames = Object.entries(categories)
+      .filter(([category]) => category !== allCategory)
+      .flatMap(([, names]) => names);
+    const counts = new Map();
+    mappedNames.forEach(name => counts.set(name, (counts.get(name) || 0) + 1));
+    actualNames.forEach(name => {
+      if(!counts.has(name)) errors.push(`${section}: uncategorized item ${name}`);
+      else if(counts.get(name) !== 1) errors.push(`${section}: item categorized more than once ${name}`);
+    });
+    mappedNames.forEach(name => {
+      if(!data[name]) errors.push(`${section}: category points to missing item ${name}`);
+    });
+  });
+
   return {
     status: errors.length ? "FAIL" : "PASS",
     errors,
@@ -298,6 +748,81 @@ function shortGuideName(name){
     .replace("Bypass Windows 11 OOBE","Windows 11 Bypass");
 }
 
+
+function setSearchClearVisibility(){
+  const search = el("search");
+  const clear = el("searchClearBtn");
+  if(!search || !clear) return;
+  if(search.value.trim()) clear.classList.remove("hidden");
+  else clear.classList.add("hidden");
+}
+
+function clearSearchOnly(){
+  const search = el("search");
+  if(!search) return;
+  search.value = "";
+  setSearchClearVisibility();
+  renderAll();
+  if(typeof search.focus === "function") search.focus();
+}
+
+function renderChecklistEmptyState(message = "Select a symptom to view checklist") {
+  const checklist = el("checklist");
+  if(!checklist) return;
+  checklist.innerHTML = "";
+  const empty = document.createElement("div");
+  empty.className = "empty-state checklist-empty";
+  empty.textContent = message;
+  checklist.appendChild(empty);
+}
+
+function checklistItemCompleted(question, index){
+  const select = el(`a${index}`);
+  const text = el(`t${index}`);
+  const selected = select ? String(select.value || "").trim() : "";
+  const detail = text ? String(text.value || "").trim() : "";
+  if(detail) return true;
+  return !!selected && selected !== "-- Select --";
+}
+
+function updateChecklistProgress(){
+  const progress = el("checklistProgress");
+  const progressText = el("checklistProgressText");
+  const progressBar = el("checklistProgressBar");
+  if(!progress || !progressText || !progressBar) return;
+
+  if(isKnowledgeLevel() || !current()){
+    progress.classList.add("hidden");
+    progressText.classList.add("hidden");
+    progressBar.style.width = "0%";
+    return;
+  }
+
+  const questions = getQuestions();
+  const total = questions.length;
+  let completed = 0;
+  questions.forEach((question, index) => {
+    const done = checklistItemCompleted(question, index);
+    if(done) completed += 1;
+    const row = el(`checkRow${index}`);
+    if(row){
+      if(done) row.classList.add("is-complete");
+      else row.classList.remove("is-complete");
+    }
+  });
+
+  const percent = total ? Math.round((completed / total) * 100) : 0;
+  progressText.textContent = `Checklist ${completed} / ${total} completed`;
+  progressBar.style.width = `${percent}%`;
+  progress.classList.remove("hidden");
+  progressText.classList.remove("hidden");
+}
+
+function handleChecklistUpdate(){
+  updateRecommendation();
+  updateChecklistProgress();
+}
+
 function shouldShowAdditionalDetail(){
   return !isManual() && selectedLevel !== "error";
 }
@@ -320,10 +845,23 @@ function renderErrorDescription(){
 
 
 function renderMain(){
-  updateCurrentSelection();
   el("note").value = "";
   const checklist = el("checklist");
   const manualBox = el("manualBox");
+
+  if(!current()){
+    el("currentSelection").innerHTML = "<b>Current Selection:</b> -";
+    el("mainTitle").textContent = "TROUBLESHOOTING CHECKLIST";
+    el("recTitle").textContent = "CONCLUSION";
+    el("recommendation").textContent = "-";
+    manualBox.classList.add("hidden");
+    el("suggestion").classList.add("hidden");
+    renderChecklistEmptyState();
+    updateChecklistProgress();
+    return;
+  }
+
+  updateCurrentSelection();
 
   if(isKnowledgeLevel()){
     el("mainTitle").textContent = isKnowledgeLevel() ? "INFORMATION" : "TROUBLESHOOTING CHECKLIST";
@@ -334,6 +872,7 @@ function renderMain(){
     manualBox.textContent = getKnowledgeText();
     manualBox.classList.remove("hidden");
     el("suggestion").classList.add("hidden");
+    updateChecklistProgress();
     return;
   }
 
@@ -345,6 +884,7 @@ function renderMain(){
 
   getQuestions().forEach((q, i) => {
     const row = document.createElement("div");
+    row.id = `checkRow${i}`;
     row.className = "check-row";
 
     const label = document.createElement("div");
@@ -362,7 +902,7 @@ function renderMain(){
         option.textContent = value;
         select.appendChild(option);
       });
-      select.addEventListener("change", updateRecommendation);
+      select.addEventListener("change", handleChecklistUpdate);
       row.appendChild(select);
     }else{
       row.appendChild(document.createElement("div"));
@@ -373,7 +913,7 @@ function renderMain(){
       const input = document.createElement("input");
       input.id = `t${i}`;
       input.placeholder = "detail";
-      input.addEventListener("input", updateRecommendation);
+      input.addEventListener("input", handleChecklistUpdate);
       row.appendChild(input);
     }else{
       row.appendChild(document.createElement("div"));
@@ -389,6 +929,7 @@ function renderMain(){
   }
   renderRelatedGuide();
   updateRecommendation();
+  updateChecklistProgress();
   forceConclusionRed();
 }
 
@@ -922,13 +1463,6 @@ function reviewEngine(ans, rec){
   return {rec, reviewLines:null, blockEmail:false};
 }
 
-function conclusionLine(rec){
-  if(!rec || !rec.result) return "Conclusion:";
-  if(rec.result === "Dispatch") return `Conclusion: Dispatch ${rec.part || ""}`.trim();
-  if(rec.result === "FOP") return "Conclusion: FOP";
-  return "Conclusion:";
-}
-
 function reviewText(info){
   if(!info) return "";
   const lines = [checklistSummaryText(), ""];
@@ -943,14 +1477,10 @@ function reviewText(info){
     });
     lines.push("");
     lines.push("Please verify with the customer.");
-    lines.push("");
-    lines.push("Conclusion:");
     return lines.join("\n");
   }
   if(info.reviewLines){
     lines.push(...info.reviewLines);
-    lines.push("");
-    lines.push("Conclusion:");
     return lines.join("\n");
   }
   return "";
@@ -1154,11 +1684,7 @@ function generateText(){
   // If there is inconsistent information or a wrong-symptom suggestion, show only the Review/Suggestion content.
   if(review && (review.conflicts || review.reviewLines)) return reviewText(review);
 
-  const lines = [checklistSummaryText()];
-  const rec = (review && review.rec) || baseRec;
-  lines.push("");
-  lines.push(conclusionLine(rec));
-  return lines.join("\n");
+  return checklistSummaryText();
 }
 
 
@@ -1204,43 +1730,38 @@ function copyNote(){
 }
 function clearAll(){
   el("search").value = "";
+  setSearchClearVisibility();
   renderMain();
   el("note").value = "";
 }
 
 function filterSymptoms(){
-  const kw = el("search").value.toLowerCase().trim();
-  if(!kw){ renderAll(); return; }
-  const box = el("symptom");
-  box.innerHTML = "";
-  getVisibleLevelKeys().forEach(levelKey => {
-    getVisibleSymptomKeys(levelKey).forEach(symKey => {
-      const obj = LEVELS[levelKey].symptoms[symKey];
-      const hay = `${LEVELS[levelKey].name} ${obj.name}`.toLowerCase();
-      if(hay.includes(kw)){
-        const div = document.createElement("div");
-        div.className = "item";
-        div.textContent = `${LEVELS[levelKey].name} > ${obj.name}`;
-        div.onclick = () => {
-          selectedLevel = levelKey;
-          selectedSymptom = symKey;
-          el("search").value = "";
-          renderAll();
-        };
-        box.appendChild(div);
-      }
-    });
-  });
+  renderGlobalSearch();
 }
 
 function renderAll(){
   ensureSelectionAvailable();
-  renderLevel1();
-  renderSymptoms();
-  renderMain();
+  renderModuleTabs();
+  if(activeModule === "troubleshooting"){
+    renderLevel1();
+    renderSymptoms();
+    renderMain();
+  }else{
+    renderReferenceView();
+  }
+  setSearchClearVisibility();
+  if(el("search") && el("search").value.trim()) renderGlobalSearch();
+  else {
+    const panel = el("globalSearchPanel");
+    if(panel) panel.classList.add("hidden");
+    showModuleView();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  if(el("tabTroubleshooting")) el("tabTroubleshooting").addEventListener("click", () => switchModule("troubleshooting"));
+  if(el("tabCode")) el("tabCode").addEventListener("click", () => switchModule("code"));
+  if(el("tabUserGuide")) el("tabUserGuide").addEventListener("click", () => switchModule("guide"));
   el("product").addEventListener("change", () => {
     const productText = el("product").options[el("product").selectedIndex].text;
     gaTrack("product_selected", { product: productText });
@@ -1252,6 +1773,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderAll();
   });
   el("search").addEventListener("input", filterSymptoms);
+  if(el("searchClearBtn")) el("searchClearBtn").addEventListener("click", clearSearchOnly);
   el("topClearBtn").addEventListener("click", clearAll);
   el("generateBtn").addEventListener("click", generateNote);
   el("emailThBtn").addEventListener("click", sendEmailTH);
@@ -1277,7 +1799,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.2.3 Excel-Only Data Rules
+// v5.2.4 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,
@@ -1288,7 +1810,9 @@ function getVisibleLevelKeys(){
   const structure = (typeof MODEL_STRUCTURE !== "undefined" && MODEL_STRUCTURE[product])
     ? MODEL_STRUCTURE[product]
     : [];
-  return structure.map(item => item.level).filter(levelKey => LEVELS[levelKey]);
+  return structure
+    .map(item => item.level)
+    .filter(levelKey => LEVELS[levelKey] && levelKey !== "bios" && levelKey !== "error" && levelKey !== "manual");
 }
 
 function getVisibleSymptomKeys(levelKey){

@@ -1,4 +1,4 @@
-PD Guide Toolkit v5.2.3
+PD Guide Toolkit v5.2.4
 
 Open index.html to start the Toolkit.
 
@@ -48,6 +48,13 @@ Diagnostics:
 - Runtime diagnostics run silently in the background when the Toolkit loads; there is no user-facing Diagnostics button.
 - Background diagnostics are a runtime aid; the release gate remains python validate_database.py.
 
+Navigation v5.2.4:
+- Troubleshooting contains the product troubleshooting workflow.
+- Code provides categorized Error Code reference from the existing Knowledge Base.
+- User Guide provides categorized guide content from TROUBLESHOOTING_GUIDE.md using the approved category order: All, Windows, Diagnostics, Recovery, Power, Battery, Storage, Display, Audio, Lenovo Vantage, USB / Port, Security / Activation, BIOS / Firmware, Tools / Commands.
+- SYMPTOMS hides the duplicate BIOS Level 1 entry; BIOS password guidance is available under GUIDE > BIOS / Firmware.
+- Search All is global and searches Troubleshooting, Code, and User Guide together.
+
 Run python generate_database.py and python validate_database.py before packaging every release.
 
-Version 5.2.3
+Version 5.2.4

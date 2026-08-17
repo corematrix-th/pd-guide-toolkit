@@ -19,7 +19,7 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 XLSX = ROOT / "PD_Guide_Database.xlsx"
 OUTPUT = ROOT / "database.js"
-VERSION = "5.2.3"
+VERSION = "5.2.4"
 NS = {
     "m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
