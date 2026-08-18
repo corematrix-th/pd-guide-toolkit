@@ -259,7 +259,7 @@ def main() -> None:
     if not XLSX.exists() or not OUTPUT.exists():
         raise SystemExit("PD_Guide_Database.xlsx and database.js are required.")
     if not LABOR_XLSX.exists() or not LABOR_OUTPUT.exists():
-        raise SystemExit("Labor Mapping.xlsx and labor_mapping.js are required for v5.2.5.")
+        raise SystemExit("Labor Mapping.xlsx and labor_mapping.js are required for v5.2.6.")
 
     sheets = read_xlsx(XLSX)
     errors, warnings = validate_workbook(sheets)

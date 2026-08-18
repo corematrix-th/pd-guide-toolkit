@@ -144,7 +144,7 @@ function withDisplayQuestions(sym){
 }
 
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.2.5)
+// Excel-only data rule (v5.2.6)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
@@ -381,7 +381,7 @@ function renderReferenceView(){
   listTitle.textContent = cfg.listTitle;
   categoriesBox.innerHTML = "";
 
-  // v5.2.5: Code and Guide are direct-reference lists. Category mappings remain
+  // v5.2.6: Code and Guide are direct-reference lists. Category mappings remain
   // internal metadata for Search/Diagnostics, but are not shown as navigation.
   selectedReferenceCategory[moduleName] = cfg.allCategory;
   if(categoryColumn) categoryColumn.classList.add("hidden");
@@ -647,18 +647,26 @@ function setLaborSearchClearVisibility(){
   const search = el("laborSearch");
   const clear = el("laborSearchClearBtn");
   if(!search || !clear) return;
-  if(search.value.trim()) clear.classList.remove("hidden");
-  else clear.classList.add("hidden");
+  // Keep the labeled Clear button visible beside the Labor Mapping search box.
+  clear.classList.remove("hidden");
+  clear.disabled = !search.value.trim();
 }
 
-function appendLaborSupportRow(tbody, supportType, support, postalLabel = null){
+function appendLaborSupportRow(tbody, supportType, support, rowMeta = null, rowClass = ""){
   const tr = document.createElement("tr");
-  if(postalLabel !== null){
+  if(rowClass) tr.className = rowClass;
+  if(rowMeta){
     const postal = document.createElement("th");
     postal.className = "labor-postal-cell";
-    postal.textContent = postalLabel;
+    postal.textContent = rowMeta.postalLabel || "-";
     postal.rowSpan = 2;
     tr.appendChild(postal);
+
+    const province = document.createElement("td");
+    province.className = "labor-province-cell";
+    province.textContent = rowMeta.provinceName || "-";
+    province.rowSpan = 2;
+    tr.appendChild(province);
   }
 
   const type = document.createElement("th");
@@ -698,33 +706,7 @@ function buildLaborTable(headers, className = ""){
   return { tableWrap, tbody };
 }
 
-function renderLaborPostalResults(matches, resultsBox){
-  matches.forEach(row => {
-    const card = document.createElement("div");
-    card.className = "labor-result-card";
-
-    const location = document.createElement("div");
-    location.className = "labor-result-location";
-    const province = document.createElement("strong");
-    province.textContent = row.province;
-    const postal = document.createElement("span");
-    postal.textContent = `Postal Code: ${laborPostalLabel(row)}`;
-    location.appendChild(province);
-    location.appendChild(postal);
-    card.appendChild(location);
-
-    const { tableWrap, tbody } = buildLaborTable(
-      ["Support Type", "Labor Vendor ID", "Premier Vendor"],
-      "labor-postal-table"
-    );
-    appendLaborSupportRow(tbody, "Standard / PCARE", row.standardPcare);
-    appendLaborSupportRow(tbody, "Premier Support", row.premierSupport);
-    card.appendChild(tableWrap);
-    resultsBox.appendChild(card);
-  });
-}
-
-function renderLaborProvinceResults(matches, resultsBox){
+function renderLaborResults(matches, resultsBox){
   const groups = new Map();
   matches.forEach(row => {
     const key = String(row.province || "");
@@ -747,13 +729,19 @@ function renderLaborProvinceResults(matches, resultsBox){
     card.appendChild(location);
 
     const { tableWrap, tbody } = buildLaborTable(
-      ["Postal Code", "Support Type", "Labor Vendor ID", "Premier Vendor"],
-      "labor-province-table"
+      ["Postal Code", "Province", "Support Type", "Labor Vendor ID", "Premier Vendor"],
+      "labor-unified-table"
     );
-    rows.forEach(row => {
-      const postalLabel = laborPostalLabel(row);
-      appendLaborSupportRow(tbody, "Standard / PCARE", row.standardPcare, postalLabel);
-      appendLaborSupportRow(tbody, "Premier Support", row.premierSupport);
+    rows.forEach((row, rowIndex) => {
+      const rowMeta = {
+        postalLabel: laborPostalLabel(row),
+        provinceName: row.province
+      };
+      // Keep both support rows for the same Postal Code visually grouped.
+      // Alternate the background only when moving to the next Postal Code range.
+      const rowClass = rowIndex % 2 === 1 ? "labor-postal-alt" : "labor-postal-base";
+      appendLaborSupportRow(tbody, "Standard / Premium care", row.standardPcare, rowMeta, rowClass);
+      appendLaborSupportRow(tbody, "Premier Support", row.premierSupport, null, rowClass);
     });
     card.appendChild(tableWrap);
     resultsBox.appendChild(card);
@@ -808,8 +796,8 @@ function renderLaborMapping(){
     return;
   }
 
-  if(isPostalSearch) renderLaborPostalResults(displayMatches, resultsBox);
-  else renderLaborProvinceResults(displayMatches, resultsBox);
+  // Use one consistent five-column table for both Province and Postal Code searches.
+  renderLaborResults(displayMatches, resultsBox);
 
   gaTrack("labor_mapping_search", {
     search_type: isPostalSearch ? "postal_code" : "province",
@@ -839,6 +827,58 @@ function getManualGuide(key){
   return manuals[key] || null;
 }
 
+// v5.2.6 — Selective Related Guide popup policy.
+// Keep the troubleshooting page in place and expose ⓘ only for steps where
+// the operator is likely to need a setting, Vantage/BIOS path, command, or
+// longer recovery procedure. Basic procedures intentionally stay icon-free.
+const SELECTIVE_RELATED_GUIDE_NAMES = new Set([
+  "lenovo diagnostics",
+  "re-install windows",
+  "reset this pc",
+  "dump file",
+  "battery health",
+  "battery report",
+  "fn & ctrl key swap",
+  "ssd not found during install os",
+  "disable audio enhancements",
+  "lock on leave function"
+]);
+
+function resolveManualGuideKey(token){
+  const manuals = LEVELS.manual && LEVELS.manual.symptoms ? LEVELS.manual.symptoms : {};
+  const raw = String(token || "").trim();
+  if(!raw) return null;
+  if(manuals[raw]) return raw;
+
+  const displayName = (typeof RELATED_GUIDE_MASTER !== "undefined" && RELATED_GUIDE_MASTER[raw])
+    ? RELATED_GUIDE_MASTER[raw]
+    : raw;
+  const target = String(displayName || "").trim().toLowerCase();
+  return Object.keys(manuals).find(candidate =>
+    String(manuals[candidate].name || "").trim().toLowerCase() === target
+  ) || null;
+}
+
+function getPopupGuideKeysForQuestion(question){
+  const keys = [];
+  String((question && question.relatedGuide) || "")
+    .split(/\s*\|\s*|\r?\n|\s*;\s*/)
+    .map(value => value.trim())
+    .filter(Boolean)
+    .forEach(token => {
+      const key = resolveManualGuideKey(token);
+      const guide = key ? getManualGuide(key) : null;
+      const name = String((guide && guide.name) || "").trim().toLowerCase();
+      if(key && SELECTIVE_RELATED_GUIDE_NAMES.has(name) && !keys.includes(key)) keys.push(key);
+    });
+  return keys;
+}
+
+function getGuidePopupText(guide){
+  if(!guide) return "No information available.";
+  return String(guide.guide || guide.content || "No information available.").trim();
+}
+
 function openGuideModal(key){
   const guide = getManualGuide(key);
   if(!guide) return;
@@ -848,7 +888,7 @@ function openGuideModal(key){
     symptom: getSymptomName()
   });
   el("modalTitle").textContent = guide.name;
-  el("modalBody").textContent = getGuideTextForCurrentModel(guide);
+  el("modalBody").textContent = getGuidePopupText(guide);
   el("guideModal").classList.remove("hidden");
 }
 
@@ -975,7 +1015,7 @@ function collectDiagnostics(){
     if(!row.province) errors.push(`Labor Mapping row ${index + 1}: missing Province`);
     if(Number(row.postalFrom) > Number(row.postalTo)) errors.push(`Labor Mapping row ${index + 1}: invalid Postal Code range`);
     [row.standardPcare, row.premierSupport].forEach((support, supportIndex) => {
-      const label = supportIndex === 0 ? "Standard / PCARE" : "Premier Support";
+      const label = supportIndex === 0 ? "Standard / Premium care" : "Premier Support";
       if(!support || !support.laborVendorId || !support.premierVendor){
         errors.push(`Labor Mapping row ${index + 1}: incomplete ${label} mapping`);
       }
@@ -1003,54 +1043,7 @@ function runBackgroundDiagnostics(){
   return info;
 }
 
-function renderRelatedGuide(){
-  const rightBox = el("rightRelatedGuide") || el("relatedGuide");
-  if(rightBox){
-    rightBox.innerHTML = "";
-    rightBox.classList.add("hidden");
-  }
-
-  const old = document.getElementById("relatedGuideInline");
-  if(old) old.remove();
-
-  if(isManual()) return;
-
-  const keys = getRelatedGuideKeys();
-  const valid = keys.map(key => [key, getManualGuide(key)]).filter(x => x[1]);
-  if(!valid.length) return;
-
-  const wrapper = document.createElement("div");
-  wrapper.id = "relatedGuideInline";
-  wrapper.className = "related-guide-inline";
-
-  const title = document.createElement("div");
-  title.className = "section-title related-title";
-  title.textContent = "RELATED GUIDE";
-  wrapper.appendChild(title);
-
-  const box = document.createElement("div");
-  box.className = "related-guide";
-  valid.forEach(([key, guide]) => {
-    const chip = document.createElement("span");
-    chip.className = "guide-chip";
-    chip.textContent = shortGuideName(guide.name);
-    chip.onclick = () => openGuideModal(key);
-    box.appendChild(chip);
-  });
-  wrapper.appendChild(box);
-
-  const checklist = el("checklist");
-  if(checklist) checklist.appendChild(wrapper);
-}
-
-function shortGuideName(name){
-  return name
-    .replace("Lenovo Vantage Update","Vantage")
-    .replace("Lenovo Diagnostics","Diagnostics")
-    .replace("Microsoft Office Activation","Office Activation")
-    .replace("Re-install Windows","Re-install Windows")
-    .replace("Bypass Windows 11 OOBE","Windows 11 Bypass");
-}
+// Related Guides are rendered inline as ⓘ beside selected checklist labels.
 
 
 function setSearchClearVisibility(){
@@ -1194,6 +1187,21 @@ function renderMain(){
     const label = document.createElement("div");
     label.className = "check-label";
     label.textContent = q.label;
+
+    const popupGuideKeys = getPopupGuideKeysForQuestion(q);
+    popupGuideKeys.forEach(key => {
+      const guide = getManualGuide(key);
+      const info = document.createElement("button");
+      info.type = "button";
+      info.className = "check-guide-info";
+      info.textContent = "ⓘ";
+      info.title = guide ? `Open ${guide.name} guide` : "Open guide";
+      info.onclick = event => {
+        if(event && typeof event.stopPropagation === "function") event.stopPropagation();
+        openGuideModal(key);
+      };
+      label.appendChild(info);
+    });
     row.appendChild(label);
 
     const options = getQuestionOptions(q);
@@ -1231,7 +1239,6 @@ function renderMain(){
     detail.placeholder = "Additional Detail";
     checklist.appendChild(detail);
   }
-  renderRelatedGuide();
   updateRecommendation();
   updateChecklistProgress();
   forceConclusionRed();
@@ -2105,7 +2112,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.2.5 Excel-Only Data Rules
+// v5.2.6 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,
@@ -2145,28 +2152,11 @@ function getQuestionOptions(question){
 
 function getRelatedGuideKeys(){
   if(isManual()) return [];
-  const manuals = (LEVELS.manual && LEVELS.manual.symptoms) ? LEVELS.manual.symptoms : {};
-  const tokens = [];
-  getQuestions().forEach(row => {
-    String(row.relatedGuide || '')
-      .split(/\s*\|\s*|\r?\n|\s*;\s*/)
-      .map(x => x.trim())
-      .filter(Boolean)
-      .forEach(token => { if(!tokens.includes(token)) tokens.push(token); });
-  });
-
   const resolved = [];
-  tokens.forEach(token => {
-    let key = manuals[token] ? token : null;
-    const displayName = (typeof RELATED_GUIDE_MASTER !== "undefined" && RELATED_GUIDE_MASTER[token])
-      ? RELATED_GUIDE_MASTER[token]
-      : token;
-    if(!key){
-      key = Object.keys(manuals).find(candidate =>
-        String(manuals[candidate].name || '').trim().toLowerCase() === String(displayName).trim().toLowerCase()
-      );
-    }
-    if(key && !resolved.includes(key)) resolved.push(key);
+  getQuestions().forEach(question => {
+    getPopupGuideKeysForQuestion(question).forEach(key => {
+      if(!resolved.includes(key)) resolved.push(key);
+    });
   });
   return resolved;
 }

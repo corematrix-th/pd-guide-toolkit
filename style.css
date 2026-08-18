@@ -274,12 +274,25 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
 .manual{padding:10px;border:1px solid var(--border);border-radius:6px;background:#fafafa;line-height:1.6;white-space:pre-wrap}
 .error-description{margin-bottom:7px;padding:6px 8px;border:1px solid #ffe0a3;border-radius:6px;background:#fff8e8;color:#805000;font-size:11px;line-height:1.45}
 
-.related-guide-inline{display:block;margin-top:10px;padding:8px;border:1px solid #d9dee5;border-radius:6px;background:#f5f6f8}
-.related-guide-inline .related-title{margin:0 0 6px;color:#555;font-weight:700}
-.related-guide-inline .related-guide{display:flex;flex-wrap:wrap;gap:5px;max-height:70px;min-height:24px;margin:0;padding:0;border:0;background:transparent;overflow-y:auto}
-.related-guide{display:flex;flex-wrap:wrap;gap:4px;min-height:28px;margin-bottom:6px;padding:6px;border:1px solid var(--border);background:#fafafa;overflow-y:auto}
-.guide-chip{display:inline-block;margin:2px;padding:4px 7px;border:1px solid #b8ddff;border-radius:4px;background:#eef6ff;color:#005b99;font-weight:700;white-space:nowrap;cursor:pointer;transition:background var(--transition),transform var(--transition)}
-.guide-chip:hover{background:#dcecff;transform:translateY(-1px)}
+/* v5.2.6 — selective Related Guide icon beside the checklist label. */
+.check-guide-info{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:4px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#4f7fa8;
+  font-size:14px;
+  font-weight:700;
+  line-height:1;
+  vertical-align:-1px;
+  cursor:pointer;
+  transition:color var(--transition),transform var(--transition),background var(--transition);
+}
+.check-guide-info:hover{color:#245f91;transform:scale(1.08)}
+.check-guide-info:focus-visible{outline:2px solid #9cc4e4;outline-offset:2px;border-radius:50%}
 #relatedGuide,#rightRelatedGuide,.right-related{display:none}
 
 .empty-state{color:#8a94a3;text-align:center}
@@ -308,7 +321,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
   .section-heading{align-items:flex-start;flex-direction:column;gap:3px}
 }
 
-/* v5.2.5 — Locked module UI, Global Search, and Labor Mapping */
+/* v5.2.6 — Locked module UI, Global Search, Labor Mapping, and selective guide popups */
 .module-nav{
   display:flex;
   align-items:center;
@@ -433,6 +446,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
 
 /* Code and User Guide intentionally reuse the same tree/main geometry as Troubleshooting. */
 .reference-tree,.reference-main{width:100%}
+.reference-main{grid-template-columns:1fr}
 .reference-detail-panel,.reference-info-panel{height:430px;min-height:430px}
 .reference-detail-panel{display:flex;min-width:0;flex-direction:column;overflow:hidden}
 .reference-current-selection{flex:0 0 auto}
@@ -498,7 +512,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
   font-size:10px;
   line-height:1.45;
 }
-.reference-version{margin-top:auto;padding-top:6px;border-top:1px solid #edf1f5}
+.reference-version{margin-top:auto;padding-top:6px;border-top:1px solid #edf1f5;text-align:right}
 
 @media(max-width:900px){
   .module-nav{overflow-x:auto}
@@ -533,8 +547,13 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
 }
 .labor-title{margin:0}
 .labor-source-note{color:#7a8593;font-size:10px}
-.labor-search-field{max-width:620px}
+.labor-search-field{max-width:760px}
 .labor-search-field label{display:block;margin-bottom:4px;color:#55606d;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2px}
+.labor-search-controls{display:flex;align-items:center;gap:8px}
+.labor-search-controls .search-wrap{flex:1;min-width:0}
+.labor-search-wrap input{padding-right:7px}
+.labor-clear-btn{flex:0 0 auto}
+.labor-clear-btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
 .labor-result-summary{margin:10px 1px 6px;color:#586675;font-size:10px;font-weight:700;letter-spacing:.15px}
 .labor-results{display:grid;gap:8px;max-height:520px;overflow:auto;padding-right:2px}
 .labor-empty-state{
@@ -567,18 +586,25 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
 .labor-compare-table tbody th{background:#fafbfc;color:#56636f;font-size:11px;font-weight:700}
 .labor-compare-table tbody td{color:#37424d;font-size:11px}
 .labor-compare-table .labor-id{font-weight:800;letter-spacing:.15px}
-.labor-postal-table thead th:nth-child(1){width:22%}
-.labor-postal-table thead th:nth-child(2){width:22%}
-.labor-postal-table thead th:nth-child(3){width:56%}
-.labor-province-table thead th:nth-child(1){width:18%}
-.labor-province-table thead th:nth-child(2){width:20%}
-.labor-province-table thead th:nth-child(3){width:22%}
-.labor-province-table thead th:nth-child(4){width:40%}
+.labor-unified-table thead th:nth-child(1){width:14%}
+.labor-unified-table thead th:nth-child(2){width:16%}
+.labor-unified-table thead th:nth-child(3){width:18%}
+.labor-unified-table thead th:nth-child(4){width:20%}
+.labor-unified-table thead th:nth-child(5){width:32%}
 .labor-postal-cell{vertical-align:middle;background:#f4f7f9;color:#43515e}
+.labor-province-cell{vertical-align:middle;background:#fbfcfd;color:#43515e;font-weight:700}
 .labor-support-type{white-space:nowrap}
+
+/* v5.2.5 — group the two support rows for each Postal Code and alternate
+   a very light background between adjacent Postal Code ranges. */
+.labor-compare-table tbody tr.labor-postal-base > th,
+.labor-compare-table tbody tr.labor-postal-base > td{background:#fff}
+.labor-compare-table tbody tr.labor-postal-alt > th,
+.labor-compare-table tbody tr.labor-postal-alt > td{background:#f3f5f7}
 .labor-version{margin-top:8px;text-align:right}
 @media(max-width:900px){
   .labor-mapping-view{min-height:480px}
   .labor-search-topline,.labor-result-location{align-items:flex-start;flex-direction:column;gap:3px}
-  .labor-compare-table{min-width:680px}
+  .labor-search-controls{align-items:stretch}
+  .labor-compare-table{min-width:820px}
 }

@@ -21,7 +21,7 @@ XLSX = ROOT / "PD_Guide_Database.xlsx"
 OUTPUT = ROOT / "database.js"
 LABOR_XLSX = ROOT / "Labor Mapping.xlsx"
 LABOR_OUTPUT = ROOT / "labor_mapping.js"
-VERSION = "5.2.5"
+VERSION = "5.2.6"
 NS = {
     "m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",

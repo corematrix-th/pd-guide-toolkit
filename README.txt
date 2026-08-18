@@ -1,4 +1,4 @@
-PD Guide Toolkit v5.2.5
+PD Guide Toolkit v5.2.6
 
 Open index.html to start the Toolkit.
 
@@ -30,7 +30,7 @@ PD_Guide_Database.xlsx structure:
 Labor Mapping.xlsx rules:
 - Keep the original State/Province and Postal Code ranges exactly as supplied.
 - Do not merge adjacent Postal Code ranges automatically. Vendor mapping may differ by range.
-- Standard / PCARE and Premier Support retain their own SAP Account Number, Labor Vendor ID, and Premier Vendor.
+- Standard / Premium care and Premier Support retain their own SAP Account Number, Labor Vendor ID, and Premier Vendor.
 - The Toolkit displays Labor Vendor ID and Premier Vendor; SAP Account Number remains stored in runtime data for future use.
 - After editing Labor Mapping.xlsx, run python generate_database.py and python validate_database.py.
 
@@ -58,15 +58,25 @@ Diagnostics:
 - Runtime diagnostics validate the Labor Mapping dataset count and required vendor fields.
 - Background diagnostics are a runtime aid; the release gate remains python validate_database.py.
 
-Navigation v5.2.5:
+Selective Related Guide popup (v5.2.6):
+- SYMPTOMS no longer renders a separate Related Guide card below the checklist.
+- Selected complex checklist steps show a small ⓘ beside the checklist label.
+- Clicking ⓘ opens the existing Guide popup without leaving SYMPTOMS or clearing checklist answers.
+- Popup content is read from the same GUIDE source; no duplicate guide text is maintained in app.js.
+- Basic procedures such as Power Reset and Emergency Reset intentionally have no ⓘ.
+- For the Windows Recovery multi-guide mapping, only Reset This PC is exposed as a popup; Startup Repair and System Restore are not shown.
+
+Navigation v5.2.6:
 - SYMPTOMS contains the product troubleshooting workflow.
 - ERROR POST provides the Error/Post reference library, including BIOS Password and Supervisor Password.
 - GUIDE provides the direct User Guide library.
 - LABOR MAPPING provides an independent Province / Postal Code search.
 - Search All searches SYMPTOMS, ERROR POST, and GUIDE only. Labor Mapping is intentionally excluded.
 - Labor Mapping has its own search box and accepts Province name or a 5-digit Postal Code.
+- Province and Postal Code searches use the same result columns: Postal Code, Province, Support Type, Labor Vendor ID, Premier Vendor.
+- A dedicated Clear button beside the Labor Mapping search resets the query and results.
 - Postal Code lookup returns every source row whose range contains that code; it does not guess between overlapping source mappings.
 
 Run python generate_database.py and python validate_database.py before packaging every release.
 
-Version 5.2.5
+Version 5.2.6
