@@ -212,12 +212,13 @@ button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9
 .section-heading .section-title{margin-bottom:0}
 #mainTitle{font-size:10px;letter-spacing:.25px}
 .current-selection{
-  margin-bottom:6px;
-  padding:5px 7px;
+  margin-bottom:4px;
+  padding:3px 6px;
   border:1px solid #cfe3ff;
-  border-radius:6px;
+  border-radius:5px;
   background:#eef6ff;
   font-size:10px;
+  line-height:1.25;
 }
 
 .progress-text{color:#6b7280;font-size:9px;font-weight:600;white-space:nowrap}
@@ -253,12 +254,12 @@ button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9
 .recommendation.rec-lcd,
 .recommendation.rec-l2,
 .recommendation.rec-mainboard{
-  min-height:44px;
-  margin-bottom:9px;
-  padding:10px;
-  border:1px solid #ffb8b8;
+  min-height:42px;
+  margin-bottom:8px;
+  padding:8px 10px;
+  border:1px solid #f0cccc;
   border-radius:6px;
-  background:#fff0f0;
+  background:#fff8f8;
   color:#d60000;
   font-size:12px;
   font-weight:700;
@@ -307,7 +308,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
   .section-heading{align-items:flex-start;flex-direction:column;gap:3px}
 }
 
-/* v5.2.4 — Locked module UI, subtle framed navigation, and Global Search */
+/* v5.2.5 — Locked module UI, Global Search, and Labor Mapping */
 .module-nav{
   display:flex;
   align-items:center;
@@ -416,7 +417,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
 .global-search-empty{padding:70px 20px;font-size:11px}
 
 
-/* v5.2.4 — Code uses a direct full-width list; detail stays in the locked lower panels. */
+/* v5.2.5 — Error Post and Guide use direct full-width lists; detail stays in the locked lower panels. */
 .reference-view.code-mode .reference-tree,
 .reference-view.guide-mode .reference-tree{grid-template-columns:1fr}
 .reference-view.code-mode #referenceItemsColumn,
@@ -505,3 +506,79 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
   .reference-detail-panel,.reference-info-panel{height:auto;min-height:420px}
 }
 
+
+
+/* v5.2.5 — Labor Mapping uses an independent Province / Postal Code lookup. */
+.labor-mapping-view{
+  position:relative;
+  min-height:560px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+.labor-search-card{
+  padding:10px 12px;
+  border:1px solid #d9e3eb;
+  border-radius:6px;
+  background:#f8fafc;
+}
+.labor-search-topline{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+.labor-title{margin:0}
+.labor-source-note{color:#7a8593;font-size:10px}
+.labor-search-field{max-width:620px}
+.labor-search-field label{display:block;margin-bottom:4px;color:#55606d;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2px}
+.labor-result-summary{margin:10px 1px 6px;color:#586675;font-size:10px;font-weight:700;letter-spacing:.15px}
+.labor-results{display:grid;gap:8px;max-height:520px;overflow:auto;padding-right:2px}
+.labor-empty-state{
+  padding:76px 20px;
+  border:1px dashed #d7e0e8;
+  border-radius:6px;
+  background:#fbfcfd;
+  color:#9099a4;
+  font-size:11px;
+  text-align:center;
+}
+.labor-result-card{overflow:hidden;border:1px solid #d8e1e8;border-radius:6px;background:#fff}
+.labor-result-location{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 10px;
+  border-bottom:1px solid #dfe6ec;
+  background:#f3f7fa;
+}
+.labor-result-location strong{color:#344352;font-size:12px}
+.labor-result-location span{color:#6f7c89;font-size:10px;font-weight:600}
+.labor-table-wrap{overflow-x:auto}
+.labor-compare-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.labor-compare-table th,.labor-compare-table td{padding:8px 10px;border-right:1px solid #e2e8ed;border-bottom:1px solid #e5eaee;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.labor-compare-table tr:last-child th,.labor-compare-table tr:last-child td{border-bottom:0}
+.labor-compare-table th:last-child,.labor-compare-table td:last-child{border-right:0}
+.labor-compare-table thead th{background:#eaf1f5;color:#465664;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.15px}
+.labor-compare-table tbody th{background:#fafbfc;color:#56636f;font-size:11px;font-weight:700}
+.labor-compare-table tbody td{color:#37424d;font-size:11px}
+.labor-compare-table .labor-id{font-weight:800;letter-spacing:.15px}
+.labor-postal-table thead th:nth-child(1){width:22%}
+.labor-postal-table thead th:nth-child(2){width:22%}
+.labor-postal-table thead th:nth-child(3){width:56%}
+.labor-province-table thead th:nth-child(1){width:18%}
+.labor-province-table thead th:nth-child(2){width:20%}
+.labor-province-table thead th:nth-child(3){width:22%}
+.labor-province-table thead th:nth-child(4){width:40%}
+.labor-postal-cell{vertical-align:middle;background:#f4f7f9;color:#43515e}
+.labor-support-type{white-space:nowrap}
+.labor-version{margin-top:8px;text-align:right}
+@media(max-width:900px){
+  .labor-mapping-view{min-height:480px}
+  .labor-search-topline,.labor-result-location{align-items:flex-start;flex-direction:column;gap:3px}
+  .labor-compare-table{min-width:680px}
+}

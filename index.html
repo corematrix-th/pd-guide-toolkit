@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>PD Guide Toolkit</title>
-  <link rel="stylesheet" href="style.css?v=524r7">
+  <link rel="stylesheet" href="style.css?v=525r1">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
   <script>
@@ -38,9 +38,12 @@
       <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg></span>
       <span class="module-label">GUIDE</span>
     </button>
+    <button id="tabLaborMapping" class="module-tab" type="button" role="tab" aria-selected="false">
+      <span class="module-label">LABOR MAPPING</span>
+    </button>
   </div>
 
-  <div class="controlbar">
+  <div id="mainControlbar" class="controlbar">
     <div class="field small">
       <label>Product</label>
       <select id="product">
@@ -68,6 +71,28 @@
   </div>
 
   <div id="globalSearchPanel" class="global-search-panel hidden" aria-live="polite"></div>
+
+  <div id="laborMappingView" class="labor-mapping-view hidden">
+    <div class="labor-search-card">
+      <div class="labor-search-topline">
+        <div class="section-title labor-title">LABOR MAPPING</div>
+        <div class="labor-source-note">Search by Province or 5-digit Postal Code</div>
+      </div>
+      <div class="labor-search-field">
+        <label for="laborSearch">Province / Postal Code</label>
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+          </span>
+          <input id="laborSearch" placeholder="e.g. Chon Buri or 20000" autocomplete="off">
+          <button type="button" class="search-clear hidden" id="laborSearchClearBtn" aria-label="Clear Labor Mapping search" title="Clear search">×</button>
+        </div>
+      </div>
+    </div>
+    <div id="laborResultSummary" class="labor-result-summary">Enter a Province or Postal Code to find Labor Mapping.</div>
+    <div id="laborResults" class="labor-results"></div>
+    <div class="version labor-version">Version 5.2.5</div>
+  </div>
 
   <div id="troubleshootingView">
   <div class="tree">
@@ -119,7 +144,7 @@
         </button>
       </div>
 
-      <div class="version">Version 5.2.4</div>
+      <div class="version">Version 5.2.5</div>
     </div>
   </div>
   </div>
@@ -152,7 +177,7 @@
           <div class="reference-meta-row"><span>Item</span><strong>-</strong></div>
         </div>
         <div id="referenceInfoHint" class="reference-info-hint">Select an item from the list above to view the reference.</div>
-        <div class="version reference-version">Version 5.2.4</div>
+        <div class="version reference-version">Version 5.2.5</div>
       </div>
     </div>
   </div>
@@ -169,10 +194,11 @@
   </div>
 </div>
 
-<script src="database.js?v=524r2"></script>
-<script src="data.js?v=524r2"></script>
-<script src="knowledge.js?v=524r2"></script>
-<script src="app.js?v=524r6"></script>
+<script src="database.js?v=525r1"></script>
+<script src="data.js?v=525r1"></script>
+<script src="knowledge.js?v=525r1"></script>
+<script src="labor_mapping.js?v=525r1"></script>
+<script src="app.js?v=525r1"></script>
 <script>
   // Firebase Realtime Database counters for PD Guide Toolkit.
   // Global path remains siteStats/global so historical counters are preserved.

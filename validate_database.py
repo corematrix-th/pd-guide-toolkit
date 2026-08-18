@@ -13,6 +13,9 @@ from generate_database import (
     EXTERNAL_FRU_SHEETS,
     NO_PHYSICAL_DAMAGE_LEVELS,
     OUTPUT,
+    LABOR_XLSX,
+    LABOR_OUTPUT,
+    build_labor_mapping,
     PRODUCT_SHEETS,
     REFERENCE_FILES,
     ROOT,
@@ -24,7 +27,7 @@ from generate_database import (
     validate_workbook,
 )
 
-JS_FILES = ["database.js", "data.js", "knowledge.js", "app.js"]
+JS_FILES = ["database.js", "data.js", "knowledge.js", "labor_mapping.js", "app.js"]
 VERSION_FILES = [
     "README.txt",
     "index.html",
@@ -52,6 +55,44 @@ process.stdout.write(JSON.stringify(ctx.__OUT));
     )
     return json.loads(proc.stdout)
 
+
+
+def load_labor_runtime() -> dict:
+    helper = r'''
+const fs=require('fs'),vm=require('vm');
+const p=process.argv[1];
+const src=fs.readFileSync(p,'utf8')+'\n;globalThis.__OUT={LABOR_MAPPING_META,LABOR_MAPPING};';
+const ctx={}; vm.createContext(ctx); vm.runInContext(src,ctx);
+process.stdout.write(JSON.stringify(ctx.__OUT));
+'''
+    proc = subprocess.run(
+        ["node", "-e", helper, str(LABOR_OUTPUT)],
+        check=True, capture_output=True, text=True,
+    )
+    return json.loads(proc.stdout)
+
+def validate_labor_mapping_runtime() -> list[str]:
+    errors: list[str] = []
+    if not LABOR_XLSX.exists():
+        return [f"Missing Labor Mapping master source: {LABOR_XLSX.name}"]
+    if not LABOR_OUTPUT.exists():
+        return [f"Missing Labor Mapping runtime: {LABOR_OUTPUT.name}"]
+    expected = build_labor_mapping()
+    runtime = load_labor_runtime()
+    meta = runtime.get("LABOR_MAPPING_META", {})
+    actual = runtime.get("LABOR_MAPPING", [])
+    if str(meta.get("version", "")) != VERSION:
+        errors.append(f"Labor Mapping version mismatch: {meta.get('version')} != {VERSION}")
+    if str(meta.get("source", "")) != LABOR_XLSX.name:
+        errors.append(f"Labor Mapping source mismatch: {meta.get('source')} != {LABOR_XLSX.name}")
+    if int(meta.get("rows", -1)) != len(expected):
+        errors.append(f"Labor Mapping metadata row count mismatch: {meta.get('rows')} != {len(expected)}")
+    if actual != expected:
+        errors.append(
+            f"{LABOR_OUTPUT.name} is out of sync with {LABOR_XLSX.name}. "
+            "Run python generate_database.py to regenerate it."
+        )
+    return errors
 
 def validate_runtime() -> tuple[list[str], list[str]]:
     errors: list[str] = []
@@ -217,11 +258,14 @@ def validate_guides() -> list[str]:
 def main() -> None:
     if not XLSX.exists() or not OUTPUT.exists():
         raise SystemExit("PD_Guide_Database.xlsx and database.js are required.")
+    if not LABOR_XLSX.exists() or not LABOR_OUTPUT.exists():
+        raise SystemExit("Labor Mapping.xlsx and labor_mapping.js are required for v5.2.5.")
 
     sheets = read_xlsx(XLSX)
     errors, warnings = validate_workbook(sheets)
     errors.extend(validate_javascript())
     errors.extend(validate_guides())
+    errors.extend(validate_labor_mapping_runtime())
     errors.extend(validate_smoke_test())
     errors.extend(validate_reference_texts())
 

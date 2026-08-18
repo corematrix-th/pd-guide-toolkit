@@ -1,22 +1,23 @@
-PD Guide Toolkit v5.2.4
+PD Guide Toolkit v5.2.5
 
 Open index.html to start the Toolkit.
 
 MASTER DATABASE
 PD_Guide_Database.xlsx is the sole source of truth for product-facing checklist data.
+Labor Mapping.xlsx is the sole source of truth for Labor Mapping Province / Postal Code routing.
 
 Workflow:
-PD_Guide_Database.xlsx
+PD_Guide_Database.xlsx + Labor Mapping.xlsx
         ↓
 python generate_database.py
         ↓
-database.js + Reference_Text/*.txt
+database.js + labor_mapping.js + Reference_Text/*.txt
         ↓
 python validate_database.py
         ↓
 Toolkit
 
-Workbook structure:
+PD_Guide_Database.xlsx structure:
 - Thinkpad
 - Ideapad
 - Desktop
@@ -26,16 +27,24 @@ Workbook structure:
 - Related_Guide_Master
 - README
 
+Labor Mapping.xlsx rules:
+- Keep the original State/Province and Postal Code ranges exactly as supplied.
+- Do not merge adjacent Postal Code ranges automatically. Vendor mapping may differ by range.
+- Standard / PCARE and Premier Support retain their own SAP Account Number, Labor Vendor ID, and Premier Vendor.
+- The Toolkit displays Labor Vendor ID and Premier Vendor; SAP Account Number remains stored in runtime data for future use.
+- After editing Labor Mapping.xlsx, run python generate_database.py and python validate_database.py.
+
 Dropdown values are stored as DDxxx IDs and resolved through Dropdown_Master.
 Related guides are stored as readable keys and resolved through Related_Guide_Master.
 Reference_Text files are generated mirrors of the visible runtime structure; do not maintain their hierarchy manually.
-Do not edit checklist, dropdown, email, or related-guide text directly in JavaScript.
+Do not edit checklist, dropdown, email, related-guide, or Labor Mapping runtime text directly in JavaScript.
 
 Checklist scope rules:
 - Windows, Battery, Network, Storage, Audio, and Camera must not contain Physical Damage.
 - Desktop, Tiny, and AIO external-device levels Monitor, Adapter, Keyboard, and Mouse must contain exactly one FRU P/N.
 - Wherever FRU P/N exists, it must be the final checklist item for that symptom.
 - Monitor checklists must not contain Other Issue.
+- Swap SSD, Swap RAM, Swap SSD / HDD, and Swap PSU must not appear in customer-facing checklists.
 
 Dropdown control syntax:
 - Text Input = textbox only
@@ -46,15 +55,18 @@ Dropdown control syntax:
 
 Diagnostics:
 - Runtime diagnostics run silently in the background when the Toolkit loads; there is no user-facing Diagnostics button.
+- Runtime diagnostics validate the Labor Mapping dataset count and required vendor fields.
 - Background diagnostics are a runtime aid; the release gate remains python validate_database.py.
 
-Navigation v5.2.4:
-- Troubleshooting contains the product troubleshooting workflow.
-- Code provides categorized Error Code reference from the existing Knowledge Base.
-- User Guide provides categorized guide content from TROUBLESHOOTING_GUIDE.md using the approved category order: All, Windows, Diagnostics, Recovery, Power, Battery, Storage, Display, Audio, Lenovo Vantage, USB / Port, Security / Activation, BIOS / Firmware, Tools / Commands.
-- SYMPTOMS hides the duplicate BIOS Level 1 entry; BIOS password guidance is available under GUIDE > BIOS / Firmware.
-- Search All is global and searches Troubleshooting, Code, and User Guide together.
+Navigation v5.2.5:
+- SYMPTOMS contains the product troubleshooting workflow.
+- ERROR POST provides the Error/Post reference library, including BIOS Password and Supervisor Password.
+- GUIDE provides the direct User Guide library.
+- LABOR MAPPING provides an independent Province / Postal Code search.
+- Search All searches SYMPTOMS, ERROR POST, and GUIDE only. Labor Mapping is intentionally excluded.
+- Labor Mapping has its own search box and accepts Province name or a 5-digit Postal Code.
+- Postal Code lookup returns every source row whose range contains that code; it does not guess between overlapping source mappings.
 
 Run python generate_database.py and python validate_database.py before packaging every release.
 
-Version 5.2.4
+Version 5.2.5

@@ -118,14 +118,15 @@ const ids = [
   "mainTitle", "checklistProgressText", "checklistProgress", "checklistProgressBar", "checklist", "manualBox",
   "recTitle", "recommendation", "suggestion", "note", "generateBtn", "emailThBtn", "emailEnBtn",
   "clearBtn", "guideModal", "modalTitle", "modalBody", "modalCloseBtn",
-  "tabTroubleshooting", "tabCode", "tabUserGuide", "globalSearchPanel",
+  "tabTroubleshooting", "tabCode", "tabUserGuide", "tabLaborMapping", "globalSearchPanel",
+  "mainControlbar", "laborMappingView", "laborSearch", "laborSearchClearBtn", "laborResultSummary", "laborResults",
   "troubleshootingView", "referenceView", "referenceCategoryColumn", "referenceCategories", "referenceItemsColumn", "referenceListTitle",
   "referenceItems", "referenceCurrentSelection", "referenceDetailHeading", "referenceDetailTitle", "referenceDetailBody",
   "referenceInfoTitle", "referenceMeta", "referenceInfoHint"
 ];
 ids.forEach(id => {
   const tag = id === "product" ? "select"
-    : id === "search" ? "input"
+    : id === "search" || id === "laborSearch" ? "input"
     : id === "note" || id === "manualBox" ? "textarea"
     : id.endsWith("Btn") || id.startsWith("tab") ? "button"
     : "div";
@@ -182,12 +183,14 @@ assert(/class="action-primary"/.test(indexHtml), "Generate Note primary action s
 assert((indexHtml.match(/class="action-secondary"/g) || []).length === 2, "Email secondary action styling is missing");
 assert(/id="clearBtn" class="action-clear"/.test(indexHtml), "Clear outline action styling is missing");
 assert((indexHtml.match(/<svg viewBox="0 0 24 24"/g) || []).length >= 5, "Action/search icons are missing");
-assert(/id="tabTroubleshooting"/.test(indexHtml) && /id="tabCode"/.test(indexHtml) && /id="tabUserGuide"/.test(indexHtml), "v5.2.4 module navigation is missing");
-assert(/id="tabTroubleshooting"[\s\S]*?<span class="module-label">SYMPTOMS<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabCode"[\s\S]*?<span class="module-label">ERROR POST<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabUserGuide"[\s\S]*?<span class="module-label">GUIDE<\/span>[\s\S]*?<\/button>/.test(indexHtml), "v5.2.4 module labels must be SYMPTOMS / ERROR POST / GUIDE");
+assert(/id="tabTroubleshooting"/.test(indexHtml) && /id="tabCode"/.test(indexHtml) && /id="tabUserGuide"/.test(indexHtml) && /id="tabLaborMapping"/.test(indexHtml), "v5.2.5 module navigation is missing");
+assert(/id="tabTroubleshooting"[\s\S]*?<span class="module-label">SYMPTOMS<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabCode"[\s\S]*?<span class="module-label">ERROR POST<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabUserGuide"[\s\S]*?<span class="module-label">GUIDE<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabLaborMapping"[\s\S]*?<span class="module-label">LABOR MAPPING<\/span>[\s\S]*?<\/button>/.test(indexHtml), "v5.2.5 module labels must be SYMPTOMS / ERROR POST / GUIDE / LABOR MAPPING");
 assert(/id="globalSearchPanel"/.test(indexHtml), "Global Search panel is missing");
+assert(/id="laborMappingView"/.test(indexHtml) && /id="laborSearch"/.test(indexHtml) && /id="laborResults"/.test(indexHtml), "Labor Mapping view/search is missing");
+assert(/labor_mapping\.js/.test(indexHtml), "Labor Mapping runtime script is missing");
 assert(/id="referenceCategoryColumn"/.test(indexHtml) && /id="referenceCategories"/.test(indexHtml) && /id="referenceItemsColumn"/.test(indexHtml) && /id="referenceItems"/.test(indexHtml) && /id="referenceDetailBody"/.test(indexHtml), "Code/User Guide reference layout is missing");
 assert(/id="referenceInfoTitle"/.test(indexHtml), "Reference info/related heading is missing");
-assert(/Version 5\.2\.4/.test(indexHtml), "Visible version is not v5.2.4");
+assert(/Version 5\.2\.5/.test(indexHtml), "Visible version is not v5.2.5");
 
 const styleCss = fs.readFileSync(path.join(root, "style.css"), "utf8");
 assert(/\.module-tab\{[\s\S]*?min-height:26px;[\s\S]*?font-size:10px;/.test(styleCss), "Module navigation should stay compact");
@@ -206,10 +209,13 @@ assert(/\.module-icon\{display:none\}/.test(styleCss), "Minimal module navigatio
 assert(/\.reference-tree,\.reference-main\{/.test(styleCss) && /reference-tree/.test(indexHtml) && /reference-main/.test(indexHtml), "Locked Code/User Guide layout styling is missing");
 assert(/\.reference-view\.code-mode \.reference-tree,[\s\S]*?\.reference-view\.guide-mode \.reference-tree\{grid-template-columns:1fr\}/.test(styleCss), "Code/User Guide direct-list locked layout styling is missing");
 assert(/\.global-search-panel\{/.test(styleCss), "Global Search styling is missing");
+assert(/\.labor-mapping-view\{/.test(styleCss) && /\.labor-compare-table\{/.test(styleCss), "Labor Mapping table styling is missing");
+assert(/\.labor-compare-table tbody td\{color:#37424d;font-size:11px\}/.test(styleCss), "Labor Mapping result font should be slightly larger");
+assert(/\.labor-postal-table thead th:nth-child\(1\)/.test(styleCss) && /\.labor-province-table thead th:nth-child\(4\)/.test(styleCss), "Labor Mapping transposed/province table layouts are missing");
 assert(/#mainTitle\{font-size:10px;letter-spacing:\.25px\}/.test(styleCss), "Troubleshooting heading does not match Level 1 / Symptom scale");
 assert(/#note\{height:270px;min-height:240px;max-height:270px;resize:none\}/.test(styleCss), "Result / Email detail height should stay compact");
 
-const source = ["database.js", "data.js", "knowledge.js", "app.js"]
+const source = ["database.js", "data.js", "knowledge.js", "labor_mapping.js", "app.js"]
   .map(filename => fs.readFileSync(path.join(root, filename), "utf8"))
   .join("\n\n");
 
@@ -261,6 +267,14 @@ assert(code2100, "Code 2100 is missing from the direct Error Post list");
 const biosPasswordPost = document.getElementById("referenceItems").children.find(node => node.textContent === "BIOS Password");
 const supervisorPasswordPost = document.getElementById("referenceItems").children.find(node => node.textContent === "Supervisor Password");
 assert(biosPasswordPost && supervisorPasswordPost, "BIOS Password and Supervisor Password must be available in ERROR POST");
+const errorPostNames = document.getElementById("referenceItems").children.map(node => node.textContent);
+const biosPasswordIndex = errorPostNames.indexOf("BIOS Password");
+const supervisorPasswordIndex = errorPostNames.indexOf("Supervisor Password");
+const bootDeviceMissingIndex = errorPostNames.indexOf("Boot Device Missing");
+assert(
+  biosPasswordIndex >= 0 && supervisorPasswordIndex === biosPasswordIndex + 1 && bootDeviceMissingIndex === supervisorPasswordIndex + 1,
+  "ERROR POST order must place BIOS Password / Supervisor Password immediately before Boot Device Missing"
+);
 code2100.onclick();
 assert(document.getElementById("referenceDetailHeading").textContent === "ERROR POST DETAIL", "Error Post detail heading is incorrect");
 assert(document.getElementById("referenceInfoTitle").textContent === "RELATED", "Code lower-right panel must be RELATED");
@@ -293,7 +307,52 @@ assert(descendants(document.getElementById("referenceDetailBody")).some(node => 
 document.getElementById("search").value = "battery report";
 filterSymptoms();
 assert(descendants(document.getElementById("globalSearchPanel")).some(node => node.textContent === "GUIDE"), "Global Search did not return User Guide results");
+
+// Labor Mapping is intentionally excluded from Search All.
+document.getElementById("search").value = "6002389662";
+filterSymptoms();
+assert(!descendants(document.getElementById("globalSearchPanel")).some(node => String(node.textContent || "").includes("Centercom Ltd")), "Search All must not return Labor Mapping data");
 document.getElementById("search").value = "";
+
+switchModule("labor");
+assert(document.getElementById("tabLaborMapping").className.includes("active"), "Labor Mapping module tab did not activate");
+assert(document.getElementById("mainControlbar").classList.contains("hidden"), "Search All/Product controlbar must be hidden in Labor Mapping");
+assert(!document.getElementById("laborMappingView").classList.contains("hidden"), "Labor Mapping view did not open");
+assert(LABOR_MAPPING_META.version === "5.2.5", "Labor Mapping runtime version is not v5.2.5");
+assert(LABOR_MAPPING_META.rows === 119 && LABOR_MAPPING.length === 119, "Labor Mapping row count is incorrect");
+document.getElementById("laborSearch").value = "20000";
+renderLaborMapping();
+const laborNodes = descendants(document.getElementById("laborResults"));
+assert(laborNodes.some(node => node.textContent === "Chon Buri"), "Postal Code 20000 did not find Chon Buri");
+assert(laborNodes.some(node => node.textContent === "6002351052"), "Standard / PCARE Labor Vendor ID is incorrect for 20000");
+assert(laborNodes.some(node => node.textContent === "IT Advance Service Co Ltd"), "Standard / PCARE vendor is incorrect for 20000");
+assert(laborNodes.some(node => node.textContent === "6002389662"), "Premier Support Labor Vendor ID is incorrect for 20000");
+assert(laborNodes.some(node => node.textContent === "Centercom Ltd"), "Premier Support vendor is incorrect for 20000");
+const laborTexts = laborNodes.map(node => node.textContent);
+assert(laborTexts.includes("Support Type") && laborTexts.includes("Labor Vendor ID") && laborTexts.includes("Premier Vendor"), "Postal Code Labor Mapping table headers are incorrect");
+assert(laborTexts.includes("Standard / PCARE") && laborTexts.includes("Premier Support"), "Support types must be rendered as table rows");
+// 10100-10999 exists twice in the source (Bangkok and Samut Prakan), but both
+// rows have identical Standard/PCARE and Premier mappings. The UI should show
+// only one result without altering the 119-row source dataset.
+document.getElementById("laborSearch").value = "10800";
+renderLaborMapping();
+assert(document.getElementById("laborResults").children.length === 1, "Postal Code 10800 should collapse identical duplicate Labor Mapping results");
+const bangkokDuplicateNodes = descendants(document.getElementById("laborResults"));
+assert(bangkokDuplicateNodes.some(node => node.textContent === "Krung Thep Maha Nakh"), "Postal Code 10800 should retain the first matching source row for display");
+assert(!bangkokDuplicateNodes.some(node => node.textContent === "Samut Prakan"), "Postal Code 10800 should not display an identical duplicate mapping twice");
+document.getElementById("laborSearch").value = "Surat Thani";
+renderLaborMapping();
+assert(document.getElementById("laborResults").children.length === 1, "Province search should render one consolidated table per Province");
+const suratNodes = descendants(document.getElementById("laborResults"));
+assert(suratNodes.filter(node => node.textContent === "Standard / PCARE").length === 7, "Surat Thani must retain all 7 Standard / PCARE source ranges");
+assert(suratNodes.filter(node => node.textContent === "Premier Support").length === 7, "Surat Thani must retain all 7 Premier Support source ranges");
+assert(suratNodes.some(node => node.textContent === "84000 – 84130") && suratNodes.some(node => node.textContent === "84140"), "Surat Thani source Postal Code ranges must remain unmerged");
+document.getElementById("laborSearch").value = "84140";
+renderLaborMapping();
+const samuiNodes = descendants(document.getElementById("laborResults"));
+assert(samuiNodes.some(node => node.textContent === "vServePlus Koh Samui"), "Postal Code 84140 must retain Koh Samui Standard mapping");
+assert(samuiNodes.some(node => node.textContent === "Centercom-Samui"), "Postal Code 84140 must retain Samui Premier mapping");
+clearLaborSearch();
 switchModule("troubleshooting");
 
 const thinkpadStructure = MODEL_STRUCTURE.thinkpad;
@@ -348,13 +407,14 @@ assert(formatNoteLine("Specific keys listed", "x,y,z") === "- Specific Keys List
 
 const diagnostics = collectDiagnostics();
 assert(diagnostics.status === "PASS", "Runtime diagnostics did not pass: " + diagnostics.errors.join(" | "));
-assert(diagnostics.meta.version === "5.2.4", "Diagnostics/database version is not v5.2.4");
+assert(diagnostics.meta.version === "5.2.5", "Diagnostics/database version is not v5.2.5");
+assert(diagnostics.laborRows === 119, "Diagnostics Labor Mapping row count is incorrect");
 assert(diagnostics.checklistRows === 2285, "Diagnostics checklist-row count is incorrect");
 const backgroundDiagnostics = runBackgroundDiagnostics();
 assert(backgroundDiagnostics.status === "PASS", "Background diagnostics did not pass");
 assert(!document.getElementById("diagBtn"), "Diagnostics button must not be present in the user UI");
 
-// v5.2.4 data hygiene: SSD/RAM swap checks were removed from all customer-facing checklists.
+// v5.2.5 data hygiene: SSD/RAM swap checks were removed from all customer-facing checklists.
 for(const [product, rows] of Object.entries(MODEL_STRUCTURE)){
   for(const row of rows){
     for(const symptomKey of row.symptoms || []){
@@ -482,6 +542,7 @@ console.log(JSON.stringify({
   globalSearch: true,
   codeLibrary: true,
   userGuideLibrary: true,
+  laborMapping: true,
   checklistProgress: true,
   searchEmptyState: true,
   cssCleanup: true,

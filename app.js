@@ -144,7 +144,7 @@ function withDisplayQuestions(sym){
 }
 
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.2.4)
+// Excel-only data rule (v5.2.5)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
@@ -176,7 +176,25 @@ function referenceData(moduleName = activeModule){
   if(moduleName === "code"){
     const codeData = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE["Code"]) ? KNOWLEDGE_BASE["Code"] : {};
     const biosData = (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE["BIOS"]) ? KNOWLEDGE_BASE["BIOS"] : {};
-    return {...biosData, ...codeData};
+    // Keep ERROR POST in the operational reading order. BIOS / Supervisor Password
+    // stay near the bottom, immediately before Boot Device Missing.
+    const ordered = {};
+    let insertedBiosPasswords = false;
+    Object.entries(codeData).forEach(([name, item]) => {
+      if(name === "Boot Device Missing"){
+        ["BIOS Password", "Supervisor Password"].forEach(biosName => {
+          if(biosData[biosName]) ordered[biosName] = biosData[biosName];
+        });
+        insertedBiosPasswords = true;
+      }
+      ordered[name] = item;
+    });
+    if(!insertedBiosPasswords){
+      ["BIOS Password", "Supervisor Password"].forEach(biosName => {
+        if(biosData[biosName]) ordered[biosName] = biosData[biosName];
+      });
+    }
+    return ordered;
   }
   const cfg = referenceConfig(moduleName);
   return (typeof KNOWLEDGE_BASE !== "undefined" && KNOWLEDGE_BASE[cfg.section])
@@ -202,7 +220,8 @@ function renderModuleTabs(){
   const tabs = {
     troubleshooting: el("tabTroubleshooting"),
     code: el("tabCode"),
-    guide: el("tabUserGuide")
+    guide: el("tabUserGuide"),
+    labor: el("tabLaborMapping")
   };
   Object.entries(tabs).forEach(([key, tab]) => {
     if(!tab) return;
@@ -215,18 +234,28 @@ function renderModuleTabs(){
 function showModuleView(){
   const trouble = el("troubleshootingView");
   const reference = el("referenceView");
+  const labor = el("laborMappingView");
+  const controlbar = el("mainControlbar");
   if(trouble){
     if(activeModule === "troubleshooting") trouble.classList.remove("hidden");
     else trouble.classList.add("hidden");
   }
   if(reference){
-    if(activeModule === "troubleshooting") reference.classList.add("hidden");
-    else reference.classList.remove("hidden");
+    if(activeModule === "code" || activeModule === "guide") reference.classList.remove("hidden");
+    else reference.classList.add("hidden");
+  }
+  if(labor){
+    if(activeModule === "labor") labor.classList.remove("hidden");
+    else labor.classList.add("hidden");
+  }
+  if(controlbar){
+    if(activeModule === "labor") controlbar.classList.add("hidden");
+    else controlbar.classList.remove("hidden");
   }
 }
 
 function switchModule(moduleName, options = {}){
-  if(!["troubleshooting", "code", "guide"].includes(moduleName)) return;
+  if(!["troubleshooting", "code", "guide", "labor"].includes(moduleName)) return;
   activeModule = moduleName;
   if(!options.keepSearch && el("search")) el("search").value = "";
   setSearchClearVisibility();
@@ -352,7 +381,7 @@ function renderReferenceView(){
   listTitle.textContent = cfg.listTitle;
   categoriesBox.innerHTML = "";
 
-  // v5.2.4: Code and Guide are direct-reference lists. Category mappings remain
+  // v5.2.5: Code and Guide are direct-reference lists. Category mappings remain
   // internal metadata for Search/Diagnostics, but are not shown as navigation.
   selectedReferenceCategory[moduleName] = cfg.allCategory;
   if(categoryColumn) categoryColumn.classList.add("hidden");
@@ -559,6 +588,245 @@ function renderSymptoms(){
   });
 }
 
+
+function laborRows(){
+  return Array.isArray(typeof LABOR_MAPPING !== "undefined" ? LABOR_MAPPING : null) ? LABOR_MAPPING : [];
+}
+
+function normalizeLaborProvince(value){
+  return String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function laborPostalLabel(row){
+  const from = Number(row.postalFrom);
+  const to = Number(row.postalTo);
+  if(from === to) return String(from);
+  return `${from} – ${to}`;
+}
+
+function findLaborMappings(query){
+  const raw = String(query || "").trim();
+  if(!raw) return [];
+  if(/^\d+$/.test(raw)){
+    if(raw.length !== 5) return [];
+    const postal = Number(raw);
+    return laborRows().filter(row => postal >= Number(row.postalFrom) && postal <= Number(row.postalTo));
+  }
+  const needle = normalizeLaborProvince(raw);
+  return laborRows().filter(row => normalizeLaborProvince(row.province).includes(needle));
+}
+
+function laborSupportSignature(support){
+  const source = support || {};
+  return [
+    source.sapAccountNumber || "",
+    source.laborVendorId || "",
+    source.premierVendor || ""
+  ].map(value => String(value).trim()).join("|");
+}
+
+function dedupeLaborPostalMatches(matches){
+  const seen = new Set();
+  return (matches || []).filter(row => {
+    // Keep the source data untouched. Only collapse duplicate UI results when
+    // the exact Postal Code range and both support mappings are identical.
+    // If any Vendor/Labor/SAP value differs, both results remain visible.
+    const signature = [
+      Number(row.postalFrom),
+      Number(row.postalTo),
+      laborSupportSignature(row.standardPcare),
+      laborSupportSignature(row.premierSupport)
+    ].join("||");
+    if(seen.has(signature)) return false;
+    seen.add(signature);
+    return true;
+  });
+}
+
+function setLaborSearchClearVisibility(){
+  const search = el("laborSearch");
+  const clear = el("laborSearchClearBtn");
+  if(!search || !clear) return;
+  if(search.value.trim()) clear.classList.remove("hidden");
+  else clear.classList.add("hidden");
+}
+
+function appendLaborSupportRow(tbody, supportType, support, postalLabel = null){
+  const tr = document.createElement("tr");
+  if(postalLabel !== null){
+    const postal = document.createElement("th");
+    postal.className = "labor-postal-cell";
+    postal.textContent = postalLabel;
+    postal.rowSpan = 2;
+    tr.appendChild(postal);
+  }
+
+  const type = document.createElement("th");
+  type.className = "labor-support-type";
+  type.textContent = supportType;
+
+  const id = document.createElement("td");
+  id.className = "labor-id";
+  id.textContent = support && support.laborVendorId ? support.laborVendorId : "-";
+
+  const vendor = document.createElement("td");
+  vendor.textContent = support && support.premierVendor ? support.premierVendor : "-";
+
+  tr.appendChild(type);
+  tr.appendChild(id);
+  tr.appendChild(vendor);
+  tbody.appendChild(tr);
+}
+
+function buildLaborTable(headers, className = ""){
+  const tableWrap = document.createElement("div");
+  tableWrap.className = "labor-table-wrap";
+  const table = document.createElement("table");
+  table.className = `labor-compare-table ${className}`.trim();
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  headers.forEach(text => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+  const tbody = document.createElement("tbody");
+  table.appendChild(tbody);
+  tableWrap.appendChild(table);
+  return { tableWrap, tbody };
+}
+
+function renderLaborPostalResults(matches, resultsBox){
+  matches.forEach(row => {
+    const card = document.createElement("div");
+    card.className = "labor-result-card";
+
+    const location = document.createElement("div");
+    location.className = "labor-result-location";
+    const province = document.createElement("strong");
+    province.textContent = row.province;
+    const postal = document.createElement("span");
+    postal.textContent = `Postal Code: ${laborPostalLabel(row)}`;
+    location.appendChild(province);
+    location.appendChild(postal);
+    card.appendChild(location);
+
+    const { tableWrap, tbody } = buildLaborTable(
+      ["Support Type", "Labor Vendor ID", "Premier Vendor"],
+      "labor-postal-table"
+    );
+    appendLaborSupportRow(tbody, "Standard / PCARE", row.standardPcare);
+    appendLaborSupportRow(tbody, "Premier Support", row.premierSupport);
+    card.appendChild(tableWrap);
+    resultsBox.appendChild(card);
+  });
+}
+
+function renderLaborProvinceResults(matches, resultsBox){
+  const groups = new Map();
+  matches.forEach(row => {
+    const key = String(row.province || "");
+    if(!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(row);
+  });
+
+  groups.forEach((rows, provinceName) => {
+    const card = document.createElement("div");
+    card.className = "labor-result-card labor-province-card";
+
+    const location = document.createElement("div");
+    location.className = "labor-result-location";
+    const province = document.createElement("strong");
+    province.textContent = provinceName;
+    const rangeCount = document.createElement("span");
+    rangeCount.textContent = `${rows.length} Postal Code range${rows.length === 1 ? "" : "s"}`;
+    location.appendChild(province);
+    location.appendChild(rangeCount);
+    card.appendChild(location);
+
+    const { tableWrap, tbody } = buildLaborTable(
+      ["Postal Code", "Support Type", "Labor Vendor ID", "Premier Vendor"],
+      "labor-province-table"
+    );
+    rows.forEach(row => {
+      const postalLabel = laborPostalLabel(row);
+      appendLaborSupportRow(tbody, "Standard / PCARE", row.standardPcare, postalLabel);
+      appendLaborSupportRow(tbody, "Premier Support", row.premierSupport);
+    });
+    card.appendChild(tableWrap);
+    resultsBox.appendChild(card);
+  });
+}
+
+function renderLaborMapping(){
+  const search = el("laborSearch");
+  const resultsBox = el("laborResults");
+  const summary = el("laborResultSummary");
+  if(!search || !resultsBox || !summary) return;
+  const query = search.value.trim();
+  setLaborSearchClearVisibility();
+  resultsBox.innerHTML = "";
+
+  if(!query){
+    summary.textContent = "Enter a Province or Postal Code to find Labor Mapping.";
+    const empty = document.createElement("div");
+    empty.className = "labor-empty-state";
+    empty.textContent = "Search by Province name or a 5-digit Postal Code.";
+    resultsBox.appendChild(empty);
+    return;
+  }
+  if(/^\d+$/.test(query) && query.length !== 5){
+    summary.textContent = "Postal Code must contain 5 digits.";
+    const empty = document.createElement("div");
+    empty.className = "labor-empty-state";
+    empty.textContent = "Enter a complete 5-digit Postal Code.";
+    resultsBox.appendChild(empty);
+    return;
+  }
+
+  const matches = findLaborMappings(query);
+  const isPostalSearch = /^\d{5}$/.test(query);
+  const displayMatches = isPostalSearch ? dedupeLaborPostalMatches(matches) : matches;
+  if(displayMatches.length){
+    if(isPostalSearch){
+      summary.textContent = `LABOR MAPPING RESULTS — “${query}” (${displayMatches.length})`;
+    }else{
+      const provinceCount = new Set(displayMatches.map(row => String(row.province || ""))).size;
+      summary.textContent = `LABOR MAPPING RESULTS — “${query}” (${provinceCount} province${provinceCount === 1 ? "" : "s"}, ${displayMatches.length} postal range${displayMatches.length === 1 ? "" : "s"})`;
+    }
+  }else{
+    summary.textContent = `No Labor Mapping found for “${query}”.`;
+  }
+
+  if(!displayMatches.length){
+    const empty = document.createElement("div");
+    empty.className = "labor-empty-state";
+    empty.textContent = "No matching Province or Postal Code.";
+    resultsBox.appendChild(empty);
+    return;
+  }
+
+  if(isPostalSearch) renderLaborPostalResults(displayMatches, resultsBox);
+  else renderLaborProvinceResults(displayMatches, resultsBox);
+
+  gaTrack("labor_mapping_search", {
+    search_type: isPostalSearch ? "postal_code" : "province",
+    result_count: displayMatches.length,
+    source_match_count: matches.length
+  });
+}
+
+function clearLaborSearch(){
+  const search = el("laborSearch");
+  if(!search) return;
+  search.value = "";
+  setLaborSearchClearVisibility();
+  renderLaborMapping();
+  if(typeof search.focus === "function") search.focus();
+}
+
 function updateCurrentSelection(){
   const product = el("product").options[el("product").selectedIndex].text;
   const text = isManual() ? current().name : `${product} → ${LEVELS[selectedLevel].name} → ${current().name}`;
@@ -695,10 +963,31 @@ function collectDiagnostics(){
     });
   });
 
+  const laborMeta = (typeof LABOR_MAPPING_META !== "undefined" && LABOR_MAPPING_META) ? LABOR_MAPPING_META : {};
+  const laborData = laborRows();
+  if(String(laborMeta.version || "") !== String(meta.version || "")){
+    errors.push(`Labor Mapping version mismatch: ${laborMeta.version || "missing"} != ${meta.version || "missing"}`);
+  }
+  if(laborMeta.rows !== undefined && Number(laborMeta.rows) !== laborData.length){
+    errors.push(`Labor Mapping row count mismatch: metadata=${laborMeta.rows}, runtime=${laborData.length}`);
+  }
+  laborData.forEach((row, index) => {
+    if(!row.province) errors.push(`Labor Mapping row ${index + 1}: missing Province`);
+    if(Number(row.postalFrom) > Number(row.postalTo)) errors.push(`Labor Mapping row ${index + 1}: invalid Postal Code range`);
+    [row.standardPcare, row.premierSupport].forEach((support, supportIndex) => {
+      const label = supportIndex === 0 ? "Standard / PCARE" : "Premier Support";
+      if(!support || !support.laborVendorId || !support.premierVendor){
+        errors.push(`Labor Mapping row ${index + 1}: incomplete ${label} mapping`);
+      }
+    });
+  });
+
   return {
     status: errors.length ? "FAIL" : "PASS",
     errors,
     meta,
+    laborMeta,
+    laborRows: laborData.length,
     checklistRows,
     fruRows,
     levelEntries,
@@ -1758,11 +2047,13 @@ function renderAll(){
     renderLevel1();
     renderSymptoms();
     renderMain();
-  }else{
+  }else if(activeModule === "code" || activeModule === "guide"){
     renderReferenceView();
+  }else if(activeModule === "labor"){
+    renderLaborMapping();
   }
   setSearchClearVisibility();
-  if(el("search") && el("search").value.trim()) renderGlobalSearch();
+  if(activeModule !== "labor" && el("search") && el("search").value.trim()) renderGlobalSearch();
   else {
     const panel = el("globalSearchPanel");
     if(panel) panel.classList.add("hidden");
@@ -1774,6 +2065,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if(el("tabTroubleshooting")) el("tabTroubleshooting").addEventListener("click", () => switchModule("troubleshooting"));
   if(el("tabCode")) el("tabCode").addEventListener("click", () => switchModule("code"));
   if(el("tabUserGuide")) el("tabUserGuide").addEventListener("click", () => switchModule("guide"));
+  if(el("tabLaborMapping")) el("tabLaborMapping").addEventListener("click", () => switchModule("labor"));
   el("product").addEventListener("change", () => {
     const productText = el("product").options[el("product").selectedIndex].text;
     gaTrack("product_selected", { product: productText });
@@ -1786,6 +2078,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   el("search").addEventListener("input", filterSymptoms);
   if(el("searchClearBtn")) el("searchClearBtn").addEventListener("click", clearSearchOnly);
+  if(el("laborSearch")) el("laborSearch").addEventListener("input", renderLaborMapping);
+  if(el("laborSearchClearBtn")) el("laborSearchClearBtn").addEventListener("click", clearLaborSearch);
   el("topClearBtn").addEventListener("click", clearAll);
   el("generateBtn").addEventListener("click", generateNote);
   el("emailThBtn").addEventListener("click", sendEmailTH);
@@ -1811,7 +2105,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.2.4 Excel-Only Data Rules
+// v5.2.5 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,

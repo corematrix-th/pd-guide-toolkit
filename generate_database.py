@@ -19,7 +19,9 @@ from xml.etree import ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 XLSX = ROOT / "PD_Guide_Database.xlsx"
 OUTPUT = ROOT / "database.js"
-VERSION = "5.2.4"
+LABOR_XLSX = ROOT / "Labor Mapping.xlsx"
+LABOR_OUTPUT = ROOT / "labor_mapping.js"
+VERSION = "5.2.5"
 NS = {
     "m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
@@ -444,6 +446,107 @@ def write_reference_texts(levels: dict, model_source: dict[str, list[dict[str, o
     return written
 
 
+
+LABOR_HEADERS = [
+    "State/Province",
+    "Postal Code (From)",
+    "Postal Code (To)",
+    "SAP Account Number",
+    "Labor Vendor ID",
+    "Premier Vendor",
+    "SAP Account Number",
+    "Labor Vendor ID",
+    "Premier Vendor",
+]
+
+def parse_int_text(value: object, label: str, row_number: int) -> int:
+    text = clean(value)
+    if not text:
+        raise ValueError(f"Labor Mapping row {row_number}: missing {label}")
+    try:
+        return int(float(text))
+    except ValueError as exc:
+        raise ValueError(f"Labor Mapping row {row_number}: invalid {label}: {text}") from exc
+
+def build_labor_mapping() -> list[dict[str, object]]:
+    if not LABOR_XLSX.exists():
+        raise SystemExit(f"Missing Labor Mapping source: {LABOR_XLSX.name}")
+    sheets = read_xlsx(LABOR_XLSX)
+    if not sheets:
+        raise SystemExit(f"{LABOR_XLSX.name} contains no worksheets")
+    sheet_name, rows = next(iter(sheets.items()))
+    if len(rows) < 3:
+        raise SystemExit(f"{LABOR_XLSX.name} {sheet_name}: expected two header rows and mapping data")
+    header = [clean(value) for value in (list(rows[1]) + [None] * 9)[:9]]
+    if header != LABOR_HEADERS:
+        raise SystemExit(
+            f"{LABOR_XLSX.name} {sheet_name}: unexpected column headers: {header}"
+        )
+
+    output: list[dict[str, object]] = []
+    errors: list[str] = []
+    for row_number, raw in enumerate(rows[2:], start=3):
+        row = list(raw) + [None] * 9
+        if not any(clean(value) for value in row[:9]):
+            continue
+        try:
+            province = clean(row[0])
+            if not province:
+                raise ValueError(f"Labor Mapping row {row_number}: missing State/Province")
+            postal_from = parse_int_text(row[1], "Postal Code (From)", row_number)
+            postal_to = parse_int_text(row[2], "Postal Code (To)", row_number)
+            if postal_from > postal_to:
+                raise ValueError(
+                    f"Labor Mapping row {row_number}: Postal Code (From) {postal_from} > Postal Code (To) {postal_to}"
+                )
+            values = [clean(value) for value in row[3:9]]
+            labels = [
+                "Standard SAP Account Number", "Standard Labor Vendor ID", "Standard Premier Vendor",
+                "Premier SAP Account Number", "Premier Labor Vendor ID", "Premier Premier Vendor",
+            ]
+            for label, value in zip(labels, values):
+                if not value:
+                    raise ValueError(f"Labor Mapping row {row_number}: missing {label}")
+            output.append({
+                "province": province,
+                "postalFrom": postal_from,
+                "postalTo": postal_to,
+                "standardPcare": {
+                    "sapAccountNumber": values[0],
+                    "laborVendorId": values[1],
+                    "premierVendor": values[2],
+                },
+                "premierSupport": {
+                    "sapAccountNumber": values[3],
+                    "laborVendorId": values[4],
+                    "premierVendor": values[5],
+                },
+                "sourceRow": row_number,
+            })
+        except ValueError as exc:
+            errors.append(str(exc))
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}", file=sys.stderr)
+        raise SystemExit(f"Labor Mapping validation failed with {len(errors)} error(s).")
+    return output
+
+def write_labor_mapping() -> int:
+    rows = build_labor_mapping()
+    meta = {
+        "version": VERSION,
+        "source": LABOR_XLSX.name,
+        "rows": len(rows),
+        "rangePolicy": "Source postal-code ranges are preserved exactly; no automatic merging.",
+    }
+    js = (
+        f"// AUTO-GENERATED from {LABOR_XLSX.name} for v{VERSION}. Edit Excel first, then run generate_database.py.\n"
+        "const LABOR_MAPPING_META = " + json.dumps(meta, ensure_ascii=False, separators=(",", ":")) + ";\n\n"
+        "const LABOR_MAPPING = " + json.dumps(rows, ensure_ascii=False, separators=(",", ":")) + ";\n"
+    )
+    LABOR_OUTPUT.write_text(js, encoding="utf-8")
+    return len(rows)
+
 def generate() -> dict[str, int]:
     if not XLSX.exists() or not OUTPUT.exists():
         raise SystemExit("PD_Guide_Database.xlsx and database.js must be in the same folder as this script.")
@@ -565,11 +668,13 @@ def generate() -> dict[str, int]:
     )
     OUTPUT.write_text(js, encoding="utf-8")
     reference_count = write_reference_texts(levels, model_source)
+    labor_count = write_labor_mapping()
     return {
         "questions": question_count,
         "dropdowns": len(dropdowns),
         "related_guides": len(related_guides),
         "reference_files": reference_count,
+        "labor_rows": labor_count,
     }
 
 
@@ -578,7 +683,8 @@ def main() -> None:
     print(
         f"Generated {OUTPUT.name} from {XLSX.name} for v{VERSION} "
         f"({stats['questions']} checklist rows, {stats['dropdowns']} dropdowns, "
-        f"{stats['related_guides']} related guides, {stats['reference_files']} reference files)."
+        f"{stats['related_guides']} related guides, {stats['reference_files']} reference files, "
+        f"{stats['labor_rows']} labor mapping rows)."
     )
 
 
