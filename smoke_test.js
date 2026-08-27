@@ -173,6 +173,14 @@ assert(/browserPresenceRef/.test(indexHtml), "Firebase presence is not scoped to
 assert(/onlineUsers\/\$\{visitorUuid\}/.test(indexHtml), "Firebase presence path is not grouped by visitorUuid");
 assert(/push\(browserPresenceRef\)/.test(indexHtml), "Firebase tab sessions are not nested under the browser/profile presence node");
 assert(/onDisconnect\(nextPresenceRef\)\.remove\(\)/.test(indexHtml), "Firebase presence cleanup is not registered before session write");
+assert(/ONLINE_STALE_TIMEOUT_MS\s*=\s*30\s*\*\s*60\s*\*\s*1000/.test(indexHtml), "Hybrid Online stale timeout must be 30 minutes");
+assert(/PRESENCE_HEARTBEAT_INTERVAL_MS\s*=\s*5\s*\*\s*60\s*\*\s*1000/.test(indexHtml), "Hybrid Online heartbeat must run every 5 minutes");
+assert(/lastSeen:\s*serverTimestamp\(\)/.test(indexHtml), "Firebase presence must store lastSeen heartbeat");
+assert(/countActiveBrowsers/.test(indexHtml) && /lastSeen\s*\?\?\s*session\.connectedAt/.test(indexHtml), "Online count must filter browser sessions by recent heartbeat");
+assert(/writeHeartbeat/.test(indexHtml) && /startHeartbeat/.test(indexHtml), "Hybrid heartbeat presence is missing");
+assert(/\.info\/serverTimeOffset/.test(indexHtml) && /firebaseNow/.test(indexHtml), "Hybrid Online must compare server timestamps using Firebase server time offset");
+assert(!/deactivatePresenceForInactivity/.test(indexHtml), "Activity-only inactivity cleanup must not remain in Hybrid Online mode");
+assert(!/pointerdown[\s\S]*handleUserActivity/.test(indexHtml), "Hybrid Online must not depend on user activity events");
 assert(/PD_SITE_STATS_STATUS/.test(indexHtml), "Background site-statistics status object is missing");
 assert(/Initialization attempt/.test(indexHtml), "Site-statistics retry/error reporting is missing");
 assert(/id="onlineDot" class="online-dot"/.test(indexHtml), "Realtime Online status dot is missing");

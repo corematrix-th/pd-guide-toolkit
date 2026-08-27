@@ -1,5 +1,13 @@
 PD Guide Toolkit v5.2.6
 
+Online presence (v5.2.6):
+- Online counts unique browser/profile IDs, not tabs.
+- Hybrid Presence: an open Toolkit tab remains Online without requiring clicks, typing, scrolling, or mouse activity.
+- Each connected tab refreshes a Firebase lastSeen heartbeat every 5 minutes.
+- Normal browser/tab closes are removed immediately through onDisconnect()/page cleanup when the disconnect is observed.
+- Sleep, network loss, or orphaned sessions are excluded after 30 minutes without a heartbeat.
+- Chrome + Edge count separately because they have different browser/profile IDs; multiple tabs in the same browser/profile still count as one Online user.
+
 Open index.html to start the Toolkit.
 
 MASTER DATABASE

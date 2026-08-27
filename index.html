@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>PD Guide Toolkit</title>
-  <link rel="stylesheet" href="style.css?v=526r1">
+  <link rel="stylesheet" href="style.css?v=526r2">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBWX6GCY18"></script>
   <script>
@@ -188,11 +188,11 @@
   </div>
 </div>
 
-<script src="database.js?v=526r1"></script>
-<script src="data.js?v=526r1"></script>
-<script src="knowledge.js?v=526r1"></script>
-<script src="labor_mapping.js?v=526r1"></script>
-<script src="app.js?v=526r1"></script>
+<script src="database.js?v=526r2"></script>
+<script src="data.js?v=526r2"></script>
+<script src="knowledge.js?v=526r2"></script>
+<script src="labor_mapping.js?v=526r2"></script>
+<script src="app.js?v=526r2"></script>
 <script>
   // Firebase Realtime Database counters for PD Guide Toolkit.
   // Global path remains siteStats/global so historical counters are preserved.
@@ -275,7 +275,7 @@
 
     const { initializeApp, getApps, getApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
     const {
-      getDatabase, ref, onValue, set, push, remove, onDisconnect,
+      getDatabase, ref, onValue, set, update, push, remove, onDisconnect,
       runTransaction, serverTimestamp
     } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js");
 
@@ -296,16 +296,69 @@
       if(viewEl) viewEl.textContent = formatCount(snapshot.val());
     }, error => reportStatsError("Views read", error));
 
-    onValue(onlineUsersRef, snapshot => {
-      const count = snapshot.exists() ? snapshot.size : 0;
+    // Hybrid presence: an open Toolkit tab stays Online without requiring user activity.
+    // Each tab sends a periodic heartbeat. onDisconnect() removes normal closes/disconnects,
+    // while the 30-minute lastSeen window excludes stale sessions left behind by sleep/network loss.
+    const ONLINE_STALE_TIMEOUT_MS = 30 * 60 * 1000;
+    const PRESENCE_HEARTBEAT_INTERVAL_MS = 5 * 60 * 1000;
+    const ONLINE_RECOUNT_INTERVAL_MS = 60 * 1000;
+    const serverTimeOffsetRef = ref(db, ".info/serverTimeOffset");
+    let serverTimeOffsetMs = 0;
+    let latestOnlineSnapshot = null;
+
+    onValue(serverTimeOffsetRef, snapshot => {
+      const offset = Number(snapshot.val());
+      serverTimeOffsetMs = Number.isFinite(offset) ? offset : 0;
+      renderActiveOnlineCount();
+    }, error => reportStatsError("Firebase server time", error));
+
+    function firebaseNow(){
+      return Date.now() + serverTimeOffsetMs;
+    }
+
+    function countActiveBrowsers(snapshot, now = firebaseNow()){
+      if(!snapshot || !snapshot.exists()) return 0;
+      const cutoff = now - ONLINE_STALE_TIMEOUT_MS;
+      let count = 0;
+      snapshot.forEach(browserSnapshot => {
+        let browserActive = false;
+        browserSnapshot.forEach(sessionSnapshot => {
+          const session = sessionSnapshot.val() || {};
+          const lastSeen = Number(session.lastSeen ?? session.connectedAt);
+          if(Number.isFinite(lastSeen) && lastSeen >= cutoff){
+            browserActive = true;
+            return true;
+          }
+          return false;
+        });
+        if(browserActive) count += 1;
+        return false;
+      });
+      return count;
+    }
+
+    function renderActiveOnlineCount(){
+      const count = countActiveBrowsers(latestOnlineSnapshot);
       if(onlineEl) onlineEl.textContent = formatCount(count);
+      statsStatus.presenceMode = "hybrid";
+      statsStatus.timeoutMinutes = 30;
+      statsStatus.heartbeatMinutes = 5;
+      statsStatus.activeOnline = count;
       statsStatus.onlineReadable = true;
       updateOnlineIndicator();
+    }
+
+    onValue(onlineUsersRef, snapshot => {
+      latestOnlineSnapshot = snapshot;
+      renderActiveOnlineCount();
     }, error => {
       statsStatus.onlineReadable = false;
       updateOnlineIndicator();
       reportStatsError("Online read", error);
     });
+
+    // Re-evaluate stale sessions even when Firebase receives no new writes.
+    window.setInterval(renderActiveOnlineCount, ONLINE_RECOUNT_INTERVAL_MS);
 
     // Views increase on each page load. A failed write is reported but does not stop reads/presence.
     runTransaction(viewsRef, current => (Number(current) || 0) + 1)
@@ -325,32 +378,80 @@
         .catch(error => reportStatsError("Visitors increment", error));
     }
 
-    // Presence is grouped by the persistent browser/profile UUID. Each tab gets its own
-    // child session, while the Online display counts only browser/profile parents.
-    // Result: one browser with multiple tabs is Online = 1; another browser/device adds +1.
+    // Presence is grouped by the persistent browser/profile UUID. Each tab has its own
+    // child session, but the Online display counts the browser/profile only once.
     const browserPresenceRef = ref(db, `${basePath}/onlineUsers/${visitorUuid}`);
     let presenceRef = null;
+    let presenceWriteInFlight = false;
+    let heartbeatTimer = null;
+
+    async function writeHeartbeat(){
+      if(!statsStatus.connected || !presenceRef) return;
+      try {
+        await update(presenceRef, { lastSeen: serverTimestamp() });
+        statsStatus.lastHeartbeat = new Date().toISOString();
+      } catch(error){
+        reportStatsError("Online heartbeat", error);
+      }
+    }
+
+    function startHeartbeat(){
+      if(heartbeatTimer) window.clearInterval(heartbeatTimer);
+      heartbeatTimer = window.setInterval(() => {
+        writeHeartbeat().catch(error => reportStatsError("Online heartbeat", error));
+      }, PRESENCE_HEARTBEAT_INTERVAL_MS);
+    }
+
+    async function ensurePresence(){
+      if(!statsStatus.connected || presenceRef || presenceWriteInFlight) return;
+      presenceWriteInFlight = true;
+      const nextPresenceRef = push(browserPresenceRef);
+      try {
+        // Register disconnect cleanup before writing the session, per Firebase presence guidance.
+        await onDisconnect(nextPresenceRef).remove();
+        await set(nextPresenceRef, {
+          connectedAt: serverTimestamp(),
+          lastSeen: serverTimestamp()
+        });
+        presenceRef = nextPresenceRef;
+        statsStatus.lastHeartbeat = new Date().toISOString();
+        setStatsState("connected", {connected: true, presenceActive: true});
+        startHeartbeat();
+      } catch(error){
+        reportStatsError("Online presence", error);
+      } finally {
+        presenceWriteInFlight = false;
+      }
+    }
+
+    // When a background tab becomes visible again, refresh immediately instead of waiting
+    // for the next scheduled heartbeat. This does not require user interaction.
+    document.addEventListener("visibilitychange", () => {
+      if(document.visibilityState === "visible"){
+        if(presenceRef) writeHeartbeat().catch(error => reportStatsError("Online heartbeat", error));
+        else ensurePresence().catch(error => reportStatsError("Online presence", error));
+      }
+    });
+
     onValue(connectedRef, async snapshot => {
       const connected = snapshot.val() === true;
       statsStatus.connected = connected;
       if(!connected){
         presenceRef = null;
-        setStatsState("offline", {connected: false});
+        if(heartbeatTimer){
+          window.clearInterval(heartbeatTimer);
+          heartbeatTimer = null;
+        }
+        setStatsState("offline", {connected: false, presenceActive: false});
         return;
       }
 
-      const nextPresenceRef = push(browserPresenceRef);
-      try {
-        await onDisconnect(nextPresenceRef).remove();
-        await set(nextPresenceRef, { connectedAt: serverTimestamp() });
-        presenceRef = nextPresenceRef;
-        setStatsState("connected", {connected: true});
-      } catch(error){
-        reportStatsError("Online presence", error);
-      }
+      setStatsState("connected", {connected: true});
+      await ensurePresence();
     }, error => reportStatsError("Firebase connection", error));
 
     const cleanupPresence = () => {
+      if(heartbeatTimer) window.clearInterval(heartbeatTimer);
       if(presenceRef) remove(presenceRef).catch(() => {});
     };
     window.addEventListener("pagehide", cleanupPresence);
