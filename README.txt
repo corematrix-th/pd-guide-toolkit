@@ -1,6 +1,6 @@
-PD Guide Toolkit v5.2.6
+PD Guide Toolkit v5.2.9
 
-Online presence (v5.2.6):
+Online presence (v5.2.8):
 - Online counts unique browser/profile IDs, not tabs.
 - Hybrid Presence: an open Toolkit tab remains Online without requiring clicks, typing, scrolling, or mouse activity.
 - Each connected tab refreshes a Firebase lastSeen heartbeat every 5 minutes.
@@ -66,7 +66,7 @@ Diagnostics:
 - Runtime diagnostics validate the Labor Mapping dataset count and required vendor fields.
 - Background diagnostics are a runtime aid; the release gate remains python validate_database.py.
 
-Selective Related Guide popup (v5.2.6):
+Selective Related Guide popup (v5.2.8):
 - SYMPTOMS no longer renders a separate Related Guide card below the checklist.
 - Selected complex checklist steps show a small ⓘ beside the checklist label.
 - Clicking ⓘ opens the existing Guide popup without leaving SYMPTOMS or clearing checklist answers.
@@ -74,7 +74,7 @@ Selective Related Guide popup (v5.2.6):
 - Basic procedures such as Power Reset and Emergency Reset intentionally have no ⓘ.
 - For the Windows Recovery multi-guide mapping, only Reset This PC is exposed as a popup; Startup Repair and System Restore are not shown.
 
-Navigation v5.2.6:
+Navigation v5.2.8:
 - SYMPTOMS contains the product troubleshooting workflow.
 - ERROR POST provides the Error/Post reference library, including BIOS Password and Supervisor Password.
 - GUIDE provides the direct User Guide library.
@@ -87,4 +87,4 @@ Navigation v5.2.6:
 
 Run python generate_database.py and python validate_database.py before packaging every release.
 
-Version 5.2.6
+Version 5.2.9

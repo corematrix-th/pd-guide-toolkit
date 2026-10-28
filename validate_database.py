@@ -6,6 +6,8 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
+import shutil
 from pathlib import Path
 
 from generate_database import (
@@ -51,7 +53,7 @@ process.stdout.write(JSON.stringify(ctx.__OUT));
         ["node", "-e", helper, str(OUTPUT)],
         check=True,
         capture_output=True,
-        text=True,
+        text=True, encoding="utf-8",
     )
     return json.loads(proc.stdout)
 
@@ -67,7 +69,7 @@ process.stdout.write(JSON.stringify(ctx.__OUT));
 '''
     proc = subprocess.run(
         ["node", "-e", helper, str(LABOR_OUTPUT)],
-        check=True, capture_output=True, text=True,
+        check=True, capture_output=True, text=True, encoding="utf-8",
     )
     return json.loads(proc.stdout)
 
@@ -93,6 +95,28 @@ def validate_labor_mapping_runtime() -> list[str]:
             "Run python generate_database.py to regenerate it."
         )
     return errors
+
+def validate_generated_sync() -> list[str]:
+    """Regenerate in isolation; never modify the user's runtime during validation."""
+    with tempfile.TemporaryDirectory(prefix="pd-guide-validate-") as directory:
+        target = Path(directory)
+        for filename in ("generate_database.py", XLSX.name, LABOR_XLSX.name, OUTPUT.name):
+            shutil.copy2(ROOT / filename, target / filename)
+        proc = subprocess.run(
+            [sys.executable, str(target / "generate_database.py")],
+            capture_output=True, text=True, encoding="utf-8",
+        )
+        if proc.returncode:
+            return [f"Isolated regeneration failed: {(proc.stderr or proc.stdout).strip()}"]
+        errors = []
+        for filename in (OUTPUT.name, LABOR_OUTPUT.name):
+            expected = (target / filename).read_text(encoding="utf-8")
+            actual = (ROOT / filename).read_text(encoding="utf-8")
+            if actual != expected:
+                errors.append(f"{filename} differs from regenerated master data. "
+                              "Run python generate_database.py.")
+        return errors
+
 
 def validate_runtime() -> tuple[list[str], list[str]]:
     errors: list[str] = []
@@ -205,7 +229,7 @@ def validate_javascript() -> list[str]:
     errors: list[str] = []
     for filename in JS_FILES:
         path = ROOT / filename
-        proc = subprocess.run(["node", "--check", str(path)], capture_output=True, text=True)
+        proc = subprocess.run(["node", "--check", str(path)], capture_output=True, text=True, encoding="utf-8")
         if proc.returncode:
             errors.append(f"JavaScript syntax error in {filename}: {proc.stderr.strip()}")
     return errors
@@ -217,7 +241,7 @@ def validate_smoke_test() -> list[str]:
     script = ROOT / "smoke_test.js"
     if not script.exists():
         return ["Missing smoke_test.js"]
-    proc = subprocess.run(["node", str(script)], capture_output=True, text=True)
+    proc = subprocess.run(["node", str(script)], capture_output=True, text=True, encoding="utf-8")
     if proc.returncode:
         errors.append(f"Headless DOM smoke test failed: {(proc.stderr or proc.stdout).strip()}")
     return errors
@@ -259,13 +283,14 @@ def main() -> None:
     if not XLSX.exists() or not OUTPUT.exists():
         raise SystemExit("PD_Guide_Database.xlsx and database.js are required.")
     if not LABOR_XLSX.exists() or not LABOR_OUTPUT.exists():
-        raise SystemExit("Labor Mapping.xlsx and labor_mapping.js are required for v5.2.6.")
+        raise SystemExit("Labor Mapping.xlsx and labor_mapping.js are required for v5.2.9.")
 
     sheets = read_xlsx(XLSX)
     errors, warnings = validate_workbook(sheets)
     errors.extend(validate_javascript())
     errors.extend(validate_guides())
     errors.extend(validate_labor_mapping_runtime())
+    errors.extend(validate_generated_sync())
     errors.extend(validate_smoke_test())
     errors.extend(validate_reference_texts())
 

@@ -88,6 +88,7 @@ class FakeDocument {
   }
   createElement(tagName){ return new FakeElement(tagName, this); }
   getElementById(id){ return this.registry.get(id) || null; }
+  execCommand(command){ this.lastExecCommand = command; return true; }
   addEventListener(type, callback){
     (this.listeners[type] ||= []).push(callback);
   }
@@ -189,9 +190,9 @@ assert(/id="checklistProgressText"/.test(indexHtml) && /id="checklistProgressBar
 assert(/class="action-primary"/.test(indexHtml), "Generate Note primary action styling is missing");
 assert((indexHtml.match(/class="action-secondary"/g) || []).length === 2, "Email secondary action styling is missing");
 assert(/id="clearBtn" class="action-clear"/.test(indexHtml), "Clear outline action styling is missing");
-assert((indexHtml.match(/<svg viewBox="0 0 24 24"/g) || []).length >= 5, "Action/search icons are missing");
-assert(/id="tabTroubleshooting"/.test(indexHtml) && /id="tabCode"/.test(indexHtml) && /id="tabUserGuide"/.test(indexHtml) && /id="tabLaborMapping"/.test(indexHtml), "v5.2.6 module navigation is missing");
-assert(/id="tabTroubleshooting"[\s\S]*?<span class="module-label">SYMPTOMS<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabCode"[\s\S]*?<span class="module-label">ERROR POST<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabUserGuide"[\s\S]*?<span class="module-label">GUIDE<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabLaborMapping"[\s\S]*?<span class="module-label">LABOR MAPPING<\/span>[\s\S]*?<\/button>/.test(indexHtml), "v5.2.6 module labels must be SYMPTOMS / ERROR POST / GUIDE / LABOR MAPPING");
+assert((indexHtml.match(/<svg viewBox="0 0 24 24"/g) || []).length >= 6, "Action/search icons are missing");
+assert(/id="tabTroubleshooting"/.test(indexHtml) && /id="tabCode"/.test(indexHtml) && /id="tabUserGuide"/.test(indexHtml) && /id="tabLaborMapping"/.test(indexHtml), "v5.2.7 module navigation is missing");
+assert(/id="tabTroubleshooting"[\s\S]*?<span class="module-label">SYMPTOMS<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabCode"[\s\S]*?<span class="module-label">ERROR POST<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabUserGuide"[\s\S]*?<span class="module-label">GUIDE<\/span>[\s\S]*?<\/button>/.test(indexHtml) && /id="tabLaborMapping"[\s\S]*?<span class="module-label">LABOR MAPPING<\/span>[\s\S]*?<\/button>/.test(indexHtml), "v5.2.7 module labels must be SYMPTOMS / ERROR POST / GUIDE / LABOR MAPPING");
 assert(/id="globalSearchPanel"/.test(indexHtml), "Global Search panel is missing");
 assert(/id="laborMappingView"/.test(indexHtml) && /id="laborSearch"/.test(indexHtml) && /id="laborResults"/.test(indexHtml), "Labor Mapping view/search is missing");
 assert(/id="laborSearchClearBtn"[\s\S]*?<span>Clear<\/span>/.test(indexHtml), "Labor Mapping labeled Clear button is missing beside Search");
@@ -199,7 +200,9 @@ assert(/labor_mapping\.js/.test(indexHtml), "Labor Mapping runtime script is mis
 assert(/id="referenceCategoryColumn"/.test(indexHtml) && /id="referenceCategories"/.test(indexHtml) && /id="referenceItemsColumn"/.test(indexHtml) && /id="referenceItems"/.test(indexHtml) && /id="referenceDetailBody"/.test(indexHtml), "Code/User Guide reference layout is missing");
 assert(!/id="referenceInfoTitle"/.test(indexHtml) && !/id="referenceMeta"/.test(indexHtml) && !/id="referenceInfoHint"/.test(indexHtml), "ERROR POST / GUIDE right-side reference panel must be removed");
 assert(!/id="referenceDetailHeading"/.test(indexHtml), "ERROR POST DETAIL / USER GUIDE DETAIL heading must be removed");
-assert(/Version 5\.2\.6/.test(indexHtml), "Visible version is not v5.2.6");
+assert(/Version 5\.2\.9/.test(indexHtml), "Visible version is not v5.2.8");
+assert(!/id="copyBtn"/.test(indexHtml) && !/id="copyStatus"/.test(indexHtml), "Result copy button/status must be removed");
+assert(/id="guideModal"[^>]*role="dialog"[^>]*aria-modal="true"[^>]*aria-labelledby="modalTitle"/.test(indexHtml), "Related Guide modal ARIA semantics are missing");
 
 const styleCss = fs.readFileSync(path.join(root, "style.css"), "utf8");
 assert(/\.module-tab\{[\s\S]*?min-height:26px;[\s\S]*?font-size:10px;/.test(styleCss), "Module navigation should stay compact");
@@ -330,8 +333,12 @@ switchModule("labor");
 assert(document.getElementById("tabLaborMapping").className.includes("active"), "Labor Mapping module tab did not activate");
 assert(document.getElementById("mainControlbar").classList.contains("hidden"), "Search All/Product controlbar must be hidden in Labor Mapping");
 assert(!document.getElementById("laborMappingView").classList.contains("hidden"), "Labor Mapping view did not open");
-assert(LABOR_MAPPING_META.version === "5.2.6", "Labor Mapping runtime version is not v5.2.6");
+assert(LABOR_MAPPING_META.version === "5.2.9", "Labor Mapping runtime version is not v5.2.8");
 assert(LABOR_MAPPING_META.rows === 119 && LABOR_MAPPING.length === 119, "Labor Mapping row count is incorrect");
+const phangngaUpdatedRange = LABOR_MAPPING.find(row => row.province === "Phangnga" && row.postalFrom === 82190);
+assert(phangngaUpdatedRange && phangngaUpdatedRange.postalTo === 82220, "Phangnga 82190 range must end at 82220");
+assert(!JSON.stringify(LEVELS).includes("Swap HDMI / DisplayPort Cable"), "Old HDMI / DisplayPort checklist label remains");
+assert(!JSON.stringify(LEVELS).includes("Check BIOS / Diagnostics"), "Old BIOS / Diagnostics checklist label remains");
 document.getElementById("laborSearch").value = "20000";
 renderLaborMapping();
 const laborNodes = descendants(document.getElementById("laborResults"));
@@ -374,8 +381,10 @@ clearLaborSearch();
 assert(document.getElementById("laborSearch").value === "", "Labor Mapping Clear did not empty Search");
 assert(document.getElementById("laborSearchClearBtn").disabled === true, "Labor Mapping Clear button should be disabled after clearing Search");
 switchModule("troubleshooting");
+assert(document.getElementById("a0").selectedIndex === 1, "Troubleshooting answer was lost after switching modules");
+assert(document.getElementById("checklistProgressText").textContent === "Checklist 1 / 9 completed", "Checklist progress was not restored after switching modules");
 
-// v5.2.6 selective Related Guide regression: complex steps show inline ⓘ and
+// v5.2.7 selective Related Guide regression: complex steps show inline ⓘ and
 // open the existing popup without navigating away from SYMPTOMS.
 el("product").value = "thinkpad";
 const batteryLevel = Object.keys(LEVELS).find(key => LEVELS[key].name === "Battery");
@@ -441,14 +450,14 @@ assert(formatNoteLine("Specific keys listed", "x,y,z") === "- Specific Keys List
 
 const diagnostics = collectDiagnostics();
 assert(diagnostics.status === "PASS", "Runtime diagnostics did not pass: " + diagnostics.errors.join(" | "));
-assert(diagnostics.meta.version === "5.2.6", "Diagnostics/database version is not v5.2.6");
+assert(diagnostics.meta.version === "5.2.9", "Diagnostics/database version is not v5.2.8");
 assert(diagnostics.laborRows === 119, "Diagnostics Labor Mapping row count is incorrect");
 assert(diagnostics.checklistRows === 2285, "Diagnostics checklist-row count is incorrect");
 const backgroundDiagnostics = runBackgroundDiagnostics();
 assert(backgroundDiagnostics.status === "PASS", "Background diagnostics did not pass");
 assert(!document.getElementById("diagBtn"), "Diagnostics button must not be present in the user UI");
 
-// v5.2.6 data hygiene: SSD/RAM swap checks were removed from all customer-facing checklists.
+// v5.2.7 data hygiene: SSD/RAM swap checks were removed from all customer-facing checklists.
 for(const [product, rows] of Object.entries(MODEL_STRUCTURE)){
   for(const row of rows){
     for(const symptomKey of row.symptoms || []){
@@ -530,6 +539,24 @@ for(const level of Object.values(LEVELS)){
 }
 assert(badRuntimeOptions === 0, "Generated runtime contains visible dropdown control tokens");
 
+const desktopMonitorRow = MODEL_STRUCTURE.desktop.find(row => LEVELS[row.level] && LEVELS[row.level].name === "Monitor");
+assert(desktopMonitorRow, "Desktop Monitor level not found");
+const desktopMonitorLevel = LEVELS[desktopMonitorRow.level];
+const desktopFlickerKey = desktopMonitorRow.symptoms.find(key => desktopMonitorLevel.symptoms[key] && desktopMonitorLevel.symptoms[key].name === "Flickering");
+assert(desktopFlickerKey, "Desktop > Monitor > Flickering not found");
+const desktopFlickerLabels = desktopMonitorLevel.symptoms[desktopFlickerKey].questions.desktop.map(question => question.label);
+assert(JSON.stringify(desktopFlickerLabels) === JSON.stringify([
+  "Check BIOS",
+  "swap HDMI cable",
+  "Monitor Test on Other Machine",
+  "Swap Monitor",
+  "Graphics Driver Update",
+  "Physical Damage",
+  "Liquid Spilled",
+  "FRU P/N"
+]), "Desktop > Monitor > Flickering checklist regressed to non-desktop steps");
+assert(!desktopFlickerLabels.includes("Move LCD Lid") && !desktopFlickerLabels.includes("External Monitor Test"), "Desktop > Monitor > Flickering still contains notebook-only steps");
+
 const noPhysicalLevels = new Set(["windows", "battery", "network", "storage", "audio", "camera"]);
 const externalFruProducts = new Set(["desktop", "tiny", "aio"]);
 const externalFruLevels = new Set(["monitor", "adapter", "keyboard", "mouse"]);
@@ -578,6 +605,8 @@ console.log(JSON.stringify({
   userGuideLibrary: true,
   laborMapping: true,
   checklistProgress: true,
+  navigationStatePreserved: true,
+  modalAccessibility: true,
   searchEmptyState: true,
   cssCleanup: true,
   checklistScopeRules: true,

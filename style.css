@@ -274,7 +274,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
 .manual{padding:10px;border:1px solid var(--border);border-radius:6px;background:#fafafa;line-height:1.6;white-space:pre-wrap}
 .error-description{margin-bottom:7px;padding:6px 8px;border:1px solid #ffe0a3;border-radius:6px;background:#fff8e8;color:#805000;font-size:11px;line-height:1.45}
 
-/* v5.2.6 — selective Related Guide icon beside the checklist label. */
+/* v5.2.7 — selective Related Guide icon beside the checklist label. */
 .check-guide-info{
   display:inline-flex;
   align-items:center;
@@ -321,7 +321,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
   .section-heading{align-items:flex-start;flex-direction:column;gap:3px}
 }
 
-/* v5.2.6 — Locked module UI, Global Search, Labor Mapping, and selective guide popups */
+/* v5.2.7 — Locked module UI, Global Search, Labor Mapping, and selective guide popups */
 .module-nav{
   display:flex;
   align-items:center;
@@ -608,3 +608,7 @@ textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace
   .labor-search-controls{align-items:stretch}
   .labor-compare-table{min-width:820px}
 }
+
+/* v5.2.8 — navigation-safe checklist state and dialog polish */
+.modal-content:focus-within{outline:2px solid rgba(74,124,150,.22);outline-offset:2px}
+@media (max-width:760px){.action-buttons{flex-wrap:wrap}.action-buttons button{flex:1 1 calc(50% - 6px)}}

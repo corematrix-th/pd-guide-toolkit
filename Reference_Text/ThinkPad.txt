@@ -1,0 +1,179 @@
+GLOBAL MAPPING SOURCE (v5.2.9)
+- Generated from PD_Guide_Database.xlsx and Toolkit-owned knowledge structure.
+- Do not edit the hierarchy in this file manually; run generate_database.py instead.
+- After changing Excel or Toolkit-owned knowledge, run generate_database.py and validate_database.py in the same release.
+
+---
+
+ThinkPad
+
+Boot
+├── No Power
+├── Power on No Display
+├── Power on No Display + Beep Sound
+├── Boot Loop
+├── Stuck Lenovo Logo
+├── Stuck Automatic Repair
+└── Black Screen After Login
+
+Windows
+├── Slow
+├── Freeze
+├── Auto Shutdown
+├── Auto Reboot
+├── BSOD
+├── Fingerprint Login
+├── Face Recognition
+├── Login Issue
+└── Can't Resume After Sleep
+
+Display
+├── Abnormal Line
+├── Flickering
+├── Dim
+├── Black Screen
+├── Color Bias
+├── Garbage
+└── Touchscreen
+
+Adapter
+├── Adapter Not Work
+└── Power Cord Not Work
+
+Battery
+├── Can't Charge
+├── Battery Runtime Short
+├── Battery Swollen
+├── Slow Charge
+└── No power without AC adapter (No keep power)
+
+Port
+├── Can't Charge
+├── USB-C Display
+├── USB-A
+├── HDMI
+├── SD Card
+├── Smart Card
+└── Audio Jack
+
+Keyboard
+├── Few Key Not Work
+├── All Key Not Work
+├── Keyboard Auto Type
+├── Backlight
+├── Fn Key
+└── Keyboard Left Ctrl
+
+Mouse
+├── Mouse Not Work
+├── Wireless Mouse Not Detect
+├── Mouse Click L Double
+└── Scroll Mouse Not Work
+
+Touchpad
+├── Touchpad-Cursor
+├── Touchpad-Key
+├── Cursor Auto Move or Jump
+└── TrackPoint
+
+Network
+├── Wi-Fi
+├── LAN
+├── Bluetooth
+├── WWAN / SIM
+└── Smart Card
+
+Storage
+├── SSD Not Detect
+└── SSD Not Found During Install OS
+
+Audio
+├── Speaker No Sound
+├── Speaker Noise
+├── Microphone
+├── Echo
+├── Speaker Low Volume
+├── Microphone Low Volume
+└── Audio Jack
+
+Camera
+├── Camera Not Work
+├── Blurry
+├── Face Recognition
+└── Lock on Leave Function
+
+Fan
+├── Fan Error
+├── Fan Not Spin
+├── Fan Noise
+├── Fan Spin High
+└── Fan Overheat
+
+Dock
+├── Not Charging
+├── Not Detected
+├── Monitor Flickering
+├── No Signal / HDMI / DisplayPort
+├── USB-A
+├── LAN
+└── Audio Jack
+
+BIOS
+├── BIOS Password
+└── Supervisor Password
+
+Code
+├── 0162 Setup Data Integrity Check Failure
+├── 0183 Bad CRC of Security Settings in EFI Variable
+├── 0188 Invalid Rfid Serialization Information Area
+├── 0190 Critical Low-Battery Error
+├── 0271 Date and Time Error
+├── 1802 Unauthorized Network Card Is Plugged in
+├── 1962 No Operating System Found
+├── 2100 Detection Error on Storage Device
+├── 2101 Detection Error on HDD
+├── 2200 Machine Type and Serial Number Are Invalid
+├── 2201 Machine Uuid Is Invalid
+├── Boot Device Missing
+├── Button Cover Tamper Detection
+└── PXE
+
+Troubleshooting Guide
+├── Lenovo Vantage Update
+├── Lenovo Diagnostics
+├── Battery Report
+├── Battery Health
+├── BIOS Version
+├── Windows Product Key
+├── Windows Activation
+├── Reset This Pc
+├── Startup Repair
+├── System Restore
+├── Uninstall Windows Update
+├── Re-install Windows
+├── Event Viewer
+├── Sfc /Scannow
+├── Safe Mode
+├── Dump File
+├── BitLocker Recovery
+├── Microsoft Office Activation
+├── Bypass Windows 11 Oobe
+├── Always on USB
+├── BIOS / Supervisor Password
+├── Lock on Leave Function
+├── Reset Battery
+├── LCD Self-Test
+├── Disable Audio Enhancements
+├── SSD Not Found During Install OS
+├── Fn & Ctrl Key Swap
+├── Downgrade BIOS
+├── Emergency Reset
+└── Power Reset
+
+=== GENERATED STRUCTURE SOURCE ===
+PD_Guide_Database.xlsx is the source of truth for product-facing structure and checklist data.
+Toolkit-owned BIOS, Code, Troubleshooting Guide content, Generate Note, and Dispatch logic remain in JavaScript/Markdown.
+Structure version: v5.2.9
+
+[v5.2.9 MODEL SCOPE NOTE]
+Notebook master. IdeaPad follows this structure unless hardware behavior differs.

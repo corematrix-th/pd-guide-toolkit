@@ -96,7 +96,7 @@
     </div>
     <div id="laborResultSummary" class="labor-result-summary">Enter a Province or Postal Code to find Labor Mapping.</div>
     <div id="laborResults" class="labor-results"></div>
-    <div class="version labor-version">Version 5.2.6</div>
+    <div class="version labor-version">Version 5.2.9</div>
   </div>
 
   <div id="troubleshootingView">
@@ -149,7 +149,7 @@
         </button>
       </div>
 
-      <div class="version">Version 5.2.6</div>
+      <div class="version">Version 5.2.9</div>
     </div>
   </div>
   </div>
@@ -171,18 +171,18 @@
         <div id="referenceCurrentSelection" class="current-selection reference-current-selection">Select an item</div>
         <div id="referenceDetailTitle" class="reference-detail-title">Select an item</div>
         <div id="referenceDetailBody" class="reference-detail-body empty-state">Select an item to view information.</div>
-        <div class="version reference-version">Version 5.2.6</div>
+        <div class="version reference-version">Version 5.2.9</div>
       </div>
     </div>
   </div>
 </div>
 
 
-<div id="guideModal" class="modal hidden">
+<div id="guideModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-content">
     <div class="modal-header">
       <div id="modalTitle" class="modal-title">Guide</div>
-      <button class="modal-close" id="modalCloseBtn">Close</button>
+      <button class="modal-close" id="modalCloseBtn" type="button" aria-label="Close related guide">Close</button>
     </div>
     <pre id="modalBody" class="modal-body"></pre>
   </div>

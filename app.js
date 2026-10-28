@@ -32,6 +32,46 @@ let selectedLevel = "boot";
 let selectedSymptom = "no_power";
 let activeModule = "troubleshooting";
 
+// v5.2.8 — Preserve troubleshooting work while navigating between modules.
+const TROUBLESHOOTING_SESSION = new Map();
+
+function troubleshootingStateKey(){
+  return `${getProductKey()}::${selectedLevel}::${selectedSymptom}`;
+}
+
+function saveTroubleshootingState(){
+  if(activeModule !== "troubleshooting" || isKnowledgeLevel() || !current()) return;
+  const questions = getQuestions();
+  const rows = questions.map((question, index) => ({
+    select: el(`a${index}`) ? el(`a${index}`).value : "",
+    text: el(`t${index}`) ? el(`t${index}`).value : ""
+  }));
+  TROUBLESHOOTING_SESSION.set(troubleshootingStateKey(), {
+    rows,
+    additionalDetail: el("additionalDetail") ? el("additionalDetail").value : "",
+    note: el("note") ? el("note").value : ""
+  });
+}
+
+function restoreTroubleshootingState(){
+  if(isKnowledgeLevel() || !current()) return;
+  const state = TROUBLESHOOTING_SESSION.get(troubleshootingStateKey());
+  if(!state) return;
+  (state.rows || []).forEach((row, index) => {
+    const select = el(`a${index}`);
+    const text = el(`t${index}`);
+    if(select && row && row.select !== undefined) select.value = row.select;
+    if(text && row && row.text !== undefined) text.value = row.text;
+  });
+  const detail = el("additionalDetail");
+  if(detail) detail.value = state.additionalDetail || "";
+  if(el("note")) el("note").value = state.note || "";
+}
+
+function clearTroubleshootingState(){
+  TROUBLESHOOTING_SESSION.delete(troubleshootingStateKey());
+}
+
 const CODE_CATEGORIES = {
   "All Codes": [],
   "BIOS / Firmware": [
@@ -144,7 +184,7 @@ function withDisplayQuestions(sym){
 }
 
 // v5.0.0 Final Normalization: canonical checklist labels + runtime de-duplication
-// Excel-only data rule (v5.2.6)
+// Excel-only data rule (v5.2.7)
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Drop Down, Email TH, Email EN,
 // and Related Guide are rendered directly from database.js, which is generated
 // from PD_Guide_Database.xlsx. No checklist-name normalization, insertion,
@@ -381,7 +421,7 @@ function renderReferenceView(){
   listTitle.textContent = cfg.listTitle;
   categoriesBox.innerHTML = "";
 
-  // v5.2.6: Code and Guide are direct-reference lists. Category mappings remain
+  // v5.2.7: Code and Guide are direct-reference lists. Category mappings remain
   // internal metadata for Search/Diagnostics, but are not shown as navigation.
   selectedReferenceCategory[moduleName] = cfg.allCategory;
   if(categoryColumn) categoryColumn.classList.add("hidden");
@@ -827,7 +867,7 @@ function getManualGuide(key){
   return manuals[key] || null;
 }
 
-// v5.2.6 — Selective Related Guide popup policy.
+// v5.2.7 — Selective Related Guide popup policy.
 // Keep the troubleshooting page in place and expose ⓘ only for steps where
 // the operator is likely to need a setting, Vantage/BIOS path, command, or
 // longer recovery procedure. Basic procedures intentionally stay icon-free.
@@ -890,6 +930,7 @@ function openGuideModal(key){
   el("modalTitle").textContent = guide.name;
   el("modalBody").textContent = getGuidePopupText(guide);
   el("guideModal").classList.remove("hidden");
+  if(el("modalCloseBtn") && typeof el("modalCloseBtn").focus === "function") el("modalCloseBtn").focus();
 }
 
 function closeGuideModal(){
@@ -1118,6 +1159,7 @@ function updateChecklistProgress(){
 function handleChecklistUpdate(){
   updateRecommendation();
   updateChecklistProgress();
+  saveTroubleshootingState();
 }
 
 function shouldShowAdditionalDetail(){
@@ -1237,8 +1279,10 @@ function renderMain(){
     detail.id = "additionalDetail";
     detail.className = "detail-box";
     detail.placeholder = "Additional Detail";
+    detail.addEventListener("input", handleChecklistUpdate);
     checklist.appendChild(detail);
   }
+  restoreTroubleshootingState();
   updateRecommendation();
   updateChecklistProgress();
   forceConclusionRed();
@@ -2006,7 +2050,10 @@ function guideFromChecklist(){
 
 
 // v4.8.3 Email TH rule: write customer steps, keep only final result request at the bottom.
-function setNote(text){ el("note").value = text; }
+function setNote(text){
+  el("note").value = text;
+  saveTroubleshootingState();
+}
 function generateNote(){
   gaTrack("generate_note", {
     level1: getLevelName(),
@@ -2030,13 +2077,8 @@ function sendEmailEN(){
   });
   setNote(emailFromChecklist("EN"));
 }
-function copyNote(){
-  const n = el("note");
-  n.select();
-  document.execCommand("copy");
-  alert("Copied");
-}
 function clearAll(){
+  if(activeModule === "troubleshooting") clearTroubleshootingState();
   el("search").value = "";
   setSearchClearVisibility();
   renderMain();
@@ -2091,8 +2133,15 @@ document.addEventListener("DOMContentLoaded", () => {
   el("generateBtn").addEventListener("click", generateNote);
   el("emailThBtn").addEventListener("click", sendEmailTH);
   el("emailEnBtn").addEventListener("click", sendEmailEN);
+  if(el("note")) el("note").addEventListener("input", saveTroubleshootingState);
   el("clearBtn").addEventListener("click", clearAll);
   el("modalCloseBtn").addEventListener("click", closeGuideModal);
+  if(el("guideModal")) el("guideModal").addEventListener("click", event => {
+    if(event && event.target === el("guideModal")) closeGuideModal();
+  });
+  document.addEventListener("keydown", event => {
+    if(event && event.key === "Escape" && el("guideModal") && !el("guideModal").classList.contains("hidden")) closeGuideModal();
+  });
   renderAll();
   runBackgroundDiagnostics();
 });
@@ -2112,7 +2161,7 @@ function _stripKnownSuffix(text){
 }
 
 // ============================================================================
-// v5.2.6 Excel-Only Data Rules
+// v5.2.7 Excel-Only Data Rules
 // PD_Guide_Database.xlsx is the sole source of truth for:
 // LEVEL 1, SYMPTOM / GUIDE, CHECKLIST, Dropdown ID, Email TH, Email EN,
 // and Related Guide Key. Master values are resolved during database.js generation. No legacy mapping, fallback text, injection, removal,
