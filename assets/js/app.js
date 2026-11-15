@@ -1280,8 +1280,6 @@ function batteryHealthEmailBelow50(percentage){
 function batteryHealthEmailAbove50(percentage){
   const health = percentage === null ? "____" : percentage.toFixed(1);
   return [
-    "ตัวอย่างตอบอีเมลลูกค้ากรณี Battery Health ตั้งแต่ 50% ขึ้นไป",
-    "",
     "เรียน คุณลูกค้า",
     "",
     "สำหรับตัวเครื่อง S/N: _____ ที่แจ้งปัญหาแบตเตอรี่ลดไว",
@@ -1318,8 +1316,6 @@ function batteryHealthEmailBelow50EN(percentage){
 function batteryHealthEmailAbove50EN(percentage){
   const health = percentage === null ? "____" : percentage.toFixed(1);
   return [
-    "Customer Email Template — Battery Health 50% or Above",
-    "",
     "Dear Customer,",
     "",
     "Regarding device S/N: _____ with the reported rapid battery drain issue:",
@@ -1369,11 +1365,13 @@ function openBatteryEmailPreview(language, getPercentage){
   modal.className = "battery-calc-modal battery-email-modal";
   const heading = document.createElement("div");
   heading.className = "battery-calc-title";
-  heading.textContent = "Battery Email " + language.toUpperCase();
+  const percentage = getPercentage();
+  const conditionLabel = percentage !== null && percentage < 50 ? "<50%" : "≥50%";
+  heading.textContent = "Battery Email " + language.toUpperCase() + " (" + conditionLabel + ")";
   const textArea = document.createElement("textarea");
   textArea.className = "battery-calc-email";
   textArea.setAttribute("aria-label", heading.textContent);
-  textArea.value = batteryHealthEmailText(language, getPercentage());
+  textArea.value = batteryHealthEmailText(language, percentage);
   const actions = document.createElement("div");
   actions.className = "battery-calc-actions";
   const copy = document.createElement("button");
@@ -2078,8 +2076,20 @@ function smartBootRule(ans){
     if(adapterOther === "Working" && swapAdapter === "Working") return {result:"Verify Checklist", part:"-"};
     if(adapterOther === "Not work") return {result:"Dispatch", part:"Adapter"};
     if(adapterOther === "Same Issue" && swapAdapter === "Working") return {result:"Dispatch", part:"Adapter"};
-    if(adapterOther === "Same Issue") return {result:"Dispatch", part:"Adapter"};
+    if(adapterOther === "Same Issue" && swapAdapter !== "Same Issue") return {result:"Dispatch", part:"Adapter"};
     if(swapAdapter === "Working") return {result:"Dispatch", part:"Adapter"};
+    // v5.3.9: Evidence-complete ThinkPad/IdeaPad No Power path (no adapter cross-test in this checklist).
+    // Both LEDs are off, power reset and tests with a replacement adapter/other Type-C port
+    // still show the same issue. Tail questions are not required.
+    // A working substitute adapter is implied by "Swap Adapter = Same Issue"; do not
+    // infer Mainboard from untested or incomplete steps.
+    const noPowerElimination = (product === "thinkpad" || product === "ideapad") &&
+       powerLed === "No" && chargeLed === "No" && reset === "Same Issue" &&
+       swapAdapter === "Same Issue" && typec === "Same Issue" &&
+       // Any CID / Any Other Issue are supporting notes, not required to conclude.
+       // Explicit CID = Yes is handled above before the dispatch path.
+       selectedAnswer(ans, "Any CID") !== "Yes";
+    if(noPowerElimination) return {result:"Dispatch", part:"Mainboard", evidenceKey:"NO_POWER_ELIMINATION"};
     if(typec === "Working") return {result:"Dispatch", part:"Mainboard", modelVerification:true};
     // Required evidence is symptom-specific, not a percentage of completed questions.
     if(adapterOther === "Working" && swapAdapter === "Same Issue" && reset === "Same Issue" &&
@@ -2214,6 +2224,12 @@ function calculateRaw(){
   const symRec = symptomRecommendation(ans);
   if(symRec) return sanitizeDecision(symRec.rec);
 
+  // A reported CID must not be masked by a generic accessory/recovery dispatch.
+  // Respect only explicit CID evidence, never an unanswered optional field.
+  if(selectedAnswer(ans, "Any CID") === "Yes" || selectedAnswer(ans, "Physical damage / Liquid spilled") === "Yes"){
+    return {result:"CID", part:"-"};
+  }
+
   const recoveryRule = recoveryActionRule(ans);
   if(recoveryRule) return sanitizeDecision(recoveryRule);
   const accessoryRule = cableAndAccessoryRule(ans);
@@ -2265,7 +2281,7 @@ function calculateRaw(){
     if(r.q.includes("Swap USB Device") && r.a === "Working") return {result:"Dispatch", part:"USB Device"};
     if(r.q.includes("Swap USB port") && r.a === "Working") return {result:"Dispatch", part:"USB Port"};
     if(r.q.includes("External Monitor") && r.a === "Working") return {result:"Dispatch", part:"LCD Panel"};
-    if(r.q.includes("External Monitor") && r.a === "Same Issue") return {result:"Dispatch", part:"Mainboard"};
+    // Same Issue on an external monitor is not enough by itself to identify a Mainboard.
     if(r.q.includes("Monitor test on other machine") && r.a === "Working") return {result:"Dispatch", part:"PC / Graphics Output"};
     if(r.q.includes("Swap Monitor") && r.a === "Working") return {result:"Dispatch", part:"Monitor"};
     if((r.q.includes("USB Keyboard") || r.q.includes("External Keyboard Test") || r.q.includes("Swap Keyboard") || r.q.includes("On-Screen Keyboard")) && r.a === "Working") return {result:"Dispatch", part:"Keyboard"};
@@ -2274,7 +2290,7 @@ function calculateRaw(){
     if(r.q.includes("Swap Smart Card") && r.a === "Working") return {result:"Dispatch", part:"Smart Card Reader"};
     if(r.q.includes("Swap SIM") && r.a === "Working") return {result:"Dispatch", part:"SIM Tray / WWAN Card"};
     if(r.q.includes("Swap Mouse") && r.a === "Working") return {result:"Dispatch", part:"Mouse Replacement"};
-    if((r.q.includes("Mouse test") || r.q.includes("Mouse works")) && (r.a === "Working" || r.a === "Yes")) return {result:"Dispatch", part:sym.defaultPart || "Touchpad / ClickPad"};
+    // A functioning mouse alone does not prove a failed Touchpad / ClickPad.
     if((r.q.includes("Headphone Test") || r.q.includes("Swap Headphone")) && r.a === "Working") return {result:"Dispatch", part:"Speaker"};
     if(r.q.includes("External Mic Test") && r.a === "Working") return {result:"Dispatch", part:"Microphone"};
     if(r.q.includes("Swap Bluetooth Device") && r.a === "Working") return {result:"Dispatch", part:"Bluetooth Device / WLAN Card"};
@@ -2315,14 +2331,23 @@ function suspectDecision(rec, ans){
   }
   // Never dispatch a default FRU solely because 80% of a checklist was completed.
   const hasPositivePartEvidence = ans.some(x => /^Failed(?:\b|:)|^Working$/i.test(x.a || "") && /diagnos|swap|test|external|replace/i.test(x.q || ""));
+  if(rec.result === "Dispatch" && rec.evidenceKey === "NO_POWER_ELIMINATION") return rec;
   if(rec.result === "Dispatch" && !hasPositivePartEvidence && rec.part && rec.part !== "-"){
     return {result:"Suspect",part:rec.part,recommendation:""};
   }
   return rec;
 }
+// v5.4.0: the context-based engine is authoritative for the visible Conclusion.
+// Legacy calculateRaw remains available for audit/comparison; never silently
+// fall back to it when model-specific evidence is insufficient.
 function calculate(){
   const ans = answers();
-  return sanitizeDecision(normalizeConclusion(suspectDecision(calculateRaw(),ans)));
+  if(!window.PDDecisionEngine) return {result:"Escalate L2",part:"-",evidenceReason:"Decision Engine failed to load"};
+  const sym = current() || {};
+  return sanitizeDecision(normalizeConclusion(window.PDDecisionEngine.evaluate({
+    model:getProductKey(), level:selectedLevel, symptom:selectedSymptom,
+    answers:ans, defaultPart:sym.defaultPart, defaultResult:sym.defaultResult
+  })));
 }
 
 function suggestion(){
@@ -2333,6 +2358,7 @@ function suggestion(){
 
 // v5.3.0: Explanation follows the actual decision and selected evidence; no AI/network required.
 function conclusionReason(rec, ans){
+  if(rec && rec.evidenceReason) return rec.evidenceReason;
   const get = label => selectedAnswer(ans, label);
   const result = rec.result || "Pending";
   const part = rec.part || "";
@@ -2354,6 +2380,7 @@ function conclusionReason(rec, ans){
   }
   if(result === "Dispatch" && selectedLevel === "boot" && selectedSymptom === "no_power"){
     if(part === "Mainboard"){
+      if(rec.evidenceKey === "NO_POWER_ELIMINATION") return "Power LED และ Charge LED ไม่ติด หลัง Emergency Reset, ทดสอบ Adapter ทดแทน และพอร์ต Type-C อีกช่องหนึ่งยังพบอาการเดิม จึงแนะนำเบิก Mainboard โดยยืนยัน Part/FRU ตามรุ่น และตรวจสอบ BitLocker Recovery Key ก่อนเปลี่ยน";
       if(get("Swap Other Type-C Port") === "Working") return "เครื่องทำงานผ่านพอร์ต Type-C อีกช่องหนึ่ง จึงสงสัยวงจรชาร์จของพอร์ตเดิม ต้องยืนยัน FRU ตามรุ่นก่อนเปลี่ยน Mainboard";
       return "Adapter เดิมใช้กับเครื่องอื่นได้ แต่เครื่องยังไม่เปิดหลัง Reset, เปลี่ยน Adapter และทดสอบพอร์ตอื่น จึงสงสัยวงจร Power ภายในเครื่อง ต้องยืนยัน FRU ตามรุ่นก่อน Dispatch";
     }
@@ -2385,7 +2412,7 @@ function renderConclusion(rec){
   }
   const heading = document.createElement("div");
   heading.className = "conclusion-result";
-  heading.textContent = "Result :" + (hasEvidence ? " " + resultText.trim() : "");
+  heading.textContent = "Result : " + resultText.trim();
   box.appendChild(heading);
 
   // Reason is available only from the info icon beside a populated Result.

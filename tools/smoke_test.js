@@ -190,6 +190,7 @@ assert(/Initialization attempt/.test(indexHtml), "Site-statistics retry/error re
 assert(/id="onlineDot" class="online-dot"/.test(indexHtml), "Realtime Online status dot is missing");
 assert(/id="searchClearBtn"/.test(indexHtml), "Search clear button is missing");
 assert(!/id="checklistProgressText"|id="checklistProgressBar"/.test(indexHtml), "Checklist progress must be removed");
+assert(!/id="generatePartBtn"/.test(indexHtml) && !/scoring_engine\.js/.test(indexHtml), "Generate Part must be removed from active UI");
 assert(/class="action-primary"/.test(indexHtml), "Generate Note primary action styling is missing");
 assert((indexHtml.match(/class="action-secondary"/g) || []).length === 5, "Email and Copy secondary action styling is missing");
 assert(/id="clearBtn" class="action-clear"/.test(indexHtml), "Clear outline action styling is missing");
@@ -203,7 +204,7 @@ assert(/labor_mapping\.js/.test(indexHtml), "Labor Mapping runtime script is mis
 assert(/id="referenceCategoryColumn"/.test(indexHtml) && /id="referenceCategories"/.test(indexHtml) && /id="referenceItemsColumn"/.test(indexHtml) && /id="referenceItems"/.test(indexHtml) && /id="referenceDetailBody"/.test(indexHtml), "Code/User Guide reference layout is missing");
 assert(!/id="referenceInfoTitle"/.test(indexHtml) && !/id="referenceMeta"/.test(indexHtml) && !/id="referenceInfoHint"/.test(indexHtml), "ERROR POST / GUIDE right-side reference panel must be removed");
 assert(!/id="referenceDetailHeading"/.test(indexHtml), "ERROR POST DETAIL / USER GUIDE DETAIL heading must be removed");
-assert(/Version 5\.3\.9/.test(indexHtml), "Visible version is not v5.3.9");
+assert(/Version 5\.4\.0/.test(indexHtml), "Visible version is not v5.4.0");
 assert(/id="tabBatteryHealth"/.test(indexHtml) && /id="batteryHealthView"/.test(indexHtml), "Battery Calculator module missing");
 assert(/id="batteryDesign"/.test(indexHtml) && /id="batteryFull"/.test(indexHtml) && /id="batteryEmailEn"/.test(indexHtml), "Battery calculator fields missing");
 assert(indexHtml.indexOf('id="batteryDesign"') < indexHtml.indexOf('id="batteryFull"'), "Design Capacity should precede Full Charge Capacity");
@@ -226,7 +227,7 @@ assert(/\.module-tab\{[\s\S]*?background:#f2f3f3;[\s\S]*?color:#4b5358;/.test(st
 assert(/\.module-tab\.active,[\s\S]*?background:#6f9eaf;[\s\S]*?color:#fff;/.test(styleCss), "Active module navigation should use the selected blue-gray style");
 assert(/\.module-icon\{display:inline-flex/.test(styleCss), "Module navigation icons should be visible");
 assert((indexHtml.match(/class="module-icon"/g) || []).length === 5, "All five module tabs should have icons");
-assert(/#generateBtn,[\s\S]*?#emailThBtn,[\s\S]*?#emailEnBtn\{min-height:34px/.test(styleCss), "Generate and email buttons should be enlarged");
+assert(/#generateBtn,[\s\S]*?#copyNoteBtn,[\s\S]*?#emailThBtn,[\s\S]*?#emailEnBtn,[\s\S]*?#clearBtn\{[\s\S]*?min-height:34px;/.test(styleCss), "All five Result actions must have equal heights and padding");
 assert(/\.reference-tree,\.reference-main\{/.test(styleCss) && /reference-tree/.test(indexHtml) && /reference-main/.test(indexHtml), "Locked Code/User Guide layout styling is missing");
 assert(/\.reference-view\.code-mode \.reference-tree,[\s\S]*?\.reference-view\.guide-mode \.reference-tree\{grid-template-columns:1fr\}/.test(styleCss), "Code/User Guide direct-list locked layout styling is missing");
 assert(/\.global-search-panel\{/.test(styleCss), "Global Search styling is missing");
@@ -237,7 +238,7 @@ assert(/\.labor-search-controls\{display:flex/.test(styleCss) && /\.labor-clear-
 assert(/#mainTitle\{font-size:10px;letter-spacing:\.25px\}/.test(styleCss), "Troubleshooting heading does not match Level 1 / Symptom scale");
 assert(/#note\{height:270px;min-height:240px;max-height:270px;resize:none\}/.test(styleCss), "Result / Email detail height should stay compact");
 
-const source = ["database.js", "data.js", "knowledge.js", "labor_mapping.js", "app.js"]
+const source = ["database.js", "data.js", "knowledge.js", "labor_mapping.js", "decision_engine.js", "app.js"]
   .map(filename => fs.readFileSync(path.join(root, "assets", "js", filename), "utf8"))
   .join("\n\n");
 
@@ -620,8 +621,126 @@ for(const [productKey, structureRows] of Object.entries(MODEL_STRUCTURE)){
   }
 }
 
+// Reproduce the reported ThinkPad > Boot > No Power conclusion exactly.
+document.getElementById("product").value = "thinkpad";
+selectedLevel = "boot";
+selectedSymptom = "no_power";
+renderAll();
+const noPowerEvidence = {
+  "Power LED":"No", "Charge LED":"No", "Emergency Reset":"Same Issue",
+  "Swap Other Type-C Port":"Same Issue", "Swap Adapter":"Same Issue",
+  "Any CID":"No", "Any Other Issue":"No"
+};
+getQuestions().forEach((q,i) => {
+  const value = noPowerEvidence[q.label];
+  if(value !== undefined) el("a"+i).value = value;
+});
+const noPowerDecision = calculate();
+assert(noPowerDecision.result === "Dispatch" && noPowerDecision.part === "Mainboard", "Complete No Power troubleshooting must dispatch Mainboard");
+renderConclusion(noPowerDecision);
+assert(descendants(el("recommendation")).some(n => String(n.textContent || "").includes("Bitlocker Reminder")), "Mainboard conclusion must warn about BitLocker");
+// Missing confirmation must not automatically dispatch a Mainboard.
+const noPowerPortIndex = getQuestions().findIndex(q => q.label === "Swap Other Type-C Port");
+assert(noPowerPortIndex >= 0, "No Power Type-C port step missing");
+el("a"+noPowerPortIndex).value = "-- Select --";
+assert(!(calculate().result === "Dispatch" && calculate().part === "Mainboard"), "Unconfirmed port test must not dispatch Mainboard");
+
+// No Power must conclude at Swap Adapter (Same Issue) even if both auxiliary rows remain empty.
+document.getElementById("product").value = "thinkpad";
+selectedLevel = "boot";
+selectedSymptom = "no_power";
+TROUBLESHOOTING_SESSION.clear();
+renderAll();
+const earlyPowerAnswers = {
+  "Power LED":"No", "Charge LED":"No", "Emergency Reset":"Same Issue",
+  "Swap Other Type-C Port":"Same Issue", "Swap Adapter":"Same Issue"
+};
+getQuestions().forEach((q,i) => { if(earlyPowerAnswers[q.label] !== undefined) el("a"+i).value = earlyPowerAnswers[q.label]; });
+let earlyPower = calculate();
+assert(earlyPower.result === "Dispatch" && earlyPower.part === "Mainboard", "No Power should dispatch Mainboard after Swap Adapter Same Issue with unanswered tails");
+renderConclusion(earlyPower);
+assert(descendants(el("recommendation")).some(n => String(n.textContent || "").includes("Bitlocker Reminder")), "Early Mainboard dispatch lost BitLocker reminder");
+for(const tailName of ["Any CID", "Any Other Issue"]){
+ const idx = getQuestions().findIndex(q => q.label === tailName);
+ assert(idx >= 0, "No Power missing auxiliary field " + tailName);
+ el("a"+idx).value = "No";
+ assert(calculate().part === "Mainboard", tailName + " No should not affect early Mainboard decision");
+ el("a"+idx).value = "-- Select --";
+}
+const cidIdx = getQuestions().findIndex(q => q.label === "Any CID");
+el("a"+cidIdx).value = "Yes";
+assert(calculate().result === "CID", "Explicit CID must override No Power dispatch");
+el("a"+cidIdx).value = "-- Select --";
+const swIdx = getQuestions().findIndex(q => q.label === "Swap Adapter");
+el("a"+swIdx).value = "-- Select --";
+assert(!(calculate().result === "Dispatch" && calculate().part === "Mainboard"), "No Power must not dispatch Mainboard before adapter swap test");
+el("a"+swIdx).value = "Same Issue";
+
+// Comprehensive runtime sweep: every product / level / symptom from the Excel-generated structure.
+let coveredSymptomCases = 0;
+let blankDispatches = [];
+let optionalOnlyDispatches = [];
+let crashedCases = [];
+let singleAnswerChecks = 0;
+let cidChecks = 0;
+for(const [productKey, structureRows] of Object.entries(MODEL_STRUCTURE)){
+  document.getElementById("product").value = productKey;
+  for(const structureRow of structureRows){
+    for(const symptomKey of structureRow.symptoms || []){
+      selectedLevel = structureRow.level;
+      selectedSymptom = symptomKey;
+      const slug = productKey + " > " + structureRow.level + " > " + symptomKey;
+      try{
+        TROUBLESHOOTING_SESSION.clear();
+        renderAll();
+        const allQuestions = getQuestions();
+        allQuestions.forEach((q, idx) => { const answer = el("a"+idx); if(answer) answer.selectedIndex = 0; });
+        const baseline = calculate();
+        if(baseline.result === "Dispatch") blankDispatches.push(slug + " -> " + baseline.part + " answers=" + JSON.stringify(answers().filter(x => x.a && x.a !== "-- Select --")));
+        const tails = ["Any CID", "Any Other Issue", "Other issue", "FRU P/N"];
+        const tailIndex = allQuestions.findIndex(q => tails.some(t => String(q.label).toLowerCase() === t.toLowerCase()));
+        if(tailIndex >= 0){
+          const select = el("a"+tailIndex);
+          if(select && select.options.some(o => o.value === "No")){
+            select.value = "No";
+            const optionalRec = calculate();
+            if(optionalRec.result === "Dispatch") optionalOnlyDispatches.push(slug + " -> " + optionalRec.part);
+          }
+        }
+        // Check every option of each checklist item in isolation (no stale answers).
+        for(let i=0; i<allQuestions.length; i++){
+          const answer = el("a"+i);
+          if(!answer || !answer.options) continue;
+          for(let opt=1; opt<answer.options.length; opt++){
+            if(answer.options[opt].value === "Not Test") continue;
+            answer.selectedIndex = opt;
+            const result = calculate();
+            assert(result && typeof result.result === "string", "Invalid result for " + slug + " / " + allQuestions[i].label);
+            if(result.result === "Dispatch") assert(result.part && result.part !== "-", "Dispatch without part in " + slug);
+            singleAnswerChecks++;
+            answer.selectedIndex = 0;
+          }
+          if(String(allQuestions[i].label).toLowerCase() === "any cid" && answer.options.some(o=>o.value === "Yes")){
+            answer.value = "Yes";
+            assert(calculate().result === "CID", "CID evidence ignored: " + slug);
+            cidChecks++;
+            answer.selectedIndex = 0;
+          }
+        }
+        coveredSymptomCases++;
+      }catch(e){crashedCases.push(slug + " : " + e.message);}
+    }
+  }
+}
+assert(crashedCases.length === 0,"Symptom sweep raised exceptions: "+crashedCases.slice(0,8).join(" | "));
+assert(blankDispatches.length === 0,"Dispatch with no answers: "+blankDispatches.slice(0,8).join(" | "));
+assert(optionalOnlyDispatches.length === 0,"Dispatch from auxiliary-only answers: "+optionalOnlyDispatches.slice(0,8).join(" | "));
+
 console.log(JSON.stringify({
   status: "PASS",
+  coveredSymptomCases,
+  singleAnswerChecks,
+  cidChecks,
   level1Count: document.getElementById("level1").children.length,
   defaultChecklistRows: noPowerRows.length,
   selectiveRelatedGuidePopup: true,
@@ -664,3 +783,8 @@ assert(/function batteryHealthEmailAbove50\(percentage\)/.test(source), "Origina
 assert(/function batteryHealthEmailAbove50EN\(percentage\)/.test(source), "English translation should accept live battery health");
 assert(/BATTERY CALCULATOR<\/span>/.test(indexHtml), "Battery menu label not renamed");
 assert(/openBatteryEmailPreview\("en"/.test(source), "English email preview missing");
+
+const css = fs.readFileSync(path.join(root,"assets","css","style.css"),"utf8");
+for(const id of ["generateBtn","copyNoteBtn","emailThBtn","emailEnBtn","clearBtn"]){
+  assert(css.includes(".action-buttons #"+id), "Result action size not aligned: "+id);
+}

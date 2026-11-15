@@ -1,4 +1,4 @@
-PD Guide Toolkit v5.3.9
+PD Guide Toolkit v5.4.0
 
 Online presence (v5.2.8):
 - Online counts unique browser/profile IDs, not tabs.
@@ -9,6 +9,16 @@ Online presence (v5.2.8):
 - Chrome + Edge count separately because they have different browser/profile IDs; multiple tabs in the same browser/profile still count as one Online user.
 
 Open index.html to start the Toolkit.
+
+DECISION ENGINE v5.4.0
+- assets/js/decision_engine.js is the active, evidence-based decision system.
+- Model family > Level/Symptom > actual Checklist answers determine Conclusions.
+- Legacy calculateRaw() remains in app.js as reference only; it does not produce visible conclusions.
+- Dispatch requires a specific confirmed test path; incomplete evidence gives Suspect/Pending instead of guessed parts.
+- Run: node tools/test_decision_engine.js && node tools/smoke_test.js
+- Read docs/audits/DECISION_ENGINE_AUDIT_V5_4_0.md for coverage and limits.
+- The Excel-generated source database still has historical 5.3.8 metadata; no workbook business data was edited.
+
 
 MASTER DATABASE
 PD_Guide_Database.xlsx is the sole source of truth for product-facing checklist data.
@@ -90,3 +100,9 @@ Run python tools/generate_database.py and python tools/validate_database.py befo
 Version 5.3.5
 
 Folder layout: see docs/FOLDER_STRUCTURE.md.
+
+Generate Part (v5.4.0 scoring addition): Click after entering checklist answers.
+Result: (NN%) Part Suspect displays an Evidence Score, NOT the chance of a part failure.
+Dispatch is restricted to existing affirmative decision rules and is subject to model/FRU verification.
+The reason icon displays supporting candidates and Next Actions. Editing a checklist answer resets the score.
+

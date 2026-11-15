@@ -1,0 +1,22 @@
+'use strict';
+const fs=require('fs'),vm=require('vm'),path=require('path'),assert=require('assert');
+const root=path.resolve(__dirname,'..');const sandbox={window:{}};vm.createContext(sandbox);
+for(const file of ['decision_engine.js','scoring_engine.js'])vm.runInContext(fs.readFileSync(path.join(root,'assets/js',file),'utf8'),sandbox);
+const e=sandbox.window.PDPartScoring.evaluate;
+const run=(level,symptom,pairs,model='thinkpad')=>e({model,level,symptom,answers:Object.entries(pairs).map(([q,a])=>({q,a})),defaultPart:'-'});
+const power=run('boot','no_power',{'Power LED':'No','Charge LED':'No','Emergency Reset':'Same Issue','Swap Other Type-C Port':'Same Issue','Swap Adapter':'Same Issue'});
+assert.strictEqual(power.result,'Dispatch');assert.strictEqual(power.part,'Mainboard');assert.strictEqual(power.score,80);
+const powerCid=run('boot','no_power',{'Power LED':'No','Charge LED':'No','Emergency Reset':'Same Issue','Swap Other Type-C Port':'Same Issue','Swap Adapter':'Same Issue','Any CID':'Yes'});
+assert.strictEqual(powerCid.result,'CID');assert.strictEqual(powerCid.score,null);
+const wifi=run('network','wifi',{'WLAN Status Check':'On','Airplane Mode Check':'Off','Hotspot Test':'Same Issue','Port LAN Test':'Working','WLAN Driver Update':'Same Issue','Check BIOS Settings':'Enabled'});
+assert.strictEqual(wifi.result,'Suspect');assert.strictEqual(wifi.part,'WLAN Card');assert.ok(wifi.score<90);
+const both=run('network','wifi',{'Hotspot Test':'Same Issue','Port LAN Test':'Same Issue','Check BIOS Settings':'Not Test'});
+assert.notStrictEqual(both.result,'Dispatch');assert.ok(both.nextActions.length);
+const keyboard=run('keyboard','few_key_not_work',{'Specific Keys Listed':'U,J,K,S','External Keyboard Test':'Same Issue','Any CID':'No'});
+assert.strictEqual(keyboard.part,'Windows / Driver');
+const unknown=run('foo','unknown_symptom',{'Test X':'Same Issue'});
+assert.strictEqual(unknown.result,'Pending');assert.strictEqual(unknown.score,null);
+const empty=run('network','wifi',{'Hotspot Test':'-- Select --'});
+assert.strictEqual(empty.score,null);
+assert.strictEqual(run('network','wifi',{'WLAN Driver Update':'Working'}).result,'Suspect'); // A driver action alone is not proven resolution
+console.log(JSON.stringify({status:'PASS',scenarios:8}));

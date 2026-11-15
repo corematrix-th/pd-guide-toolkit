@@ -203,3 +203,14 @@
 
 ### v5.3.8 dark gray refinement
 - Neutral charcoal dark theme, larger theme toggle glyph, improved completed checklist focus/hover contrast. Light mode and logic unchanged.
+
+### v5.3.9 (UI/No Power refinement; version retained)
+- Align Generate Note, Copy, Email TH, Email EN, Clear action button heights, padding, font and icon sizes.
+- ThinkPad/IdeaPad Boot > No Power: when both LEDs are No, Emergency Reset, Swap Other Type-C Port and Swap Adapter all return Same Issue, and Any CID/Any Other Issue are No, recommend Dispatch Mainboard with BitLocker Recovery Key reminder. Do not infer Mainboard if required evidence is unanswered.
+- Added regression coverage for the above scenario.
+
+### v5.3.9 — logic audit / No Power early result (same version)
+- All-product/symptom regression sweep and findings: `docs/audits/LOGIC_AUDIT_V5_3_9.md`.
+- No Power Mainboard rule no longer waits for Any CID / Any Other Issue.
+- Safer CID precedence and removal of ambiguous generic one-step dispatch fallbacks.
+- RESULT / EMAIL text increased to 12px without resizing its panel.

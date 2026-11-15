@@ -270,6 +270,8 @@ button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9
 
 textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace;font-size:11px}
 #note{height:270px;min-height:240px;max-height:270px;resize:none}
+/* Slightly larger text in RESULT / EMAIL only; retain existing panel dimensions. */
+#note{font-size:12px;line-height:1.45}
 .detail-box{height:72px;margin-top:6px;padding:6px;font-family:Arial,sans-serif;font-size:10px}
 .manual{padding:10px;border:1px solid var(--border);border-radius:6px;background:#fafafa;line-height:1.6;white-space:pre-wrap}
 .error-description{margin-bottom:7px;padding:6px 8px;border:1px solid #ffe0a3;border-radius:6px;background:#fff8e8;color:#805000;font-size:11px;line-height:1.45}
@@ -809,13 +811,25 @@ body > .conclusion-reason-overlay.hidden {display:none;}
 /* Align the calculator glyph with the Battery Health label baseline. */
 .check-guide-info.battery-calculator-icon{position:relative;top:-2px;line-height:1;vertical-align:middle;}
 
-/* v5.3.7 — Make primary Note/Email actions easier to read and click. */
+/* v5.3.9 — All five Result / Email actions share Generate Note dimensions. */
 .action-buttons #generateBtn,
+.action-buttons #copyNoteBtn,
 .action-buttons #emailThBtn,
-.action-buttons #emailEnBtn{min-height:34px;padding:8px 12px;gap:7px;font-size:12px}
+.action-buttons #emailEnBtn,
+.action-buttons #clearBtn{
+  min-height:34px;
+  padding:8px 12px;
+  gap:7px;
+  font-size:12px;
+  line-height:17px;
+  align-items:center;
+  justify-content:center;
+}
 .action-buttons #generateBtn svg,
+.action-buttons #copyNoteBtn svg,
 .action-buttons #emailThBtn svg,
-.action-buttons #emailEnBtn svg{width:15px;height:15px}
+.action-buttons #emailEnBtn svg,
+.action-buttons #clearBtn svg{width:15px;height:15px}
 
 /* v5.3.8 — Theme-only enhancement. No existing spacing or layout dimensions changed. */
 .module-nav .theme-toggle{
@@ -1022,3 +1036,29 @@ html[data-theme="dark"] #batteryHealthView.battery-health-view{background:var(--
 html[data-theme="dark"] #batteryHealthView .battery-main-modal{background:transparent;border:0;color:var(--text)}
 html[data-theme="dark"] #batteryHealthView .battery-main-fields input{background:var(--surface-soft);color:var(--text);border-color:var(--border)}
 html[data-theme="dark"] #batteryHealthView .battery-main-result{background:var(--surface-soft);color:var(--text)}
+
+/* Battery Email preview: show more customer-facing text without changing page layout.
+   Dialog stays within the viewport; only the email field scrolls when needed. */
+.battery-email-modal{display:flex;flex-direction:column;box-sizing:border-box;max-height:calc(100dvh - 36px);}
+.battery-email-modal .battery-calc-title{flex:0 0 auto;}
+.battery-email-modal .battery-calc-email{flex:1 1 auto;height:480px;min-height:180px;max-height:calc(100dvh - 175px);overflow-y:auto;}
+.battery-email-modal .battery-calc-actions{flex:0 0 auto;}
+@media (max-height:600px){.battery-email-modal .battery-calc-email{height:calc(100dvh - 175px);min-height:100px;}}
+
+
+/* v5.4.0: Five conclusion actions on one desktop row.
+   Keep Generate Note dominant; slightly tighten the other four controls. */
+@media (min-width:761px){
+  #troubleshootingView .action-buttons{display:flex;flex-wrap:nowrap;gap:5px;min-width:0;}
+  #troubleshootingView .action-buttons #generateBtn{flex:0 0 auto;}
+  #troubleshootingView .action-buttons #copyNoteBtn,
+  #troubleshootingView .action-buttons #emailThBtn,
+  #troubleshootingView .action-buttons #emailEnBtn,
+  #troubleshootingView .action-buttons #clearBtn{
+    flex:0 1 auto;min-width:0;min-height:32px;padding:6px 7px;gap:4px;font-size:11px;line-height:17px;white-space:nowrap;
+  }
+  #troubleshootingView .action-buttons #copyNoteBtn svg,
+  #troubleshootingView .action-buttons #emailThBtn svg,
+  #troubleshootingView .action-buttons #emailEnBtn svg,
+  #troubleshootingView .action-buttons #clearBtn svg{width:13px;height:13px;}
+}
