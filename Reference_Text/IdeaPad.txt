@@ -1,4 +1,4 @@
-GLOBAL MAPPING SOURCE (v5.2.9)
+GLOBAL MAPPING SOURCE (v5.3.8)
 - Generated from PD_Guide_Database.xlsx and Toolkit-owned knowledge structure.
 - Do not edit the hierarchy in this file manually; run generate_database.py instead.
 - After changing Excel or Toolkit-owned knowledge, run generate_database.py and validate_database.py in the same release.
@@ -10,6 +10,7 @@ IdeaPad
 Boot
 ├── No Power
 ├── Power on No Display
+├── Power on No Display + Beep Sound
 ├── Boot Loop
 ├── Stuck Lenovo Logo
 ├── Stuck Automatic Repair
@@ -128,7 +129,7 @@ Troubleshooting Guide
 ├── Lenovo Vantage Update
 ├── Lenovo Diagnostics
 ├── Battery Report
-├── Battery Health
+├── Battery Status
 ├── BIOS Version
 ├── Windows Product Key
 ├── Windows Activation
@@ -159,7 +160,7 @@ Troubleshooting Guide
 === GENERATED STRUCTURE SOURCE ===
 PD_Guide_Database.xlsx is the source of truth for product-facing structure and checklist data.
 Toolkit-owned BIOS, Code, Troubleshooting Guide content, Generate Note, and Dispatch logic remain in JavaScript/Markdown.
-Structure version: v5.2.9
+Structure version: v5.3.8
 
-[v5.2.9 MODEL SCOPE NOTE]
+[v5.3.8 MODEL SCOPE NOTE]
 Notebook-family variant. Keep only genuine IdeaPad-specific hardware differences.

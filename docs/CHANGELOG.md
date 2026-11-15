@@ -1,3 +1,31 @@
+- v5.3.9 (Battery Calculator inline follow-up): Main Battery Calculator restored as an in-page tab rather than a popup. Email TH/EN remain popup previews; Thai normal-health email restored from supplied service wording, with calculated or blank battery-health percentage. Kept realtime capacity calculation, Clear and checklist popup unchanged.
+- v5.3.9 (Battery Calculator refinement): renamed menu; opened standalone calculator as compact modal; removed Calculate button; added always-available TH/EN email previews and Copy; preserved live calculation, Clear and checklist Use Result.
+## v5.3.9
+- Added standalone Battery Health Calculator tab (Full Charge / Design Capacity × 100).
+- Increased Light Theme completed-checklist row contrast.
+- Preserved prior module logic and Dark Theme.
+
+## v5.3.5 — Conclusion, Email TH, Guide and Navigation
+- Result displays an inline ⓘ info button to reveal Reason on demand; no visible Reason row.
+- Mainboard / SSD reminders use concise Thai single-line messages and appear persistently when applicable.
+- Email TH strips gendered polite particles; Email EN and clipboard font behavior are unchanged.
+- Level 1 / Symptom labels increased to 12px; Checklist unchanged.
+- Guide return-request sections removed from source Markdown and generated knowledge content.
+- Guide and Error Post detail text increased to 12px; Guide moved to second tab, Error Post to third.
+- Decision logic unchanged.
+
+## v5.3.2
+- Compact inline Reason (12px), expand/collapse, smaller Result/Email panel.
+- First-character autocomplete in global search and Labor Mapping, up to 5 suggestions.
+- No changes to decision logic or Excel database.
+
+## v5.3.0
+
+- One-line Result conclusion and Thai Reason.
+- Improved No Power adapter/Mainboard evidence logic and label matching.
+- Desktop 90% UI scale retained.
+- See docs/releases/V5_3_0_RELEASE.md for limitations and verification.
+
 ## v5.2.9 — Desktop Monitor Flickering Correction
 
 - Corrected `Desktop > Monitor > Flickering` so it no longer uses notebook-only steps (`Move LCD Lid`, `External Monitor Test`).
@@ -162,3 +190,16 @@
 - Standardized DD003 as `No, Yes, Not Test` / `No|Yes|Not Test`.
 - Updated all Thinkpad, Ideapad, Desktop, Tiny, and AIO references.
 - Synchronized `database.js`; removed `Not sure` and reversed Yes/No variants.
+
+## v5.3.7
+- Added outline icons to all four module tabs and slightly increased tab sizes.
+- Enlarged Generate Note, Email TH, and Email EN buttons; unchanged business logic.
+- Updated runtime version metadata to v5.3.7.
+
+## v5.3.8
+- Added accessible light/dark theme icon toggle on the right side of existing module nav.
+- Kept legacy light UI styles; dark palette added only under html[data-theme="dark"].
+- Saved theme choice locally where browser storage is permitted; unchanged business logic.
+
+### v5.3.8 dark gray refinement
+- Neutral charcoal dark theme, larger theme toggle glyph, improved completed checklist focus/hover contrast. Light mode and logic unchanged.

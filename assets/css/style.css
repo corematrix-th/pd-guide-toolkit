@@ -1,0 +1,1024 @@
+:root{
+  --bg:#f4f6f8;
+  --surface:#fff;
+  --surface-soft:#f7f9fb;
+  --border:#d9e1ea;
+  --border-soft:#e8edf3;
+  --text:#111;
+  --muted:#667085;
+  --primary:#d71920;
+  --primary-hover:#bd141b;
+  --secondary:#356b8f;
+  --secondary-hover:#2b5b7a;
+  --selection:#e8f2ff;
+  --selection-border:#7cb2ea;
+  --complete:#f4faf6;
+  --success:#24a148;
+  --shadow:0 1px 2px rgba(16,24,40,.04);
+  --radius:8px;
+  --transition:140ms ease;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  font-size:11px;
+}
+
+.app{max-width:1250px;margin:0 auto;padding:10px}
+.topbar,
+.controlbar,
+.col,
+.left,
+.right{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  padding:10px 12px;
+  margin-bottom:8px;
+}
+.title{font-size:17px;font-weight:700;line-height:1.15}
+.byline{font-size:12px;color:#666;margin-top:2px}
+
+.site-stats{font-size:10px;color:#666;letter-spacing:.1px}
+.site-stats span{font-weight:600;color:#555}
+.topbar-stats{
+  align-self:flex-start;
+  margin-top:2px;
+  padding:2px 4px;
+  text-align:right;
+  white-space:nowrap;
+}
+.stat-separator{padding:0 2px;color:#a3acb7}
+.online-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin:0 4px 1px 0;
+  border-radius:50%;
+  background:#b7c0ca;
+  box-shadow:0 0 0 2px rgba(183,192,202,.14);
+  vertical-align:middle;
+  transition:background var(--transition),box-shadow var(--transition);
+}
+.online-dot.is-online{
+  background:var(--success);
+  box-shadow:0 0 0 2px rgba(36,161,72,.15);
+}
+
+.controlbar{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
+  padding:9px;
+  margin-bottom:8px;
+}
+.field{width:420px}
+.field.small{width:160px}
+.field label{display:block;margin-bottom:4px;font-size:10px;font-weight:700;color:#333}
+select,input,textarea{
+  border:1px solid #cfd8e3;
+  background:#fff;
+  color:var(--text);
+  font-size:11px;
+  transition:border-color var(--transition),box-shadow var(--transition),background var(--transition);
+}
+select,input{width:100%;padding:5px 7px;border-radius:5px}
+select:focus,input:focus,textarea:focus{
+  outline:0;
+  border-color:#8ab7e6;
+  box-shadow:0 0 0 2px rgba(47,111,176,.10);
+}
+
+.search-wrap{position:relative}
+.search-wrap input{padding-left:28px;padding-right:28px}
+.search-icon{
+  position:absolute;
+  left:8px;
+  top:50%;
+  width:14px;
+  height:14px;
+  color:#7a8593;
+  pointer-events:none;
+  transform:translateY(-50%);
+}
+.search-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.search-clear{
+  position:absolute;
+  right:4px;
+  top:50%;
+  width:22px;
+  height:22px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+  color:#6b7280;
+  font-size:16px;
+  font-weight:400;
+  line-height:22px;
+  transform:translateY(-50%);
+}
+.search-clear:hover{background:#eef2f6;color:#222;transform:translateY(-50%)}
+.search-clear:active{transform:translateY(-50%) scale(.94)}
+
+button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-height:28px;
+  margin-top:7px;
+  padding:6px 11px;
+  border:1px solid transparent;
+  border-radius:5px;
+  background:#667085;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background var(--transition),border-color var(--transition),color var(--transition),box-shadow var(--transition),transform var(--transition);
+}
+button:hover{transform:translateY(-1px);box-shadow:0 2px 5px rgba(16,24,40,.10)}
+button:active{transform:translateY(0) scale(.98);box-shadow:none}
+button:focus-visible{outline:2px solid rgba(47,111,176,.35);outline-offset:2px}
+button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+
+.buttons{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:7px}
+.action-primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.action-primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+.action-secondary{background:#f2f7fb;border-color:#a8c2d5;color:#285d80}
+.action-secondary:hover{background:#e8f2f8;border-color:#84abc4;color:#214f6d}
+.action-clear,.clear{background:#fff;border-color:#c8d0d9;color:#5f6875}
+.action-clear:hover,.clear:hover{background:#f4f6f8;border-color:#aeb8c4;color:#333}
+.compact-action{height:27px;min-height:27px;margin-top:0;padding:4px 9px}
+
+.action-buttons{gap:6px;margin-top:6px}
+.action-buttons button{min-height:26px;margin-top:0;padding:5px 9px;gap:5px;font-size:10px;border-radius:5px}
+.action-buttons button svg{width:13px;height:13px}
+
+.tree{display:grid;grid-template-columns:280px 1fr;gap:7px;margin-bottom:8px}
+.col{height:250px;overflow:auto}
+.col-title,
+.section-title{
+  color:#3b4654;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.25px;
+}
+.col-title{
+  position:sticky;
+  top:0;
+  z-index:2;
+  padding:6px 8px;
+  border-bottom:1px solid var(--border);
+  background:#f5f7fa;
+}
+.item{
+  position:relative;
+  padding:6px 9px;
+  border-bottom:1px solid #edf1f5;
+  cursor:pointer;
+  font-size:11px;
+  transition:background var(--transition),color var(--transition),box-shadow var(--transition),padding var(--transition);
+}
+.item:hover{background:#f0f6fc}
+.item:active{background:#e8f2fb}
+.item.active{
+  padding-left:11px;
+  background:var(--selection);
+  color:#164f7d;
+  font-weight:700;
+  box-shadow:inset 3px 0 0 #4f8fca;
+}
+.search-result:hover{padding-left:11px}
+
+.main{display:grid;grid-template-columns:1.35fr .75fr;gap:8px}
+.left,.right{min-height:430px;padding:10px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.section-title{margin-bottom:7px}
+.section-heading .section-title{margin-bottom:0}
+#mainTitle{font-size:10px;letter-spacing:.25px}
+.current-selection{
+  margin-bottom:4px;
+  padding:3px 6px;
+  border:1px solid #cfe3ff;
+  border-radius:5px;
+  background:#eef6ff;
+  font-size:10px;
+  line-height:1.25;
+}
+
+.progress-text{color:#6b7280;font-size:9px;font-weight:600;white-space:nowrap}
+.progress-track{height:3px;margin:0 0 4px;border-radius:999px;background:#e9eef4;overflow:hidden}
+.progress-bar{width:0;height:100%;border-radius:inherit;background:#4f8fca;transition:width 180ms ease}
+
+.check-row{
+  display:grid;
+  grid-template-columns:240px 160px 1fr;
+  gap:6px;
+  align-items:center;
+  margin:0 -4px;
+  padding:3px 4px;
+  border-bottom:1px solid #edf1f5;
+  border-radius:4px;
+  transition:background var(--transition),box-shadow var(--transition);
+}
+.check-row:hover{background:#fafbfd}
+.check-row:focus-within{
+  background:#f0f6fc;
+  box-shadow:inset 3px 0 0 var(--selection-border);
+}
+.check-row.is-complete{background:var(--complete)}
+.check-row.is-complete:focus-within{background:#edf7f1}
+.check-label{font-size:11px;font-weight:600}
+.check-row select{width:155px;height:26px;padding:2px 6px;font-size:11px}
+.check-row input{width:100%;height:26px;padding:3px 6px;font-size:11px}
+
+.recommendation,
+.recommendation-dispatch,
+.recommendation.rec-fop,
+.recommendation.rec-adapter,
+.recommendation.rec-lcd,
+.recommendation.rec-l2,
+.recommendation.rec-mainboard{
+  min-height:42px;
+  margin-bottom:8px;
+  padding:8px 10px;
+  border:1px solid #f0cccc;
+  border-radius:6px;
+  background:#fff8f8;
+  color:#d60000;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.45;
+}
+.recommendation *{color:#d60000;font-size:12px}
+.suggestion{margin-bottom:9px;padding:8px;border:1px solid #ffe0a3;border-radius:6px;background:#fff8e8;color:#805000;line-height:1.45}
+
+textarea{width:100%;padding:7px;border-radius:5px;font-family:Consolas,monospace;font-size:11px}
+#note{height:270px;min-height:240px;max-height:270px;resize:none}
+.detail-box{height:72px;margin-top:6px;padding:6px;font-family:Arial,sans-serif;font-size:10px}
+.manual{padding:10px;border:1px solid var(--border);border-radius:6px;background:#fafafa;line-height:1.6;white-space:pre-wrap}
+.error-description{margin-bottom:7px;padding:6px 8px;border:1px solid #ffe0a3;border-radius:6px;background:#fff8e8;color:#805000;font-size:11px;line-height:1.45}
+
+/* v5.2.7 — selective Related Guide icon beside the checklist label. */
+.check-guide-info{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:4px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#4f7fa8;
+  font-size:14px;
+  font-weight:700;
+  line-height:1;
+  vertical-align:-1px;
+  cursor:pointer;
+  transition:color var(--transition),transform var(--transition),background var(--transition);
+}
+.check-guide-info:hover{color:#245f91;transform:scale(1.08)}
+.check-guide-info:focus-visible{outline:2px solid #9cc4e4;outline-offset:2px;border-radius:50%}
+#relatedGuide,#rightRelatedGuide,.right-related{display:none}
+
+.empty-state{color:#8a94a3;text-align:center}
+.list-empty{padding:26px 14px;font-size:11px}
+.checklist-empty{margin-top:8px;padding:44px 18px;border:1px dashed #d7dee7;border-radius:6px;background:#fafbfd;font-size:11px}
+
+.version{margin-top:6px;color:#777;font-size:10px;text-align:right}
+.hidden{display:none}
+
+.modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35)}
+.modal.hidden{display:none}
+.modal-content{width:min(720px,92vw);max-height:85vh;border:1px solid var(--border);border-radius:8px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.25);overflow:hidden}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border);background:#f1f4f8}
+.modal-title{font-size:14px;font-weight:700}
+.modal-close{margin:0;background:#667085;border-color:#667085}
+.modal-close:hover{background:#525c69;border-color:#525c69}
+.modal-body{max-height:70vh;padding:12px;font-family:Arial,sans-serif;font-size:12px;line-height:1.6;white-space:pre-wrap;overflow:auto}
+
+@media(max-width:900px){
+  .tree,.main{grid-template-columns:1fr}
+  .controlbar,.topbar{flex-wrap:wrap}
+  .field,.field.small{width:100%}
+  .check-row{grid-template-columns:1fr}
+  .check-row select{width:100%}
+  .topbar-stats{width:100%;text-align:left}
+  .section-heading{align-items:flex-start;flex-direction:column;gap:3px}
+}
+
+/* v5.2.7 — Locked module UI, Global Search, Labor Mapping, and selective guide popups */
+.module-nav{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:6px;
+  margin:0 0 8px;
+  padding:5px 7px;
+  border:1px solid #d7e2ec;
+  border-radius:6px;
+  background:#f8fafc;
+  box-shadow:var(--shadow);
+}
+.module-tab{
+  flex:0 0 auto;
+  min-width:0;
+  min-height:34px;
+  margin:0;
+  padding:7px 13px;
+  border:1px solid #cfd4d7;
+  border-radius:3px;
+  background:#f2f3f3;
+  color:#4b5358;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.18px;
+  text-shadow:none;
+  box-shadow:0 1px 2px rgba(16,24,40,.06);
+  cursor:pointer;
+  transition:color var(--transition),background var(--transition),border-color var(--transition),box-shadow var(--transition),transform var(--transition);
+}
+.module-tab:hover{
+  border-color:#aeb9be;
+  background:#e7ebed;
+  color:#374047;
+  box-shadow:0 1px 3px rgba(16,24,40,.09);
+}
+.module-tab.active,
+.module-tab.active:hover{
+  border-color:#5f8998;
+  background:#6f9eaf;
+  color:#fff;
+  box-shadow:0 1px 3px rgba(45,72,84,.2);
+}
+.module-tab:focus-visible{
+  outline:1px solid #94c9e8;
+  outline-offset:1px;
+}
+.module-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 15px}
+.module-icon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.module-tab{gap:7px}
+.module-label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  line-height:1;
+  white-space:nowrap;
+  font-weight:700;
+}
+
+.global-search-panel{
+  min-height:688px;
+  margin-bottom:8px;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.global-search-heading{
+  padding:2px 3px 8px;
+  border-bottom:1px solid var(--border);
+  color:#3b4654;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+.global-search-list{max-height:630px;overflow:auto}
+.global-search-result{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:7px 6px;
+  border-bottom:1px solid #edf1f5;
+  border-radius:4px;
+  cursor:pointer;
+  transition:background var(--transition),transform var(--transition);
+}
+.global-search-result:hover{background:#f0f6fc}
+.global-search-result:active{transform:scale(.997)}
+.search-badge{
+  min-width:42px;
+  padding:3px 5px;
+  border:1px solid #cfd8e3;
+  border-radius:4px;
+  background:#f5f7fa;
+  color:#5d6875;
+  font-size:8px;
+  font-weight:700;
+  text-align:center;
+}
+.badge-ts{border-color:#b9d5eb;background:#eef6fc;color:#2b668f}
+.badge-code{border-color:#d7c5ea;background:#f7f1fc;color:#704b91}
+.badge-guide{border-color:#bfdcc9;background:#f0f8f3;color:#39714b}
+.global-search-result-text{min-width:0}
+.global-search-result-title{font-size:11px;font-weight:700;color:#2e3742}
+.global-search-result-subtitle{margin-top:1px;color:#7a8593;font-size:9px}
+.global-search-empty{padding:70px 20px;font-size:11px}
+
+
+/* v5.2.5 — Error Post and Guide use direct full-width lists; detail stays in the locked lower panels. */
+.reference-view.code-mode .reference-tree,
+.reference-view.guide-mode .reference-tree{grid-template-columns:1fr}
+.reference-view.code-mode #referenceItemsColumn,
+.reference-view.guide-mode #referenceItemsColumn{grid-column:1 / -1}
+.reference-view.code-mode #referenceItems,
+.reference-view.guide-mode #referenceItems{display:block}
+.reference-view.code-mode .reference-item,
+.reference-view.guide-mode .reference-item{padding-top:6px;padding-bottom:6px}
+.reference-view.code-mode .reference-detail-title,
+.reference-view.guide-mode .reference-detail-title{font-size:12px}
+.reference-view.code-mode .reference-meta-row,
+.reference-view.guide-mode .reference-meta-row{grid-template-columns:76px 1fr}
+
+/* Code and User Guide intentionally reuse the same tree/main geometry as Troubleshooting. */
+.reference-tree,.reference-main{width:100%}
+.reference-main{grid-template-columns:1fr}
+.reference-detail-panel,.reference-info-panel{height:430px;min-height:430px}
+.reference-detail-panel{display:flex;min-width:0;flex-direction:column;overflow:hidden}
+.reference-current-selection{flex:0 0 auto}
+.reference-detail-title{
+  flex:0 0 auto;
+  margin:5px 0 7px;
+  padding:0 0 7px;
+  border-bottom:1px solid var(--border);
+  color:#2f3b48;
+  font-size:12px;
+  font-weight:700;
+  line-height:1.35;
+}
+.reference-detail-body{
+  min-height:0;
+  padding:2px 3px 4px 0;
+  color:#343d48;
+  font-size:11px;
+  line-height:1.55;
+  overflow:auto;
+  flex:1 1 auto;
+}
+.reference-detail-empty{padding-top:74px;text-align:center}
+.reference-detail-section{margin-bottom:14px}
+.reference-detail-heading{
+  margin-bottom:4px;
+  color:#546171;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+.reference-detail-text{white-space:pre-wrap}
+.reference-bullets{margin:4px 0 0;padding-left:18px}
+.reference-bullets li{margin:3px 0}
+.guide-content{white-space:pre-wrap}
+.reference-category,.reference-item{font-size:11px}
+.reference-info-panel{display:flex;flex-direction:column}
+.reference-meta{
+  margin-top:1px;
+  border:1px solid var(--border-soft);
+  border-radius:6px;
+  background:#fafbfd;
+  overflow:hidden;
+}
+.reference-meta-row{
+  display:grid;
+  grid-template-columns:76px 1fr;
+  gap:8px;
+  padding:7px 8px;
+  border-bottom:1px solid var(--border-soft);
+  align-items:start;
+}
+.reference-meta-row:last-child{border-bottom:0}
+.reference-meta-row span{color:#7a8593;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.2px}
+.reference-meta-row strong{min-width:0;color:#35404d;font-size:10px;line-height:1.35;overflow-wrap:anywhere}
+.reference-info-hint{
+  margin-top:8px;
+  padding:8px;
+  border:1px dashed #d7dee7;
+  border-radius:6px;
+  background:#fafbfd;
+  color:#8a94a3;
+  font-size:10px;
+  line-height:1.45;
+}
+.reference-version{margin-top:auto;padding-top:6px;border-top:1px solid #edf1f5;text-align:right}
+
+@media(max-width:900px){
+  .module-nav{overflow-x:auto}
+  .module-tab{min-width:0;white-space:nowrap}
+  .reference-detail-panel,.reference-info-panel{height:auto;min-height:420px}
+}
+
+
+
+/* v5.2.5 — Labor Mapping uses an independent Province / Postal Code lookup. */
+.labor-mapping-view{
+  position:relative;
+  min-height:560px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+.labor-search-card{
+  padding:10px 12px;
+  border:1px solid #d9e3eb;
+  border-radius:6px;
+  background:#f8fafc;
+}
+.labor-search-topline{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+}
+.labor-title{margin:0}
+.labor-source-note{color:#7a8593;font-size:10px}
+.labor-search-field{max-width:760px}
+.labor-search-field label{display:block;margin-bottom:4px;color:#55606d;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2px}
+.labor-search-controls{display:flex;align-items:center;gap:8px}
+.labor-search-controls .search-wrap{flex:1;min-width:0}
+.labor-search-wrap input{padding-right:7px}
+.labor-clear-btn{flex:0 0 auto}
+.labor-clear-btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.labor-result-summary{margin:10px 1px 6px;color:#586675;font-size:10px;font-weight:700;letter-spacing:.15px}
+.labor-results{display:grid;gap:8px;max-height:520px;overflow:auto;padding-right:2px}
+.labor-empty-state{
+  padding:76px 20px;
+  border:1px dashed #d7e0e8;
+  border-radius:6px;
+  background:#fbfcfd;
+  color:#9099a4;
+  font-size:11px;
+  text-align:center;
+}
+.labor-result-card{overflow:hidden;border:1px solid #d8e1e8;border-radius:6px;background:#fff}
+.labor-result-location{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 10px;
+  border-bottom:1px solid #dfe6ec;
+  background:#f3f7fa;
+}
+.labor-result-location strong{color:#344352;font-size:12px}
+.labor-result-location span{color:#6f7c89;font-size:10px;font-weight:600}
+.labor-table-wrap{overflow-x:auto}
+.labor-compare-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.labor-compare-table th,.labor-compare-table td{padding:8px 10px;border-right:1px solid #e2e8ed;border-bottom:1px solid #e5eaee;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.labor-compare-table tr:last-child th,.labor-compare-table tr:last-child td{border-bottom:0}
+.labor-compare-table th:last-child,.labor-compare-table td:last-child{border-right:0}
+.labor-compare-table thead th{background:#eaf1f5;color:#465664;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.15px}
+.labor-compare-table tbody th{background:#fafbfc;color:#56636f;font-size:11px;font-weight:700}
+.labor-compare-table tbody td{color:#37424d;font-size:11px}
+.labor-compare-table .labor-id{font-weight:800;letter-spacing:.15px}
+.labor-unified-table thead th:nth-child(1){width:14%}
+.labor-unified-table thead th:nth-child(2){width:16%}
+.labor-unified-table thead th:nth-child(3){width:18%}
+.labor-unified-table thead th:nth-child(4){width:20%}
+.labor-unified-table thead th:nth-child(5){width:32%}
+.labor-postal-cell{vertical-align:middle;background:#f4f7f9;color:#43515e}
+.labor-province-cell{vertical-align:middle;background:#fbfcfd;color:#43515e;font-weight:700}
+.labor-support-type{white-space:nowrap}
+
+/* v5.2.5 — group the two support rows for each Postal Code and alternate
+   a very light background between adjacent Postal Code ranges. */
+.labor-compare-table tbody tr.labor-postal-base > th,
+.labor-compare-table tbody tr.labor-postal-base > td{background:#fff}
+.labor-compare-table tbody tr.labor-postal-alt > th,
+.labor-compare-table tbody tr.labor-postal-alt > td{background:#f3f5f7}
+.labor-version{margin-top:8px;text-align:right}
+@media(max-width:900px){
+  .labor-mapping-view{min-height:480px}
+  .labor-search-topline,.labor-result-location{align-items:flex-start;flex-direction:column;gap:3px}
+  .labor-search-controls{align-items:stretch}
+  .labor-compare-table{min-width:820px}
+}
+
+/* v5.2.8 — navigation-safe checklist state and dialog polish */
+.modal-content:focus-within{outline:2px solid rgba(74,124,150,.22);outline-offset:2px}
+@media (max-width:760px){.action-buttons{flex-wrap:wrap}.action-buttons button{flex:1 1 calc(50% - 6px)}}
+
+/* v5.2.9 compact desktop layout: approximately 90% of the original UI.
+   Keep mobile/tablet at native scale for touch accessibility. */
+@media (min-width: 901px) {
+  html { zoom: 0.95; }
+}
+
+/* v5.3.0 concise conclusion with Thai explanation */
+.recommendation{position:relative;padding:10px 12px}
+.conclusion-result{font-size:13px;font-weight:800;line-height:1.5;padding-right:125px}
+.conclusion-reason-label{font-size:11px;font-weight:700;margin-top:6px}
+.conclusion-reason{font-size:10px;font-weight:400;line-height:1.6;max-width:95%}
+.conclusion-verification{position:absolute;top:8px;right:10px;font-size:10px;font-weight:700;color:#a45b08;background:#fff1d5;border-radius:10px;padding:3px 7px}
+@media(max-width:600px){.conclusion-result{padding-right:0}.conclusion-verification{position:static;display:inline-block;margin-top:7px}}
+
+/* v5.3.1: accessible conclusion colors; override legacy red descendant rule */
+.recommendation .conclusion-result{color:#d60000;font-size:13px}
+.recommendation .conclusion-reason-label{color:#111111;font-size:11px}
+.recommendation .conclusion-reason{color:#111111;font-size:10px;font-weight:400}
+
+/* v5.3.2 compact conclusion, readable inline reason and autocomplete */
+.recommendation .conclusion-reason-row{display:flex;align-items:baseline;gap:4px;min-width:0;margin-top:5px;color:#111;font:12px Arial,sans-serif}
+.recommendation .conclusion-reason-label{font-size:12px;color:#111;white-space:nowrap;margin:0;flex:none}
+.recommendation .conclusion-reason{font-size:12px;color:#111;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:none;flex:1}
+.recommendation .conclusion-reason-row.expanded{flex-wrap:wrap}
+.recommendation .conclusion-reason-row.expanded .conclusion-reason{white-space:normal;overflow:visible;flex-basis:calc(100% - 72px)}
+.recommendation .reason-toggle{flex:none;border:0;background:transparent;color:#145a84;font-size:11px;cursor:pointer;padding:0 2px}
+.recommendation .reason-toggle.hidden{display:none}
+#note{height:160px;min-height:130px;max-height:230px;resize:vertical;overflow:auto}
+.search-wrap{position:relative}
+.inline-suggestions{position:absolute;z-index:120;top:calc(100% + 3px);left:0;right:0;background:#fff;border:1px solid #b9cbdc;border-radius:6px;box-shadow:0 7px 18px #1c35502e;max-height:230px;overflow-y:auto}
+.inline-suggestions.hidden{display:none}
+.inline-suggestion-item{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;border:0;border-bottom:1px solid #edf1f5;background:#fff;text-align:left;padding:8px 11px;font:12px Arial,sans-serif;cursor:pointer;color:#162e42}
+.inline-suggestion-item small{font-size:10px;color:#65768a}
+.inline-suggestion-item:hover,.inline-suggestion-item.is-active{background:#e8f2fc}
+
+/* v5.3.2 layout corrections: restore stable checklist geometry */
+@media (min-width: 801px) {
+  #troubleshootingView .check-row { grid-template-columns: 240px 160px minmax(0, 1fr); min-height: 32px; }
+  #troubleshootingView .check-row select { width: 155px; min-width: 155px; max-width: 155px; height: 26px; }
+  #troubleshootingView .check-row .check-label { min-width: 0; }
+  #troubleshootingView .detail-box { resize: none; }
+}
+/* Compact conclusion: no oversized gap between Result and Reason */
+.recommendation .conclusion-result { line-height: 1.3; padding-right: 0; }
+.recommendation .conclusion-reason-row { margin-top: 3px; align-items: center; gap: 4px; }
+.recommendation .conclusion-reason { line-height: 1.4; }
+/* Lower action buttons toward bottom of notebook viewport without hiding them */
+#note { height: 230px; min-height: 170px; max-height: 230px; resize: none; }
+/* Search: one line per suggestion, left aligned; label immediately after title */
+.inline-suggestion-item { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 5px; text-align: left; padding: 10px 11px 7px; min-height: 35px; line-height: 1.35; white-space: nowrap; }
+.inline-suggestion-item span { display: inline; text-align: left; overflow: hidden; text-overflow: ellipsis; }
+.inline-suggestion-item small { display: inline; flex: none; font-size: 10px; white-space: nowrap; }
+.inline-suggestions { text-align: left; }
+
+/* v5.3.3 - targeted, deterministic layout fixes */
+/* A fixed desktop checklist grid; do not alter row geometry based on selection. */
+@media (min-width:901px) {
+  #checklist .check-row {grid-template-columns:minmax(0,240px) 160px minmax(0,1fr);min-height:32px;align-items:center;}
+  #checklist .check-row select {width:155px;min-width:155px;max-width:155px;height:26px;}
+  #checklist .check-row input {min-width:0;}
+  #checklist .detail-box {resize:none;}
+}
+/* The generic button rule centers contents; override it for search suggestions. */
+.search-wrap .inline-suggestions {left:0;right:0;text-align:left;}
+.search-wrap .inline-suggestions .inline-suggestion-item {
+  display:flex;flex-direction:row;justify-content:flex-start;align-items:center;
+  text-align:left;gap:5px;width:100%;min-height:36px;margin:0;
+  padding:11px 10px 7px;border:0;border-bottom:1px solid #edf1f5;
+  border-radius:0;background:#fff;transform:none;box-shadow:none;
+  white-space:nowrap;line-height:1.25;font:400 12px Arial,sans-serif;
+}
+.search-wrap .inline-suggestions .inline-suggestion-item:hover,
+.search-wrap .inline-suggestions .inline-suggestion-item.is-active {background:#e8f2fc;transform:none;box-shadow:none;}
+.search-wrap .inline-suggestions .inline-suggestion-item span {flex:0 1 auto;min-width:0;text-align:left;overflow:hidden;text-overflow:ellipsis;}
+.search-wrap .inline-suggestions .inline-suggestion-item small {flex:0 0 auto;margin:0;text-align:left;font-size:10px;}
+/* Result and Reason are consecutive rows with a small, consistent gap. */
+#recommendation.recommendation {padding:8px 10px;line-height:1.3;}
+#recommendation .conclusion-result {margin:0;padding:0;line-height:1.3;color:#d60000;font-size:13px;}
+#recommendation .conclusion-reason-row {display:flex;align-items:center;flex-wrap:nowrap;gap:4px;margin:3px 0 0;min-width:0;line-height:1.4;}
+#recommendation .conclusion-reason-label {margin:0;line-height:1.4;color:#111;font-size:12px;}
+#recommendation .conclusion-reason {color:#111;font-size:12px;line-height:1.4;}
+#recommendation .reason-toggle {margin:0;min-height:0;padding:0 2px;line-height:1.4;}
+#recommendation .conclusion-reason-row.expanded {flex-wrap:wrap;}
+#recommendation .conclusion-reason-row.expanded .conclusion-reason {white-space:normal;overflow:visible;flex-basis:calc(100% - 76px);}
+/* Restore a taller output pane without allowing its textarea to be resized. */
+#note {height:230px;min-height:230px;max-height:230px;resize:none;overflow:auto;}
+
+/* v5.3.3 stability patch: fixed desktop geometry and non-reflowing conclusion. */
+@media (min-width:901px) {
+  #troubleshootingView .main {
+    display:grid;
+    grid-template-columns:minmax(0, 52fr) minmax(0, 48fr);
+    gap:8px;
+    align-items:stretch;
+  }
+  #troubleshootingView .main > .left,
+  #troubleshootingView .main > .right {
+    box-sizing:border-box;
+    width:100%;min-width:0;max-width:100%;
+    height:450px;min-height:450px;max-height:450px;
+  }
+  #troubleshootingView .main > .left {overflow-y:auto;overflow-x:hidden;}
+  #troubleshootingView .main > .right {display:flex;flex-direction:column;overflow:visible;}
+  #troubleshootingView .main > .right #note {
+    flex:1 1 auto;min-height:0;height:auto;max-height:none;resize:none;overflow:auto;
+  }
+  #troubleshootingView .main > .right .action-buttons {flex:0 0 auto;}
+  #troubleshootingView .main > .right .version {flex:0 0 auto;}
+}
+#recommendation.recommendation {position:relative;min-width:0;max-width:100%;}
+#recommendation .conclusion-result {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#recommendation .conclusion-reason-row {flex-wrap:nowrap;min-width:0;}
+#recommendation .conclusion-reason {flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#recommendation .conclusion-reason-overlay {
+  position:absolute;z-index:100;top:calc(100% + 3px);left:0;right:0;
+  max-height:130px;overflow:auto;overflow-wrap:anywhere;
+  padding:10px 12px;border:1px solid #e5bfc0;border-radius:6px;
+  background:#fff;color:#111;font:400 12px/1.55 Arial,sans-serif;
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+}
+#recommendation .conclusion-reason-overlay.hidden {display:none;}
+
+/* v5.3.3 final: 100% browser zoom should match prior 90% browser zoom
+   with the previous internal desktop zoom of .95 (0.95 * 0.90 = 0.855). */
+@media (min-width:901px){ html {zoom:0.855;} }
+#recommendation .conclusion-reason.hidden {display:none;}
+
+/* v5.3.3: Additional Checks do not contribute to the checklist progress. */
+.additional-checks-heading{font-size:10px;font-weight:700;color:#5b6472;border-bottom:1px solid #dfe5ec;padding:9px 4px 5px;margin-top:5px}
+#checklist .additional-check-row{background:#fafbfd}
+#checklist .additional-check-row .additional-check-detail.hidden{display:none}
+
+
+/* v5.3.4: one unified checklist, same pale-green completed-row background. */
+#checklist .check-row.is-complete,
+#checklist .check-row.is-complete:hover {background:var(--complete);}
+#checklist .check-row.is-complete:focus-within {background:#edf7f1;}
+#checklist .check-row .check-label {color:inherit;}
+/* Reminders live inside Conclusion only, independent of the Note/Email content. */
+#recommendation .conclusion-reminders {
+  margin-top:7px;padding-top:6px;border-top:1px solid #f0d6b2;
+  max-height:94px;overflow-y:auto;overscroll-behavior:contain;
+}
+#recommendation .conclusion-reminder {display:flex;flex-direction:column;gap:1px;padding:3px 0;color:#754c0a;}
+#recommendation .conclusion-reminder strong {color:#9a5c00;font:700 11px/1.35 Arial,sans-serif;}
+#recommendation .conclusion-reminder span {color:#604b2d;font:400 11px/1.4 Arial,sans-serif;}
+
+/* v5.3.4 Reason info popover is mounted on body, not under Conclusion. */
+body > .conclusion-reason-overlay {
+  position:fixed;z-index:99999;box-sizing:border-box;
+  width:320px;max-width:calc(100vw - 20px);max-height:220px;
+  overflow-y:auto;overflow-wrap:anywhere;
+  padding:10px 12px;border:1px solid #e5bfc0;border-radius:6px;
+  background:#fff;color:#111;font:400 12px/1.55 Arial,sans-serif;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
+body > .conclusion-reason-overlay.hidden {display:none;}
+#recommendation .reason-toggle {
+  flex:none;border:0;background:transparent;color:#145a84;
+  font:700 17px/1 Arial,sans-serif;cursor:pointer;padding:0 3px;
+}
+
+/* v5.3.5 visual hierarchy, compact Result / persistent Thai reminders */
+#level1 .item,#symptoms .item,#symptom .item {font-size:12px;}
+#level1 .item.active,#symptoms .item.active,#symptom .item.active {font-weight:600;}
+.reference-view .reference-detail-body {font-size:12px;}
+.reference-view .guide-content,.reference-view .reference-detail-text,.reference-view .reference-bullets {font-size:12px;}
+#recommendation .conclusion-result {display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+#recommendation .conclusion-result .reason-toggle {display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;}
+#recommendation .conclusion-reminders {margin-top:5px;padding-top:0;border-top:0;max-height:none;overflow:visible;}
+#recommendation .conclusion-reminder {display:flex;flex-direction:row;align-items:baseline;flex-wrap:nowrap;gap:5px;padding:2px 0;white-space:nowrap;}
+#recommendation .conclusion-reminder strong {flex:none;font:700 11px/1.4 Arial,sans-serif;}
+#recommendation .conclusion-reminder span {font:400 11px/1.4 Arial,sans-serif;}
+
+/* Battery Health calculator */
+.battery-calc-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.42);display:flex;align-items:center;justify-content:center;padding:18px}
+.battery-calc-modal{background:#fff;color:#222;border-radius:10px;padding:18px;width:min(580px,96vw);max-height:90vh;overflow:auto;box-shadow:0 12px 40px #0004;font:13px Arial,sans-serif}
+.battery-calc-title{font-weight:700;font-size:17px;margin-bottom:12px}
+.battery-calc-modal label{display:block;font-weight:600;margin:10px 0 6px}
+.battery-calc-modal label input{display:block;box-sizing:border-box;width:100%;padding:9px;margin-top:5px;border:1px solid #ccc;border-radius:5px;font:14px Arial}
+.battery-calc-result{font-size:18px;font-weight:700;text-align:center;margin:14px 0 8px}
+.battery-calc-guidance{font-size:13px;line-height:1.6;margin:10px 0}
+.battery-calc-email{box-sizing:border-box;width:100%;height:220px;resize:vertical;padding:10px;line-height:1.6;font:13px Arial}
+.battery-calc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.battery-calc-actions button{padding:8px 12px;cursor:pointer}
+
+/* v5.3.5 minor conclusion typography and calculator icon */
+#recommendation .conclusion-result{font-size:12px;}
+.check-guide-info.battery-calculator-icon{font-size:13px;vertical-align:middle;}
+.check-guide-info.battery-calculator-icon::before{content:"";display:none;}
+
+/* Align the calculator glyph with the Battery Health label baseline. */
+.check-guide-info.battery-calculator-icon{position:relative;top:-2px;line-height:1;vertical-align:middle;}
+
+/* v5.3.7 — Make primary Note/Email actions easier to read and click. */
+.action-buttons #generateBtn,
+.action-buttons #emailThBtn,
+.action-buttons #emailEnBtn{min-height:34px;padding:8px 12px;gap:7px;font-size:12px}
+.action-buttons #generateBtn svg,
+.action-buttons #emailThBtn svg,
+.action-buttons #emailEnBtn svg{width:15px;height:15px}
+
+/* v5.3.8 — Theme-only enhancement. No existing spacing or layout dimensions changed. */
+.module-nav .theme-toggle{
+  flex:0 0 auto;margin:0 0 0 auto;padding:0;
+  width:30px;height:30px;min-height:30px;
+  border:1px solid #cfd4d7;border-radius:5px;
+  background:#f2f3f3;color:#4b5358;
+}
+.theme-toggle svg{width:18px;height:18px;stroke-width:1.8}
+.theme-toggle .theme-sun{display:none}
+html[data-theme="dark"] .theme-toggle .theme-moon{display:none}
+html[data-theme="dark"] .theme-toggle .theme-sun{display:block}
+
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#15171a;--surface:#222529;--surface-soft:#2b2e33;
+  --border:#454a50;--border-soft:#373c42;--text:#f0f2f4;
+  --muted:#bcc3cb;--selection:#344a56;--selection-border:#72a7bf;
+  --complete:#224435;--shadow:0 1px 2px rgba(0,0,0,.18);
+}
+html[data-theme="dark"] .byline,
+html[data-theme="dark"] .site-stats,
+html[data-theme="dark"] .site-stats span,
+html[data-theme="dark"] .version,
+html[data-theme="dark"] .labor-source-note,
+html[data-theme="dark"] .labor-result-summary{color:#bdbdbd}
+html[data-theme="dark"] .field label,
+html[data-theme="dark"] .col-title,
+html[data-theme="dark"] .section-title,
+html[data-theme="dark"] .global-search-heading,
+html[data-theme="dark"] .reference-detail-title,
+html[data-theme="dark"] .reference-detail-heading,
+html[data-theme="dark"] .labor-search-field label{color:#d5d5d5}
+html[data-theme="dark"] select,
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea{background:#191b1f;color:#f0f2f4;border-color:#535b63}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder{color:#a9a9a9}
+html[data-theme="dark"] select option{background:#191b1f;color:#f0f2f4}
+html[data-theme="dark"] .module-nav,
+html[data-theme="dark"] .labor-search-card,
+html[data-theme="dark"] .modal-header{background:#272a2e;border-color:#434a51}
+html[data-theme="dark"] .module-tab,
+html[data-theme="dark"] .module-nav .theme-toggle{background:#2d3136;border-color:#555d66;color:#f0f2f4}
+html[data-theme="dark"] .module-tab:hover,
+html[data-theme="dark"] .module-nav .theme-toggle:hover{background:#3d444b;border-color:#78838e;color:#fff}
+html[data-theme="dark"] .module-tab.active,
+html[data-theme="dark"] .module-tab.active:hover{background:#467f9a;border-color:#72a8bd;color:#fff}
+html[data-theme="dark"] .col-title,
+html[data-theme="dark"] .labor-result-location{background:#30343a}
+html[data-theme="dark"] .item,
+html[data-theme="dark"] .check-row,
+html[data-theme="dark"] .global-search-result{border-bottom-color:#3d434a}
+html[data-theme="dark"] .item:hover,
+html[data-theme="dark"] .global-search-result:hover,
+html[data-theme="dark"] .check-row:hover{background:#32373d}
+html[data-theme="dark"] .item:active,
+html[data-theme="dark"] .item.active,
+html[data-theme="dark"] .check-row:focus-within{background:#3c4650;color:#f5f5f5}
+html[data-theme="dark"] .check-row.is-complete{background:var(--complete)}
+html[data-theme="dark"] .check-row.is-complete:focus-within{background:#294f3c}
+html[data-theme="dark"] .current-selection{background:#304450;border-color:#617e8f;color:#f0f2f4}
+html[data-theme="dark"] .action-secondary{background:#303b45;border-color:#596a78;color:#eef2f5}
+html[data-theme="dark"] .action-secondary:hover{background:#405160;border-color:#92a5b2;color:#fff}
+html[data-theme="dark"] .action-clear,
+html[data-theme="dark"] .clear{background:#303438;border-color:#61686e;color:#e9edf0}
+html[data-theme="dark"] .action-clear:hover,
+html[data-theme="dark"] .clear:hover{background:#42484e;border-color:#828b94;color:#fff}
+html[data-theme="dark"] .search-clear:hover{background:#42484e;color:#fff}
+html[data-theme="dark"] .manual,
+html[data-theme="dark"] .reference-meta,
+html[data-theme="dark"] .reference-info-hint,
+html[data-theme="dark"] .checklist-empty,
+html[data-theme="dark"] .labor-empty-state{background:#2c3035;border-color:#4e565d;color:#ededed}
+html[data-theme="dark"] .reference-meta strong,
+html[data-theme="dark"] .reference-detail-body,
+html[data-theme="dark"] .labor-result-location strong,
+html[data-theme="dark"] .global-search-result-title{color:#ededed}
+html[data-theme="dark"] .reference-meta span,
+html[data-theme="dark"] .global-search-result-subtitle,
+html[data-theme="dark"] .labor-result-location span{color:#bdbdbd}
+html[data-theme="dark"] .modal-content,
+html[data-theme="dark"] .labor-mapping-view,
+html[data-theme="dark"] .labor-result-card{background:var(--surface);border-color:var(--border)}
+html[data-theme="dark"] .inline-suggestions,
+html[data-theme="dark"] .inline-suggestion-item,
+html[data-theme="dark"] .search-wrap .inline-suggestions .inline-suggestion-item{background:#25292d;color:#efefef;border-color:#515b64}
+html[data-theme="dark"] .inline-suggestion-item small{color:#c4c4c4}
+html[data-theme="dark"] .inline-suggestion-item:hover,
+html[data-theme="dark"] .inline-suggestion-item.is-active,
+html[data-theme="dark"] .search-wrap .inline-suggestions .inline-suggestion-item:hover,
+html[data-theme="dark"] .search-wrap .inline-suggestions .inline-suggestion-item.is-active{background:#3b424a}
+html[data-theme="dark"] .recommendation,
+html[data-theme="dark"] .recommendation-dispatch,
+html[data-theme="dark"] .recommendation.rec-fop,
+html[data-theme="dark"] .recommendation.rec-adapter,
+html[data-theme="dark"] .recommendation.rec-lcd,
+html[data-theme="dark"] .recommendation.rec-l2,
+html[data-theme="dark"] .recommendation.rec-mainboard{background:#3c2a31;border-color:#81545d;color:#ffa0a8}
+html[data-theme="dark"] .recommendation *,
+html[data-theme="dark"] .recommendation .conclusion-result,
+html[data-theme="dark"] #recommendation .conclusion-result{color:#ff9292}
+html[data-theme="dark"] .recommendation .conclusion-reason-label,
+html[data-theme="dark"] .recommendation .conclusion-reason,
+html[data-theme="dark"] #recommendation .conclusion-reason-label,
+html[data-theme="dark"] #recommendation .conclusion-reason{color:#f0e3e5}
+html[data-theme="dark"] #recommendation .conclusion-reason-overlay{background:#32272d;border-color:#895e65;color:#f0e3e5}
+html[data-theme="dark"] .suggestion,
+html[data-theme="dark"] .error-description{background:#443922;border-color:#846e3e;color:#ffe0a2}
+html[data-theme="dark"] .conclusion-verification{background:#614820;color:#ffdfaa}
+html[data-theme="dark"] .labor-compare-table th,
+html[data-theme="dark"] .labor-compare-table td{border-color:#505050}
+html[data-theme="dark"] .labor-compare-table thead th{background:#343940;color:#ededed}
+html[data-theme="dark"] .labor-compare-table tbody th,
+html[data-theme="dark"] .labor-compare-table .labor-postal-cell,
+html[data-theme="dark"] .labor-compare-table .labor-province-cell{background:#32373d;color:#e1e1e1}
+html[data-theme="dark"] .labor-compare-table tbody td{color:#e0e0e0}
+html[data-theme="dark"] .labor-compare-table tbody tr.labor-postal-base > th,
+html[data-theme="dark"] .labor-compare-table tbody tr.labor-postal-base > td{background:#25292e}
+html[data-theme="dark"] .labor-compare-table tbody tr.labor-postal-alt > th,
+html[data-theme="dark"] .labor-compare-table tbody tr.labor-postal-alt > td{background:#30353b}
+html[data-theme="dark"] .search-badge{background:#32383f;border-color:#626e7a;color:#e2e2e2}
+html[data-theme="dark"] .badge-ts{background:#25425c;color:#bfe0fb}
+html[data-theme="dark"] .badge-code{background:#3c3152;color:#e0c8ff}
+html[data-theme="dark"] .badge-guide{background:#254839;color:#c3efd1}
+
+/* v5.3.8 dark gray refinement: keep checked-row labels legible even when focused/hovered.
+   Scoped to dark mode so light UI and underlying application logic stay untouched. */
+html[data-theme="dark"] #checklist .check-row.is-complete,
+html[data-theme="dark"] #checklist .check-row.is-complete:hover,
+html[data-theme="dark"] #checklist .check-row.is-complete:focus-within {
+  background:var(--complete);
+  color:var(--text);
+}
+html[data-theme="dark"] #checklist .check-row.is-complete .check-label,
+html[data-theme="dark"] #checklist .check-row.is-complete:hover .check-label,
+html[data-theme="dark"] #checklist .check-row.is-complete:focus-within .check-label {
+  color:var(--text);
+}
+html[data-theme="dark"] #checklist .additional-check-row {background:#25292e;}
+html[data-theme="dark"] #checklist .additional-check-row:hover,
+html[data-theme="dark"] #checklist .additional-check-row:focus-within {background:#30353b;color:var(--text);}
+
+/* Modern Graphite palette refresh: dark-theme colors only; no layout or logic changes. */
+
+/* v5.3.9: battery calculator - standalone module, matching existing surfaces. */
+.battery-health-view{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;min-height:400px}
+.battery-description{color:var(--muted);margin:12px 0 16px;font-size:12px;line-height:1.5}
+.battery-fields{display:flex;gap:16px;flex-wrap:wrap;max-width:620px}
+.battery-field{flex:1 1 240px}
+.battery-field label{display:block;font-size:11px;font-weight:700;margin-bottom:6px}
+.battery-field input{width:100%;padding:9px 10px;font-size:12px}
+.battery-actions{display:flex;gap:8px;margin:16px 0}
+.battery-actions button{padding:9px 16px}
+.battery-result{max-width:620px;border:1px solid var(--border);background:var(--surface-soft);border-radius:6px;padding:16px;font-size:16px;font-weight:700;color:var(--text)}
+.battery-result.battery-error{color:#b42318;border-color:#efb5b0}
+.battery-footnote{max-width:760px;margin-top:14px;line-height:1.6;font-size:11px;color:var(--muted)}
+.battery-health-view .version{margin-top:24px}
+html[data-theme="dark"] .battery-health-view{background:var(--surface);border-color:var(--border)}
+html[data-theme="dark"] .battery-result{background:#30343a;border-color:#555d66;color:#f0f2f4}
+html[data-theme="dark"] .battery-result.battery-error{color:#ffb0a8;border-color:#8c4d4d}
+/* v5.3.9: clearer completed rows in light mode, no layout change. */
+html:not([data-theme="dark"]) #checklist .check-row.is-complete,
+html:not([data-theme="dark"]) #checklist .check-row.is-complete:hover,
+html:not([data-theme="dark"]) #checklist .check-row.is-complete:focus-within{background:#d7eadf}
+
+/* Calculator email preview; does not alter existing layout elsewhere. */
+.battery-email-text{display:block;box-sizing:border-box;width:100%;max-width:620px;min-height:160px;margin-top:10px;padding:10px;resize:vertical;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;font:12px/1.65 Arial,sans-serif}
+.battery-email-text[hidden]{display:none}
+
+/* v5.3.9 Battery Calculator dialogs — isolated from existing page layout. */
+.battery-main-overlay{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.48);min-height:0;border:0;border-radius:0;box-shadow:none}
+.battery-main-overlay.hidden{display:none}
+.battery-main-modal{box-sizing:border-box;width:min(510px,96vw);max-height:90vh;overflow:auto;padding:15px;background:#fff;color:#222;border-radius:8px;box-shadow:0 12px 40px #0004;font:13px Arial,sans-serif}
+.battery-main-heading{font-size:17px;font-weight:700;margin-bottom:9px}
+.battery-modal-description{font-size:11px;color:#646a72;margin-bottom:10px}
+.battery-main-fields label{display:block;font-size:12px;font-weight:700;margin-bottom:8px}
+.battery-main-fields input{box-sizing:border-box;display:block;width:100%;height:34px;margin-top:5px;padding:7px 9px;border:1px solid #c6cbd1;border-radius:5px;font:13px Arial,sans-serif;background:#fff;color:#222}
+.battery-main-result{text-align:center;font-size:17px;font-weight:700;margin:13px 0 7px}
+.battery-modal-formula{font-size:12px;margin-bottom:8px}
+.battery-main-modal .battery-actions{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 0}
+.battery-main-modal .battery-actions button{padding:8px 12px}
+.battery-email-modal .battery-calc-email{display:block;height:270px;min-height:160px;max-height:55vh;border-radius:5px;border:1px solid #c6cbd1;background:#fff;color:#222;white-space:pre-wrap}
+html[data-theme="dark"] .battery-main-modal,html[data-theme="dark"] .battery-calc-modal{background:#282b30;color:#f0f2f4;border:1px solid #555b63}
+html[data-theme="dark"] .battery-main-fields input,html[data-theme="dark"] .battery-calc-modal label input,html[data-theme="dark"] .battery-email-modal .battery-calc-email{background:#1d2024;color:#f0f2f4;border-color:#616971}
+html[data-theme="dark"] .battery-modal-description{color:#bec4cb}
+html[data-theme="dark"] .battery-main-modal button,html[data-theme="dark"] .battery-calc-modal button{background:#414750;color:#f4f6f8;border:1px solid #626a75;border-radius:4px}
+html[data-theme="dark"] .battery-main-modal button:hover,html[data-theme="dark"] .battery-calc-modal button:hover{background:#555e68}
+html[data-theme="dark"] .battery-main-modal button:disabled,html[data-theme="dark"] .battery-calc-modal button:disabled{opacity:.55}
+
+/* Battery Calculator main tab: embedded in normal page flow, email previews only remain dialogs. */
+#batteryHealthView.battery-health-view{position:static;inset:auto;display:block;width:auto;min-height:400px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+#batteryHealthView.battery-health-view.hidden{display:none}
+#batteryHealthView .battery-main-modal{box-sizing:border-box;display:block;width:100%;max-width:none;max-height:none;overflow:visible;padding:0;background:transparent;color:var(--text);border:0;border-radius:0;box-shadow:none;font:inherit}
+#batteryHealthView .battery-main-heading{font-size:13px;font-weight:700;margin-bottom:8px}
+#batteryHealthView .battery-modal-description{color:var(--muted);font-size:11px;margin-bottom:15px}
+#batteryHealthView .battery-main-fields{display:flex;flex-wrap:wrap;gap:14px;max-width:620px}
+#batteryHealthView .battery-main-fields label{flex:1 1 230px;min-width:0;font-size:11px;margin:0}
+#batteryHealthView .battery-main-fields input{height:32px;background:var(--surface);color:var(--text);border-color:var(--border)}
+#batteryHealthView .battery-main-result{max-width:620px;margin:16px 0 0;padding:13px;background:var(--surface-soft);border:1px solid var(--border);border-radius:6px;text-align:left;font-size:16px}
+#batteryHealthView .battery-modal-formula{color:var(--muted);font-size:11px;margin:10px 0}
+#batteryHealthView .battery-actions{margin-top:15px}
+html[data-theme="dark"] #batteryHealthView.battery-health-view{background:var(--surface);border-color:var(--border)}
+html[data-theme="dark"] #batteryHealthView .battery-main-modal{background:transparent;border:0;color:var(--text)}
+html[data-theme="dark"] #batteryHealthView .battery-main-fields input{background:var(--surface-soft);color:var(--text);border-color:var(--border)}
+html[data-theme="dark"] #batteryHealthView .battery-main-result{background:var(--surface-soft);color:var(--text)}

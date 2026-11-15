@@ -8,4 +8,4 @@
 - No Labor Mapping changes in this release.
 
 ## Release gate
-Run `python generate_database.py`, `node smoke_test.js`, `python test_pipeline.py`, and `python validate_database.py` before packaging.
+Run `python tools/generate_database.py`, `node tools/smoke_test.js`, `python -m unittest discover -s tools -p 'test_*.py' -v`, and `python tools/validate_database.py` before packaging.

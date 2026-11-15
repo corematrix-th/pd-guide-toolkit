@@ -1,4 +1,4 @@
-PD Guide Toolkit v5.2.9
+PD Guide Toolkit v5.3.9
 
 Online presence (v5.2.8):
 - Online counts unique browser/profile IDs, not tabs.
@@ -15,13 +15,13 @@ PD_Guide_Database.xlsx is the sole source of truth for product-facing checklist 
 Labor Mapping.xlsx is the sole source of truth for Labor Mapping Province / Postal Code routing.
 
 Workflow:
-PD_Guide_Database.xlsx + Labor Mapping.xlsx
+source/PD_Guide_Database.xlsx + source/Labor Mapping.xlsx
         ↓
-python generate_database.py
+python tools/generate_database.py
         ↓
-database.js + labor_mapping.js + Reference_Text/*.txt
+assets/js/database.js + assets/js/labor_mapping.js + Reference_Text/*.txt
         ↓
-python validate_database.py
+python tools/validate_database.py
         ↓
 Toolkit
 
@@ -40,7 +40,7 @@ Labor Mapping.xlsx rules:
 - Do not merge adjacent Postal Code ranges automatically. Vendor mapping may differ by range.
 - Standard / Premium care and Premier Support retain their own SAP Account Number, Labor Vendor ID, and Premier Vendor.
 - The Toolkit displays Labor Vendor ID and Premier Vendor; SAP Account Number remains stored in runtime data for future use.
-- After editing Labor Mapping.xlsx, run python generate_database.py and python validate_database.py.
+- After editing Labor Mapping.xlsx, run python tools/generate_database.py and python tools/validate_database.py.
 
 Dropdown values are stored as DDxxx IDs and resolved through Dropdown_Master.
 Related guides are stored as readable keys and resolved through Related_Guide_Master.
@@ -64,7 +64,7 @@ Dropdown control syntax:
 Diagnostics:
 - Runtime diagnostics run silently in the background when the Toolkit loads; there is no user-facing Diagnostics button.
 - Runtime diagnostics validate the Labor Mapping dataset count and required vendor fields.
-- Background diagnostics are a runtime aid; the release gate remains python validate_database.py.
+- Background diagnostics are a runtime aid; the release gate remains python tools/validate_database.py.
 
 Selective Related Guide popup (v5.2.8):
 - SYMPTOMS no longer renders a separate Related Guide card below the checklist.
@@ -85,6 +85,8 @@ Navigation v5.2.8:
 - A dedicated Clear button beside the Labor Mapping search resets the query and results.
 - Postal Code lookup returns every source row whose range contains that code; it does not guess between overlapping source mappings.
 
-Run python generate_database.py and python validate_database.py before packaging every release.
+Run python tools/generate_database.py and python tools/validate_database.py before packaging every release.
 
-Version 5.2.9
+Version 5.3.5
+
+Folder layout: see docs/FOLDER_STRUCTURE.md.
