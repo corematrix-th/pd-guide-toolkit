@@ -1,0 +1,125 @@
+# Email TH / EN consistency audit — v5.4.0
+
+Updated customer-facing instructions for 18 checklist labels, affecting 121 product checklist rows. Email wording is concise and aligned between Thai and English. Additionally translated 16 prewritten manual guide Email EN entries containing Thai text. Checklist labels, dropdowns, model-specific order, decision/scoring logic and version remain unchanged.
+
+- Thinkpad row 17: Power LED
+- Thinkpad row 18: Caps Lock Toggle
+- Thinkpad row 19: Emergency Reset
+- Thinkpad row 20: External Monitor Test
+- Thinkpad row 21: Swap Ram
+- Thinkpad row 247: Any CID
+- Thinkpad row 252: Any CID
+- Thinkpad row 257: Any CID
+- Thinkpad row 263: Any CID
+- Thinkpad row 269: Any CID
+- Thinkpad row 274: Any CID
+- Thinkpad row 325: WLAN Status Check
+- Thinkpad row 326: Airplane Mode Check
+- Thinkpad row 327: Hotspot Test
+- Thinkpad row 329: Windows Update
+- Thinkpad row 330: Lenovo Vantage Update
+- Thinkpad row 332: Check BIOS Settings
+- Thinkpad row 333: Power Reset
+- Thinkpad row 336: Ethernet Driver Update
+- Thinkpad row 338: Check BIOS Settings
+- Thinkpad row 339: Any CID
+- Thinkpad row 341: Bluetooth Status Check
+- Thinkpad row 342: Reset Bluetooth Driver
+- Thinkpad row 343: Windows Update
+- Thinkpad row 344: Lenovo Vantage Update
+- Thinkpad row 346: Power Reset
+- Thinkpad row 347: Other Device Test
+- Ideapad row 17: Power LED
+- Ideapad row 18: Caps Lock Toggle
+- Ideapad row 19: Power Reset
+- Ideapad row 20: External Monitor Test
+- Ideapad row 21: Swap Ram
+- Ideapad row 247: Any CID
+- Ideapad row 252: Any CID
+- Ideapad row 257: Any CID
+- Ideapad row 262: Any CID
+- Ideapad row 267: Any CID
+- Ideapad row 273: Any CID
+- Ideapad row 306: WLAN Status Check
+- Ideapad row 307: Airplane Mode Check
+- Ideapad row 308: Hotspot Test
+- Ideapad row 309: Port LAN Test
+- Ideapad row 313: Check BIOS Settings
+- Ideapad row 314: Power Reset
+- Ideapad row 317: Ethernet Driver Update
+- Ideapad row 319: Check BIOS Settings
+- Ideapad row 320: Any CID
+- Ideapad row 322: Bluetooth Status Check
+- Ideapad row 323: Reset Bluetooth Driver
+- Ideapad row 325: Lenovo Vantage Update
+- Ideapad row 327: Power Reset
+- Ideapad row 328: Other Device Test
+- Desktop row 18: Power LED
+- Desktop row 19: Caps Lock Toggle
+- Desktop row 20: Power Reset
+- Desktop row 21: Swap Ram
+- Desktop row 185: Any CID
+- Desktop row 191: Any CID
+- Desktop row 197: Any CID
+- Desktop row 204: Any CID
+- Desktop row 211: Any CID
+- Desktop row 246: WLAN Status Check
+- Desktop row 247: Airplane Mode Check
+- Desktop row 248: Hotspot Test
+- Desktop row 249: Port LAN Test
+- Desktop row 253: Check BIOS Settings
+- Desktop row 254: Power Reset
+- Desktop row 257: Ethernet Driver Update
+- Desktop row 259: Check BIOS Settings
+- Desktop row 260: Any CID
+- Desktop row 262: Bluetooth Status Check
+- Desktop row 263: Reset Bluetooth Driver
+- Desktop row 265: Lenovo Vantage Update
+- Desktop row 267: Power Reset
+- Desktop row 268: Other Device Test
+- Tiny row 15: Power LED
+- Tiny row 16: Caps Lock Toggle
+- Tiny row 17: Power Reset
+- Tiny row 18: Swap Ram
+- Tiny row 185: Any CID
+- Tiny row 191: Any CID
+- Tiny row 197: Any CID
+- Tiny row 204: Any CID
+- Tiny row 211: Any CID
+- Tiny row 246: WLAN Status Check
+- Tiny row 247: Airplane Mode Check
+- Tiny row 248: Hotspot Test
+- Tiny row 249: Port LAN Test
+- Tiny row 253: Check BIOS Settings
+- Tiny row 254: Power Reset
+- Tiny row 257: Ethernet Driver Update
+- Tiny row 259: Check BIOS Settings
+- Tiny row 260: Any CID
+- Tiny row 262: Bluetooth Status Check
+- Tiny row 263: Reset Bluetooth Driver
+- Tiny row 265: Lenovo Vantage Update
+- Tiny row 267: Power Reset
+- Tiny row 268: Other Device Test
+- AIO row 16: Power LED
+- AIO row 17: Caps Lock Toggle
+- AIO row 18: Power Reset
+- AIO row 19: Swap Ram
+- AIO row 192: Any CID
+- AIO row 198: Any CID
+- AIO row 204: Any CID
+- AIO row 211: Any CID
+- AIO row 218: Any CID
+- AIO row 253: WLAN Status Check
+- AIO row 254: Airplane Mode Check
+- AIO row 255: Hotspot Test
+- AIO row 256: Port LAN Test
+- AIO row 260: Check BIOS Settings
+- AIO row 261: Power Reset
+- AIO row 264: Ethernet Driver Update
+- AIO row 266: Check BIOS Settings
+- AIO row 267: Any CID
+- AIO row 269: Bluetooth Status Check
+- AIO row 270: Reset Bluetooth Driver
+- AIO row 272: Lenovo Vantage Update
+- AIO row 274: Power Reset
+- AIO row 275: Other Device Test
